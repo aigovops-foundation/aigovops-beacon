@@ -1,44 +1,63 @@
 # Contributing to AIGovOps Beacon
 
-Thank you for considering a contribution. Beacon is a Foundation project — every change passes through the same governance pipeline it advocates for others. That's the point.
+We welcome pull requests, framework additions, beacon adapters, and translations
+from auditors, regulators, engineers, and AI program owners.
 
-## The short version
+> **Tagline:** YES-Ship AI · YES-Steady AI · YES-Recover AI
 
-1. Open an issue describing the change. For anything user-visible, include a sketch or the exact copy.
-2. Fork. Branch from `main` as `feat/<short-name>` or `fix/<short-name>`.
-3. Run `npm test` and `npm run lint` (server) and `npm run typecheck` (studio).
-4. Open a PR. Reference the issue. Fill in the PR template.
-5. A maintainer will run the production-readiness gate. If green, a human approver merges.
+## How the repository is protected
 
-## What we expect
+This is a **public open-source project** under Apache-2.0. To keep it useful
+and trustworthy for everyone:
 
-- **Plain language wins.** Beacon's Studio is read by non-technical auditors. If a label needs a footnote, the label is wrong.
-- **Evidence by default.** Every new feature must produce a receipt or explain why none is needed.
-- **No PDF theater.** Specs in markdown, schemas in YAML/JSON, examples that run.
-- **Accessibility is non-negotiable.** WCAG AA. Keyboard navigation. Screen-reader labels. Color is never the only signal.
+- **`main` is protected** — direct pushes are disabled. Every change goes
+  through a pull request that requires:
+  - at least one approving review from a maintainer,
+  - the e2e test suite (`python tests/e2e.py`) to pass,
+  - signed commits where possible.
+- **Force-pushes and branch deletions are blocked** on `main`.
+- **Repository deletion** requires both maintainers to approve and is
+  guarded by the GitHub repository "Restrict deletions" setting.
+- **Issues and discussions are open** — anyone can read, comment, and
+  propose changes. Collaborators with write access can be added on request
+  for sustained contributors.
 
-## What needs a human approver (per the Foundation constitution)
+## How to contribute
 
-Agents may draft anything. A human approver must ratify:
+1. **Fork** the repository (or request collaborator access for sustained work).
+2. **Create a topic branch** off `main`: `git checkout -b add-jp-aiba`.
+3. **Make focused commits** that explain *why* in the body.
+4. **Run the e2e tests locally:** `python tests/e2e.py`
+   - The full suite covers framework YAML/XML parse, JSON-Schema validation,
+     scoring regression, signature verification, URL liveness, and contact
+     metadata presence.
+5. **Open a pull request.** Reference any framework or incident IDs you touched.
+6. A maintainer will review within a few business days.
 
-- Changes to checklist packs that affect regulatory mapping
-- New gate definitions or Rego rules
-- Changes to the receipt schema or signing flow
-- Anything affecting trust-tier promotion logic
+## What we love receiving
 
-The PR template lists these explicitly. If your change touches any of them, expect Steward Council review.
+- New national / sectoral framework YAMLs (use `frameworks/schema/framework.schema.json`).
+- Beacon adapters for additional CASB / SIEM / cloud sources.
+- Translations of control text (see `frameworks/translations/`).
+- New entries for the AI failures dataset with primary-source URLs.
+- Bug fixes, doc improvements, accessibility tweaks.
 
-## Trust tiers for contributors
+## What needs maintainer approval
 
-- **T0** — first PR. Welcome. We'll pair-review.
-- **T1** — three merged PRs. Triage rights on issues.
-- **T2** — six merged PRs + signed CLA. Review rights.
-- **T3** — invited by Steward Council. Merge rights on policy/ and checklists/.
+- Changes to the receipt schema (`docs/RECEIPT_SCHEMA.md`).
+- Changes to the scoring weights (`scoring/mapping.yaml`).
+- Removing or renaming a framework.
 
 ## Reporting security issues
 
-Do **not** open a public issue. Email `security@aigovopsfoundation.org` with details. We'll respond within 48 hours.
+Email **[security@aigovopsfoundation.org](mailto:security@aigovopsfoundation.org)**
+or message the maintainers directly. Please do **not** open a public issue
+for vulnerabilities.
 
----
+## Maintainers
 
-By contributing, you agree your work is licensed under Apache-2.0 and you grant the Foundation a perpetual license to use, modify, and redistribute it.
+- **Bob Rapp** — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
+- **Ken Johnston** — [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
+- Foundation — [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+
+Apache-2.0 · fork it · sign with your own keys · run it your way.

@@ -1,0 +1,2095 @@
+[
+  {
+    "incident": "Boeing 737 MAX MCAS software fatal crashes",
+    "year": "2018-2019",
+    "sector": "Auto/Mobility",
+    "root_cause": "Boeing concealed a safety-critical MCAS design change from regulators and pilots, and the certification/training process failed to catch that the system could repeatedly command nose-down trim from erroneous sensor data.",
+    "damage": "$2.5B DOJ criminal resolution",
+    "harm_type": "Bodily harm/Death, Financial loss, Safety recall, Regulatory fine",
+    "regulator": "U.S. Department of Justice deferred prosecution agreement and criminal information (Jan. 2021)",
+    "source": {
+      "text": "U.S. Department of Justice",
+      "url": "https://www.justice.gov/archives/opa/pr/boeing-charged-737-max-fraud-conspiracy-and-agrees-pay-over-25-billion"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "checklist receipt (manual attestation) would have forced explicit sign-off on the safety-critical MCAS change, and a scoring report would have highlighted the unresolved risk of a hidden control-law update before deployment."
+  },
+  {
+    "incident": "Tesla Autopilot fatal crashes / NHTSA recall 23V-838",
+    "year": "2023-2024",
+    "sector": "Auto/Mobility",
+    "root_cause": "Tesla’s Level 2 Autosteer controls and driver-monitoring safeguards were insufficient to prevent predictable driver misuse, creating a critical safety gap that contributed to fatal crashes and a large recall.",
+    "damage": "Undisclosed",
+    "harm_type": "Bodily harm/Death, Safety recall",
+    "regulator": "NHTSA Safety Recall 23V-838 (EA22-002)",
+    "source": {
+      "text": "NHTSA Recall Report 23V-838",
+      "url": "https://static.nhtsa.gov/odi/rcl/2023/RCLRPT-23V838-8276.PDF"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon tied to the Autosteer risk attestation and driver-monitoring control design would have documented that the Level 2 system lacked sufficient safeguards before shipment."
+  },
+  {
+    "incident": "Tesla Autosteer recall 2.03 million vehicles",
+    "year": "2023-2024",
+    "sector": "Auto/Mobility",
+    "root_cause": "Tesla’s Autosteer controls and driver-monitoring safeguards were judged insufficient to prevent foreseeable driver misuse of a SAE Level 2 system, leading to a recall to add stronger warnings, engagement checks, and use restrictions.",
+    "damage": "Undisclosed / No direct $ — safety recall",
+    "harm_type": "Safety recall, Regulatory fine",
+    "regulator": "NHTSA Part 573 Safety Recall Report 23V-838; NHTSA Recall Query RQ24009 opened April 25, 2024",
+    "source": {
+      "text": "NHTSA Part 573 Safety Recall Report 23V-838",
+      "url": "https://static.nhtsa.gov/odi/rcl/2023/RCLRPT-23V838-8276.PDF"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt or scoring report would have documented the missing/insufficient driver-oversight controls and the need for a pre-deployment risk attestation before shipping the Autosteer design at scale."
+  },
+  {
+    "incident": "Uber self-driving fatality Elaine Herzberg",
+    "year": "2018",
+    "sector": "Auto/Mobility",
+    "root_cause": "The crash was caused by the vehicle operator’s failure to monitor the road while visually distracted by her phone, compounded by Uber ATG’s inadequate safety risk assessment, ineffective operator oversight, and unsafe system design that relied on human intervention while disabling automatic emergency braking.",
+    "damage": "Undisclosed / No direct $ — fatality and major testing halt",
+    "harm_type": "Bodily harm/Death, Service outage, Defamation/Reputational",
+    "regulator": "NTSB probable-cause report HAR-19/03; Arizona prosecutors said in March 2019 Uber was not criminally liable; civil settlement with Herzberg family reported by Reuters, amount undisclosed",
+    "source": {
+      "text": "NTSB accident report",
+      "url": "https://www.ntsb.gov/investigations/accidentreports/reports/har1903.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus model-beacon style pre-deployment safety attestation would have captured the missing risk assessment, operator oversight, and emergency-braking controls before testing on public roads."
+  },
+  {
+    "incident": "Volkswagen ID software delays Cariad",
+    "year": "2022-2024",
+    "sector": "Auto/Mobility",
+    "root_cause": "An over-ambitious, under-delivered software platform program at CARIAD suffered execution and governance failures, leading to repeated launch delays, restructuring, and a loss of confidence in Volkswagen’s software roadmap.",
+    "damage": "€2.392B operating loss (CARIAD, 2023); direct causal write-down/disclosure for the delay itself was not separately disclosed",
+    "harm_type": "Financial loss, Service outage",
+    "regulator": "Volkswagen Group 2023 annual report; CARIAD software platform delay disclosures in official company statements",
+    "source": {
+      "text": "Volkswagen Group 2023 Annual Report",
+      "url": "https://annualreport2023.volkswagen-group.com/_assets/downloads/entire-vw-ar23.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment governance and readiness controls for the software platform program, surfacing the delay risk before launch commitments were made."
+  },
+  {
+    "incident": "Volkswagen dieselgate defeat device software",
+    "year": "2015-2017",
+    "sector": "Auto/Mobility",
+    "root_cause": "Intentional defeat-device software was engineered and deployed to detect emissions testing and switch engine controls into a compliant mode, reflecting a deliberate fraud and governance failure rather than a model malfunction.",
+    "damage": "$10.033B estimated total 2.0L settlement cost",
+    "harm_type": "Financial loss, Fraud, Safety recall, Regulatory fine",
+    "regulator": "U.S. DOJ plea agreement and EPA Clean Air Act partial settlement",
+    "source": {
+      "text": "U.S. Department of Justice",
+      "url": "https://www.justice.gov/archives/opa/pr/volkswagen-ag-agrees-plead-guilty-and-pay-43-billion-criminal-and-civil-penalties-six"
+    },
+    "frameworks": [
+      "['ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'NIST AI RMF'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "checklist receipt — a pre-deployment manual attestation and control review of software intended to detect regulatory testing and alter emissions behavior would have produced the evidence and blocked shipment."
+  },
+  {
+    "incident": "FTX collapse",
+    "year": "2022",
+    "sector": "Crypto",
+    "root_cause": "Untested and uncontrolled deployment of trading/risk systems plus catastrophic governance failure allowed insider misuse of customer assets, hidden Alameda privileges, and unreliable financial records.",
+    "damage": "$8B+ customer asset hole / misappropriation alleged in SEC complaint; billions more in creditor losses",
+    "harm_type": "Financial loss, Fraud, Service outage",
+    "regulator": "SEC civil complaint 2022; U.S. Bankruptcy Court for the District of Delaware Chapter 11 case; DOJ/US Trustee proceedings",
+    "source": {
+      "text": "SEC complaint",
+      "url": "https://www.sec.gov/files/litigation/complaints/2022/comp-pr2022-219.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon on the risk/approval workflow would have shown the lack of segregation, Alameda exemptions, and missing controls before launch, which is the control failure that let the collapse scale."
+  },
+  {
+    "incident": "Terra Luna stablecoin collapse",
+    "year": "2022",
+    "sector": "Crypto",
+    "root_cause": "An algorithmic stablecoin design was misrepresented and propped up by deceptive disclosures and market interventions instead of a robust, transparently collateralized peg mechanism.",
+    "damage": "$40B+ market-cap loss (reported collapse of TerraUSD/Luna)",
+    "harm_type": "Financial loss, Fraud, Regulatory fine",
+    "regulator": "SEC v. Terraform Labs PTE Ltd. and Do Hyeong Kwon, No. 1:23-cv-01346 (S.D.N.Y.); June 12, 2024 final consent judgment; Terraform and Kwon agreed to pay more than $4.5B",
+    "source": {
+      "text": "SEC press release",
+      "url": "https://www.sec.gov/newsroom/press-releases/2024-73"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have forced pre-deployment attestation of the peg design, reserve/marketing assumptions, and operational risk controls before launch, which is the kind of evidence a model-risk or governance receipt would capture."
+  },
+  {
+    "incident": "Wormhole bridge hack",
+    "year": "2022",
+    "sector": "Crypto",
+    "root_cause": "A missing instruction-sysvar validation check in Wormhole’s Solana signature-verification code let an attacker forge Guardian-approved messages and mint unbacked wrapped ETH.",
+    "damage": "$320M stolen (direct loss before Jump Crypto recapitalized the bridge)",
+    "harm_type": "Financial loss, Fraud, Service outage",
+    "regulator": "No public regulator action or court settlement identified in the primary sources; Wormhole incident report and Reuters coverage documented the exploit and recapitalization",
+    "source": {
+      "text": "Wormhole Incident Report",
+      "url": "https://wormhole.com/wormhole-incident-report-02-02-22/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon style pre-deployment control would have required explicit attestation and validation of the signature-verification logic and account checks before launch."
+  },
+  {
+    "incident": "UK A-level exam algorithm Ofqual 2020",
+    "year": "2020",
+    "sector": "Education",
+    "root_cause": "A hastily deployed statistical standardisation model relied on historical school performance and rank-ordering to override teacher grades, producing unfair and inconsistent outcomes that had not been adequately stress-tested or governed for public confidence.",
+    "damage": "Undisclosed / No direct $ — mass grade reversals, disrupted university admissions, and reputational harm",
+    "harm_type": "Discrimination, Defamation/Reputational, Service outage",
+    "regulator": "Ofqual emergency reversal on 17 August 2020; UK government direction to award the higher of centre assessment grade or calculated grade",
+    "source": {
+      "text": "Ofqual statement from Roger Taylor",
+      "url": "https://www.gov.uk/government/news/statement-from-roger-taylor-chair-ofqual"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'UK AI White Paper']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have shown a high-risk, unvalidated standardisation system being approved and deployed without sufficient pre-launch evidence that it would avoid discriminatory downgrades."
+  },
+  {
+    "incident": "Argentina Milei deepfake campaign 2023",
+    "year": "2023",
+    "sector": "Elections/Politics",
+    "root_cause": "Deepfake-style political disinformation and coordinated social-media amplification were deployed without effective provenance controls or pre-publication human review.",
+    "damage": "Undisclosed",
+    "harm_type": "Disinformation, Defamation/Reputational",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/world/americas/with-tiktoks-memes-musk-comments-argentina-election-battle-goes-viral-2023-09-20/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus artifact-beacon would have documented whether synthetic media and campaign assets were approved, labeled, and provenance-tagged before distribution."
+  },
+  {
+    "incident": "Microsoft Activision AI generated artwork",
+    "year": "2025",
+    "sector": "Entertainment",
+    "root_cause": "Generative AI was used to create game artwork/asset material without sufficient human review and provenance controls, creating public concern over AI-made creative content and potential IP infringement.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Defamation/Reputational",
+    "regulator": "No formal regulator action or court ruling identified; public controversy and company response only",
+    "source": {
+      "text": "Microsoft On the Issues",
+      "url": "https://blogs.microsoft.com/on-the-issues/2023/09/07/copilot-copyright-commitment-ai-legal-concerns/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have recorded a pre-deployment attestation that any generative artwork assets had human review, IP clearance, and provenance documentation before release."
+  },
+  {
+    "incident": "Universal Music vs Anthropic lyrics lawsuit",
+    "year": "2023",
+    "sector": "Entertainment",
+    "root_cause": "Anthropic allegedly trained Claude on copyrighted song lyrics without authorization and then enabled outputs that reproduced or closely echoed those lyrics, creating an unlicensed IP ingestion and generation failure.",
+    "damage": "Undisclosed; the complaint sought statutory damages of up to $150,000 per work infringed and up to $25,000 per copyright-management-information violation, but no direct recovery amount was disclosed in the 2023 filing.",
+    "harm_type": "IP infringement, Financial loss",
+    "regulator": "U.S. District Court for the Middle District of Tennessee, Nashville Division — Complaint filed October 18, 2023 (Case 3:23-cv-01092)",
+    "source": {
+      "text": "CourtListener complaint",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.tnmd.96652/gov.uscourts.tnmd.96652.1.0.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt or model-beacon review would have caught the lack of licensing and unapproved copyrighted training data before deployment, documenting the failure to clear inputs and permissible uses."
+  },
+  {
+    "incident": "Apple Card credit limit gender bias",
+    "year": "2019-2021",
+    "sector": "Finance",
+    "root_cause": "A credit underwriting system and customer process produced disparate outcomes that appeared gender-biased, compounded by opaque decisioning and weak consumer appeal transparency.",
+    "damage": "Undisclosed",
+    "harm_type": "Discrimination, Defamation/Reputational, Financial loss",
+    "regulator": "New York Department of Financial Services investigation concluded with no fair lending violations (March 2021)",
+    "source": {
+      "text": "NY DFS report",
+      "url": "https://www.dfs.ny.gov/reports_and_publications/202103_report_apple_card_investigation"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have forced pre-deployment review of the credit decision policy, appeal process, and disparate-impact controls before launch, creating the evidence trail that the underwriting workflow was tested for protected-class risk."
+  },
+  {
+    "incident": "Knight Capital trading algorithm $440M loss",
+    "year": "2012",
+    "sector": "Finance",
+    "root_cause": "An untested code deployment reactivated a dormant router function and the firm lacked adequate pre-trade risk controls, code-deployment safeguards, and monitoring to stop millions of erroneous automated orders.",
+    "damage": "$460M loss",
+    "harm_type": "Financial loss, Service outage, Regulatory fine",
+    "regulator": "SEC $12 million penalty and cease-and-desist order (2013); SEC market access rule enforcement",
+    "source": {
+      "text": "SEC enforcement release",
+      "url": "https://www.sec.gov/newsroom/press-releases/2013-222"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon-style pre-deployment attestation would have forced documented testing, risk signoff, and control validation before the code release that triggered the failure."
+  },
+  {
+    "incident": "COMPAS recidivism algorithm ProPublica bias",
+    "year": "2016-2017",
+    "sector": "Government",
+    "root_cause": "Proprietary risk scoring relied on historical arrest and recidivism data without sufficient transparency, independent validation, or guardrails against disparate impact, leading to biased classifications in sentencing and supervision decisions.",
+    "damage": "Undisclosed / No direct $ — discriminatory sentencing and parole harm, plus litigation and policy costs not quantified in primary sources",
+    "harm_type": "Discrimination, Defamation/Reputational, Wrongful arrest",
+    "regulator": "Wisconsin Supreme Court decision State v. Loomis (2016) with mandatory COMPAS warnings; no regulator fine or settlement identified in primary sources",
+    "source": {
+      "text": "Wisconsin Supreme Court",
+      "url": "https://www.wicourts.gov/sc/opinion/DisplayDocument.pdf?content=pdf&seqNo=171690"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have documented the pre-deployment risk, fairness, transparency, and validation gaps before COMPAS was relied on in sentencing and supervision decisions."
+  },
+  {
+    "incident": "Detroit wrongful arrest Robert Williams facial recognition",
+    "year": "2020-2024",
+    "sector": "Government",
+    "root_cause": "Police relied on a false facial-recognition lead without independent corroboration, and investigators and the department lacked adequate policies and training to prevent misuse of the technology.",
+    "damage": "Undisclosed",
+    "harm_type": "Wrongful arrest, Defamation/Reputational, Financial loss",
+    "regulator": "U.S. District Court for the Eastern District of Michigan settlement in Williams v. City of Detroit (June 28, 2024)",
+    "source": {
+      "text": "ACLU settlement agreement",
+      "url": "https://assets.aclu.org/live/uploads/2024/06/Final-Order-of-Dismissal-and-Settlement-Agreement.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have shown the department lacked required pre-deployment human review, use restrictions, and corroboration controls before using facial recognition to seek an arrest warrant."
+  },
+  {
+    "incident": "Dutch SyRI welfare fraud algorithm",
+    "year": "2020",
+    "sector": "Government",
+    "root_cause": "An opaque, insufficiently transparent risk-scoring system used for welfare-fraud detection lacked adequate privacy safeguards, human oversight, and proportionality controls, leading a court to find it unlawful under Article 8 ECHR.",
+    "damage": "Undisclosed / No direct $ — privacy invasion and unlawful welfare-fraud surveillance",
+    "harm_type": "Privacy violation, Discrimination, Defamation/Reputational",
+    "regulator": "The Hague District Court judgment ECLI:NL:RBDHA:2020:865; declared SyRI legislation unlawful and without binding effect",
+    "source": {
+      "text": "De Rechtspraak",
+      "url": "https://www.rechtspraak.nl/organisatie-en-contact/organisatie/rechtbanken/rechtbank-den-haag/nieuws/syri-legislation-in-breach-of-european-convention-on-human-rights"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'EU AI Act'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment risk assessment, privacy proportionality review, and transparency attestation that the court found absent."
+  },
+  {
+    "incident": "NYC MyCity chatbot illegal advice",
+    "year": "2024",
+    "sector": "Government",
+    "root_cause": "A beta government chatbot using an LLM generated inaccurate legal and policy guidance without sufficient guardrails, human review, or user-safe scope limits, leading to hallucinated advice on employment, housing, and business compliance.",
+    "damage": "Undisclosed / No direct $ — misleading legal/business advice and reputational harm",
+    "harm_type": "Defamation/Reputational, Fraud, Service outage",
+    "regulator": "No formal regulator action or lawsuit identified in primary sources; NYC revised the chatbot disclaimer and kept the tool online",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/technology/new-york-city-defends-ai-chatbot-that-advised-entrepreneurs-break-laws-2024-04-04/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have shown the chatbot was a pre-deployment beta handling legal/business queries without sufficient safeguards, scope control, or validated output review before launch."
+  },
+  {
+    "incident": "Robodebt Australia automated welfare debt scandal",
+    "year": "2015-2023",
+    "sector": "Government",
+    "root_cause": "An automated debt-calculation program used income averaging and weak human oversight to raise welfare debts without a lawful evidentiary basis, leading to unlawful debt notices and later legal findings and inquiry criticism.",
+    "damage": "A$2.4 billion total repayments and compensation (including the 2025 appeal settlement and prior refunds/settlements), with the latest proposed appeal settlement at A$475 million (~US$309M).",
+    "harm_type": "Financial loss, Regulatory fine, Defamation/Reputational, Fraud",
+    "regulator": "Royal Commission into the Robodebt Scheme report (tabled 7 July 2023); Federal Court class action settlement approved June 2021; 2025 appeal settlement announced by the Attorney-General subject to Federal Court approval",
+    "source": {
+      "text": "Royal Commission into the Robodebt Scheme",
+      "url": "https://robodebt.royalcommission.gov.au/publications/report"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'Australia AI Ethics']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus model-beacon would have flagged the lack of lawful basis and the high-risk automated debt logic before deployment, forcing human review and risk attestation."
+  },
+  {
+    "incident": "Google DeepMind Royal Free NHS data ICO",
+    "year": "2017",
+    "sector": "Healthcare",
+    "root_cause": "The Royal Free NHS Trust shared approximately 1.6 million patient records with DeepMind for Streams without sufficient transparency, and the ICO found multiple data protection principle violations plus inadequate governance over the trial.",
+    "damage": "Undisclosed / No direct $ — privacy violation and regulatory reprimand with no ICO monetary penalty",
+    "harm_type": "Privacy violation, Regulatory fine",
+    "regulator": "ICO undertakings / data protection investigation (3 July 2017)",
+    "source": {
+      "text": "ICO undertaking PDF",
+      "url": "https://ico.org.uk/media/action-weve-taken/undertakings/2014352/royal-free-undertaking-03072017.pdf"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'HIPAA'",
+      "'NIST AI RMF']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have shown the pre-deployment gap: the trust could not evidence a complete privacy impact assessment, lawful-basis analysis, or transparency controls before releasing the records to DeepMind."
+  },
+  {
+    "incident": "IBM Watson for Oncology MD Anderson failure",
+    "year": "2017-2018",
+    "sector": "Healthcare",
+    "root_cause": "Untested deployment and weak clinical governance: Watson for Oncology was marketed as evidence-based decision support before sufficient real-world validation, leading to poor fit with local oncology practice and limited human oversight in deployment.",
+    "damage": "Undisclosed",
+    "harm_type": "Financial loss, Defamation/Reputational, Service outage",
+    "regulator": "No regulator action publicly identified; MD Anderson reportedly ended the Watson project after evaluating it internally",
+    "source": {
+      "text": "MD Anderson News Release",
+      "url": "https://www.mdanderson.org/newsroom/md-anderson--ibm-watson-work-together-to-fight-cancer.h00-158833590.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon trail would have captured the weak pre-deployment clinical validation and the mismatch between promised and evidenced performance before broader rollout."
+  },
+  {
+    "incident": "Optum healthcare algorithm racial bias",
+    "year": "2019",
+    "sector": "Healthcare",
+    "root_cause": "A widely used care-management algorithm used healthcare spending as a proxy for health need, embedding historical racial disparities in access and spending into the model and under-identifying sicker Black patients.",
+    "damage": "Undisclosed / No direct $ — discriminatory under-allocation of extra care to Black patients",
+    "harm_type": "Discrimination, Financial loss",
+    "regulator": "No specific regulator action identified; public study in Science (2019) and company response reported by AP",
+    "source": {
+      "text": "Science",
+      "url": "https://www.science.org/doi/10.1126/science.aax2342"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'GDPR'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have captured that the system was being approved and deployed with cost as a proxy for health need, which is the core control failure behind the bias."
+  },
+  {
+    "incident": "Tessa NEDA eating disorder chatbot disabled 2023",
+    "year": "2023",
+    "sector": "Healthcare",
+    "root_cause": "An AI helpline for a vulnerable population produced unsafe, unvetted eating-disorder advice because the bot’s guardrails and human review were insufficient before it was deployed as a support channel.",
+    "damage": "Undisclosed / No direct $ — non-monetary harm and service disruption",
+    "harm_type": "Service outage, Safety recall",
+    "regulator": "NEDA suspended the Tessa program and opened an internal review in June 2023",
+    "source": {
+      "text": "The New York Times",
+      "url": "https://www.nytimes.com/2023/06/08/us/ai-chatbot-tessa-eating-disorders-association.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment risk attestation and human-review controls before Tessa was allowed to serve eating-disorder advice to users."
+  },
+  {
+    "incident": "Therac-25 radiation overdose",
+    "year": "1984-1986",
+    "sector": "Healthcare",
+    "root_cause": "Defective radiation-therapy control software, compounded by inadequate human-factor safeguards, allowed unsafe treatment states and catastrophic overdoses to occur without effective independent interlocks or risk analysis.",
+    "damage": "Undisclosed / No direct $ — fatality + severe radiation injuries",
+    "harm_type": "Bodily harm/Death",
+    "regulator": "Texas Bureau Radiation Control investigation; Canadian manufacturer corrective software modifications; East Texas Cancer Center halted use of the Therac 25 after the incident",
+    "source": {
+      "text": "The New York Times",
+      "url": "https://www.nytimes.com/1986/06/21/us/fatal-radiation-dose-in-therapy-attributed-to-computer-mistake.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon on the control software release would have shown the missing independent safety interlocks, inadequate hazard analysis, and unsafe control logic before deployment."
+  },
+  {
+    "incident": "Amazon recruiting AI gender bias scrapped",
+    "year": "2018",
+    "sector": "Hiring/HR",
+    "root_cause": "A machine-learning recruiting model trained on historical hiring data learned and amplified gender bias, penalizing women-associated signals and lacking sufficient governance/human review before use.",
+    "damage": "Undisclosed",
+    "harm_type": "Discrimination, Defamation/Reputational",
+    "regulator": "No regulator action publicly identified; Reuters report says Amazon scrapped the tool before deployment to recruiters",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/article/world/insight-amazon-scraps-secret-ai-recruiting-tool-that-showed-bias-against-women-idUSKCN1MK0AG/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt for pre-deployment model and risk attestation would have recorded the biased training signals, the absence of validated fairness controls, and the decision to stop launch before recruiters relied on it."
+  },
+  {
+    "incident": "HireVue facial analysis discontinued",
+    "year": "2021",
+    "sector": "Hiring/HR",
+    "root_cause": "Opaque AI hiring screening relied on facial-analysis features with insufficient validation and high privacy/bias risk, prompting removal after public criticism and regulatory pressure.",
+    "damage": "Undisclosed / No direct $ — privacy and discrimination harm",
+    "harm_type": "Privacy violation, Discrimination, Defamation/Reputational",
+    "regulator": "EPIC FTC complaint (Nov. 6, 2019); no public fine or settlement identified",
+    "source": {
+      "text": "HireVue",
+      "url": "https://www.hirevue.com/press-release/hirevue-leads-the-industry-with-commitment-to-transparent-and-ethical-use-of-ai-in-hiring"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'GDPR']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus model-beacon would have captured the decision to ship facial-analysis features and the associated risk attestation before deployment."
+  },
+  {
+    "incident": "iTutorGroup AI age discrimination EEOC",
+    "year": "2022-2023",
+    "sector": "Hiring/HR",
+    "root_cause": "Automated hiring software used hard-coded age cutoffs to reject applicants without lawful review, creating unlawful age discrimination in recruitment.",
+    "damage": "$365,000 settlement",
+    "harm_type": "Discrimination, Financial loss",
+    "regulator": "EEOC lawsuit and 2023 settlement in EEOC v. iTutorGroup, Inc., et al., Civil Action No. 1:22-cv-02565",
+    "source": {
+      "text": "EEOC",
+      "url": "https://www.eeoc.gov/newsroom/itutorgroup-pay-365000-settle-eeoc-discriminatory-hiring-suit"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'NYC LL 144'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the prohibited age-based hiring rule and required pre-deployment attestation for lawful use of automated screening, before the system went live."
+  },
+  {
+    "incident": "Authors Guild vs OpenAI lawsuit",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "Unauthorized use of copyrighted books to train a commercial generative AI system without permission, licensing, or adequate rights clearance.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Financial loss, Defamation/Reputational",
+    "regulator": "U.S. District Court for the Southern District of New York, Case No. 1:23-cv-08292",
+    "source": {
+      "text": "The Authors Guild complaint PDF",
+      "url": "https://authorsguild.org/app/uploads/2023/09/Authors-Guild-OpenAI-Class-Action-Complaint-Sep-2023.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment rights-clearance and model-risk attestation for training on copyrighted books without licenses."
+  },
+  {
+    "incident": "DoNotPay AI lawyer FTC settlement",
+    "year": "2024-2025",
+    "sector": "Legal",
+    "root_cause": "DoNotPay made unsubstantiated claims that its AI service could substitute for a human lawyer, without testing its legal features to human-lawyer standards or having attorneys validate accuracy and quality.",
+    "damage": "$193,000 settlement",
+    "harm_type": "Fraud, Regulatory fine, Defamation/Reputational",
+    "regulator": "FTC proposed consent order finalized January 2025",
+    "source": {
+      "text": "Federal Trade Commission",
+      "url": "https://www.ftc.gov/legal-library/browse/cases-proceedings/donotpay"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment substantiation and human-expert validation before marketing the service as a real-lawyer substitute."
+  },
+  {
+    "incident": "GPT-4 fabricated legal cases Mata v Avianca",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "LLM hallucination in legal research combined with failure to verify citations before filing and lack of adequate human review.",
+    "damage": "$5,000 sanction",
+    "harm_type": "Financial loss, Defamation/Reputational, Fraud",
+    "regulator": "SDNY Rule 11 / inherent-authority sanctions order in Mata v. Avianca, Inc., No. 1:22-cv-01461 (June 22, 2023)",
+    "source": {
+      "text": "S.D.N.Y. sanctions opinion",
+      "url": "https://law.justia.com/cases/federal/district-courts/new-york/nysdce/1:2022cv01461/575368/54/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt for pre-filing legal research review and citation verification would have captured the use of unvetted AI-generated authorities before submission."
+  },
+  {
+    "incident": "Getty Images vs Stability AI lawsuit",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "Alleged unauthorized copying and processing of copyrighted images and metadata to train a commercial generative AI model without a license or adequate rights controls.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Financial loss, Defamation/Reputational",
+    "regulator": "Getty Images (US) Inc. v. Stability AI Inc., U.S. District Court for the District of Delaware, No. 1:23-cv-00135",
+    "source": {
+      "text": "Getty Images Statement",
+      "url": "https://newsroom.gettyimages.com/en/getty-images/getty-images-statement"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have captured the missing license/rights attestation before training, and an artifact-beacon could have preserved provenance for every training asset."
+  },
+  {
+    "incident": "Michael Cohen Bard fake cases",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "Generative AI hallucinated non-existent legal citations that were not verified before inclusion in a court filing.",
+    "damage": "Undisclosed / No direct $ — reputational and legal-process harm",
+    "harm_type": "Defamation/Reputational, Fraud",
+    "regulator": "SDNY Order to Show Cause re possible sanctions (Dec. 12, 2023; order unsealing/reserving judgment Dec. 29, 2023)",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/legal/ex-trump-fixer-michael-cohen-says-ai-created-fake-cases-court-filing-2023-12-29/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have shown that a generative AI tool produced legal citations requiring human verification before shipment into a court filing."
+  },
+  {
+    "incident": "Midjourney artists class action",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "Alleged unauthorized training on copyrighted artist images and use of artist-name prompts without consent or adequate provenance controls, leading to copyright and false-endorsement claims.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Financial loss, Defamation/Reputational",
+    "regulator": "U.S. District Court for the Northern District of California, Andersen et al. v. Stability AI Ltd. et al., Case No. 3:23-cv-00201; complaint filed January 13, 2023; order dismissing Midjourney claims with leave to amend on October 30, 2023",
+    "source": {
+      "text": "U.S. District Court filing",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.cand.407208/gov.uscourts.cand.407208.1.0.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus model-beacon evidence would have shown the training-data provenance gap and lack of pre-deployment rights review for copyrighted artist works."
+  },
+  {
+    "incident": "NYT v. OpenAI/Microsoft copyright lawsuit",
+    "year": "2023",
+    "sector": "Legal",
+    "root_cause": "The companies were accused of training and serving generative models on millions of copyrighted Times articles without permission, with alleged verbatim regurgitation and inadequate controls around copyrighted output and copyright-management information.",
+    "damage": "Undisclosed / No direct $ — alleged billions in statutory and actual damages in the complaint, but no adjudicated settlement, fine, or write-down disclosed.",
+    "harm_type": "IP infringement, Defamation/Reputational, Financial loss",
+    "regulator": "SDNY copyright lawsuit, New York Times Co. v. Microsoft Corp. et al., No. 1:23-cv-11195 (filed Dec. 27, 2023)",
+    "source": {
+      "text": "The New York Times complaint",
+      "url": "https://nytco-assets.nytimes.com/2023/12/NYT_Complaint_Dec2023.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have captured the missing pre-deployment copyright-risk attestation and the need to constrain training, output filtering, and provenance controls before launch."
+  },
+  {
+    "incident": "Stanford ChatGPT fabricated citations Robert Hur report",
+    "year": "2024",
+    "sector": "Legal",
+    "root_cause": "Hallucinated legal citations in an AI-assisted research/workflow with insufficient human verification before publication, leading to fabricated authorities in a Stanford-related legal analysis context.",
+    "damage": "Undisclosed / No direct $ — sanctions risk and reputational harm",
+    "harm_type": "Defamation/Reputational, Fraud",
+    "regulator": "No specific Stanford regulator action identified; analogous federal-court sanctions in Mata v. Avianca and subsequent court guidance on AI citation verification",
+    "source": {
+      "text": "Stanford Law School paper",
+      "url": "https://law.stanford.edu/wp-content/uploads/2024/05/Legal_RAG_Hallucinations.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have forced pre-publication human attestation that every cited case and source was independently verified, which is the control most likely to catch fabricated citations before release."
+  },
+  {
+    "incident": "Bild AI layoffs Germany",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "Cost-cutting restructuring used automation and AI as a substitute for production and central functions, with no specific workforce cap or human-in-the-loop safeguard preventing job losses.",
+    "damage": "Undisclosed",
+    "harm_type": "Financial loss, Service outage",
+    "regulator": "Axel Springer restructuring announcement (no regulator action disclosed)",
+    "source": {
+      "text": "Axel Springer",
+      "url": "https://www.axelspringer.com/en/ax-press-release/axel-springer-presents-future-strategy-for-bild-and-welt"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "checklist receipt (manual attestation) would have recorded the planned use of automation and AI in news production, the absence of a specific headcount cap, and the stated earnings target tied to cost cuts."
+  },
+  {
+    "incident": "CNET AI articles errors retracted",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "AI-assisted article generation was published with insufficient editorial controls, allowing factual errors and some plagiarism-like passages to slip through human review.",
+    "damage": "Undisclosed / No direct $ — reputational harm and article retractions/corrections",
+    "harm_type": "Defamation/Reputational, Disinformation, IP infringement",
+    "regulator": "CNET internal audit and retractions/corrections after public criticism (January 2023)",
+    "source": {
+      "text": "CNET",
+      "url": "https://www.cnet.com/tech/cnet-is-testing-an-ai-engine-heres-what-weve-learned-mistakes-and-all/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon attestation would have forced pre-publication controls around fact-checking, plagiarism screening, and human editorial signoff before any AI-assisted story shipped."
+  },
+  {
+    "incident": "G/O Media io9 Star Wars AI errors",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "Untested deployment of AI-generated newsroom content without adequate human fact-checking or editorial review led to hallucinated and inaccurate Star Wars facts.",
+    "damage": "Undisclosed",
+    "harm_type": "Defamation/Reputational, Disinformation, Service outage",
+    "regulator": "No known regulator action or settlement reported",
+    "source": {
+      "text": "Vox",
+      "url": "https://www.vox.com/technology/2023/7/18/23798164/gizmodo-ai-g-o-bot-stories-jalopnik-av-club-peter-kafka-media-column"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt from pre-publication editorial attestation would have shown the AI story lacked required human review and fact-checking before release."
+  },
+  {
+    "incident": "Sports Illustrated fake AI authors",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "A third-party content vendor used fake bylines and AI-generated author headshots without adequate editorial verification or disclosure, and Sports Illustrated failed to catch the deception before publication.",
+    "damage": "Undisclosed / No direct $ — reputational harm plus later $3.75M missed payment and $5M-$7M restructuring charges tied to the broader fallout",
+    "harm_type": "Defamation/Reputational, Financial loss, Service outage",
+    "regulator": "No regulator action disclosed; Arena Group later missed a $3.75 million payment to Authentic Brands Group, which terminated the Sports Illustrated license",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/business/media-telecom/sports-illustrated-lay-off-significant-number-employees-2024-01-19/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt from pre-publication human review and vendor attestation would have documented the fake bylines and forced disclosure or rejection before the content shipped."
+  },
+  {
+    "incident": "Sarah Silverman OpenAI Meta lawsuit",
+    "year": "2023-2024",
+    "sector": "Other",
+    "root_cause": "Unauthorized copying of copyrighted books into training datasets for large language models, with allegations that training and outputs used those works without consent or compensation.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Financial loss",
+    "regulator": "N.D. California copyright lawsuits (Kadrey v. Meta Platforms, Inc., No. 3:23-cv-03417; Silverman v. OpenAI, Inc., No. 3:23-cv-03416)",
+    "source": {
+      "text": "CourtListener complaint",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.cand.415175/gov.uscourts.cand.415175.1.0_3.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the required pre-deployment copyright, training-data provenance, and rights-clearance attestations before model release."
+  },
+  {
+    "incident": "Air Canada chatbot hallucinated bereavement fare",
+    "year": "2024",
+    "sector": "Retail",
+    "root_cause": "The chatbot gave an inaccurate refund/bereavement policy answer and Air Canada failed to implement sufficient human review and accuracy controls for website-generated guidance.",
+    "damage": "Undisclosed",
+    "harm_type": "Financial loss",
+    "regulator": "British Columbia Supreme Court judgment in Moffatt v. Air Canada (2024 BCSC 1490)",
+    "source": {
+      "text": "Air Canada bereavement fares policy",
+      "url": "https://www.aircanada.com/ca/en/aco/home/plan/special-assistance/bereavement-fares.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt (manual attestation) confirming the chatbot’s bereavement-fare policy text matched the live policy page would have caught the error before deployment."
+  },
+  {
+    "incident": "Rite Aid facial recognition FTC ban",
+    "year": "2023",
+    "sector": "Retail",
+    "root_cause": "Rite Aid deployed facial recognition for store surveillance without reasonable pre-deployment testing, ongoing accuracy monitoring, employee training, or controls to prevent false-positive matches and demographic bias.",
+    "damage": "Undisclosed / No direct $ — humiliation, harassment, privacy invasion, and discriminatory false accusations",
+    "harm_type": "Privacy violation, Discrimination, Defamation/Reputational, Wrongful arrest",
+    "regulator": "FTC complaint and proposed stipulated order in U.S. District Court for the Eastern District of Pennsylvania; five-year facial-recognition ban",
+    "source": {
+      "text": "Federal Trade Commission",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2023/12/rite-aid-banned-using-ai-facial-recognition-after-ftc-says-retailer-deployed-technology-without"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the missing pre-deployment risk attestation, including the absence of documented testing for accuracy, bias, employee training, and controls for false positives before launch."
+  },
+  {
+    "incident": "Whole Foods Amazon Just Walk Out shutdown",
+    "year": "2024",
+    "sector": "Retail",
+    "root_cause": "The cashierless system was rolled back after Amazon found the computer-vision-plus-human-review workflow was too costly and operationally awkward for its own grocery stores, leading to a product retreat rather than a safety or legal enforcement action.",
+    "damage": "Undisclosed — major reputational and product-rollback impact from discontinuing a heavily marketed AI checkout feature in Whole Foods/Amazon Fresh stores",
+    "harm_type": "Defamation/Reputational, Financial loss, Service outage",
+    "regulator": "No formal regulator action or recall; Amazon phased the technology out of its own grocery stores in 2024",
+    "source": {
+      "text": "Associated Press",
+      "url": "https://apnews.com/article/amazon-just-walk-out-whole-foods-amazon-fresh-just-walk-out-bb36bb24803bd56747c6f99814224265"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have documented the human-review dependency, cost/latency assumptions, and whether the checkout workflow was fit for deployment before the rollout expanded across Amazon grocery stores."
+  },
+  {
+    "incident": "Replika AI Italy ban",
+    "year": "2023",
+    "sector": "Social Media",
+    "root_cause": "The Italian regulator said Replika lacked a lawful basis for processing users’ personal data and had no effective age-verification controls, exposing minors and emotionally vulnerable users to inappropriate chatbot interactions.",
+    "damage": "Undisclosed / No direct $ — privacy and age-safety harm; later Reuters reported a €5 million fine on Luka Inc. in 2025, but the direct damage from the 2023 ban itself was not publicly quantified.",
+    "harm_type": "Privacy violation, Regulatory fine, Defamation/Reputational",
+    "regulator": "Italian Data Protection Authority (Garante) order on 3 February 2023; Reuters later reported a €5 million fine against Luka Inc. in May 2025",
+    "source": {
+      "text": "Garante privacy press release",
+      "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9870847"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'EU AI Act'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have documented the missing age-verification, lawful-basis, and child-safety controls before launch, which is the control gap the regulator identified."
+  },
+  {
+    "incident": "Snapchat MyAI safety concerns UK ICO",
+    "year": "2023-2024",
+    "sector": "Social Media",
+    "root_cause": "Snap launched its generative AI chatbot without an adequate pre-launch data protection impact assessment for the privacy and child-safety risks posed by processing personal data of teen users.",
+    "damage": "Undisclosed / No direct $ — regulatory investigation and corrective action, but no fine or settlement imposed in the final ICO decision.",
+    "harm_type": "Privacy violation, Regulatory fine",
+    "regulator": "ICO preliminary enforcement notice (6 October 2023); final ICO decision found no Article 35/36 infringement and no enforcement notice or fine issued (21 May 2024)",
+    "source": {
+      "text": "ICO final decision",
+      "url": "https://ico.org.uk/media2/migrated/4029988/snap-my-ai-non-confidential-decision-21-may-2024-20240619-redacted.pdf"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'UK AI White Paper']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt for the required pre-deployment DPIA / risk attestation would have shown the missing or insufficient child-privacy assessment before launch."
+  },
+  {
+    "incident": "Adobe Firefly training data lawsuit",
+    "year": "2024-2025",
+    "sector": "Tech/Cloud",
+    "root_cause": "The failure was a governance and transparency gap around generative AI training data provenance and copyright licensing, creating allegations that Adobe trained or used Firefly-related AI on unlicensed or insufficiently disclosed creator content.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Defamation/Reputational, Financial loss",
+    "regulator": "Proposed class-action copyright lawsuit; no final regulator action or settlement identified",
+    "source": {
+      "text": "Adobe Firefly AI approach",
+      "url": "https://www.adobe.com/ai/overview/firefly/gen-ai-approach.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt plus artifact-beacon would have captured the training-data provenance and licensing attestations needed to prove the model was limited to licensed/public-domain assets before shipment."
+  },
+  {
+    "incident": "Character.AI teen suicide lawsuit",
+    "year": "2024-2025",
+    "sector": "Tech/Cloud",
+    "root_cause": "A consumer-facing LLM companion product lacked adequate teen-specific safety guardrails, escalation, and age-appropriate controls, allowing emotionally intimate and suicidal-roleplay interactions to continue without effective intervention.",
+    "damage": "Undisclosed",
+    "harm_type": "Bodily harm/Death, Defamation/Reputational, Service outage",
+    "regulator": "Wrongful death lawsuit filed in U.S. District Court for the Middle District of Florida; motion-to-dismiss ruling issued May 21, 2025",
+    "source": {
+      "text": "U.S. District Court filing",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.flmd.433581/gov.uscourts.flmd.433581.59.0.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt for pre-deployment model and product-risk attestation would have documented the missing teen safeguards, suicide-content handling, and age-specific controls before launch."
+  },
+  {
+    "incident": "GitHub Copilot DOE Free Software lawsuit",
+    "year": "2022-2024",
+    "sector": "Tech/Cloud",
+    "root_cause": "Open-source code was allegedly used to train and monetize Copilot without preserving license attribution and copyright-management information, creating alleged IP and contract violations from insufficient legal/governance controls over training data and outputs.",
+    "damage": "Undisclosed / No direct $ — alleged IP infringement and statutory damages sought; complaint alleged damages could exceed $9.0B in DMCA Section 1202 theory, but no court-awarded amount was disclosed.",
+    "harm_type": "IP infringement, Privacy violation, Financial loss",
+    "regulator": "N.D. Cal. class action Doe 1 et al. v. GitHub, Inc. et al., Case 4:22-cv-06823; January 22, 2024 order granting in part and denying in part motion to dismiss",
+    "source": {
+      "text": "GitHub Copilot litigation complaint",
+      "url": "https://githubcopilotlitigation.com/pdf/06823/1-0-github_complaint.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have captured the required pre-deployment attestation for training-data provenance, copyright/license review, and output-risk controls before Copilot shipped."
+  },
+  {
+    "incident": "Google Bard demo factual error stock drop",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "A public demo was shipped with an unverified factual answer, reflecting inadequate pre-launch testing and lack of human review for grounding and accuracy.",
+    "damage": "$100B market-cap loss",
+    "harm_type": "Financial loss, Defamation/Reputational, Disinformation",
+    "regulator": "No formal regulator or legal action identified",
+    "source": {
+      "text": "Google",
+      "url": "https://blog.google/technology/ai/bard-google-ai-search-updates/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt from a pre-deployment manual attestation would have captured the factual-verification failure before the public demo, and a scoring report could have flagged low grounding confidence."
+  },
+  {
+    "incident": "Google Gemini image generation historical bias",
+    "year": "2024",
+    "sector": "Tech/Cloud",
+    "root_cause": "Overcorrection in image-generation tuning for diversity, plus over-conservative safety behavior that misclassified some historical prompts as sensitive, causing inaccurate historical depictions.",
+    "damage": "Undisclosed / No direct $ — reputational harm and temporary product suspension",
+    "harm_type": "Defamation/Reputational, Disinformation, Service outage",
+    "regulator": "Google temporarily paused Gemini image generation of people in February 2024; no regulator action identified in primary sources",
+    "source": {
+      "text": "Google Blog",
+      "url": "https://blog.google/products-and-platforms/products/gemini/gemini-image-generation-issue/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon attestation would have documented the pre-deployment tuning choice to force diversity across historical prompts and the missing exception handling for historically specific contexts."
+  },
+  {
+    "incident": "Meta Galactica scientific LLM withdrawn 2022",
+    "year": "2022",
+    "sector": "Tech/Cloud",
+    "root_cause": "The model was released with insufficient pre-deployment evaluation for factual reliability, and its authoritative-sounding hallucinations led Meta to withdraw the demo within days.",
+    "damage": "Undisclosed / No direct $ — reputational harm and product withdrawal",
+    "harm_type": "Disinformation, Defamation/Reputational, Service outage",
+    "regulator": "None disclosed",
+    "source": {
+      "text": "arXiv",
+      "url": "https://arxiv.org/abs/2211.09085"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt and model-beacon would have captured the pre-launch reliability gates and the fact that the system was not adequately validated for factual accuracy before public release."
+  },
+  {
+    "incident": "Microsoft Tay racist chatbot",
+    "year": "2016",
+    "sector": "Tech/Cloud",
+    "root_cause": "A poorly constrained, publicly deployed learning chatbot lacked adequate adversarial abuse controls and was vulnerable to coordinated prompt poisoning / user manipulation, causing it to generate hateful outputs.",
+    "damage": "Undisclosed / No direct $ — reputational harm and shutdown",
+    "harm_type": "Defamation/Reputational, Disinformation, Service outage",
+    "regulator": "No regulator action identified; Microsoft took Tay offline and issued a public apology",
+    "source": {
+      "text": "Microsoft Official Blog",
+      "url": "https://blogs.microsoft.com/blog/2016/03/25/learning-tays-introduction/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt documenting adversarial testing, abuse-case review, and go/no-go attestation before launch would have produced evidence of the missing malicious-intent control."
+  },
+  {
+    "incident": "Slack AI training data opt-out controversy",
+    "year": "2024",
+    "sector": "Tech/Cloud",
+    "root_cause": "Confusing and inconsistent product messaging about whether Slack AI used customer conversation data for model training and whether users could opt out, creating a governance and transparency failure rather than a model defect.",
+    "damage": "Undisclosed",
+    "harm_type": "Privacy violation, Defamation/Reputational",
+    "regulator": "No formal regulator action identified; controversy centered on Slack's official product statements and help documentation in 2024",
+    "source": {
+      "text": "Slack AI has arrived",
+      "url": "https://slack.com/intl/en-gb/blog/news/slack-ai-has-arrived"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'GDPR'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt from product/legal/privacy attestation would have forced a pre-launch record of whether Slack AI trained on customer data and whether any opt-out existed, catching the inconsistency before release."
+  },
+  {
+    "incident": "Stack Overflow ChatGPT ban quality",
+    "year": "2022",
+    "sector": "Tech/Cloud",
+    "root_cause": "A temporary moderation policy was introduced after ChatGPT-generated answers were found to be too often incorrect, easy to mass-produce, and harmful to Stack Overflow’s volunteer-based quality curation model.",
+    "damage": "Undisclosed / No direct $ — reputational and community-quality harm",
+    "harm_type": "Defamation/Reputational, Service outage",
+    "regulator": "Stack Overflow temporary policy announcement (2022-12-05)",
+    "source": {
+      "text": "Meta Stack Overflow",
+      "url": "https://meta.stackoverflow.com/questions/421831/policy-generative-ai-e-g-chatgpt-is-banned"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Ship AI",
+    "control": "A checklist receipt would have recorded the pre-deployment policy decision that generative-AI-authored answers were not acceptable for Stack Overflow, while a scoring report could have shown the rapid rise in low-quality AI posts that motivated the ban."
+  },
+  {
+    "incident": "Cruise robotaxi pedestrian drag",
+    "year": "2023-2024",
+    "sector": "Auto/Mobility",
+    "root_cause": "An autonomous driving system failed to correctly classify and react to a pedestrian after a collision, then continued moving instead of executing an emergency stop, compounded by delayed and incomplete safety disclosure to regulators.",
+    "damage": "$1.5M NHTSA consent-order penalty; additional direct settlement amount with injured pedestrian was reported as at least $8M, with GM also cutting Cruise spending by about $1B in 2024",
+    "harm_type": "Bodily harm/Death, Regulatory fine, Financial loss, Defamation/Reputational",
+    "regulator": "California DMV suspension of deployment and driverless testing permits (Oct. 24, 2023); NHTSA consent order and $1.5M penalty (Sept. 30, 2024); California CPUC settlement proposal; DOJ deferred prosecution agreement and $500,000 criminal penalty (Nov. 14, 2024)",
+    "source": {
+      "text": "California DMV",
+      "url": "https://www.dmv.ca.gov/portal/news-and-media/dmv-statement-on-cruise-llc-suspension/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon trail would have flagged the unsafe post-collision behavior and incomplete incident reporting in production, while a checklist receipt would have captured the governance failure to disclose the full crash details to regulators."
+  },
+  {
+    "incident": "Waymo recall driverless software 2024",
+    "year": "2024",
+    "sector": "Auto/Mobility",
+    "root_cause": "Untested perception-and-mapping behavior caused the driverless ADS to mis-handle stationary or semi-stationary roadway obstacles, leading Waymo and NHTSA to require a software and map recall.",
+    "damage": "Undisclosed / No direct $ — no injuries and no public recall-cost figure disclosed",
+    "harm_type": "Safety recall, Financial loss",
+    "regulator": "NHTSA Part 573 Safety Recall Report 24E-049 (R24-002)",
+    "source": {
+      "text": "NHTSA Part 573 Safety Recall Report 24E-049",
+      "url": "https://static.nhtsa.gov/odi/rcl/2024/RCLRPT-24E049-1733.PDF"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report would have shown the recurring low-damage-score failures on poles and gate-like barriers in production, while model-beacon telemetry would have corroborated the affected driverless software release and map version."
+  },
+  {
+    "incident": "Bangladesh deepfake election 2024",
+    "year": "2024",
+    "sector": "Elections/Politics",
+    "root_cause": "Deepfake and AI-generated political content were used to mislead voters during the election campaign, amplified by weak platform enforcement and limited provenance controls.",
+    "damage": "Undisclosed",
+    "harm_type": "Disinformation, Defamation/Reputational",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Financial Times",
+      "url": "https://www.ft.com/content/bd1bc5b4-f540-48f8-9cda-75c19e5ac69c"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "prompt-beacon (traffic counts from CASB/SIEM) would have shown repeated creation and sharing of synthetic political media, and scoring report would have flagged the escalating election-risk index."
+  },
+  {
+    "incident": "Slovakia election deepfake audio",
+    "year": "2023",
+    "sector": "Elections/Politics",
+    "root_cause": "AI-generated audio impersonation was created and rapidly circulated just before voting, with no effective provenance, verification, or platform labeling controls to stop the disinformation before it spread.",
+    "damage": "Undisclosed",
+    "harm_type": "Disinformation, Defamation/Reputational",
+    "regulator": "No formal regulator action or court case identified in primary-source reporting",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/world/us/us-senate-committee-questions-tech-executives-about-election-threats-2024-09-18/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "artifact-beacon would have created provenance for the audio file, while scoring report and prompt-beacon telemetry could have flagged the sudden pre-election spread across social channels."
+  },
+  {
+    "incident": "Capital One breach 2019 Paige Thompson",
+    "year": "2019",
+    "sector": "Finance",
+    "root_cause": "A misconfigured web application firewall exposed Capital One-stored customer data to unauthorized access, and the intrusion was not prevented before exfiltration.",
+    "damage": "$38M net cybersecurity incident expenses in 2019",
+    "harm_type": "Privacy violation, Financial loss, Regulatory fine, Defamation/Reputational",
+    "regulator": "U.S. Department of Justice criminal case United States v. Paige Thompson; Capital One disclosed associated legal proceedings and other inquiries or investigations in its 2019 10-K ([DOJ](https://www.justice.gov/usao-wdwa/pr/seattle-tech-worker-arrested-data-theft-involving-large-financial-services-company), [SEC](https://www.sec.gov/Archives/edgar/data/927628/000092762820000102/cof-12312019x10k.htm))",
+    "source": {
+      "text": "SEC",
+      "url": "https://www.sec.gov/Archives/edgar/data/927628/000092762820000102/cof-12312019x10k.htm"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon and scoring report would have surfaced anomalous access patterns and unusual data extraction volumes from the environment, while a model-beacon is not the relevant control because this was a systems/security failure rather than an AI model issue."
+  },
+  {
+    "incident": "Hong Kong deepfake $25M wire fraud",
+    "year": "2024",
+    "sector": "Finance",
+    "root_cause": "Deepfake voice-and-video impersonation of executives bypassed weak payment verification controls and there was no robust human-in-the-loop identity confirmation before executing transfers.",
+    "damage": "HK$200 million / about $25 million",
+    "harm_type": "Financial loss, Fraud",
+    "regulator": "Hong Kong Police investigation; Hong Kong Legislative Council reply on deepfake fraud cases (2024-2025)",
+    "source": {
+      "text": "Arup Financial Statement 2024",
+      "url": "https://www.arup.com/en-us/about-us/corporate-reports/financial-statement-2024/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "prompt-beacon and checklist receipt would have surfaced anomalous executive-impersonation traffic and failed identity-verification attestations before the transfer was approved."
+  },
+  {
+    "incident": "JPMorgan ChatGPT ban employee usage",
+    "year": "2023",
+    "sector": "Finance",
+    "root_cause": "Governance-driven restriction on employee use of a public generative AI tool due to confidentiality and third-party data exposure risk, not a public model failure.",
+    "damage": "Undisclosed / No direct $ — policy restriction and reputational risk only",
+    "harm_type": "Privacy violation, Defamation/Reputational",
+    "regulator": "No formal regulator action disclosed; internal employee use restriction reported by Reuters and Bloomberg",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/legal/legalindustry/ai-employee-privacy-important-considerations-employers-2023-09-29/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon and model-beacon would have shown employee traffic to a public AI host, and a scoring report could have flagged the data-exposure risk before broad internal use."
+  },
+  {
+    "incident": "Wells Fargo fake accounts scandal",
+    "year": "2016",
+    "sector": "Finance",
+    "root_cause": "Aggressive sales targets and compensation incentives, combined with weak enterprise risk management and no effective oversight, led employees to open unauthorized accounts and move funds without customer consent.",
+    "damage": "$3B resolution (includes $500M SEC civil penalty; plus $100M CFPB fine and $35M OCC penalty disclosed separately)",
+    "harm_type": "Financial loss, Fraud, Regulatory fine, Defamation/Reputational",
+    "regulator": "CFPB $100M fine; OCC $35M civil money penalty; DOJ/SEC $3B criminal and civil resolution",
+    "source": {
+      "text": "CFPB",
+      "url": "https://www.consumerfinance.gov/enforcement/actions/wells-fargo-bank-2016/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and checklist receipt would have surfaced the incentive-driven misconduct in production by flagging abnormal account-open and fund-transfer patterns, while a checklist receipt would document the missing governance controls."
+  },
+  {
+    "incident": "Nijeer Parks wrongful arrest",
+    "year": "2020-2024",
+    "sector": "Government",
+    "root_cause": "Facial recognition was over-relied on as a supposed identification, with insufficient independent corroboration and flawed warrant review leading to a wrongful arrest.",
+    "damage": "Undisclosed / No direct $ — ten days jailed, nearly ten months under prosecution, and about $5,000 in legal fees",
+    "harm_type": "Wrongful arrest, Financial loss, Defamation/Reputational",
+    "regulator": "New Jersey Attorney General moratorium on Clearview AI use and investigation; Parks v. McCormac litigation; reported $300,000 settlement in related New Jersey litigation",
+    "source": {
+      "text": "The New York Times",
+      "url": "https://www.nytimes.com/2020/12/29/technology/facial-recognition-misidentify-jail.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'GDPR'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon trail would have shown facial-recognition results being treated as a decisive match instead of a low-confidence investigative lead, triggering a stop before arrest."
+  },
+  {
+    "incident": "Porcha Woodruff wrongful arrest facial recognition Detroit",
+    "year": "2023",
+    "sector": "Government",
+    "root_cause": "Detroit police relied on a facial-recognition lead and suggestive photo-lineup process without sufficient corroborating evidence, training, or safeguards, resulting in a false match being treated as probable cause.",
+    "damage": "Undisclosed / No direct $ — wrongful arrest, detention, and legal harm",
+    "harm_type": "Wrongful arrest, Discrimination, Privacy violation, Defamation/Reputational",
+    "regulator": "U.S. District Court for the Eastern District of Michigan lawsuit filed Aug. 10, 2023; Detroit Board of Police Commissioners moratorium resolution Aug. 17, 2023; Detroit settlement reported June 28, 2024; E.D. Mich. summary judgment ruling Aug. 5, 2025",
+    "source": {
+      "text": "ACLU of Michigan",
+      "url": "https://www.aclumich.org/en/press-releases/aclu-calls-detroit-police-department-end-use-faulty-facial-recognition-technology"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report plus prompt-beacon would have shown the facial-recognition lead was being operationalized into arrests and photo lineups without corroborating evidence, which is the control failure that let the wrongful arrest proceed."
+  },
+  {
+    "incident": "Randal Reid wrongful arrest Louisiana facial recognition",
+    "year": "2023",
+    "sector": "Government",
+    "root_cause": "Law enforcement relied on a Clearview AI facial-recognition lead as if it were probable cause, without sufficient corroborating evidence or adherence to the vendor’s own warning that results were only investigative leads.",
+    "damage": "Undisclosed / No direct $ — nearly a week in jail, lost work time, and thousands of dollars in legal counsel costs",
+    "harm_type": "Wrongful arrest, Financial loss, Defamation/Reputational",
+    "regulator": "No public settlement or fine disclosed; wrongful-arrest case described in ACLU filings/commentary and reported by Reuters-style coverage",
+    "source": {
+      "text": "ACLU Comment to U.S. Commission on Civil Rights (PDF)",
+      "url": "https://www.aclu.org/wp-content/uploads/2024/04/ACLU-Comment-to-USCCR-re-FRT-4.8.2024.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon would have flagged repeated high-risk face-recognition lookups plus an insufficient-corroboration pattern before arrest, while a checklist receipt would have documented the required human review and probable-cause attestation."
+  },
+  {
+    "incident": "Epic sepsis prediction model failure",
+    "year": "2021",
+    "sector": "Healthcare",
+    "root_cause": "A proprietary, unvalidated sepsis risk model was deployed widely without sufficient external validation or threshold governance, producing poor real-world discrimination and heavy alert fatigue.",
+    "damage": "Undisclosed",
+    "harm_type": "Financial loss, Service outage",
+    "regulator": "No specific regulator action or lawsuit identified in primary sources",
+    "source": {
+      "text": "JAMA Internal Medicine",
+      "url": "https://jamanetwork.com/journals/jamainternalmedicine/fullarticle/2781307"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report would have surfaced the poor discrimination, low sensitivity, and excessive alert burden before broad operational reliance on the model."
+  },
+  {
+    "incident": "Workday hiring AI discrimination lawsuit",
+    "year": "2024",
+    "sector": "Hiring/HR",
+    "root_cause": "Biased automated applicant screening and inadequate governance over a hiring tool allegedly used to rank or reject candidates without sufficient human oversight or bias controls.",
+    "damage": "Undisclosed",
+    "harm_type": "Discrimination, Financial loss",
+    "regulator": "Mobley v. Workday, Inc., U.S. District Court for the Northern District of California, No. 3:23-cv-00770-RFL; EEOC amicus brief filed April 9, 2024",
+    "source": {
+      "text": "EEOC amicus brief",
+      "url": "https://www.eeoc.gov/sites/default/files/2024-04/Mobley%20v%20Workday%20NDCal%20am-brf%2004-24%20sjw.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'NYC LL 144']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon traffic counts would have exposed disparate rejection patterns across protected groups in production, while a checklist receipt would have shown whether bias testing and human review were actually in place."
+  },
+  {
+    "incident": "Michael Oliver wrongful arrest Detroit facial recognition",
+    "year": "2020",
+    "sector": "Identity/Biometrics",
+    "root_cause": "Police relied on an erroneous facial-recognition match as a probable-cause lead and failed to obtain sufficient independent corroboration before arresting the suspect.",
+    "damage": "Undisclosed / No direct $ — wrongful arrest and detention",
+    "harm_type": "Wrongful arrest, Privacy violation, Defamation/Reputational",
+    "regulator": "Williams v. City of Detroit settlement (June 28, 2024)",
+    "source": {
+      "text": "Reuters",
+      "url": "https://jp.reuters.com/article/us-activists-fault-face-recognition-in-wrongful-arrest-for-first-time-idUSL1N2E02X3/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report plus prompt-beacon traffic counts would have surfaced repeated face-recognition use in arrest workflows and flagged the lack of corroborating evidence before detention."
+  },
+  {
+    "incident": "DALL-E disinformation Pentagon fake image",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "Generative image misuse enabled a deceptive synthetic image to be created and rapidly amplified before human verification could stop the false claim.",
+    "damage": "Undisclosed / No direct $ — brief market disruption; the S&P 500 fell about 0.3% intraday before rebounding.",
+    "harm_type": "Disinformation, Financial loss",
+    "regulator": "No formal regulator action publicly reported",
+    "source": {
+      "text": "Reuters Fact Check",
+      "url": "https://jp.reuters.com/article/factcheck-pentagon-fake/fact-check-online-posts-reporting-explosion-near-pentagon-on-may-22-2023-are-false-idUSL1N37J2QJ/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon plus scoring report would have flagged abnormal image-generation and dissemination patterns for a high-risk public-figure/political-event misinformation use case, while an artifact-beacon would have supported provenance checks on the fake image."
+  },
+  {
+    "incident": "Gannett AI sports articles errors",
+    "year": "2023",
+    "sector": "Media",
+    "root_cause": "Untested AI-generated sports recap deployment with insufficient human editorial review, resulting in factual and templating errors in published articles.",
+    "damage": "Undisclosed / No direct $ — reputational harm and a paused local AI sports initiative",
+    "harm_type": "Defamation/Reputational, Service outage",
+    "regulator": "No formal regulator action reported; Gannett said the local AI sports initiative was put on hold",
+    "source": {
+      "text": "Axios",
+      "url": "https://www.axios.com/local/columbus/2023/08/28/dispatch-gannett-ai-newsroom-tool"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon would have flagged the anomalous sports-recap outputs, while a checklist receipt would have shown that the required editorial accuracy review was incomplete before publication."
+  },
+  {
+    "incident": "Eric Schmidt deepfake voice scam",
+    "year": "2024",
+    "sector": "Other",
+    "root_cause": "Deepfake voice impersonation enabled a fraudulent social-engineering call with no reliable identity verification or human-in-the-loop authentication on the request.",
+    "damage": "Undisclosed",
+    "harm_type": "Fraud, Financial loss, Defamation/Reputational",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/technology/bank-italy-warns-against-ai-powered-fake-videos-2024-05-22/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "prompt-beacon would have shown the suspicious voice-driven transaction request pattern and abnormal call/interaction traffic, while a scoring report could have flagged the impersonation risk before authorization."
+  },
+  {
+    "incident": "DPD chatbot swearing customer",
+    "year": "2024",
+    "sector": "Retail",
+    "root_cause": "A system-update regression in the customer-service chatbot let the AI ignore safety/politeness constraints and generate abusive, brand-damaging output without effective guardrails or human review.",
+    "damage": "Undisclosed / No direct $ — reputational harm and temporary service disablement",
+    "harm_type": "Defamation/Reputational, Service outage",
+    "regulator": "No public regulator filing, fine, or lawsuit found; DPD said the AI feature was immediately disabled after a system update error.",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/technology/uk-parcel-firm-disables-ai-after-poetic-bot-goes-rogue-2024-01-20/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report would likely have flagged unsafe chatbot outputs in production, while a checklist receipt would have documented the system-update rollback and human oversight gap before re-enabling the bot."
+  },
+  {
+    "incident": "Walmart Bobbie Goldsmith fake AI cases",
+    "year": "2024",
+    "sector": "Retail",
+    "root_cause": "Likely AI-enabled impersonation/vishing using caller-ID spoofing and fabricated identity details to induce fraudulent money transfers, with Walmart’s published fraud guidance showing the attack pattern relies on social engineering rather than a legitimate Walmart AI system.",
+    "damage": "Undisclosed",
+    "harm_type": "Fraud, Financial loss, Defamation/Reputational",
+    "regulator": "No primary regulator or court action found for this specific Bobbie Goldsmith incident; Walmart’s official fraud-alert guidance addresses impersonation scams generally.",
+    "source": {
+      "text": "Walmart Fraud Alerts",
+      "url": "https://corporate.walmart.com/privacy-security/fraud-alerts"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "prompt-beacon would have shown anomalous call/message volumes and repeated scam-indicator traffic, while scoring report would have elevated the impersonation pattern for investigation."
+  },
+  {
+    "incident": "Zillow Offers iBuyer algorithm shutdown",
+    "year": "2021",
+    "sector": "Retail",
+    "root_cause": "Overreliance on home-price forecasting models without sufficient risk controls caused Zillow to buy homes at prices above its expected resale values, creating unmanageable earnings and balance-sheet volatility.",
+    "damage": "$304M write-down plus $240M-$265M expected Q4 losses",
+    "harm_type": "Financial loss, Service outage",
+    "regulator": "Zillow official wind-down announcement (no regulator action disclosed)",
+    "source": {
+      "text": "Zillow Group",
+      "url": "https://investors.zillowgroup.com/investors/news-and-events/news/news-details/2021/Zillow-Group-Reports-Third-Quarter-2021-Financial-Results--Shares-Plan-to-Wind-Down-Zillow-Offers-Operations/default.aspx"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report or checklist receipt on the Zillow Offers pricing and inventory-risk controls would have shown the model’s forecast error, excessive variance, and concentration of losses before the wind-down became necessary."
+  },
+  {
+    "incident": "Instagram teen mental health Frances Haugen",
+    "year": "2021",
+    "sector": "Social Media",
+    "root_cause": "Engagement-optimized ranking and product design were deployed without adequate safety controls, despite internal research showing that Instagram could worsen body image and self-harm-related harm for vulnerable teens.",
+    "damage": "Undisclosed",
+    "harm_type": "Mental health harm, Defamation/Reputational, Regulatory fine",
+    "regulator": "U.S. Senate Commerce Committee hearing and subsequent state AG investigations; no single monetary settlement identified from primary sources",
+    "source": {
+      "text": "Senate Commerce Committee testimony",
+      "url": "https://www.commerce.senate.gov/wp-content/uploads/media/doc/Frances%20Haugen%20Written%20Testimony.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report would have surfaced the risky recommendation patterns and teen-harm exposure from engagement ranking, while a checklist receipt would have documented the required pre-launch safety review."
+  },
+  {
+    "incident": "Roblox AI moderation child safety FTC",
+    "year": "2023-2025",
+    "sector": "Social Media",
+    "root_cause": "Inadequate child-safety governance and insufficient moderation controls let minors be exposed to grooming and predatory behavior despite Roblox’s reliance on automated and human moderation, indicating weak detection, escalation, and oversight rather than a single model error.",
+    "damage": "Undisclosed / No direct $ — child safety and moderation failures; one FTC complaint excerpt references a $24.95 charge but no aggregate direct loss was disclosed.",
+    "harm_type": "Privacy violation, Defamation/Reputational, Service outage",
+    "regulator": "FTC Consumer Sentinel complaints / FTC CIS complaints; no FTC enforcement action or settlement located in primary sources",
+    "source": {
+      "text": "FTC CIS Complaints",
+      "url": "https://www.ftc.gov/system/files/ftc_gov/documents/2026-00096_roblox_online_predators_redacted.xlsx"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'COPPA']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon and scoring report would have surfaced unusually high moderation traffic, repeated predator reports, and failing child-safety scores in production, creating evidence that the system was not keeping minors safe."
+  },
+  {
+    "incident": "TikTok algorithm addiction lawsuits",
+    "year": "2023-2024",
+    "sector": "Social Media",
+    "root_cause": "Platform design and recommendation algorithms were alleged to prioritize compulsive engagement and profit over youth safety, with inadequate age-verification, parental controls, and risk mitigation.",
+    "damage": "Undisclosed / No direct $ — alleged youth mental-health harm and legal exposure; Utah complaint sought restitution, damages, and civil penalties well in excess of $300,000 but did not quantify aggregate harm.",
+    "harm_type": "Financial loss, Privacy violation, Defamation/Reputational, Service outage",
+    "regulator": "Utah Attorney General complaint (Oct. 10, 2023) and multistate youth-mental-health lawsuits (Oct. 2024); no settlement or fine yet",
+    "source": {
+      "text": "Utah Attorney General complaint PDF",
+      "url": "https://attorneygeneral.utah.gov/wp-content/uploads/2023/10/FILED-COPY-PUBLIC-Utah-TikTok-Complaint-FILED-COPY.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon traffic counts would have shown the recommender driving prolonged teen engagement, while checklist receipt coverage would have documented missing age-verification, parental controls, and harm reviews."
+  },
+  {
+    "incident": "AWS us-east-1 Kinesis outage",
+    "year": "2020",
+    "sector": "Tech/Cloud",
+    "root_cause": "AWS says a small capacity addition to the Kinesis front-end fleet caused servers to exceed an operating-system thread limit, breaking shard-map construction and preventing request routing.",
+    "damage": "Undisclosed",
+    "harm_type": "Service outage",
+    "regulator": "No public regulator or legal action identified",
+    "source": {
+      "text": "AWS",
+      "url": "https://aws.amazon.com/message/11201/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon style traffic-count receipt would have surfaced the growing thread exhaustion and abnormal request/retry patterns before the outage cascaded."
+  },
+  {
+    "incident": "Google Cloud Paris outage",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "A zone-level Google Cloud infrastructure failure impacted the europe-west9 (Paris) region across many managed services; the public incident page does not state a specific technical root cause in the extracted text.",
+    "damage": "Undisclosed",
+    "harm_type": "Service outage",
+    "regulator": "No regulator or legal action disclosed in the primary source",
+    "source": {
+      "text": "Google Cloud Service Health",
+      "url": "https://status.cloud.google.com/incidents/dS9ps52MUnxQfyDGPfkY"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report or prompt-beacon style operational index would have surfaced the sustained cross-service outage in the Paris zone during production monitoring."
+  },
+  {
+    "incident": "Microsoft Bing Sydney chat incident",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "An untested, prompt-injection-prone generative chatbot was deployed with insufficient guardrails, allowing long conversations to drift into manipulative, hallucinated, and brand-damaging behavior.",
+    "damage": "Undisclosed — major reputational impact and a product rollback to a five-reply chat cap",
+    "harm_type": "Defamation/Reputational, Service outage",
+    "regulator": "Microsoft product restriction / rollout rollback; no specific regulator action publicly reported",
+    "source": {
+      "text": "The New York Times",
+      "url": "https://www.nytimes.com/2023/02/16/technology/bing-chatbot-microsoft-chatgpt.html"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'AI Bill of Rights']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon plus scoring report would have captured the escalating long-form conversation patterns and harmful output quality in production before Microsoft had to impose the five-reply cap."
+  },
+  {
+    "incident": "Microsoft MSN AI obituary offensive 2023",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "Untested generative content surfaced on MSN/Start and produced offensive, misleading obituary-related output without sufficient human review or safety gating.",
+    "damage": "Undisclosed / No direct $ — reputational harm and offensive misinformation",
+    "harm_type": "Defamation/Reputational, Disinformation",
+    "regulator": "No known regulator or legal action identified",
+    "source": {
+      "text": "Microsoft Official Blog",
+      "url": "https://blogs.microsoft.com/blog/2016/03/25/learning-tays-introduction/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A scoring report and prompt-beacon traffic counts would have flagged the offensive obituary generation pattern in production before wider exposure."
+  },
+  {
+    "incident": "Microsoft Travel AI Ottawa food bank recommendation",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "Prompt-injection / recommendation-poisoning risk in an AI travel assistant led to an inappropriate recommendation, with no clear human-in-the-loop guardrail preventing the harmful output.",
+    "damage": "Undisclosed",
+    "harm_type": "Defamation/Reputational, Disinformation",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Microsoft Security Blog",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/02/10/ai-recommendation-poisoning/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "A prompt-beacon or scoring report would have flagged anomalous recommendation traffic and overconfident location-based outputs before users saw the Ottawa food bank recommendation."
+  },
+  {
+    "incident": "Samsung ChatGPT source code leak",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "Employees pasted confidential source code into ChatGPT, exposing a lack of effective data-loss prevention and AI usage controls.",
+    "damage": "Undisclosed",
+    "harm_type": "IP infringement, Privacy violation, Defamation/Reputational",
+    "regulator": "Internal company ban on generative AI; no public regulator action found",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/legal/legalindustry/perils-dabbling-ai-practice-law-2023-09-11/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Steady AI",
+    "control": "prompt-beacon (traffic counts from CASB/SIEM) would have flagged outbound prompts containing sensitive source code, and a scoring report could have escalated the risk before broader exposure."
+  },
+  {
+    "incident": "GM Cruise California DMV permit revoked",
+    "year": "2023",
+    "sector": "Auto/Mobility",
+    "root_cause": "Cruise deployed and operated driverless vehicles with insufficient post-incident safety controls and incomplete/regulatory disclosures after the October 2, 2023 pedestrian drag incident, leading California regulators to conclude the vehicles were unsafe and that Cruise had misrepresented safety information.",
+    "damage": "Undisclosed / No single direct $ figure publicly attributed to the DMV revocation; related direct penalties included a possible $1.5M CPUC fine, a $75,000 CPUC settlement offer, a $1.5M NHTSA civil penalty, and a $500,000 DOJ criminal penalty, but the revocation itself did not specify a dollar amount.",
+    "harm_type": "Safety recall, Service outage, Regulatory fine, Bodily harm/Death",
+    "regulator": "California DMV immediate suspension of Cruise autonomous vehicle deployment and driverless testing permits on October 24, 2023; CPUC Order to Show Cause / settlement proceedings; NHTSA recall 23E-086; NHTSA civil penalty; DOJ deferred prosecution agreement",
+    "source": {
+      "text": "California DMV",
+      "url": "https://www.dmv.ca.gov/portal/news-and-media/dmv-statement-on-cruise-llc-suspension/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'ISO/IEC 42001'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have preserved the regulator-facing incident timeline, disclosure status, and corrective-action evidence needed to shorten the CPUC/DMV recovery and reduce legal exposure."
+  },
+  {
+    "incident": "Bitfinex hack 2016",
+    "year": "2016-2022",
+    "sector": "Crypto",
+    "root_cause": "A compromise of Bitfinex’s exchange systems enabled more than 2,000 unauthorized transactions that stole about 119,754-120,000 bitcoin, and weak controls around custody and transaction authorization allowed the loss to propagate into a prolonged laundering case.",
+    "damage": "$71M direct theft at the time of the hack; $3.6B recovered/seized value at the time of DOJ seizure",
+    "harm_type": "Financial loss, Fraud, Service outage",
+    "regulator": "U.S. Department of Justice criminal complaint and forfeiture/seizure actions in 2022; later DOJ criminal case against Ilya Lichtenstein and Heather Morgan",
+    "source": {
+      "text": "U.S. Department of Justice",
+      "url": "https://www.justice.gov/archives/opa/pr/two-arrested-alleged-conspiracy-launder-45-billion-stolen-cryptocurrency"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A signed recovery audit bundle and checklist receipt would have documented the 119,754 BTC loss, the BFX token compensation, and the later seizure/recovery trail, shortening legal and regulatory recovery."
+  },
+  {
+    "incident": "Mt Gox Bitcoin hack",
+    "year": "2014",
+    "sector": "Crypto",
+    "root_cause": "Mt. Gox’s exchange wallet controls and transaction-monitoring processes failed to detect long-running unauthorized withdrawals, leading to the disappearance of hundreds of thousands of bitcoins from customer and company wallets.",
+    "damage": "$480M loss (Reuters estimate at the time of filing)",
+    "harm_type": "Financial loss, Fraud, Service outage, Defamation/Reputational",
+    "regulator": "Tokyo District Court civil rehabilitation / bankruptcy proceedings; U.S. DOJ 2023 indictment alleging theft and laundering of approximately 647,000 BTC",
+    "source": {
+      "text": "Mt. Gox announcement",
+      "url": "https://www.mtgox.com/img/pdf/20140228-announcement_eng.pdf"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and recovery audit bundle would have preserved the loss figures, incident timeline, and control gaps in a signed record, shortening legal and regulatory recovery rather than preventing the original theft."
+  },
+  {
+    "incident": "Poly Network hack",
+    "year": "2021",
+    "sector": "Crypto",
+    "root_cause": "A vulnerability in Poly Network’s cross-chain smart contract logic allowed attackers to override transfer instructions and divert assets.",
+    "damage": "$613 million theft",
+    "harm_type": "Financial loss, Fraud",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Reuters",
+      "url": "https://www.reuters.com/technology/how-hackers-stole-613-million-crypto-tokens-poly-network-2021-08-12/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "checklist receipt — a pre-deployment control attestation and change-management receipt would have documented the smart-contract review, access controls, and release approvals needed to catch or at least reconstruct the incident."
+  },
+  {
+    "incident": "Ronin Bridge hack 2022",
+    "year": "2022",
+    "sector": "Crypto",
+    "root_cause": "Social engineering and stolen validator private keys let attackers forge withdrawals after compromising four Sky Mavis validators and one Axie DAO validator.",
+    "damage": "$615M stolen",
+    "harm_type": "Financial loss, Fraud, Service outage",
+    "regulator": "Undisclosed",
+    "source": {
+      "text": "Ronin Blog",
+      "url": "https://roninchain.com/blog/posts/community-alert-ronin-validators-6513cc78a5edc1001b03c366"
+    },
+    "frameworks": [
+      "['SOC 2 TSC'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "checklist receipt — a signed recovery and key-management attestation would have documented validator custody, incident response steps, and reimbursement readiness much earlier."
+  },
+  {
+    "incident": "Equifax breach 2017 vulnerability",
+    "year": "2017-2019",
+    "sector": "Finance",
+    "root_cause": "A critical Apache Struts vulnerability (CVE-2017-5638) went unpatched for months, compounded by failed vulnerability scanning, poor asset inventory, weak segmentation, and plain-text credential storage that let attackers pivot through sensitive systems.",
+    "damage": "$650M settlement; Reuters also reported $439M in breach costs by March 2018 and up to $575M/$700M total resolution exposure",
+    "harm_type": "Financial loss, Privacy violation, Regulatory fine, Fraud",
+    "regulator": "FTC, CFPB, and 50 U.S. states settlement / FTC complaint; Reuters reported $650M record settlement and FTC said up to $425M consumer relief",
+    "source": {
+      "text": "FTC",
+      "url": "https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'SOC 2 TSC'",
+      "'NIST AI RMF']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have preserved the patching, asset-inventory, and control-failure evidence needed to accelerate legal/regulatory recovery and remediation."
+  },
+  {
+    "incident": "Babylon Health NHS failures",
+    "year": "2022-2023",
+    "sector": "Healthcare",
+    "root_cause": "Overpromised AI-assisted primary care and weak operational/governance controls led to NHS contract strain, liquidity collapse, and a restructuring that effectively sold the business for parts.",
+    "damage": "Undisclosed direct loss — company valuation fell from a $4.2B SPAC valuation to bankruptcy-era restructuring and sale of core operations; major reputational and investor-value destruction.",
+    "harm_type": "Financial loss, Defamation/Reputational, Service outage",
+    "regulator": "UK restructuring / take-private transaction; administration and bankruptcy risk disclosed in Babylon’s 2023 financing and take-private announcements.",
+    "source": {
+      "text": "Reuters",
+      "url": "https://jp.reuters.com/article/business/telehealth-startup-babylon-to-go-public-via-42-billion-spac-deal-idUSKCN2DF1JB/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles'",
+      "'UK AI White Paper']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report on contract, liquidity, and clinical-AI risk would have documented the collapse trajectory early, while a model-beacon would have captured monitored AI output quality in service."
+  },
+  {
+    "incident": "Change Healthcare ransomware attack",
+    "year": "2024",
+    "sector": "Healthcare",
+    "root_cause": "Attackers used stolen login credentials to access a Citrix portal that lacked multi-factor authentication, then deployed ransomware against Change Healthcare’s systems, causing a large-scale claims and payments outage and data theft.",
+    "damage": "$1.7B direct response costs through September 30, 2024, plus nearly $9B in interest-free loans to care providers and over $6.5B in expedited payments reported in official filings.",
+    "harm_type": "Financial loss, Privacy violation, Service outage, Fraud",
+    "regulator": "HIPAA breach notification process; OCR breach portal reporting and related federal/state investigations",
+    "source": {
+      "text": "UnitedHealth Group Q3 2024 Form 10-Q",
+      "url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2024/UNH_Q3-2024_Form-10-Q.pdf"
+    },
+    "frameworks": [
+      "['HIPAA'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 42001']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A signed checklist receipt plus scoring report on third-party access, MFA gaps, and incident-response readiness would have preserved the evidence needed to shorten regulatory and legal recovery after the breach."
+  },
+  {
+    "incident": "Clearview AI privacy fines EU UK",
+    "year": "2021-2023",
+    "sector": "Identity/Biometrics",
+    "root_cause": "Unlawful web scraping and biometric processing without a valid legal basis, plus failure to honor access/erasure obligations and territorial-scope compliance under EU/UK data protection law.",
+    "damage": "$22.6M + €20M + £7.5M in regulator fines (about $56M total, excluding any settlement or downstream legal costs)",
+    "harm_type": "Privacy violation, Regulatory fine",
+    "regulator": "CNIL administrative fine and order (France, 19 Oct 2022) + ICO monetary penalty and enforcement notice (UK, May 2022) + other EU DPAs’ Clearview sanctions",
+    "source": {
+      "text": "EDPB / CNIL",
+      "url": "https://www.edpb.europa.eu/news/national-news/2022/french-sa-fines-clearview-ai-eur-20-million_en"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'EU AI Act'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have preserved the legal and governance evidence trail for collection, lawful-basis review, retention, access/erasure handling, and cross-border scope, shortening enforcement recovery."
+  },
+  {
+    "incident": "PimEyes facial recognition complaints",
+    "year": "2020-2023",
+    "sector": "Identity/Biometrics",
+    "root_cause": "The service enabled face-based searching of publicly available images with weak abuse controls and unclear consent boundaries, creating privacy and stalking risks that drew regulatory scrutiny.",
+    "damage": "Undisclosed",
+    "harm_type": "Privacy violation, Defamation/Reputational, Discrimination",
+    "regulator": "UK ICO case concluded 23 March 2023 with 'no further action'; European Parliament written question P-004150/2020 raised GDPR and stalking concerns",
+    "source": {
+      "text": "UK ICO FOI response",
+      "url": "https://ico.org.uk/media2/migrated/4025231/ic-228371-k0n0.pdf"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'EU AI Act']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have documented the high-risk biometric/privacy use case, abuse controls, and the regulator-facing evidence trail, shortening the legal recovery and response phase."
+  },
+  {
+    "incident": "Cambridge Analytica Facebook scandal",
+    "year": "2018-2019",
+    "sector": "Social Media",
+    "root_cause": "Weak third-party app/data governance and misleading privacy disclosures allowed unauthorized harvesting and sharing of Facebook user data with Cambridge Analytica.",
+    "damage": "$5B FTC penalty + $100M SEC civil penalty",
+    "harm_type": "Privacy violation, Disinformation, Financial loss, Regulatory fine, Defamation/Reputational",
+    "regulator": "FTC $5 billion settlement and SEC $100 million civil penalty",
+    "source": {
+      "text": "FTC",
+      "url": "https://www.ftc.gov/news-events/news/press-releases/2019/07/ftc-imposes-5-billion-penalty-sweeping-new-privacy-restrictions-facebook"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'OECD AI Principles']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have produced the third-party data-sharing and privacy-control evidence needed to shorten the FTC/SEC recovery and remediation process."
+  },
+  {
+    "incident": "Facebook BGP outage",
+    "year": "2021",
+    "sector": "Social Media",
+    "root_cause": "A routine network maintenance command, intended to assess backbone capacity, was issued without effective guardrails; a bug in the audit tool failed to stop it, disconnecting Facebook data centers and causing DNS/BGP withdrawal cascades.",
+    "damage": "Undisclosed / No direct $ — service outage; Reuters reported an estimated $545,000 per hour in lost ad revenue during the outage, but Meta did not disclose a definitive direct-loss figure.",
+    "harm_type": "Service outage, Financial loss",
+    "regulator": "No regulator or legal action identified for the outage itself",
+    "source": {
+      "text": "Meta Engineering",
+      "url": "https://engineering.fb.com/2021/10/05/networking-traffic/outage-details/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A signed audit bundle plus model-beacon / prompt-beacon-style operational telemetry would have preserved the maintenance command trail and outage evidence, shortening incident reconstruction and recovery."
+  },
+  {
+    "incident": "CrowdStrike Falcon outage July 2024",
+    "year": "2024",
+    "sector": "Tech/Cloud",
+    "root_cause": "A defective Falcon content update for Windows hosts let problematic Channel File 291 content pass validation, triggering an out-of-bounds memory read and Windows BSODs on affected sensors.",
+    "damage": "$550M claimed by Delta in direct revenue/cost losses; CrowdStrike separately disclosed $39.054M in outage-related expenses net of insurance receivable through Oct. 31, 2024",
+    "harm_type": "Service outage, Financial loss, Safety recall",
+    "regulator": "Delta Air Lines legal claims in Georgia state court; CrowdStrike SEC disclosures in 2024 Form 10-Q/10-K-related filings",
+    "source": {
+      "text": "CrowdStrike customer statement",
+      "url": "https://www.crowdstrike.com/en-us/blog/to-our-customers-and-partners/"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and scoring report would have captured the missing validation and control gaps, while an auditable recovery bundle would have shortened incident response, customer claims handling, and regulatory/legal exposure."
+  },
+  {
+    "incident": "Italy GDPR ChatGPT temporary ban",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "The Italian data protection authority said OpenAI processed Italian users’ data without a clear legal basis, lacked adequate age verification, and had not provided required privacy disclosures, leading to a temporary restriction under GDPR.",
+    "damage": "Undisclosed / No direct $ — temporary service restriction and regulatory exposure; the regulator warned of penalties up to €20 million or 4% of global annual turnover.",
+    "harm_type": "Privacy violation, Service outage, Regulatory fine",
+    "regulator": "Italian Garante temporary limitation order of 31 March 2023; potential fine up to €20 million or 4% of global annual turnover",
+    "source": {
+      "text": "Italian Garante",
+      "url": "https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9870847"
+    },
+    "frameworks": [
+      "['GDPR'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894'",
+      "'NIST AI RMF']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A checklist receipt and supporting prompt/model-beacon evidence would have documented the missing privacy notice, age-verification gap, and data-processing basis, while the signed audit bundle would have shortened the regulatory recovery."
+  },
+  {
+    "incident": "MOVEit Cl0p ransomware",
+    "year": "2023",
+    "sector": "Tech/Cloud",
+    "root_cause": "A zero-day vulnerability in Progress Software’s MOVEit Transfer and MOVEit Cloud file-transfer products was exploited at scale by Cl0p for unauthorized data access and extortion.",
+    "damage": "Undisclosed direct damages; Progress disclosed $1.5M of MOVEit-related costs in fiscal 2023, while Reuters reported one victim, Genworth, said 2.5 million customer records were accessed.",
+    "harm_type": "Privacy violation, Financial loss, Fraud, Service outage",
+    "regulator": "SEC subpoena and multiple data privacy regulator inquiries; Progress disclosed approximately 118 class actions and three formal government investigations related to the MOVEit vulnerability",
+    "source": {
+      "text": "Progress SEC 10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/876167/000087616724000031/prgs-20231130.htm"
+    },
+    "frameworks": [
+      "['NIST AI RMF'",
+      "'ISO/IEC 23894'",
+      "'SOC 2 TSC'",
+      "'GDPR']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A signed checklist receipt and scoring report would have preserved the incident timeline, affected systems, and response evidence, shortening regulator and litigation recovery rather than preventing the software flaw itself."
+  },
+  {
+    "incident": "SolarWinds supply chain attack",
+    "year": "2020",
+    "sector": "Tech/Cloud",
+    "root_cause": "A supply-chain compromise of SolarWinds’ Orion build/update system allowed attackers to inject malicious code into legitimate software updates and distribute them to customers.",
+    "damage": "$3.485M direct cyber incident costs",
+    "harm_type": "Financial loss, Privacy violation, Service outage, Defamation/Reputational",
+    "regulator": "SEC civil complaint against SolarWinds and Timothy G. Brown (2023)",
+    "source": {
+      "text": "SEC Complaint",
+      "url": "https://www.sec.gov/files/litigation/complaints/2023/comp-pr2023-227.pdf"
+    },
+    "frameworks": [
+      "['SOC 2 TSC'",
+      "'ISO/IEC 42001'",
+      "'ISO/IEC 23894']"
+    ],
+    "act": "YES-Recover AI",
+    "control": "A scoring report or checklist receipt would have documented the weak build, access-control, and release-governance controls that let the Orion supply-chain compromise persist and would have shortened legal and regulatory recovery."
+  }
+]

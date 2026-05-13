@@ -78,3 +78,14 @@ The receipts file is human-readable NDJSON, one receipt per line. To
 start over, archive or delete `~/.beacon/receipts/<date>.ndjson`. The
 key in `~/.beacon/keys/` should be preserved across runs so existing
 signatures remain verifiable.
+---
+
+## Contact & community
+
+**Tagline:** YES-Ship AI · YES-Steady AI · YES-Recover AI
+
+- Bob Rapp — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
+- Ken Johnston — [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
+- Foundation — [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+
+*Verifiable AI governance — Apache-2.0, no SaaS lock-in.*

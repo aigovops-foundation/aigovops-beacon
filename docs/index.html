@@ -45,8 +45,8 @@
         </span>
       </a>
       <nav class="nav-actions" aria-label="Primary">
-        <a href="#demo" class="btn-ghost btn-sm desktop-only">Try it</a>
-        <a href="#framework" class="btn-ghost btn-sm desktop-only">Framework</a>
+        <a href="#failures" class="btn-ghost btn-sm desktop-only">Failures</a>
+        <a href="#framework" class="btn-ghost btn-sm desktop-only">Frameworks</a>
         <a href="#run" class="btn-ghost btn-sm desktop-only">Run it</a>
         <a href="./downloads/aigovops-beacon-starter.zip" class="btn-primary btn-sm" download>Get the zip</a>
       </nav>
@@ -327,6 +327,34 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
       </div>
     </section>
 
+    <!-- ============ 6d. THE PROOF — 100 AI FAILURES ============ -->
+    <section id="failures" class="failures">
+      <div class="shell">
+        <span class="kicker">The 100-case proof set</span>
+        <h2 class="reveal">Every public AI failure we could find — mapped to the receipt that would have caught it.</h2>
+        <p class="reveal lede">From <strong>Zillow's $304M write-down</strong> to <strong>Hong Kong's $25M deepfake wire fraud</strong> to <strong>Cruise's robotaxi pedestrian drag</strong>. Each row links the incident to the framework controls that were missing and the Beacon receipt — model, prompt, artifact, or checklist — that would have produced the evidence. Filter by sector, act, or framework.</p>
+        <div class="failures-stats reveal">
+          <div class="stat"><span class="stat-num" data-stat="total">100</span><span class="stat-label">Documented failures</span></div>
+          <div class="stat"><span class="stat-num" data-stat="ship">—</span><span class="stat-label">YES-Ship AI</span></div>
+          <div class="stat"><span class="stat-num" data-stat="steady">—</span><span class="stat-label">YES-Steady AI</span></div>
+          <div class="stat"><span class="stat-num" data-stat="recover">—</span><span class="stat-label">YES-Recover AI</span></div>
+        </div>
+        <div class="failures-toolbar reveal">
+          <input type="search" id="failureSearch" placeholder="Search incidents, sectors, regulators…" aria-label="Search failures" />
+          <div class="failure-filters" id="failureFilters" role="tablist">
+            <button class="pill active" data-filter="all">All</button>
+            <button class="pill" data-filter="YES-Ship AI">YES-Ship</button>
+            <button class="pill" data-filter="YES-Steady AI">YES-Steady</button>
+            <button class="pill" data-filter="YES-Recover AI">YES-Recover</button>
+          </div>
+        </div>
+        <div id="failuresList" class="failures-list" aria-live="polite">
+          <p class="loading">Loading 100 cases…</p>
+        </div>
+        <p class="failures-note reveal">Sources are primary where possible (regulator filings, court documents, Reuters/AP/NYT/Bloomberg/FT). Methodology and full JSON: <a href="./data/ai_failures_top100.json" target="_blank">ai_failures_top100.json</a>.</p>
+      </div>
+    </section>
+
     <!-- ============ 7. THE FRAMEWORK GRID ============ -->
     <section id="framework">
       <div class="shell">
@@ -444,9 +472,12 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
         </div>
         <div>
           <strong>Contact</strong>
+          <p class="footer-tagline">YES-Ship AI · YES-Steady AI · YES-Recover AI</p>
           <ul>
+            <li><a href="mailto:bob.rapp@aigovops.community">bob.rapp@aigovops.community</a></li>
+            <li><a href="mailto:ken.johnston@aigovops.community">ken.johnston@aigovops.community</a></li>
             <li><a href="mailto:security@aigovopsfoundation.org">security@aigovopsfoundation.org</a></li>
-            <li><a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">Foundation site ↗</a></li>
+            <li><a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">aigovopsfoundation.org ↗</a></li>
           </ul>
         </div>
       </div>
@@ -463,5 +494,6 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="./js/site.js" defer></script>
   <script src="./js/frameworks.js" defer></script>
+  <script src="./js/failures.js" defer></script>
 </body>
 </html>

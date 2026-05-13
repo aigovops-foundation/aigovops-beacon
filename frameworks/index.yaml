@@ -1,3 +1,11 @@
+# AIGovOps Beacon — Global Framework Registry (index)
+# Tagline: YES-Ship AI · YES-Steady AI · YES-Recover AI
+# Maintainers:
+#   - Bob Rapp <bob.rapp@aigovops.community>
+#   - Ken Johnston <ken.johnston@aigovops.community>
+# Foundation: https://www.aigovopsfoundation.org/
+# License: Apache-2.0
+---
 - framework_id: iso-iec-23894
   short_name: AI risk management
   status: voluntary
