@@ -868,7 +868,7 @@
     "root_cause": "The chatbot gave an inaccurate refund/bereavement policy answer and Air Canada failed to implement sufficient human review and accuracy controls for website-generated guidance.",
     "damage": "Undisclosed",
     "harm_type": "Financial loss",
-    "regulator": "British Columbia Supreme Court judgment in Moffatt v. Air Canada (2024 BCSC 1490)",
+    "regulator": "British Columbia Civil Resolution Tribunal decision in Moffatt v. Air Canada (2024 BCCRT 149)",
     "source": {
       "text": "Air Canada bereavement fares policy",
       "url": "https://www.aircanada.com/ca/en/aco/home/plan/special-assistance/bereavement-fares.html"
