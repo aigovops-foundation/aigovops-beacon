@@ -14,7 +14,7 @@
     "init": "node src/cli.js init",
     "keygen": "node src/cli.js keygen",
     "seed": "node src/cli.js seed",
-    "test": "node --test test/"
+    "test": "node --test test/*.test.js"
   },
   "engines": {
     "node": ">=20.0.0"
