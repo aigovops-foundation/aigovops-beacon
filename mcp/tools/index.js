@@ -88,17 +88,25 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
+      // Maps to real Beacon route: POST /api/v1/receipts (event_type=decision).
       const payload = {
-        ts: nowIso(),
-        source: "mcp.record_decision",
-        approver: args.approver,
-        framework: args.framework,
-        controls: args.controls,
-        decision: args.decision,
-        scope: args.scope,
-        rationale_hash: args.rationale ? hash(args.rationale) : null,
+        vendor: args.vendor || "mcp-agent",
+        model: args.model || "unspecified",
+        version: args.version || "latest",
+        event_type: "decision",
+        attributes: {
+          source: "mcp.record_decision",
+          ts: nowIso(),
+          approver: args.approver,
+          framework: args.framework,
+          controls: args.controls,
+          control: args.controls[0],
+          decision: args.decision,
+          scope: args.scope,
+          rationale_hash: args.rationale ? hash(args.rationale) : null,
+        },
       };
-      const res = await fetchJson(`${beaconUrl}/api/decisions`, {
+      const res = await fetchJson(`${beaconUrl}/api/v1/receipts`, {
         method: "POST",
         body: payload,
       });
@@ -107,11 +115,20 @@ export const tools = {
           ok: true,
           mode: "offline-simulation",
           receipt_id: "sim:" + Date.now(),
-          ts: payload.ts,
+          ts: payload.attributes.ts,
           summary: `Decision recorded (simulated; Beacon core unreachable at ${beaconUrl}). Decision: ${args.decision}, framework: ${args.framework}, controls: ${args.controls.join(", ")}.`,
         };
       }
-      return res;
+      return {
+        ok: true,
+        receipt_id: res.id,
+        ts: res.ts_utc,
+        key_fpr: res.signature && res.signature.key_fpr,
+        sig_alg: res.signature && res.signature.alg,
+        framework: args.framework,
+        controls: args.controls,
+        decision: args.decision,
+      };
     },
   },
 
@@ -130,10 +147,13 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
-      const qs = new URLSearchParams();
-      if (args.receipt_id) qs.set("id", args.receipt_id);
-      if (args.content_hash) qs.set("hash", args.content_hash);
-      const res = await fetchJson(`${beaconUrl}/api/receipts/verify?${qs}`);
+      // Real route: GET /api/v1/receipts/:id/verify
+      if (!args.receipt_id) {
+        return { ok: false, error: "receipt_id required (content_hash lookup not yet supported by core)" };
+      }
+      const res = await fetchJson(
+        `${beaconUrl}/api/v1/receipts/${encodeURIComponent(args.receipt_id)}/verify`
+      );
       if (res._offline) {
         return {
           ok: false,
@@ -167,12 +187,8 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
-      const qs = new URLSearchParams({
-        source: args.source || "all",
-        window: args.window || "7d",
-        risk: args.risk || "any",
-      });
-      const res = await fetchJson(`${beaconUrl}/api/inventory?${qs}`);
+      // Real route: GET /api/v1/inventory (no server-side filters yet; we filter client-side).
+      const res = await fetchJson(`${beaconUrl}/api/v1/inventory`);
       if (res._offline) {
         return {
           mode: "offline-simulation",
@@ -191,7 +207,28 @@ export const tools = {
           },
         };
       }
-      return res;
+      // Client-side filter by source
+      let rows = Array.isArray(res) ? res : [];
+      if (args.source && args.source !== "all") {
+        rows = rows.filter((r) =>
+          (r.discovery_src || "").toLowerCase().includes(args.source.toLowerCase())
+        );
+      }
+      return {
+        ok: true,
+        count: rows.length,
+        services: rows.map((r) => ({
+          id: r.id,
+          vendor: r.vendor,
+          model: r.model,
+          version: r.version,
+          environment: r.environment,
+          trust: r.trust_tier,
+          discovery_src: r.discovery_src,
+          first_seen: r.first_seen_utc,
+          last_seen: r.last_seen_utc,
+        })),
+      };
     },
   },
 
@@ -208,9 +245,34 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
-      const qs = new URLSearchParams({ framework: args.framework });
-      if (args.scope) qs.set("scope", args.scope);
-      const res = await fetchJson(`${beaconUrl}/api/score?${qs}`);
+      // Real route: scoring is per-checklist-pack against an inventory id.
+      // For an aggregate framework score, list inventory + sum checklist coverage.
+      const inv = await fetchJson(`${beaconUrl}/api/v1/inventory`);
+      const packs = await fetchJson(`${beaconUrl}/api/v1/checklists`);
+      if (inv._offline || packs._offline) {
+        return {
+          mode: "offline-simulation",
+          framework: args.framework,
+          message:
+            "Beacon core unreachable; in lab mode would return { score, controls, gaps }.",
+        };
+      }
+      const items = Array.isArray(inv) ? inv : [];
+      const packList = Array.isArray(packs) ? packs : [];
+      const matchingPack = packList.find(
+        (p) => (p.id || "").includes(args.framework) || (p.framework || "") === args.framework
+      ) || packList[0];
+      if (!matchingPack) {
+        return { framework: args.framework, score: 0, gaps: ["no_checklist_pack_loaded"], controls: [] };
+      }
+      // Score the first inventory row (lab demo) — production would aggregate.
+      const target = items[0];
+      if (!target) {
+        return { framework: args.framework, score: 0, gaps: ["no_inventory"], controls: [] };
+      }
+      const res = await fetchJson(
+        `${beaconUrl}/api/v1/checklists/${matchingPack.id}/score/${target.id}`
+      );
       if (res._offline) {
         return {
           mode: "offline-simulation",
@@ -219,7 +281,12 @@ export const tools = {
             "Beacon core unreachable; in lab mode would return { score: 0..100, controls: [{id, status, evidence_receipts: [...]}], gaps: [...] }.",
         };
       }
-      return res;
+      return {
+        framework: args.framework,
+        scored_inventory_id: target.id,
+        scored_target: `${target.vendor}/${target.model}/${target.version}`,
+        ...res,
+      };
     },
   },
 
@@ -238,14 +305,21 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
-      const res = await fetchJson(`${beaconUrl}/api/bundles`, {
+      // Real route: POST /api/v1/export
+      // Convert from/to into window_days (Beacon export takes a rolling window).
+      let windowDays = 7;
+      if (args.from && args.from.match(/^(\d+)d ago$/)) {
+        windowDays = parseInt(args.from.match(/^(\d+)d/)[1], 10);
+      } else if (args.from && args.to) {
+        const fromMs = Date.parse(args.from);
+        const toMs = Date.parse(args.to);
+        if (!isNaN(fromMs) && !isNaN(toMs)) {
+          windowDays = Math.max(1, Math.ceil((toMs - fromMs) / 86400000));
+        }
+      }
+      const res = await fetchJson(`${beaconUrl}/api/v1/export`, {
         method: "POST",
-        body: {
-          from: args.from,
-          to: args.to,
-          framework: args.framework || null,
-          scope: args.scope || null,
-        },
+        body: { framework: args.framework || null, window_days: windowDays },
       });
       if (res._offline) {
         return {
@@ -274,11 +348,28 @@ export const tools = {
       },
     },
     async handler(args, { beaconUrl }) {
-      const res = await fetchJson(`${beaconUrl}/api/replay`, {
+      // No dedicated /replay route; we emit a synthetic decision receipt for the case.
+      const decision =
+        (args.classification || "").toLowerCase().includes("ship")
+          ? "yes-ship"
+          : (args.classification || "").toLowerCase().includes("recover")
+          ? "yes-recover"
+          : "yes-steady";
+      const res = await fetchJson(`${beaconUrl}/api/v1/receipts`, {
         method: "POST",
         body: {
-          case_id: args.case_id,
-          framework: args.framework || "nist-ai-rmf-1.0",
+          vendor: "mcp-replay",
+          model: "case-" + args.case_id,
+          version: "replay",
+          event_type: "decision",
+          attributes: {
+            source: "mcp.replay_case",
+            case_id: args.case_id,
+            framework: args.framework || "nist-ai-rmf-1.0",
+            control: "MAP-2.1",
+            decision,
+            approver: "mcp-replay",
+          },
         },
       });
       if (res._offline) {
@@ -286,10 +377,17 @@ export const tools = {
           mode: "offline-simulation",
           case_id: args.case_id,
           message:
-            "Beacon core unreachable; in lab mode would return { case, classification: 'YES-Ship|YES-Steady|YES-Recover', controls_that_would_have_caught_it: [...], receipt_id }.",
+            "Beacon core unreachable; in lab mode would return { case, classification, receipt_id }.",
         };
       }
-      return res;
+      return {
+        ok: true,
+        case_id: args.case_id,
+        decision,
+        framework: args.framework || "nist-ai-rmf-1.0",
+        receipt_id: res.id,
+        key_fpr: res.signature && res.signature.key_fpr,
+      };
     },
   },
 };

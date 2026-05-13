@@ -784,7 +784,7 @@ footer.site-footer {
   grid-template-columns: 1fr;
   gap: var(--space-8);
 }
-@media (min-width: 760px) { .footer-grid { grid-template-columns: 1.4fr repeat(3, 1fr); } }
+@media (min-width: 760px) { .footer-grid { grid-template-columns: 1.4fr repeat(4, 1fr); } }
 .footer-grid h4 {
   font-size: var(--text-xs);
   font-family: "DM Mono", monospace;

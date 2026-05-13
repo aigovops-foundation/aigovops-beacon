@@ -7,7 +7,7 @@ Tagline: *YES-Ship AI · YES-Steady AI · YES-Recover AI.*
 
 | | |
 |---|---|
-| **Version** | 2.2 |
+| **Version** | 2.3 |
 | **License** | Apache-2.0 |
 | **Status** | Beta — production patterns documented, suitcase lab proven |
 | **Owners** | bob.rapp@aigovops.community · ken.johnston@aigovops.community |
@@ -28,6 +28,7 @@ Tagline: *YES-Ship AI · YES-Steady AI · YES-Recover AI.*
 9. [Threat model](#9-threat-model)
 10. [Beta-to-ship transitions](#10-beta-to-ship-transitions)
 11. [What this is not](#11-what-this-is-not)
+12. [v2.3 — hosted MCP, restricted agent, offline walkthrough](#12-v23--hosted-mcp-restricted-agent-offline-walkthrough)
 
 ---
 
@@ -418,6 +419,100 @@ aigovops-beacon/
 └── tests/
     └── e2e.py                  # 91-link liveness harness
 ```
+
+---
+
+## 12. v2.3 — hosted MCP, restricted agent, offline walkthrough
+
+Three additions in v2.3, all aimed at the same problem: **make Beacon
+runnable as a demo on someone else's network, and as a substrate under
+an autonomous agent that needs to ship into procurement.**
+
+### 12.1 Hosted MCP server (`mcp-public/`)
+
+A single Node process that boots:
+
+- The Beacon core on loopback `127.0.0.1:$BEACON_PORT`.
+- The MCP-SSE server (`/sse`, `/messages?sid=...`) on the public `$PORT`.
+- A synchronous JSON-RPC fallback at `POST /rpc` so Workers (which do
+  poorly with long-lived SSE) can drive the same six tools.
+- A read-only proxy at `/api/v1/*` so a browser can sanity-check the
+  embedded Beacon. Writes are 405 in `PUBLIC_MODE=1` — the only way to
+  produce a receipt is through MCP.
+
+Deploys to Render free tier from `mcp-public/render.yaml`. A Dockerfile
+is included for any other host that accepts containers. The dyno disk is
+ephemeral; receipts live for the dyno's lifetime. This is the **demo /
+wire-protocol playground**, not the evidence store — for evidence,
+still run the suitcase variant (§4, Lab 1–7).
+
+### 12.2 Restricted Cloudflare Worker agent (`agent/`)
+
+A Worker whose tool universe is **enforced** to be exactly the names
+returned by the hosted MCP's `tools/list`. Two layers:
+
+1. System prompt explicitly names the six tools and forbids invention.
+2. Worker code rejects any `tool_use` whose name is not in the
+   `allowedNames` set and feeds the model a `REFUSED:` result.
+
+The Worker is BYO-key: users paste an Anthropic or OpenAI key in the UI;
+the Worker forwards it on each request and forgets it. No model contract,
+no key storage, no SaaS dependency for the demo.
+
+Agent loop is bounded — `MAX_HOPS=6` tool/use→tool/result cycles before
+the agent returns. Every accepted call goes through Beacon and produces
+a signed receipt. Every refused call is recorded too (see
+[SUPERAGENT.md](./SUPERAGENT.md)).
+
+### 12.3 Offline interactive walkthrough (`docs/walkthrough/`)
+
+A twelve-step animated walkthrough of the full Beacon flow, fully
+self-contained — no CDN, no fonts, no network. Same Hydra Teal palette
+as the rest of the system. Designed to run from a USB stick at an event
+with no Wi-Fi.
+
+A ~70-second MP4 fallback ([`docs/downloads/beacon-walkthrough.mp4`](./docs/downloads/beacon-walkthrough.mp4))
+is included for environments where opening HTML is awkward (locked-down
+kiosks, embedded video in slide decks).
+
+The walkthrough is the **canonical 5-minute explanation** of Beacon.
+When you don't have time to install a suitcase, you have time for this.
+
+### 12.4 Three verified deployment shapes (`DEMOS.md`)
+
+Not new shapes — the same three from §4 (suitcase, lab-on-corp, beta
+hybrid) — but [`DEMOS.md`](./DEMOS.md) contains the live, captured
+output of running each one end-to-end, with real inventory counts,
+receipt ids, signature fingerprints, and bundle manifests. Reproducible
+from a fresh checkout in ~5 minutes.
+
+### 12.5 Diagram
+
+```
+    user / agent / auditor
+           │
+           ▼  (HTTPS)
+    ┌───────────────────────────────────┐
+    │  Cloudflare Worker (agent/)         │        ← BYO LLM key
+    │  six tools, refusal on anything else│
+    └──────────────┬─────────────────┘
+                       │  /rpc  /sse
+                       ▼
+    ┌───────────────────────────────────┐
+    │  Render dyno  (mcp-public/)         │
+    │   ─ MCP-SSE  + JSON-RPC fallback    │
+    │   ─ embedded Beacon on loopback      │
+    │   ─ read-only /api/v1/* proxy        │
+    └───────────────────────────────────┘
+```
+
+This is **the demo posture**, not the production posture. For
+production, the orchestration runs *at the client site*, Beacon
+runs *at the client site*, and the Worker pattern collapses into
+whatever orchestrator the client uses (LangGraph, Vercel AI, raw
+function-calling). The point is the **enforcement model** — closed
+tool universe, refused on miss, signed on accept — not the specific
+hosting choice.
 
 ---
 

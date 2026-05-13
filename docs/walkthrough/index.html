@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Beacon — End-to-end Walkthrough</title>
+<meta name="description" content="A self-contained, offline-first walkthrough of the AIGovOps Beacon lab — discovery → receipt → decision → bundle → auditor verify." />
+<style>
+:root{
+  --bg:#06181A;
+  --panel:#0E2A2D;
+  --panel-2:#0B2326;
+  --ink:#E8FAF5;
+  --ink-dim:#9FBFB8;
+  --teal:#01696F;
+  --teal-2:#1FAE9A;
+  --amber:#FFB454;
+  --red:#FF6B6B;
+  --green:#4ADE80;
+  --line:#143438;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+body{display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#082023,#06181A)}
+header .brand{display:flex;align-items:center;gap:12px;font-weight:600}
+header .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--teal-2);box-shadow:0 0 12px var(--teal-2)}
+header .meta{font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+main{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:18px 28px;min-height:0}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.pane .pane-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--panel-2);font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+.pane .pane-head .traffic{display:flex;gap:6px}
+.pane .pane-head .traffic span{width:11px;height:11px;border-radius:50%}
+.pane .pane-head .traffic .r{background:#FF5F57}
+.pane .pane-head .traffic .y{background:#FEBC2E}
+.pane .pane-head .traffic .g{background:#28C840}
+.pane .pane-head .title{flex:1}
+.pane .pane-body{flex:1;padding:18px;overflow:auto;font-family:var(--mono);font-size:13px;line-height:1.55;color:var(--ink)}
+.pane.terminal .pane-body{background:#04111301;white-space:pre-wrap}
+.pane.browser .pane-body{font-family:var(--sans);font-size:14px;background:#0A1F22}
+.cursor{display:inline-block;width:8px;height:14px;background:var(--teal-2);vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.line-prompt{color:var(--teal-2)}
+.line-out{color:var(--ink)}
+.line-dim{color:var(--ink-dim)}
+.line-ok{color:var(--green)}
+.line-warn{color:var(--amber)}
+.line-err{color:var(--red)}
+.line-key{color:var(--teal-2)}
+.btn{cursor:pointer;background:var(--teal);color:white;border:1px solid var(--teal-2);padding:8px 14px;border-radius:6px;font-family:var(--sans);font-size:13px;font-weight:500}
+.btn:hover{background:var(--teal-2);color:#04111}
+.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.secondary:hover{background:var(--panel-2)}
+footer{display:flex;align-items:center;gap:14px;padding:14px 28px;border-top:1px solid var(--line);background:#082023}
+footer .step-info{flex:1;display:flex;flex-direction:column;gap:2px}
+footer .step-info .title{font-weight:600;color:var(--ink)}
+footer .step-info .desc{font-size:13px;color:var(--ink-dim)}
+footer .progress{display:flex;gap:4px;align-items:center}
+footer .progress .dot{width:10px;height:10px;border-radius:50%;background:#143438;cursor:pointer}
+footer .progress .dot.active{background:var(--teal-2);box-shadow:0 0 6px var(--teal-2)}
+footer .progress .dot.done{background:var(--teal)}
+footer .nav{display:flex;gap:8px}
+.kbd{display:inline-block;padding:1px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;font-family:var(--mono);font-size:11px;color:var(--ink-dim);background:#04111}
+.badge{display:inline-block;padding:2px 8px;border-radius:12px;background:var(--teal);color:white;font-size:11px;font-family:var(--mono)}
+.badge.warn{background:#7a5510;color:var(--amber)}
+.badge.ok{background:#0F5132;color:var(--green)}
+.diagram{font-family:var(--mono);font-size:11px;line-height:1.35;color:var(--ink);white-space:pre;padding:8px 0}
+.fake-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin-top:8px}
+.fake-table th,.fake-table td{padding:6px 10px;text-align:left;border-bottom:1px solid var(--line)}
+.fake-table th{color:var(--ink-dim);font-weight:500;background:#0B2326}
+.tag-yes{color:var(--green);font-weight:600}
+.tag-steady{color:var(--amber);font-weight:600}
+.tag-recover{color:var(--red);font-weight:600}
+.ext-pop{max-width:340px;background:white;color:#06181A;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.6);padding:14px;font-family:var(--sans);font-size:13px}
+.ext-pop h4{margin:0 0 10px;color:var(--teal);font-size:14px}
+.ext-pop .row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee}
+.ext-pop .row:last-child{border:none}
+.url-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);background:#082023;font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+.url-bar .pill{display:inline-flex;align-items:center;gap:6px;background:#04111;border:1px solid var(--line);border-radius:14px;padding:4px 10px;flex:1}
+.url-bar .pill .lock{color:var(--teal-2)}
+.json-key{color:#7DD3FC}
+.json-str{color:#FACC15}
+.json-num{color:#F472B6}
+.json-bool{color:var(--green)}
+.no-net-banner{position:fixed;bottom:80px;right:20px;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-size:12px;color:var(--green);font-family:var(--mono);opacity:.85}
+.no-net-banner .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);margin-right:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="dot"></span>
+    <span>Beacon — Lab Walkthrough</span>
+    <span class="badge">v2.3</span>
+  </div>
+  <div class="meta">
+    <span id="step-counter">step 1 / 12</span>
+    &nbsp;·&nbsp;
+    <span>YES-Ship AI · YES-Steady AI · YES-Recover AI</span>
+  </div>
+</header>
+
+<main>
+  <section class="pane terminal">
+    <div class="pane-head">
+      <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title" id="left-title">terminal</div>
+    </div>
+    <div class="pane-body" id="left-body"></div>
+  </section>
+  <section class="pane browser">
+    <div class="pane-head">
+      <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+      <div class="title" id="right-title">app</div>
+    </div>
+    <div class="pane-body" id="right-body"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="step-info">
+    <div class="title" id="step-title">Welcome</div>
+    <div class="desc" id="step-desc">Press → or Space to advance. ← to go back. P to play/pause auto-advance.</div>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="nav">
+    <button class="btn secondary" id="prev">← Prev</button>
+    <button class="btn" id="play">▶ Play</button>
+    <button class="btn" id="next">Next →</button>
+  </div>
+</footer>
+
+<div class="no-net-banner"><span class="dot"></span>Offline · runs without network</div>
+
+<script>
+// =============================================================================
+// Beacon Walkthrough — 12 self-contained steps. Zero external assets.
+// All terminal output and "browser" content is rendered locally.
+// =============================================================================
+
+const STEPS = [
+  {
+    title: "The problem",
+    desc: "AI is showing up everywhere — in browsers, on laptops, off the corp network. Governance can't see it.",
+    leftTitle: "stat ~/ai-usage 2026.txt",
+    rightTitle: "the gap",
+    leftType: "lines",
+    leftContent: [
+      { c: "line-prompt", t: "bob@laptop ~ $ " }, { c: "line-out", t: "stat ai-usage.txt" },
+      { c: "line-dim", t: "" },
+      { c: "line-out", t: "  Reported by IT  : 4 sanctioned LLMs" },
+      { c: "line-out", t: "  Actual exposure : ??? (unknown)" },
+      { c: "line-dim", t: "" },
+      { c: "line-warn", t: "  CISO: \"How would I even prove what's running today?\"" },
+      { c: "line-warn", t: "  Auditor: \"Show me one signed receipt for any AI decision.\"" },
+      { c: "line-err", t: "  Engineer: \"My copilot runs while I'm on hotel WiFi.\"" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`┌───────────────────────────────────────────────┐
+│              GOVERNANCE EXPECTS               │
+│   "We have an inventory. We approve models.   │
+│    Auditors get verifiable evidence."         │
+├───────────────────────────────────────────────┤
+│                  REALITY 2026                 │
+│   • 65% of AI calls happen IN THE BROWSER     │
+│   • Personal devices, off-corp networks       │
+│   • Decisions are emails, not artifacts       │
+│   • Audits depend on screenshots & trust      │
+└───────────────────────────────────────────────┘`
+  },
+  {
+    title: "Boot Beacon — Suitcase Lab",
+    desc: "One laptop. No corp network. The full Beacon stack starts in under 3 seconds.",
+    leftTitle: "$ docker compose -f deploy/lab.yml up",
+    rightTitle: "boot trace",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0,   t: "bob@laptop ~/aigovops-beacon $ " },
+      { c: "line-out",    d: 200, t: "docker compose -f deploy/lab.yml up" },
+      { c: "line-dim",    d: 300, t: "" },
+      { c: "line-dim",    d: 400, t: "[+] Running 4/4" },
+      { c: "line-ok",     d: 200, t: " ✔ beacon-core      Started   0.8s" },
+      { c: "line-ok",     d: 200, t: " ✔ beacon-mcp       Started   0.5s" },
+      { c: "line-ok",     d: 200, t: " ✔ synth-traffic    Started   0.3s" },
+      { c: "line-ok",     d: 200, t: " ✔ studio-ui        Started   0.6s" },
+      { c: "line-dim",    d: 400, t: "" },
+      { c: "line-out",    d: 200, t: "beacon-core | Beacon 0.1.0 listening on http://0.0.0.0:8787" },
+      { c: "line-out",    d: 100, t: "beacon-core |   data root: /var/lib/beacon" },
+      { c: "line-key",    d: 100, t: "beacon-core |   active key fingerprint: 40e6135a843fa437" },
+      { c: "line-out",    d: 100, t: "beacon-mcp  | MCP server stdio+SSE ready (6 tools)" },
+      { c: "line-out",    d: 100, t: "studio-ui   | http://localhost:5173" },
+      { c: "line-dim",    d: 300, t: "" },
+      { c: "line-prompt", d: 0,   t: "bob@laptop ~ $ " }, { c: "cursor" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  Suitcase Lab — single laptop
+  ┌────────────────────────────────┐
+  │                                │
+  │   ┌──────┐  ┌──────┐  ┌─────┐  │
+  │   │ core │←─│ MCP  │  │ UI  │  │
+  │   └──┬───┘  └──────┘  └─────┘  │
+  │      │                         │
+  │   ┌──┴──────┐                  │
+  │   │ SQLite  │  ←  ALL DATA     │
+  │   │ + keys  │     stays local  │
+  │   └─────────┘                  │
+  │                                │
+  └────────────────────────────────┘
+   No corp network required.
+   No SaaS, no telemetry.`
+  },
+  {
+    title: "Discover AI services — replay 100-case dataset",
+    desc: "synth-traffic.py replays the 100 historical AI failure cases as discovery events.",
+    leftTitle: "$ python scripts/synth-traffic.py --once --count 24",
+    rightTitle: "inventory (live)",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0,   t: "$ " },
+      { c: "line-out",    d: 200, t: "python3 scripts/synth-traffic.py --once --count 24 --decisions 6" },
+      { c: "line-dim",    d: 300, t: "" },
+      { c: "line-dim",    d: 200, t: "[synth-traffic] beacon=http://localhost:8787 cases=100 rate=4.0/s once=True" },
+      { c: "line-out",    d: 200, t: "[synth-traffic] discover ok: scanned=10 new=10 touched=0" },
+      { c: "line-out",    d: 300, t: "[synth-traffic] sent=10 ok=10" },
+      { c: "line-out",    d: 200, t: "[synth-traffic] sent=20 ok=20" },
+      { c: "line-ok",     d: 300, t: "[synth-traffic] done sent=24 ok=24" },
+      { c: "line-dim",    d: 200, t: "" },
+      { c: "line-prompt", d: 0,   t: "$ " },
+      { c: "line-out",    d: 200, t: "curl -s localhost:8787/api/v1/inventory | jq 'length'" },
+      { c: "line-out",    d: 300, t: "20" },
+      { c: "line-prompt", d: 0,   t: "$ " }, { c: "cursor" },
+    ],
+    rightType: "table",
+    rightContent: {
+      head: ["Vendor", "Model", "Env", "Trust", "Source"],
+      rows: [
+        ["openai", "gpt-4o", "prod", "T0", "manual_csv"],
+        ["anthropic", "claude-3.5-sonnet", "stage", "T0", "manual_csv"],
+        ["google", "gemini-1.5-pro", "prod", "T0", "manual_csv"],
+        ["aws-bedrock", "claude-3-sonnet", "prod", "T0", "manual_csv"],
+        ["azure-openai", "gpt-4o", "prod", "T0", "manual_csv"],
+        ["perplexity", "sonar-large", "shadow-it", "T0", "manual_csv"],
+        ["mistral", "mistral-large", "stage", "T0", "manual_csv"],
+        ["cohere", "command-r-plus", "dev", "T0", "manual_csv"],
+        ["huggingface", "meta-llama-3-70b", "stage", "T0", "manual_csv"],
+        ["openai", "gpt-4o-mini", "prod", "T0", "manual_csv"],
+      ],
+    }
+  },
+  {
+    title: "DNS log tail — find the long tail",
+    desc: "Lab-on-Corp shape: point Beacon at the DNS resolver log. No endpoint install needed.",
+    leftTitle: "$ tail -f /var/log/dns/query.log | beacon-ingest",
+    rightTitle: "dns events → inventory",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0, t: "$ " },
+      { c: "line-out", d: 200, t: "curl -X POST localhost:8787/api/v1/discover \\" },
+      { c: "line-out", d: 100, t: "    -H 'content-type: application/json' \\" },
+      { c: "line-out", d: 100, t: "    -d '{\"source\":\"dns_query_log\",\"payload\":{\"path\":\"/var/log/dns/query.log\"}}'" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-out", d: 200, t: "  parsing 8 entries..." },
+      { c: "line-out", d: 150, t: "  10.0.4.32 → chatgpt.com         (openai)" },
+      { c: "line-out", d: 150, t: "  10.0.4.32 → api.openai.com      (openai)" },
+      { c: "line-out", d: 150, t: "  10.0.7.18 → claude.ai           (anthropic)" },
+      { c: "line-out", d: 150, t: "  10.0.7.18 → api.anthropic.com   (anthropic)" },
+      { c: "line-out", d: 150, t: "  10.0.9.7  → gemini.google.com   (google)" },
+      { c: "line-out", d: 150, t: "  10.0.9.7  → generativelanguage… (google)" },
+      { c: "line-out", d: 150, t: "  10.0.4.32 → copilot.microsoft   (microsoft)" },
+      { c: "line-out", d: 150, t: "  10.0.7.18 → perplexity.ai       (perplexity)" },
+      { c: "line-dim", d: 200, t: "" },
+      { c: "line-ok",  d: 200, t: "{\"scanned\":8,\"new_inventory_rows\":5,\"touched_inventory_rows\":3}" },
+      { c: "line-prompt", d: 0, t: "$ " }, { c: "cursor" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  DNS LOG TAIL — read-only file watch
+  ┌──────────────────────────────────┐
+  │  Infoblox / BIND / Win DNS       │
+  │  └─ /var/log/dns/query.log       │
+  │      ↓                            │
+  │  beacon-core (read-only watch)    │
+  │      ↓                            │
+  │  hostname → vendor mapping       │
+  │      ↓                            │
+  │  upsert inventory + receipt      │
+  └──────────────────────────────────┘
+  Catches CLI tools, system services,
+  scripts, IoT devices — anything that
+  touches DNS. Including DoH-bypass
+  detection (hostname appears via SNI).`
+  },
+  {
+    title: "Catch what's running in the browser — MV3 extension",
+    desc: "Managed-storage policy ships from Intune/JAMF. Hostname-only, hashed, signed. Permissions: tabs/storage/alarms — no webRequest, no <all_urls>.",
+    leftTitle: "extension/background.js",
+    rightTitle: "Beacon popup on a personal laptop",
+    leftType: "lines",
+    leftContent: [
+      { c: "line-dim", t: "// MV3 service worker — runs in browser, sees tab.url" },
+      { c: "line-out", t: "chrome.tabs.onUpdated.addListener(async (id, info, tab) => {" },
+      { c: "line-out", t: "  if (!tab.url) return;" },
+      { c: "line-out", t: "  const host = new URL(tab.url).hostname;" },
+      { c: "line-key", t: "  // 1) Drop unless host is in MDM-managed allowlist" },
+      { c: "line-out", t: "  if (!ALLOWLIST.has(host)) return;" },
+      { c: "line-key", t: "  // 2) Hash with per-tenant salt — host never leaves browser cleartext" },
+      { c: "line-out", t: "  const host_hash = await sha256(salt + '::' + host);" },
+      { c: "line-key", t: "  // 3) Sign receipt with per-install ECDSA P-256 key" },
+      { c: "line-out", t: "  const sig = await crypto.subtle.sign({name:'ECDSA',hash:'SHA-256'}, key, body);" },
+      { c: "line-key", t: "  // 4) POST over HTTPS to BEACON_PUBLIC_URL/ingest" },
+      { c: "line-out", t: "  await fetch(BEACON + '/ingest', {method:'POST', body, signal: rl.signal});" },
+      { c: "line-out", t: "});" },
+    ],
+    rightType: "ext-popup",
+    rightContent: {
+      title: "Beacon Browser Receipts",
+      rows: [
+        ["Last 24h", "12 receipts sent"],
+        ["Allowlist", "openai • anthropic • google • microsoft"],
+        ["Permissions", "tabs / storage / alarms only"],
+        ["Privacy", "Hostname-only · hashed with tenant salt"],
+        ["Signing key", "ECDSA P-256 · per-install"],
+        ["Server", "beacon.aigovops.community"],
+        ["Status", "✓ all receipts acknowledged"],
+      ]
+    }
+  },
+  {
+    title: "Decision — record_decision via MCP",
+    desc: "Approver makes a YES-Ship decision. Beacon emits a signed receipt with a stable receipt_id.",
+    leftTitle: "claude desktop — agent tool call",
+    rightTitle: "decision receipt (signed)",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-dim", d: 0,   t: "// agent: aigovops-beacon MCP server (stdio)" },
+      { c: "line-prompt", d: 0, t: "Claude → " },
+      { c: "line-out", d: 200, t: "tools/call record_decision {" },
+      { c: "line-out", d: 100, t: "  approver:  'bob.rapp@aigovops.community'," },
+      { c: "line-out", d: 100, t: "  framework: 'nist-ai-rmf-1.0'," },
+      { c: "line-out", d: 100, t: "  controls:  ['MAP-2.1']," },
+      { c: "line-out", d: 100, t: "  decision:  'yes-ship'," },
+      { c: "line-out", d: 100, t: "  scope:     'sales-copilot'," },
+      { c: "line-out", d: 100, t: "  rationale: 'All green: bias eval clean, redteam pass…'" },
+      { c: "line-out", d: 100, t: "}" },
+      { c: "line-dim", d: 400, t: "" },
+      { c: "line-ok",  d: 200, t: "← {" },
+      { c: "line-ok",  d: 100, t: "    ok: true," },
+      { c: "line-ok",  d: 100, t: "    receipt_id: '01KRGZPNBZENX3PAW11JWXJT73'," },
+      { c: "line-ok",  d: 100, t: "    key_fpr: '40e6135a843fa437'," },
+      { c: "line-ok",  d: 100, t: "    sig_alg: 'Ed25519'" },
+      { c: "line-ok",  d: 100, t: "  }" },
+    ],
+    rightType: "json",
+    rightContent: `{
+  "id": "01KRGZPNBZENX3PAW11JWXJT73",
+  "ts_utc": "2026-05-13T15:33:58.665Z",
+  "vendor": "openai",
+  "model": "gpt-4o",
+  "version": "2024-11",
+  "event_type": "decision",
+  "attributes": {
+    "framework": "nist-ai-rmf-1.0",
+    "control": "MAP-2.1",
+    "decision": "yes-ship",
+    "approver": "bob.rapp@aigovops.community",
+    "scope": "sales-copilot"
+  },
+  "signature": {
+    "alg": "Ed25519",
+    "key_fpr": "40e6135a843fa437",
+    "canonical_form": "RFC8785",
+    "sig_b64": "QPrOTwL6KLKgYnY6gbWxPKGB7Ko…"
+  }
+}`
+  },
+  {
+    title: "Verify — anyone can prove the receipt is genuine",
+    desc: "Receipt verification needs only the public key, not Beacon access. Auditors hold the keys.",
+    leftTitle: "$ curl /receipts/01KRGZPNBZENX3PAW11JWXJT73/verify",
+    rightTitle: "verification result",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0, t: "$ " },
+      { c: "line-out", d: 200, t: "curl -s localhost:8787/api/v1/receipts/01KRG…JT73/verify | jq" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-out", d: 100, t: "{" },
+      { c: "line-out", d: 100, t: "  \"found\": true," },
+      { c: "line-key", d: 100, t: "  \"receipt_id\": \"01KRGZPNBZENX3PAW11JWXJT73\"," },
+      { c: "line-key", d: 100, t: "  \"key_fpr\": \"40e6135a843fa437\"," },
+      { c: "line-key", d: 100, t: "  \"active_key_fpr\": \"40e6135a843fa437\"," },
+      { c: "line-out", d: 100, t: "  \"canonical_form\": \"RFC8785\"," },
+      { c: "line-ok",  d: 100, t: "  \"signature_verifies\": true" },
+      { c: "line-out", d: 100, t: "}" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  VERIFY = HOLD THE KEYS, NOT THE SERVER
+  ┌──────────────────────────────────────┐
+  │                                      │
+  │  receipt + Beacon public key →       │
+  │     ↓                                 │
+  │  RFC8785 canonical JSON              │
+  │     ↓                                 │
+  │  Ed25519 verify(sig, body, pub)     │
+  │     ↓                                 │
+  │  ✓ TRUE / ✗ FALSE                    │
+  │                                      │
+  └──────────────────────────────────────┘
+  Auditor needs:
+    • the receipt blob (JSON)
+    • the public key fingerprint
+  That's it. No DB access, no API token.
+  Apache-2.0 verify.py — 80 lines, no deps.`
+  },
+  {
+    title: "Score against a framework — score_framework",
+    desc: "NIST AI RMF 1.0 mapped to your live inventory. Beacon tells you where you stand and where you don't.",
+    leftTitle: "MCP tool: score_framework",
+    rightTitle: "framework score breakdown",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0,   t: "agent → " },
+      { c: "line-out", d: 200, t: "score_framework { framework: 'nist-ai-rmf-1.0' }" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-out", d: 100, t: "← {" },
+      { c: "line-out", d: 100, t: "    framework: 'nist-ai-rmf-1.0'," },
+      { c: "line-out", d: 100, t: "    scored_target: 'openai/gpt-4o/2024-11'," },
+      { c: "line-key", d: 100, t: "    score: 72," },
+      { c: "line-out", d: 100, t: "    controls: {" },
+      { c: "line-ok",  d: 100, t: "      'MAP-1.1': pass," },
+      { c: "line-ok",  d: 100, t: "      'MAP-2.1': pass," },
+      { c: "line-warn",d: 100, t: "      'MEASURE-3.4': gap (no eval receipt)," },
+      { c: "line-err", d: 100, t: "      'MANAGE-2.3': fail (no rollback drill)," },
+      { c: "line-out", d: 100, t: "    }," },
+      { c: "line-out", d: 100, t: "    gaps: ['MEASURE-3.4', 'MANAGE-2.3']" },
+      { c: "line-out", d: 100, t: "  }" },
+    ],
+    rightType: "table",
+    rightContent: {
+      head: ["Control", "Status", "Evidence", "Action"],
+      rows: [
+        ["MAP-1.1 Risk register", "✓ pass", "receipt:01KR…A1", "—"],
+        ["MAP-2.1 Bias eval", "✓ pass", "receipt:01KR…B2", "—"],
+        ["MEASURE-2.1 Robustness", "✓ pass", "receipt:01KR…C3", "—"],
+        ["MEASURE-3.4 Drift monitor", "△ gap", "no receipt", "wire monitor"],
+        ["MANAGE-2.3 Rollback drill", "✗ fail", "no receipt", "schedule drill"],
+        ["GOVERN-1.1 Policy approved", "✓ pass", "receipt:01KR…E5", "—"],
+      ]
+    }
+  },
+  {
+    title: "Replay a case — historical AI failure regression test",
+    desc: "Pick one of the 100 cases; Beacon emits a synthetic decision so you can see if your current controls would catch it.",
+    leftTitle: "MCP tool: replay_case",
+    rightTitle: "case #38 — iTutor hiring bias",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0, t: "agent → " },
+      { c: "line-out", d: 200, t: "replay_case { case_id: 38 }" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-out", d: 100, t: "← {" },
+      { c: "line-out", d: 100, t: "    ok: true," },
+      { c: "line-out", d: 100, t: "    case_id: 38," },
+      { c: "line-err", d: 100, t: "    decision: 'yes-recover',    // current controls would FAIL" },
+      { c: "line-out", d: 100, t: "    framework: 'nist-ai-rmf-1.0'," },
+      { c: "line-out", d: 100, t: "    receipt_id: '01KRG…REPLAY-38'," },
+      { c: "line-out", d: 100, t: "    key_fpr: '40e6135a843fa437'" },
+      { c: "line-out", d: 100, t: "  }" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-warn",d: 0,   t: "→ recommendation: enable MEASURE-2.7 (subgroup fairness)" },
+      { c: "line-warn",d: 0,   t: "→ recommendation: enable GOVERN-3.2 (HR data governance)" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  CASE #38 — iTutor Group hiring AI
+  ───────────────────────────────────
+  Year:        2023
+  Vendor:      undisclosed
+  Sector:      EdTech
+  Failure:     rejected candidates 55+
+  EEOC fine:   $365,000
+  Class:       YES-Recover AI
+
+  Controls that WOULD have caught it:
+    • MEASURE-2.7 subgroup fairness
+    • GOVERN-3.2 HR data governance
+    • MAP-4.1 protected-class scoping
+    • MANAGE-1.4 vendor red-team
+
+  Your current controls catch:
+    • 0 of 4`
+  },
+  {
+    title: "Bundle for the auditor — bundle_for_auditor",
+    desc: "Sign, hash, and zip. The auditor gets a tarball they can verify without Beacon access.",
+    leftTitle: "MCP tool: bundle_for_auditor",
+    rightTitle: "bundle on disk",
+    leftType: "stream",
+    leftContent: [
+      { c: "line-prompt", d: 0, t: "agent → " },
+      { c: "line-out", d: 200, t: "bundle_for_auditor { from: '7d ago', to: 'now', framework: 'nist-ai-rmf-1.0' }" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-out", d: 100, t: "← {" },
+      { c: "line-key", d: 100, t: "    bundle_path: '/var/lib/beacon/bundles/bundle-2026-05-13T15-32Z'," },
+      { c: "line-key", d: 100, t: "    manifest_sha256: 'a1399fd3e02afc8bb9a196880829da8051a7eff…'," },
+      { c: "line-ok",  d: 100, t: "    verification: {" },
+      { c: "line-ok",  d: 100, t: "      receipts_verified: 69," },
+      { c: "line-ok",  d: 100, t: "      receipts_failed: 0," },
+      { c: "line-ok",  d: 100, t: "      failures: []" },
+      { c: "line-ok",  d: 100, t: "    }" },
+      { c: "line-out", d: 100, t: "  }" },
+      { c: "line-dim", d: 300, t: "" },
+      { c: "line-prompt", d: 0, t: "$ " },
+      { c: "line-out", d: 200, t: "ls bundle-2026-05-13T15-32Z/" },
+      { c: "line-out", d: 150, t: "VERIFY.md            inventory.json" },
+      { c: "line-out", d: 150, t: "attestations.json    manifest.json" },
+      { c: "line-out", d: 150, t: "checklists/          manifest.sha256" },
+      { c: "line-out", d: 150, t: "gate_decisions.json" },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  AUDITOR BUNDLE  (Apache-2.0, no SaaS)
+  ┌──────────────────────────────────┐
+  │  bundle-2026-05-13T15-32Z/       │
+  │  ├── manifest.json               │
+  │  ├── manifest.sha256             │
+  │  ├── inventory.json              │
+  │  ├── checklists/                 │
+  │  │     nist-ai-rmf-1.0.json     │
+  │  ├── attestations.json           │
+  │  ├── gate_decisions.json         │
+  │  └── VERIFY.md   ← run me first  │
+  └──────────────────────────────────┘
+
+  Auditor runs:
+    $ python verify.py bundle-2026-…Z/
+    ✓ manifest_sha256 matches
+    ✓ 69 receipts verify (Ed25519)
+    ✓ 0 chain breaks`
+  },
+  {
+    title: "Super-agent governance — Beacon as the safety layer",
+    desc: "Brains-in-a-box / KSB-style super-agents need a kill switch and receipts. Beacon is that layer.",
+    leftTitle: "super-agent ↔ beacon flow",
+    rightTitle: "the moat",
+    leftType: "lines",
+    leftContent: [
+      { c: "line-dim", t: "// Super-agent decomposes a $1M consulting engagement…" },
+      { c: "line-out", t: "orchestrator.plan('reduce churn 30% in 90d')" },
+      { c: "line-dim", t: "" },
+      { c: "line-out", t: "  ├─ specialist:RESEARCHER  → reads SaaS churn data" },
+      { c: "line-key", t: "  │   └─ beacon.record_decision('data-access', MAP-3.2)" },
+      { c: "line-out", t: "  ├─ specialist:STRATEGIST  → drafts retention plan" },
+      { c: "line-key", t: "  │   └─ beacon.record_decision('plan-v1', GOVERN-1.1)" },
+      { c: "line-out", t: "  ├─ specialist:OPS         → spins up customer-success workflow" },
+      { c: "line-key", t: "  │   └─ beacon.record_decision('deploy-prod', MANAGE-2.1)" },
+      { c: "line-out", t: "  └─ specialist:VERIFIER    → 30d monitoring & rollback drill" },
+      { c: "line-key", t: "      └─ beacon.bundle_for_auditor('engagement-acme-2026')" },
+      { c: "line-dim", t: "" },
+      { c: "line-ok",  t: "RESULT: every agent action is a signed receipt." },
+      { c: "line-ok",  t: "Auditor verifies offline. Insurer covers. Client renews." },
+    ],
+    rightType: "diagram",
+    rightContent:
+`  KSB AGENIC × BEACON
+
+  super-agent
+       ↓
+  ┌─────────────────────────────┐
+  │  many specialists running   │
+  │  unattended at client site  │
+  └─────────────────────────────┘
+       ↓ each action
+  ┌─────────────────────────────┐
+  │  Beacon MCP — 6 tools       │
+  │  receipts · scoring · bundle│
+  │  record · verify · replay   │
+  └─────────────────────────────┘
+       ↓
+  ┌─────────────────────────────┐
+  │  AUDIT-GRADE EVIDENCE       │
+  │  Auditor / Insurer / Regulator│
+  │  verify with public key.    │
+  └─────────────────────────────┘
+
+  This is the layer that lets a
+  $1M super-agent actually ship.`
+  },
+  {
+    title: "Ship — three deployment shapes, one code base",
+    desc: "Workshop today, beta tomorrow, production next quarter. Same Beacon. Same receipts. Same audit story.",
+    leftTitle: "deployment lifecycle",
+    rightTitle: "where this goes from here",
+    leftType: "diagram",
+    leftContent:
+`  ┌──────────────────────────────────────────┐
+  │  ① SUITCASE LAB                          │
+  │     1 laptop · 1 docker compose · 3 sec  │
+  │     workshops, conference demos, POCs    │
+  └──────────────────────────────────────────┘
+              ↓
+  ┌──────────────────────────────────────────┐
+  │  ② LAB-ON-CORP                           │
+  │     1 corp VM · DNS tail + CASB poll     │
+  │     no endpoint install · 1 week beta    │
+  └──────────────────────────────────────────┘
+              ↓
+  ┌──────────────────────────────────────────┐
+  │  ③ BETA HYBRID                            │
+  │     core + MV3 ext (MDM-pushed) + MCP    │
+  │     governance team queries via agents   │
+  └──────────────────────────────────────────┘
+              ↓
+  ┌──────────────────────────────────────────┐
+  │  ④ SHIP                                  │
+  │     eBPF probe, VPC mirror, multi-tenant │
+  │     SOC2 · third-party verify · scale     │
+  └──────────────────────────────────────────┘`,
+    rightType: "lines",
+    rightContent: [
+      { c: "line-dim", t: "What's next" },
+      { c: "line-dim", t: "" },
+      { c: "line-key", t: "→  Hosted MCP at https://beacon-mcp.aigovops.app" },
+      { c: "line-out", t: "    (Render free + Cloudflare Worker agent)" },
+      { c: "line-key", t: "→  GitHub Pages walkthrough URL" },
+      { c: "line-out", t: "    https://bobrapp.github.io/aigovops-beacon/walkthrough/" },
+      { c: "line-key", t: "→  Star the repo · open an issue · join the foundation" },
+      { c: "line-out", t: "    github.com/bobrapp/aigovops-beacon" },
+      { c: "line-out", t: "    aigovopsfoundation.org" },
+      { c: "line-dim", t: "" },
+      { c: "line-ok",  t: "Apache-2.0 · no SaaS lock-in · receipts forever." },
+      { c: "line-ok",  t: "YES-Ship AI · YES-Steady AI · YES-Recover AI" },
+    ]
+  },
+];
+
+// =============================================================================
+// Renderer
+// =============================================================================
+let stepIdx = 0;
+let playing = false;
+let playTimer = null;
+const PLAY_INTERVAL_MS = 14000;
+
+function $(id) { return document.getElementById(id); }
+
+function renderProgress() {
+  const wrap = $("progress");
+  wrap.innerHTML = "";
+  STEPS.forEach((s, i) => {
+    const d = document.createElement("div");
+    d.className = "dot" + (i === stepIdx ? " active" : (i < stepIdx ? " done" : ""));
+    d.title = `${i+1}. ${s.title}`;
+    d.onclick = () => goto(i);
+    wrap.appendChild(d);
+  });
+  $("step-counter").textContent = `step ${stepIdx+1} / ${STEPS.length}`;
+}
+
+function renderLeftLines(lines) {
+  const body = $("left-body");
+  body.innerHTML = "";
+  for (const ln of lines) {
+    if (ln.c === "cursor") {
+      const c = document.createElement("span");
+      c.className = "cursor";
+      body.appendChild(c);
+      continue;
+    }
+    const s = document.createElement("span");
+    s.className = ln.c || "line-out";
+    s.textContent = (ln.t || "") + "\n";
+    body.appendChild(s);
+  }
+}
+
+let streamCancel = null;
+function renderLeftStream(lines) {
+  const body = $("left-body");
+  body.innerHTML = "";
+  if (streamCancel) { clearTimeout(streamCancel); streamCancel = null; }
+  let i = 0;
+  function tick() {
+    if (i >= lines.length) return;
+    const ln = lines[i++];
+    if (ln.c === "cursor") {
+      const c = document.createElement("span");
+      c.className = "cursor";
+      body.appendChild(c);
+      body.scrollTop = body.scrollHeight;
+      streamCancel = setTimeout(tick, 10);
+      return;
+    }
+    const s = document.createElement("span");
+    s.className = ln.c || "line-out";
+    s.textContent = (ln.t || "") + "\n";
+    body.appendChild(s);
+    body.scrollTop = body.scrollHeight;
+    streamCancel = setTimeout(tick, ln.d || 0);
+  }
+  tick();
+}
+
+function renderLeftDiagram(text) {
+  const body = $("left-body");
+  body.innerHTML = "";
+  const pre = document.createElement("pre");
+  pre.className = "diagram";
+  pre.textContent = text;
+  body.appendChild(pre);
+}
+
+function renderRightDiagram(text) {
+  const body = $("right-body");
+  body.innerHTML = "";
+  const pre = document.createElement("pre");
+  pre.className = "diagram";
+  pre.textContent = text;
+  body.appendChild(pre);
+}
+
+function renderRightTable({head, rows}) {
+  const body = $("right-body");
+  body.innerHTML = "";
+  const tbl = document.createElement("table");
+  tbl.className = "fake-table";
+  const thead = document.createElement("thead");
+  const trh = document.createElement("tr");
+  head.forEach(h => { const th = document.createElement("th"); th.textContent = h; trh.appendChild(th); });
+  thead.appendChild(trh);
+  tbl.appendChild(thead);
+  const tbody = document.createElement("tbody");
+  rows.forEach(r => {
+    const tr = document.createElement("tr");
+    r.forEach(c => { const td = document.createElement("td"); td.innerHTML = colorizeCell(c); tr.appendChild(td); });
+    tbody.appendChild(tr);
+  });
+  tbl.appendChild(tbody);
+  body.appendChild(tbl);
+}
+
+function colorizeCell(text) {
+  if (typeof text !== "string") return String(text);
+  if (text.startsWith("✓")) return `<span class="tag-yes">${text}</span>`;
+  if (text.startsWith("△")) return `<span class="tag-steady">${text}</span>`;
+  if (text.startsWith("✗")) return `<span class="tag-recover">${text}</span>`;
+  return text;
+}
+
+function renderRightExtPopup({title, rows}) {
+  const body = $("right-body");
+  body.innerHTML = "";
+  body.style.display = "flex";
+  body.style.alignItems = "center";
+  body.style.justifyContent = "center";
+  const pop = document.createElement("div");
+  pop.className = "ext-pop";
+  const h = document.createElement("h4");
+  h.textContent = title;
+  pop.appendChild(h);
+  rows.forEach(([k,v]) => {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `<span style="color:#666">${k}</span><span style="font-family:var(--mono);font-size:12px">${v}</span>`;
+    pop.appendChild(row);
+  });
+  body.appendChild(pop);
+}
+
+function renderRightJSON(text) {
+  const body = $("right-body");
+  body.innerHTML = "";
+  body.style.display = "block";
+  const pre = document.createElement("pre");
+  pre.className = "diagram";
+  pre.innerHTML = colorizeJSON(text);
+  body.appendChild(pre);
+}
+
+function colorizeJSON(t) {
+  return t
+    .replace(/("[^"]+")(\s*:)/g, '<span class="json-key">$1</span>$2')
+    .replace(/:(\s*)"([^"]*)"/g, ':$1<span class="json-str">"$2"</span>')
+    .replace(/:(\s*)(true|false|null)/g, ':$1<span class="json-bool">$2</span>')
+    .replace(/:(\s*)(\d+(\.\d+)?)/g, ':$1<span class="json-num">$2</span>');
+}
+
+function renderRightLines(lines) {
+  const body = $("right-body");
+  body.innerHTML = "";
+  body.style.display = "block";
+  const pre = document.createElement("pre");
+  pre.className = "diagram";
+  pre.style.whiteSpace = "pre-wrap";
+  for (const ln of lines) {
+    const span = document.createElement("span");
+    span.className = ln.c || "line-out";
+    span.textContent = (ln.t || "") + "\n";
+    pre.appendChild(span);
+  }
+  body.appendChild(pre);
+}
+
+function render() {
+  // Cancel any in-flight stream from a previous step
+  if (streamCancel) { clearTimeout(streamCancel); streamCancel = null; }
+  const s = STEPS[stepIdx];
+  $("step-title").textContent = `${stepIdx+1}. ${s.title}`;
+  $("step-desc").textContent = s.desc;
+  $("left-title").textContent = s.leftTitle || "terminal";
+  $("right-title").textContent = s.rightTitle || "app";
+
+  // reset right-body style
+  const rb = $("right-body"); rb.style.display = "block"; rb.style.alignItems = ""; rb.style.justifyContent = "";
+
+  // LEFT
+  if (s.leftType === "lines") renderLeftLines(s.leftContent);
+  else if (s.leftType === "stream") renderLeftStream(s.leftContent);
+  else if (s.leftType === "diagram") renderLeftDiagram(s.leftContent);
+
+  // RIGHT
+  if (s.rightType === "diagram") renderRightDiagram(s.rightContent);
+  else if (s.rightType === "table") renderRightTable(s.rightContent);
+  else if (s.rightType === "ext-popup") renderRightExtPopup(s.rightContent);
+  else if (s.rightType === "json") renderRightJSON(s.rightContent);
+  else if (s.rightType === "lines") renderRightLines(s.rightContent);
+
+  renderProgress();
+}
+
+function goto(i) {
+  stepIdx = Math.max(0, Math.min(STEPS.length - 1, i));
+  render();
+}
+
+function next() { goto(stepIdx + 1); }
+function prev() { goto(stepIdx - 1); }
+function togglePlay() {
+  playing = !playing;
+  $("play").textContent = playing ? "⏸ Pause" : "▶ Play";
+  if (playing) {
+    playTimer = setInterval(() => {
+      if (stepIdx >= STEPS.length - 1) {
+        playing = false; $("play").textContent = "▶ Play"; clearInterval(playTimer); return;
+      }
+      next();
+    }, PLAY_INTERVAL_MS);
+  } else if (playTimer) {
+    clearInterval(playTimer);
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); next(); }
+  else if (e.key === "ArrowLeft") prev();
+  else if (e.key === "p" || e.key === "P") togglePlay();
+  else if (e.key === "Home") goto(0);
+  else if (e.key === "End") goto(STEPS.length - 1);
+});
+
+$("next").onclick = next;
+$("prev").onclick = prev;
+$("play").onclick = togglePlay;
+
+render();
+</script>
+</body>
+</html>

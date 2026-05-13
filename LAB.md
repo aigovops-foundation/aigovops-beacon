@@ -139,6 +139,24 @@ Each variant is a **20-minute block**. Pick four and you've got a workshop. Pick
 3. Hand it to a partner team. They run `beacon verify bundle.tar.gz` with no other access to your network
 4. Green check. **Discussion:** does this change your relationship with audit?
 
+### Lab 8 — *Offline walkthrough on a USB stick* (10 min, v2.3)
+
+1. Copy `docs/walkthrough/` to a USB stick (or any folder)
+2. Open `index.html` in any browser — no network, no install
+3. Twelve screens animate the full flow: discover → DNS tail → MV3 extension → record_decision via MCP → verify → score_framework → replay_case → bundle_for_auditor → super-agent governance
+4. Use `←`/`→`/`Space` to step, `P` to play, `Home`/`End` to jump. Click progress dots to scrub.
+5. For an event with no projector laptop access, hand attendees [`docs/downloads/beacon-walkthrough.mp4`](./docs/downloads/beacon-walkthrough.mp4) — same flow, ~70 seconds.
+6. **Discussion:** what's the smallest unit of governance evidence you can hand someone in one click?
+
+### Lab 9 — *Hosted MCP + restricted agent* (20 min, v2.3)
+
+1. Read [`mcp-public/README.md`](./mcp-public/README.md) — same six MCP tools, internet-facing, free Render dyno
+2. Read [`agent/README.md`](./agent/README.md) — a Cloudflare Worker whose tool universe is **exactly** the six Beacon tools; any other tool name is refused before the LLM sees it
+3. Connect Claude Desktop or Cursor to your Render MCP URL (`/sse`)
+4. From the Worker UI: *"Show me the inventory, then bundle the last 30 days for an EU AI Act audit."*
+5. Watch the trace — `query_inventory` then `bundle_for_auditor` — and the signed manifest sha256 come back
+6. **Discussion:** see [SUPERAGENT.md](./SUPERAGENT.md). What does it take for an autonomous agent to be procurable?
+
 ---
 
 ## 4. Beta Corp — running on a live corp network with no agent on endpoints

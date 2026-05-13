@@ -1,0 +1,13 @@
+# Cloudflare Workers config for the restricted Beacon agent.
+# https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "aigovops-beacon-agent"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Set this to your hosted Beacon MCP URL after deploying mcp-public to Render.
+[vars]
+MCP_URL    = "https://aigovops-beacon-mcp.onrender.com"
+MAX_HOPS   = "6"
+AGENT_NAME = "aigovops-beacon-agent"

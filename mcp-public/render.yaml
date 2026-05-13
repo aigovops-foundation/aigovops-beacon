@@ -1,0 +1,33 @@
+# Render.com blueprint for AIGovOps Beacon — hosted MCP server.
+# https://render.com/docs/blueprint-spec
+#
+# This deploys ONE web service that:
+#   - boots an embedded Beacon core on loopback :8787
+#   - exposes MCP-SSE + healthz + read-only Beacon REST on $PORT
+#
+# Free tier dynos sleep after 15 min idle. For a live event, upgrade
+# the plan to `starter` and remove `plan: free`.
+
+services:
+  - type: web
+    name: aigovops-beacon-mcp
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: mcp-public
+    buildCommand: |
+      cd ../server && npm install --omit=dev --no-audit --no-fund
+      cd ../mcp && npm install --omit=dev --no-audit --no-fund
+      cd ../mcp-public && npm install --no-audit --no-fund
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BEACON_PORT
+        value: "8787"
+      - key: BEACON_DATA_DIR
+        value: /tmp/beacon-public
+      - key: PUBLIC_MODE
+        value: "1"
