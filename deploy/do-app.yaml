@@ -1,0 +1,44 @@
+# do-app.yaml — AIGovOps Beacon on DigitalOcean App Platform
+# https://docs.digitalocean.com/products/app-platform/reference/app-spec/
+#
+# Deploy:
+#   doctl apps create --spec deploy/do-app.yaml
+#   doctl apps update <APP_ID> --spec deploy/do-app.yaml   # subsequent updates
+#
+# App Platform doesn't ship a built-in persistent volume; for full durability
+# attach a DigitalOcean Volume (Block Storage) to a Droplet behind a load
+# balancer, or use Spaces (S3-compatible) as the bundle target and rely on
+# /data inside the container as a hot cache only.
+
+name: aigovops-beacon
+region: nyc
+features:
+  - buildpack-stack=ubuntu-22
+
+services:
+  - name: beacon
+    dockerfile_path: deploy/Dockerfile
+    source_dir: /
+    http_port: 8787
+    instance_count: 1
+    instance_size_slug: basic-xs       # 1 vCPU / 1 GB — bump for prod
+    health_check:
+      http_path: /api/v1/health
+      initial_delay_seconds: 10
+      period_seconds: 30
+      timeout_seconds: 5
+    envs:
+      - { key: BEACON_HOST,         scope: RUN_TIME, value: "0.0.0.0" }
+      - { key: BEACON_PORT,         scope: RUN_TIME, value: "8787" }
+      - { key: BEACON_DATA_DIR,     scope: RUN_TIME, value: "/data" }
+      - { key: BEACON_CAPTURE_MODE, scope: RUN_TIME, value: "redacted" }
+      - { key: NODE_ENV,            scope: RUN_TIME, value: "production" }
+      # set these as encrypted secrets in the dashboard or via doctl
+      - { key: OIDC_ISSUER_URL,     scope: RUN_TIME, type: SECRET }
+      - { key: OIDC_CLIENT_ID,      scope: RUN_TIME, type: SECRET }
+      - { key: OIDC_CLIENT_SECRET,  scope: RUN_TIME, type: SECRET }
+      # point bundle exports at a Spaces bucket for durable storage
+      - { key: BEACON_BUNDLE_S3_ENDPOINT, scope: RUN_TIME, value: "https://nyc3.digitaloceanspaces.com" }
+      - { key: BEACON_BUNDLE_S3_BUCKET,   scope: RUN_TIME, value: "aigovops-beacon-bundles" }
+      - { key: BEACON_BUNDLE_S3_KEY,      scope: RUN_TIME, type: SECRET }
+      - { key: BEACON_BUNDLE_S3_SECRET,   scope: RUN_TIME, type: SECRET }

@@ -394,7 +394,7 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
       <div class="shell">
         <span class="kicker">Run it yourself</span>
         <h2 class="reveal">Three commands. Your own keys. Your own evidence.</h2>
-        <p class="lede reveal">No SaaS to sign up for. Beacon is a small Node server plus a static Studio. Apache-2.0 licensed. Designed to run on a free Fly.io or Railway tier — or on your laptop.</p>
+        <p class="lede reveal">No SaaS to sign up for. Beacon is a small Node server plus a static Studio. Apache-2.0 licensed. Designed to run on Render, Railway, or DigitalOcean — or on your laptop.</p>
 
         <div class="run-grid reveal">
           <pre class="code-block"><span class="c"># 1. Get the code</span>
@@ -416,10 +416,11 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
 
           <div class="run-side">
             <h3>Deploy in one click</h3>
-            <p>Spin up the Studio (Beacon's web UI) on a free tier — no card required for the free plan on either provider.</p>
+            <p>Spin up the Studio (Beacon's web UI) on a managed tier. Render and Railway have free starter tiers; DigitalOcean App Platform uses a paid basic instance.</p>
             <div class="cta-row" style="flex-direction:column; align-items:stretch; gap:var(--space-2)">
-              <a href="https://fly.io/launch/sourceforge?repo=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">Deploy to Fly.io ↗</a>
+              <a href="https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">Deploy to Render ↗</a>
               <a href="https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon" class="btn-ghost btn-sm" target="_blank" rel="noopener">Deploy to Railway ↗</a>
+              <a href="https://cloud.digitalocean.com/apps/new?repo=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon%2Ftree%2Fmain&refcode=" class="btn-ghost btn-sm" target="_blank" rel="noopener">Deploy to DigitalOcean ↗</a>
               <a href="./downloads/aigovops-beacon-starter.zip" class="btn-ghost btn-sm" download>Or grab the starter .zip</a>
             </div>
             <p class="kicker" style="margin-top:var(--space-4)">Required: Node 20+, pnpm 9+. No database. Receipts are append-only files.</p>

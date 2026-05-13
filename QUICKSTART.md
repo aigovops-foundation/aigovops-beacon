@@ -74,5 +74,5 @@ The receipt comes back signed. Verify it any time with
 
 ## Want it on a server?
 
-See `deploy/README.md`. Docker, docker-compose, Railway, or Fly. Same
-runtime, same shape.
+See `deploy/README.md`. Docker, docker-compose, Railway, Render, or
+DigitalOcean App Platform. Same runtime, same shape.

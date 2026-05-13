@@ -129,7 +129,8 @@ flowchart TB
 | **Single VM (Docker)** | Small org, single tenant | `deploy/Dockerfile` |
 | **Docker Compose** | Add Postgres, optional reverse proxy | `deploy/docker-compose.yml` |
 | **Railway one-click** | Hosted, persistent volume | `deploy/railway.json` |
-| **Fly.io** | Edge, multi-region | `deploy/fly.toml` |
+| **Render** | Managed Docker + persistent disk | `deploy/render.yaml` |
+| **DigitalOcean App Platform** | Managed Docker + Spaces for bundles | `deploy/do-app.yaml` |
 | **Kubernetes** | Large enterprise | `deploy/k8s/` *(coming in v0.3)* |
 
 ## Trust model

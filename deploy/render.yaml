@@ -1,0 +1,40 @@
+# render.yaml — AIGovOps Beacon
+# Deploy on Render (https://render.com). Persistent disk + free TLS at the edge.
+#
+# After connecting the repo in the Render dashboard, Render will read this
+# blueprint and create one Web Service + one persistent disk.
+# Before going live, set OIDC secrets in the dashboard:
+#   OIDC_ISSUER_URL, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET
+
+services:
+  - type: web
+    name: aigovops-beacon
+    runtime: docker
+    plan: starter           # 512 MB RAM / 0.5 CPU — bump to "standard" for prod
+    region: oregon          # change to your nearest region
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: BEACON_HOST
+        value: 0.0.0.0
+      - key: BEACON_PORT
+        value: "8787"
+      - key: BEACON_DATA_DIR
+        value: /data
+      - key: BEACON_CAPTURE_MODE
+        value: redacted
+      - key: NODE_ENV
+        value: production
+      # set these in the dashboard, do NOT commit
+      - key: OIDC_ISSUER_URL
+        sync: false
+      - key: OIDC_CLIENT_ID
+        sync: false
+      - key: OIDC_CLIENT_SECRET
+        sync: false
+    disk:
+      name: beacon-data
+      mountPath: /data
+      sizeGB: 1

@@ -30,7 +30,7 @@ The page also hosts:
 - The full **audit framework PDF** (NIST AI RMF + EU AI Act Art. 13 + ISO/IEC 42001 + HIPAA + Human Flourishing)
 - The five individual checklist PDFs and the [Excel inventory template](docs/downloads/AI_Model_Inventory_Template.xlsx)
 - The [starter .zip](docs/downloads/aigovops-beacon-starter.zip) for the entire repo
-- One-click deploy buttons to Fly.io and Railway
+- One-click deploy recipes for Railway, Render, and DigitalOcean App Platform
 
 Want to read the home-page source? It's plain HTML + CSS + JS in [`docs/`](docs/).
 
@@ -83,7 +83,7 @@ npm install && npm run dev
 
 Open http://localhost:8080. Studio opens by default. Click the toggle in the top right for the Control Plane.
 
-Three more one-click deploys live in [`/deploy`](deploy/): Railway, Fly.io, and Docker Compose.
+Four more one-click deploys live in [`/deploy`](deploy/): Railway, Render, DigitalOcean App Platform, and Docker Compose.
 
 ---
 
@@ -199,7 +199,8 @@ aigovops-beacon/
 │   ├── Dockerfile
 │   ├── docker-compose.yml
 │   ├── railway.json
-│   └── fly.toml
+│   ├── render.yaml
+│   └── do-app.yaml
 │
 └── scripts/
     ├── verify-receipt.js

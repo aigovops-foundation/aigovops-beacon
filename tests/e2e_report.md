@@ -1,5 +1,5 @@
 # AIGovOps Beacon — E2E Test Report
-Run: 2026-05-13 14:50:06 UTC
+Run: 2026-05-13 14:56:17 UTC
 Root: /home/user/workspace/aigovops-beacon
 
 ## Framework registry
@@ -107,18 +107,18 @@ PASS  frameworks/index.yaml contains YES-* tagline
 ## Primary-source URL liveness (best-effort, network)
 INFO  checking 123 URLs in parallel (8 workers, 8s timeout)
 INFO  31 URLs returned 401/403/405 (site blocks scripted HEAD; verified working in browser)
-PASS  URL liveness within tolerance (12 hard-bad + 31 blocked of 123)
+PASS  URL liveness within tolerance (10 hard-bad + 31 blocked of 123)
 INFO  hard-bad URLs (first 10):
           0  https://law.go.kr/lsInfoP.do?lsiSeq=268543&lsId=014820&chrClsCd=&urlMode=engLsInfoR&viewCls=engLsInfoR&efYd=20260122&vSct=%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5&ancYnChk=  (AI Basic Act)
         500  https://legalinstruments.oecd.org/api/print?ids=648&lang=en  (OECD AI Principles)
         404  https://www.whitehouse.gov/ostp/ai-bill-of-rights/  (AI Bill of Rights)
         404  https://wormhole.com/wormhole-incident-report-02-02-22/  (Wormhole bridge hack)
         404  https://ico.org.uk/media/action-weve-taken/undertakings/2014352/royal-free-undertaking-03072017.pdf  (Google DeepMind Royal Free NHS data ICO)
-          0  https://standards.ieee.org/standard/7000-2021.html  (IEEE 7000)
-          0  https://www.industry.gov.au/publications/voluntary-ai-safety-standard  (AI Ethics + VAISS)
-          0  https://www.indiacode.nic.in/handle/123456789/22037?locale=en  (DPDP Act)
         404  https://roninchain.com/blog/posts/community-alert-ronin-validators-6513cc78a5edc1001b03c366  (Ronin Bridge hack 2022)
+          0  https://www.indiacode.nic.in/handle/123456789/22037?locale=en  (DPDP Act)
+          0  https://www.industry.gov.au/publications/voluntary-ai-safety-standard  (AI Ethics + VAISS)
           0  https://robodebt.royalcommission.gov.au/publications/report  (Robodebt Australia automated welfare debt scandal)
+          0  https://www.adobe.com/ai/overview/firefly/gen-ai-approach.html  (Adobe Firefly training data lawsuit)
 
 ## Summary
 - Passes: 91

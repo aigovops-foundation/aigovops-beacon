@@ -45,27 +45,53 @@ railway domain
 
 Add a mounted volume named `beacon_data` on `/data`.
 
-## Fly.io
+## Render
+
+[Render](https://render.com/) reads `deploy/render.yaml` as a blueprint and
+provisions a Web Service plus a 1 GB persistent disk mounted at `/data`.
+TLS is automatic. After connecting the repo:
 
 ```bash
-fly launch --no-deploy --copy-config --config deploy/fly.toml
-fly volumes create beacon_data --size 1
-fly deploy --remote-only
+# render-cli (optional — the dashboard works too)
+render blueprint apply deploy/render.yaml
 ```
 
-Set OIDC secrets before exposing the app publicly:
+Set OIDC secrets in the dashboard before exposing the app publicly:
+
+```
+OIDC_ISSUER_URL=https://your-idp
+OIDC_CLIENT_ID=...
+OIDC_CLIENT_SECRET=...
+```
+
+## DigitalOcean App Platform
+
+`deploy/do-app.yaml` is an App Spec that runs the Docker build with
+healthchecks and managed TLS. App Platform doesn't ship a built-in
+persistent volume, so the spec points bundle exports at a Spaces bucket
+(S3-compatible) for durable storage; `/data` inside the container is a
+hot cache.
 
 ```bash
-fly secrets set OIDC_ISSUER_URL=https://your-idp \
-                OIDC_CLIENT_ID=… OIDC_CLIENT_SECRET=…
+doctl apps create --spec deploy/do-app.yaml
+# later updates:
+doctl apps update <APP_ID> --spec deploy/do-app.yaml
 ```
+
+Set OIDC + Spaces secrets in the dashboard or via `doctl apps update --spec`
+with the encrypted values in place.
+
+If you need a real persistent volume on DO, run the Docker image on a
+Droplet and attach a [Block Storage volume](https://docs.digitalocean.com/products/volumes/)
+mounted at `/data` — same shape as the local Docker recipe above.
 
 ## Sizing
 
-Beacon is small. A `t3.micro` or Fly `shared-cpu-1x` with 512 MB and a
-1 GB volume runs Beacon for years for a department-sized footprint.
-The receipt files are the bulk of the disk; rotate them out to S3 or
-Azure Blob with the `bundles/` export and `lifecycle` rules.
+Beacon is small. A `t3.micro`, Render `starter`, or DO `basic-xs` with
+512 MB – 1 GB and a 1 GB volume runs Beacon for years for a
+department-sized footprint.
+The receipt files are the bulk of the disk; rotate them out to S3, DO
+Spaces, or Azure Blob with the `bundles/` export and `lifecycle` rules.
 
 ## Things to harden before production
 
