@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="brazil-pl-2338-2023-lgpd" status="draft" jurisdiction="Brazil" lang="en">
+  <name>Projeto de Lei nº 2.338, de 2023 (Marco Legal da Inteligência Artificial) and Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais - LGPD)</name>
+  <short_name>Brazil AI Bill / LGPD</short_name>
+  <issuing_body>Brazilian National Congress (PL 2338/2023); Presidency of the Republic / National Data Protection Authority (LGPD)</issuing_body>
+  <effective_date>TBD — draft</effective_date>
+  <scope>PL 2338/2023 is Brazil’s federal AI bill and, as reflected on the Senate’s official page, it was approved by the Senate in substitute form and sent to the Câmara dos Deputados for revision, so it is not yet in force as law. The bill covers general AI governance, high-risk systems, impact assessments, human oversight, auditability, and liability themes for AI systems used in Brazil. The LGPD is Brazil’s in-force federal personal data law and applies broadly to processing of personal data in Brazil or targeting individuals in Brazil, including AI systems that process personal data, make automated decisions, or rely on sensitive data.</scope>
+  <primary_url>https://www25.senado.leg.br/web/atividade/materias/-/materia/157233</primary_url>
+  <applies_to>PL 2338/2023 applies to AI systems and related providers/deployers in Brazil, especially systems categorized as high risk, generative AI where covered, and uses affecting rights, safety, or public interests. LGPD applies to any natural person, public entity, or private legal entity processing personal data in Brazil or targeting individuals in Brazil, across all sectors and organization sizes.</applies_to>
+  <penalties>PL 2338/2023 is still draft/proposed in the Senate track and the Senate page does not yet state a final enforcement regime because it has not become law. LGPD enforcement is by the ANPD and can include warnings, public disclosure, blocking or deletion of data, suspension of processing activity, and fines of up to 2% of Brazilian revenue capped at R$50 million per infraction.</penalties>
+  <controls>
+    <control id="ART-1" severity="high" weight="8">
+      <statement>AI systems must be used in a way that respects fundamental rights, democratic values, human dignity, and the objectives stated in the bill's general principles.</statement>
+      <evidence_types>
+        <type>policy_document</type>
+        <type>ai_principles_statement</type>
+        <type>board_approval</type>
+      </evidence_types>
+    </control>
+    <control id="ART-3" severity="high" weight="9">
+      <statement>Organizations must classify AI use cases by risk and apply the corresponding governance obligations for limited-risk and high-risk systems.</statement>
+      <evidence_types>
+        <type>risk_register</type>
+        <type>use_case_classification</type>
+        <type>control_mapping</type>
+      </evidence_types>
+    </control>
+    <control id="ART-15" severity="critical" weight="10">
+      <statement>High-risk AI systems must meet the bill's conditioning requirements before deployment and ongoing use.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>deployment_approval</type>
+        <type>high_risk_control_checklist</type>
+      </evidence_types>
+    </control>
+    <control id="ART-18" severity="high" weight="9">
+      <statement>Providers and deployers must perform or maintain the evaluation requirements applicable to the AI system, including impact-oriented assessment where required.</statement>
+      <evidence_types>
+        <type>impact_assessment</type>
+        <type>review_records</type>
+        <type>model_card</type>
+      </evidence_types>
+    </control>
+    <control id="ART-19" severity="high" weight="8">
+      <statement>Affected persons must receive the protections and procedural rights established for AI decisions and risk management in the bill.</statement>
+      <evidence_types>
+        <type>notice_text</type>
+        <type>grievance_procedure</type>
+        <type>rights_request_log</type>
+      </evidence_types>
+    </control>
+    <control id="ART-25" severity="medium" weight="7">
+      <statement>AI governance documentation and accountability measures must be maintained in the format required by the substitute text, including evidence of controls and responsibilities.</statement>
+      <evidence_types>
+        <type>governance_policy</type>
+        <type>control_ownership_matrix</type>
+        <type>audit_trail</type>
+      </evidence_types>
+    </control>
+    <control id="ART-34" severity="high" weight="8">
+      <statement>Where the bill shifts the burden of proof or creates consumer/individual protection rules, the organization must preserve records sufficient to defend its compliance position.</statement>
+      <evidence_types>
+        <type>litigation_hold</type>
+        <type>evidence_repository</type>
+        <type>incident_log</type>
+      </evidence_types>
+    </control>
+    <control id="ART-40" severity="medium" weight="7">
+      <statement>Governance obligations for AI systems must be implemented and monitored continuously, not only at launch.</statement>
+      <evidence_types>
+        <type>monitoring_dashboard</type>
+        <type>periodic_review_minutes</type>
+        <type>control_testing</type>
+      </evidence_types>
+    </control>
+    <control id="ART-44" severity="high" weight="9">
+      <statement>High-risk AI systems must include human supervision and auditability measures as reflected in the Senate substitute text.</statement>
+      <evidence_types>
+        <type>human_oversight_procedure</type>
+        <type>audit_log</type>
+        <type>access_controls</type>
+      </evidence_types>
+    </control>
+    <control id="LGPD-PRINCIPLES" severity="critical" weight="10">
+      <statement>Personal data processed by AI must comply with LGPD principles including purpose, adequacy, necessity, transparency, security, prevention, nondiscrimination, accountability, and responsibility.</statement>
+      <evidence_types>
+        <type>privacy_policy</type>
+        <type>data_mapping</type>
+        <type>security_controls</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www25.senado.leg.br/web/atividade/materias/-/materia/157233" title="Senate PL 2338/2023"/>
+    <source url="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/brazilian-data-protection-law.pdf" title="Brazilian Data Protection Law (LGPD)"/>
+    <source url="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/outros-documentos-e-publicacoes-institucionais/lgpd-en-lei-no-13-709-capa.pdf" title="ANPD LGPD English PDF"/>
+  </sources>
+</framework>

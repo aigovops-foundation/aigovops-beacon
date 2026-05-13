@@ -1,0 +1,119 @@
+framework_id: australia-ai-ethics-voluntary-ai-safety-standard
+full_name: Australia’s AI Ethics Principles and Voluntary AI Safety Standard
+short_name: AI Ethics + VAISS
+issuing_body: Department of Industry, Science and Resources (National AI Centre / Australian Government)
+jurisdiction: Australia
+status: voluntary
+effective_date: 2019-11-07 (AI Ethics Principles); 2024-09-05 / 2025-10-21 page update for Voluntary AI Safety Standard —
+  voluntary
+scope_summary: Australia’s AI Ethics Principles provide a voluntary ethical baseline for designing, developing, and implementing
+  AI in ways that are safe, fair, transparent, accountable, and human-centred. The Voluntary AI Safety Standard is a voluntary
+  implementation guide for industry that sets out practical guardrails for organisations using, developing, or supplying AI
+  systems, especially where higher-risk applications are involved.
+primary_url: https://www.industry.gov.au/publications/voluntary-ai-safety-standard
+applies_to: Australian industry and government use cases referenced by the principles; the voluntary standard is aimed at
+  organisations using, developing, supplying, or procuring AI systems, including businesses of all sizes and sectors, especially
+  higher-risk deployments.
+penalties: No legal penalties for the voluntary standard or AI Ethics Principles; compliance is encouraged through guidance
+  and procurement/governance expectations rather than enforcement. The 2024 mandatory-guardrails proposal contemplated future
+  enforcement, but no penalties attach to the voluntary framework itself.
+sources:
+- title: Australia’s AI Ethics Principles
+  url: https://www.industry.gov.au/publications/australias-ai-ethics-principles
+- title: Voluntary AI Safety Standard
+  url: https://www.industry.gov.au/publications/voluntary-ai-safety-standard
+- title: AI guardrails policy announcement
+  url: https://www.minister.industry.gov.au/ministers/husic/transcripts/press-conference-ai-guardrails-policy
+controls:
+- id: C-01
+  statement: Establish organisational accountability for AI governance and assign clear responsibility for safe and responsible
+    AI use across development, deployment, and monitoring.
+  evidence_types:
+  - governance_charter
+  - RACI_matrix
+  - board_or_executive_attestation
+  severity: high
+  weight: 9
+- id: C-02
+  statement: Assess intended use, context, and potential harms before adopting or deploying an AI system, including whether
+    the use case is high-risk.
+  evidence_types:
+  - risk_assessment
+  - use_case_register
+  - impact_assessment
+  severity: high
+  weight: 9
+- id: C-03
+  statement: Test AI systems before release and at key lifecycle stages to verify performance, safety, fairness, and reliability
+    against defined acceptance criteria.
+  evidence_types:
+  - test_plan
+  - validation_report
+  - acceptance_criteria
+  severity: high
+  weight: 8
+- id: C-04
+  statement: Monitor AI systems after deployment and maintain processes to detect drift, incidents, and emerging harms, with
+    prompt remediation and re-testing where needed.
+  evidence_types:
+  - monitoring_logs
+  - incident_register
+  - model_drift_report
+  severity: high
+  weight: 8
+- id: C-05
+  statement: Maintain appropriate human oversight and intervention capability so a person can review, override, or halt AI
+    outputs or decisions where necessary.
+  evidence_types:
+  - human_oversight_procedure
+  - override_records
+  - escalation_workflow
+  severity: high
+  weight: 8
+- id: C-06
+  statement: Provide transparency to affected users about when AI is used and, where appropriate, how outputs are generated
+    or influenced.
+  evidence_types:
+  - user_notice
+  - disclosure_text
+  - product_documentation
+  severity: medium
+  weight: 7
+- id: C-07
+  statement: Protect privacy and security by limiting unnecessary data collection, securing data and models, and managing
+    sensitive or personal information lawfully.
+  evidence_types:
+  - privacy_impact_assessment
+  - security_controls
+  - data_minimisation_policy
+  severity: high
+  weight: 8
+- id: C-08
+  statement: Manage fairness and non-discrimination risks by checking for bias, unequal performance, and disparate impacts
+    across affected groups.
+  evidence_types:
+  - fairness_testing
+  - bias_analysis
+  - demographic_performance_metrics
+  severity: high
+  weight: 8
+- id: C-09
+  statement: Document decisions, limitations, and assurance evidence so AI system behavior, risks, and governance actions
+    are traceable and contestable.
+  evidence_types:
+  - model_card
+  - decision_log
+  - assurance_report
+  severity: medium
+  weight: 7
+- id: C-10
+  statement: Engage relevant stakeholders and provide channels for feedback, complaints, and contestation when AI causes concern
+    or adverse impact.
+  evidence_types:
+  - stakeholder_consultation_notes
+  - complaints_process
+  - feedback_records
+  severity: medium
+  weight: 6
+lang: en
+translations: {}

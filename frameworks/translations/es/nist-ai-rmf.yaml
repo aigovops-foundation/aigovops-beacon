@@ -1,0 +1,62 @@
+framework_id: nist-ai-rmf
+lang: es
+translation_status: human_verified
+full_name: Marco de Gestión de Riesgos de Inteligencia Artificial (AI RMF 1.0)
+short_name: AI RMF
+scope_summary: Marco voluntario y transversal a todos los sectores, dirigido a las organizaciones que diseñan, desarrollan,
+  implementan o utilizan sistemas de inteligencia artificial, con el fin de gestionar los riesgos relacionados con la IA y
+  promover una IA confiable y responsable. Aborda consideraciones de confiabilidad a lo largo de todo el ciclo de vida de
+  la IA, incluyendo la gobernanza, el mapeo del contexto y los impactos, la medición de riesgos y desempeño, y la gestión
+  continua. Está diseñado para adaptarse a distintos sectores, tamaños de organización y casos de uso de la IA.
+applies_to: Cualquier organización que diseñe, desarrolle, implemente, evalúe o utilice sistemas de IA; aplicable en todos
+  los sectores, tamaños de organización y tipos de modelos de IA, incluida la IA generativa. Es una guía y no un requisito
+  legal, y está pensada para adaptarse a casos de uso específicos.
+penalties: No existen sanciones legales porque el marco es voluntario; su cumplimiento se promueve mediante la adopción
+  organizativa, expectativas de aprovisionamiento, requisitos de auditoría o de clientes, o su incorporación en políticas
+  y contratos.
+controls:
+  - id: GOVERN-1.1
+    severity: high
+    weight: 9
+    statement: Se establecen, implementan y mantienen políticas, procesos, procedimientos y prácticas relacionados con la
+      IA para gestionar los riesgos de la IA.
+  - id: GOVERN-2.1
+    severity: high
+    weight: 8
+    statement: Se documentan y asignan los roles, las responsabilidades y la rendición de cuentas para la gestión de riesgos
+      de la IA.
+  - id: MAP-1.1
+    severity: medium
+    weight: 8
+    statement: Se documenta el contexto en el que opera el sistema de IA, incluidos su propósito previsto, los beneficios,
+      las partes interesadas y las personas afectadas.
+  - id: MAP-2.1
+    severity: high
+    weight: 8
+    statement: Se identifican y documentan las fuentes de datos, la calidad de los datos y las limitaciones de datos pertinentes
+      para el sistema de IA.
+  - id: MEASURE-2.1
+    severity: high
+    weight: 9
+    statement: El desempeño del sistema de IA y los resultados relacionados con los riesgos se miden mediante métodos validados
+      y apropiados.
+  - id: MEASURE-2.7
+    severity: critical
+    weight: 10
+    statement: Se evalúan y monitorean los impactos adversos, incluidos los sesgos y otros daños, en las poblaciones y contextos
+      relevantes.
+  - id: MANAGE-1.1
+    severity: high
+    weight: 9
+    statement: Las acciones de tratamiento de riesgos se priorizan, se asignan y se hace seguimiento para reducir los riesgos
+      de la IA a niveles aceptables.
+  - id: MANAGE-2.1
+    severity: high
+    weight: 9
+    statement: Existen procesos para supervisar los sistemas de IA después de su implementación y para responder a cambios,
+      incidentes o riesgos emergentes.
+  - id: MANAGE-3.1
+    severity: medium
+    weight: 7
+    statement: Los riesgos residuales de la IA y sus compensaciones se comunican a las partes interesadas y a los responsables
+      de la toma de decisiones pertinentes.

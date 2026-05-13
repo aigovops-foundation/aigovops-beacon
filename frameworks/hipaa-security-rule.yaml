@@ -1,0 +1,113 @@
+framework_id: hipaa-security-rule
+full_name: HIPAA Security Rule
+short_name: HIPAA Security Rule
+issuing_body: U.S. Department of Health and Human Services Office for Civil Rights (OCR)
+jurisdiction: United States
+status: in_force
+effective_date: April 21, 2005
+scope_summary: The HIPAA Security Rule establishes national standards to protect individuals’ electronic protected health
+  information (ePHI) that is created, received, used, or maintained by covered entities and their business associates. It
+  requires administrative, physical, and technical safeguards to ensure the confidentiality, integrity, and availability of
+  ePHI, and it applies across the health care sector and group health plans to the extent they handle ePHI.
+primary_url: https://www.hhs.gov/hipaa/for-professionals/security/index.html
+applies_to: Covered entities, business associates, and group health plans in the U.S. health care ecosystem that create, receive,
+  maintain, or transmit ePHI; all sizes and all AI/ML systems insofar as they access, process, store, or transmit ePHI.
+penalties: Enforced by OCR through complaints, compliance reviews, corrective action, resolution agreements, and civil money
+  penalties; HIPAA civil money penalties can reach up to approximately $2 million per violation category per year, adjusted
+  for inflation, with criminal penalties available under 42 U.S.C. 1320d-6 for certain wrongful conduct.
+sources:
+- title: HHS HIPAA Security Rule
+  url: https://www.hhs.gov/hipaa/for-professionals/security/index.html
+- title: eCFR 45 CFR Part 164 Subpart C
+  url: https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C
+- title: HHS OCR enforcement overview
+  url: https://www.hhs.gov/hipaa/for-professionals/compliance-enforcement/examples/how-ocr-enforces-the-hipaa-privacy-and-security-rules/index.html
+controls:
+- id: 164.308(a)(1)(ii)(A)
+  statement: Conduct an accurate and thorough risk analysis of potential risks and vulnerabilities to the confidentiality,
+    integrity, and availability of ePHI.
+  evidence_types:
+  - risk_assessment
+  - asset_inventory
+  - threat_model
+  - control_owner_attestation
+  severity: critical
+  weight: 10
+- id: 164.308(a)(1)(ii)(B)
+  statement: Implement security measures sufficient to reduce identified risks and vulnerabilities to a reasonable and appropriate
+    level.
+  evidence_types:
+  - risk_treatment_plan
+  - control_implementation_records
+  - remediation_tracking
+  severity: critical
+  weight: 10
+- id: 164.308(a)(1)(ii)(D)
+  statement: Regularly review system activity records, access reports, and security incident tracking reports.
+  evidence_types:
+  - log_review_records
+  - siem_reports
+  - monitoring_procedures
+  severity: high
+  weight: 8
+- id: 164.308(a)(3)(ii)(A)
+  statement: Authorize and supervise workforce members who work with ePHI or in locations where ePHI might be accessed.
+  evidence_types:
+  - workforce_access_policy
+  - training_records
+  - supervision_logs
+  severity: high
+  weight: 7
+- id: 164.308(a)(5)(ii)(B)
+  statement: Implement procedures for guarding against, detecting, and reporting malicious software.
+  evidence_types:
+  - malware_protection_policy
+  - endpoint_security_logs
+  - incident_reports
+  severity: high
+  weight: 7
+- id: 164.308(a)(6)(ii)
+  statement: Identify and respond to suspected or known security incidents, mitigate harmful effects, and document incidents
+    and outcomes.
+  evidence_types:
+  - incident_response_plan
+  - incident_ticketing_records
+  - post_incident_reviews
+  severity: critical
+  weight: 9
+- id: 164.308(a)(7)(ii)(A)
+  statement: Establish and implement a data backup plan to create and maintain retrievable exact copies of ePHI.
+  evidence_types:
+  - backup_policy
+  - backup_job_logs
+  - restore_test_results
+  severity: high
+  weight: 8
+- id: 164.308(a)(7)(ii)(D)
+  statement: Implement periodic testing and revision procedures for contingency plans.
+  evidence_types:
+  - disaster_recovery_test_results
+  - tabletop_exercises
+  - plan_revision_history
+  severity: high
+  weight: 7
+- id: 164.308(a)(8)
+  statement: Perform periodic technical and nontechnical evaluations, and repeat them after environmental or operational changes
+    affecting ePHI security.
+  evidence_types:
+  - evaluation_report
+  - change_management_records
+  - audit_findings
+  severity: high
+  weight: 8
+- id: 164.312(a)(1)
+  statement: Implement access controls for systems maintaining ePHI so that only authorized persons or software programs can
+    access it.
+  evidence_types:
+  - access_control_matrix
+  - system_configuration
+  - access_review_records
+  severity: critical
+  weight: 9
+lang: en
+translations: {}

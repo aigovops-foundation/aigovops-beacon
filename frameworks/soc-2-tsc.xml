@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="soc-2-tsc" status="voluntary" jurisdiction="United States; used internationally in SOC 2 engagements" lang="en">
+  <name>2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (With Revised Points of Focus – 2022)</name>
+  <short_name>SOC 2 TSC</short_name>
+  <issuing_body>AICPA’s Assurance Services Executive Committee (ASEC)</issuing_body>
+  <effective_date>N/A — voluntary</effective_date>
+  <scope>The Trust Services Criteria are AICPA control criteria used in attestation or consulting engagements to evaluate and report on controls over the security, availability, processing integrity, confidentiality, or privacy of information and systems used to provide products or services. They are designed for service organizations and can be applied across an entire entity or to a subsidiary, division, or operating unit, including systems used to process users’ data.[AICPA](https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022)</scope>
+  <primary_url>https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022</primary_url>
+  <applies_to>Service organizations of any size and industry that provide products or services using systems subject to SOC 2 reporting; commonly cloud, SaaS, data processing, managed services, fintech, healthcare vendors, and other outsourced service providers. Can cover one or more trust services categories (security, availability, processing integrity, confidentiality, privacy) and may be scoped to an entity, subsidiary, division, or operating unit.</applies_to>
+  <penalties>No direct statutory penalty regime; compliance is voluntary and enforcement is contractual or market-based through customer requirements, procurement, and independent CPA attestation. No maximum penalty is specified by the AICPA criteria themselves.</penalties>
+  <controls>
+    <control id="CC1.1" severity="high" weight="8">
+      <statement>Management demonstrates a commitment to integrity and ethical values and establishes oversight of the entity’s internal control responsibilities.</statement>
+      <evidence_types>
+        <type>governance_policy</type>
+        <type>board_minutes</type>
+        <type>code_of_conduct</type>
+        <type>management_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="CC2.1" severity="high" weight="8">
+      <statement>The entity specifies objectives with sufficient clarity to enable identification and assessment of risks relating to objectives.</statement>
+      <evidence_types>
+        <type>control_framework</type>
+        <type>risk_register</type>
+        <type>objective_documentation</type>
+      </evidence_types>
+    </control>
+    <control id="CC3.1" severity="high" weight="9">
+      <statement>The entity identifies and assesses risks to the achievement of objectives across the system and selects suitable responses.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>risk_treatment_plan</type>
+        <type>control_design_matrix</type>
+      </evidence_types>
+    </control>
+    <control id="CC4.1" severity="high" weight="9">
+      <statement>The entity selects and develops control activities that contribute to the mitigation of risks to acceptable levels.</statement>
+      <evidence_types>
+        <type>control_matrix</type>
+        <type>procedure_documentation</type>
+        <type>testing_workpapers</type>
+      </evidence_types>
+    </control>
+    <control id="CC5.1" severity="high" weight="9">
+      <statement>The entity selects and develops general controls over technology to support the achievement of objectives.</statement>
+      <evidence_types>
+        <type>it_general_controls</type>
+        <type>access_reviews</type>
+        <type>change_management_logs</type>
+      </evidence_types>
+    </control>
+    <control id="CC6.1" severity="medium" weight="6">
+      <statement>The entity implements activities to obtain and use relevant quality information to support internal control.</statement>
+      <evidence_types>
+        <type>data_quality_controls</type>
+        <type>monitoring_reports</type>
+        <type>system-generated_reports</type>
+      </evidence_types>
+    </control>
+    <control id="CC7.1" severity="high" weight="8">
+      <statement>The entity evaluates and communicates internal control deficiencies to those responsible for taking corrective action, including senior management and the board as appropriate.</statement>
+      <evidence_types>
+        <type>deficiency_log</type>
+        <type>remediation_tracking</type>
+        <type>board_reporting</type>
+      </evidence_types>
+    </control>
+    <control id="A1.1" severity="high" weight="8">
+      <statement>The entity maintains, monitors, and updates its infrastructure, software, and data to meet its availability commitments and recover from disruptions.</statement>
+      <evidence_types>
+        <type>availability_sla</type>
+        <type>backup_restore_tests</type>
+        <type>bcdr_plan</type>
+        <type>uptime_reports</type>
+      </evidence_types>
+    </control>
+    <control id="PI1.1" severity="high" weight="9">
+      <statement>The entity performs processing activities completely, accurately, timely, and authorized as required by the processing integrity objective.</statement>
+      <evidence_types>
+        <type>batch_reconciliation</type>
+        <type>input_validation</type>
+        <type>exception_reports</type>
+        <type>job_run_logs</type>
+      </evidence_types>
+    </control>
+    <control id="P1.1" severity="high" weight="9">
+      <statement>The entity identifies and addresses privacy commitments, legal requirements, and disclosures for personal information throughout its lifecycle.</statement>
+      <evidence_types>
+        <type>privacy_notice</type>
+        <type>data_inventory</type>
+        <type>law_register</type>
+        <type>privacy_controls_testing</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022" title="AICPA 2017 Trust Services Criteria"/>
+    <source url="https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2" title="AICPA SOC 2 Overview"/>
+    <source url="https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services" title="AICPA SOC Suite of Services"/>
+  </sources>
+</framework>

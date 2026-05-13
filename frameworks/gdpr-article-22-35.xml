@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="gdpr-article-22-35" status="in_force" jurisdiction="European Union / EEA member-state implementation" lang="en">
+  <name>Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC</name>
+  <short_name>GDPR</short_name>
+  <issuing_body>European Parliament and Council of the European Union; enforced by national data protection authorities and the European Data Protection Board</issuing_body>
+  <effective_date>25 May 2018</effective_date>
+  <scope>The GDPR is the EU’s general data protection law. Articles 22 and 35 are especially relevant to AI governance because they govern solely automated decision-making with legal or similarly significant effects and require a data protection impact assessment for processing that is likely to create high risk to individuals, including certain profiling-based systems. The rules apply to controllers and processors handling personal data in the EU context, including many AI systems that use personal data for scoring, ranking, eligibility, or similar decisions.</scope>
+  <primary_url>https://eur-lex.europa.eu/eli/reg/2016/679/oj</primary_url>
+  <applies_to>Controllers and processors in the EU/EEA processing personal data; especially AI/ML systems used for profiling, scoring, eligibility, fraud, hiring, credit, insurance, marketing, surveillance, or any decision-making with legal or similarly significant effects. Applies across sectors and organization sizes, with additional sensitivity where special-category data, large-scale processing, or publicly accessible area monitoring is involved.</applies_to>
+  <penalties>Enforced by national supervisory authorities, with administrative fines under Article 83. Infringements of Articles 12-22 can be fined up to EUR 20 million or 4% of worldwide annual turnover, whichever is higher; related controller/processor obligation breaches can be fined up to EUR 10 million or 2% of worldwide annual turnover. Supervisory authorities can also order cessation, limitation, or other corrective measures.</penalties>
+  <controls>
+    <control id="Art. 22(1)" severity="high" weight="9">
+      <statement>Do not subject a data subject to a decision based solely on automated processing, including profiling, that produces legal effects or similarly significantly affects the person, unless an exception applies.</statement>
+      <evidence_types>
+        <type>ai_system_design_review</type>
+        <type>decision_logic_documentation</type>
+        <type>legal_basis_assessment</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 22(2)(a)" severity="high" weight="8">
+      <statement>If relying on contract necessity, document why the automated decision is necessary for entering into or performing the contract.</statement>
+      <evidence_types>
+        <type>legal_basis_assessment</type>
+        <type>contract_mapping</type>
+        <type>product_requirement_spec</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 22(2)(b)" severity="high" weight="8">
+      <statement>If relying on Union or Member State law, identify the enabling law and its suitable safeguards for rights, freedoms, and legitimate interests.</statement>
+      <evidence_types>
+        <type>legal_register</type>
+        <type>statutory_mapping</type>
+        <type>safeguard_design_review</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 22(2)(c)" severity="high" weight="8">
+      <statement>If relying on explicit consent, capture and retain proof of valid explicit consent before the automated decision is applied.</statement>
+      <evidence_types>
+        <type>consent_log</type>
+        <type>ui_screenshot</type>
+        <type>consent_text</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 22(3)" severity="critical" weight="10">
+      <statement>Provide suitable safeguards for exceptions, including human intervention, the ability to express a point of view, and the ability to contest the decision.</statement>
+      <evidence_types>
+        <type>appeals_process</type>
+        <type>human_review_procedure</type>
+        <type>user_notice</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 22(4)" severity="critical" weight="10">
+      <statement>Do not base qualifying automated decisions on special-category personal data unless Article 9(2)(a) or 9(2)(g) applies and safeguards are in place.</statement>
+      <evidence_types>
+        <type>data_classification_register</type>
+        <type>special_category_review</type>
+        <type>lawful_basis_analysis</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 35(1)" severity="high" weight="9">
+      <statement>Before processing begins, carry out a DPIA when the processing, especially using new technologies, is likely to result in high risk to the rights and freedoms of natural persons.</statement>
+      <evidence_types>
+        <type>dpia_report</type>
+        <type>risk_assessment</type>
+        <type>project_gate_approval</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 35(3)(a)" severity="critical" weight="10">
+      <statement>Perform a DPIA for systematic and extensive evaluation of personal aspects based on automated processing, including profiling, when decisions produce legal effects or similarly significant effects.</statement>
+      <evidence_types>
+        <type>dpia_report</type>
+        <type>model_use_case_document</type>
+        <type>profiling_analysis</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 35(7)" severity="high" weight="9">
+      <statement>Ensure the DPIA contains a systematic description of processing, necessity and proportionality analysis, risk assessment, and planned measures to address the risks.</statement>
+      <evidence_types>
+        <type>dpia_template</type>
+        <type>risk_register</type>
+        <type>control_mapping</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 35(2),(9),(11)" severity="medium" weight="6">
+      <statement>Where designated, seek the DPO’s advice during the DPIA, consider data subjects’ views where appropriate, and review the DPIA when risks change.</statement>
+      <evidence_types>
+        <type>dpo_signoff</type>
+        <type>stakeholder_consultation_record</type>
+        <type>dpia_review_log</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://eur-lex.europa.eu/eli/reg/2016/679/oj" title="EUR-Lex Official Text"/>
+    <source url="https://commission.europa.eu/law/law-topic/data-protection/rules-business-and-organisations/obligations/when-data-protection-impact-assessment-dpia-required_en" title="European Commission DPIA Guidance"/>
+    <source url="https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/automated-decision-making-and-profiling_en" title="EDPB Automated Decision-Making Guidance"/>
+  </sources>
+</framework>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="nyc-local-law-144" status="in_force" jurisdiction="New York City, United States" lang="en">
+  <name>New York City Local Law 144 of 2021, amending the Administrative Code of the City of New York in relation to automated employment decision tools</name>
+  <short_name>Local Law 144</short_name>
+  <issuing_body>New York City Council; enforced by the NYC Department of Consumer and Worker Protection (DCWP)</issuing_body>
+  <effective_date>January 1, 2023 (DCWP enforcement began July 5, 2023)</effective_date>
+  <scope>Local Law 144 regulates employers and employment agencies that use automated employment decision tools (AEDTs) to screen candidates or employees for hiring or promotion decisions in New York City. It requires an annual independent bias audit, public disclosure of audit results, and advance notice to affected New York City residents before an AEDT is used.</scope>
+  <primary_url>https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page</primary_url>
+  <applies_to>Employers and employment agencies that use AEDTs in New York City for hiring or promotion screening, including jobs located in NYC at least part time, fully remote roles tied to a NYC office, and employment agencies in NYC or otherwise connected to such NYC roles. It applies to companies of any size when the AEDT is used to substantially assist or replace discretionary decision-making in employment decisions affecting natural persons.</applies_to>
+  <penalties>Enforced by DCWP, with civil penalties for violations of the subchapter or rules. The statute provides up to $500 for a first violation and each additional violation on the same day, and $500 to $1,500 for each subsequent violation; each day of unlawful AEDT use and each notice failure is a separate violation.</penalties>
+  <controls>
+    <control id="20-871(a)(1)" severity="high" weight="10">
+      <statement>Do not use an AEDT to screen a candidate or employee unless the tool has undergone a bias audit no more than one year before use.</statement>
+      <evidence_types>
+        <type>independent_audit_report</type>
+        <type>audit_date_record</type>
+        <type>vendor_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="20-871(a)(2)" severity="high" weight="9">
+      <statement>Make a summary of the most recent bias audit and the AEDT distribution date publicly available on the employer or employment agency website before use.</statement>
+      <evidence_types>
+        <type>website_capture</type>
+        <type>public_disclosure_log</type>
+        <type>audit_summary</type>
+      </evidence_types>
+    </control>
+    <control id="20-871(b)(1)" severity="high" weight="9">
+      <statement>Provide NYC-resident candidates or employees notice that an AEDT will be used in the assessment or evaluation at least ten business days before use and include accommodation instructions.</statement>
+      <evidence_types>
+        <type>notice_template</type>
+        <type>delivery_log</type>
+        <type>job_posting_or_email</type>
+      </evidence_types>
+    </control>
+    <control id="20-871(b)(2)" severity="medium" weight="8">
+      <statement>Provide advance notice of the job qualifications and characteristics the AEDT will assess at least ten business days before use.</statement>
+      <evidence_types>
+        <type>notice_template</type>
+        <type>job_posting</type>
+        <type>delivery_log</type>
+      </evidence_types>
+    </control>
+    <control id="20-871(b)(3)" severity="medium" weight="7">
+      <statement>If not disclosed on the website, provide upon written request the data type collected, data source, and data retention policy within 30 days, subject to legal and law-enforcement limits.</statement>
+      <evidence_types>
+        <type>data_inventory</type>
+        <type>privacy_notice</type>
+        <type>request_response_records</type>
+      </evidence_types>
+    </control>
+    <control id="20-872(a)" severity="critical" weight="10">
+      <statement>Avoid each civil-penalty-triggering violation of the subchapter or implementing rule, including unlawful AEDT use and notice failures.</statement>
+      <evidence_types>
+        <type>compliance_review</type>
+        <type>legal_signoff</type>
+        <type>incident_log</type>
+      </evidence_types>
+    </control>
+    <control id="20-872(b)" severity="high" weight="9">
+      <statement>Ensure no day of unlawful AEDT use continues, because each day of use in violation of the section is a separate violation.</statement>
+      <evidence_types>
+        <type>system_usage_logs</type>
+        <type>deployment_records</type>
+        <type>audit_trail</type>
+      </evidence_types>
+    </control>
+    <control id="20-872(c)" severity="high" weight="8">
+      <statement>Ensure each notice obligation is met, because failure to provide any required notice is a separate violation.</statement>
+      <evidence_types>
+        <type>notice_delivery_logs</type>
+        <type>template_approvals</type>
+        <type>recipient_records</type>
+      </evidence_types>
+    </control>
+    <control id="20-873" severity="medium" weight="6">
+      <statement>Be prepared for enforcement proceedings by the corporation counsel or designated city officials in OATH or another designated tribunal for correction and civil penalties.</statement>
+      <evidence_types>
+        <type>legal_holding_file</type>
+        <type>investigation_response_plan</type>
+        <type>subpoena_log</type>
+      </evidence_types>
+    </control>
+    <control id="20-874" severity="medium" weight="5">
+      <statement>Recognize that compliance with Local Law 144 does not limit a candidate’s or employee’s civil claims or the NYC Commission on Human Rights’ enforcement authority under title 8.</statement>
+      <evidence_types>
+        <type>legal_risk_assessment</type>
+        <type>training_materials</type>
+        <type>policy_acknowledgment</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page" title="NYC DCWP AEDT page"/>
+    <source url="https://legistar.council.nyc.gov/LegislationDetail.aspx?GUID=B051915D-A9AC-451E-81F8-6596032FA3F9&amp;ID=4344524" title="NYC Council Local Law 144 bill page"/>
+    <source url="https://www.nyc.gov/assets/dca/downloads/pdf/about/DCWP-AEDT-FAQ.pdf" title="NYC AEDT FAQ"/>
+  </sources>
+</framework>

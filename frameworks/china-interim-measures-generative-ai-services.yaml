@@ -1,0 +1,144 @@
+framework_id: china-interim-measures-generative-ai-services
+full_name: Interim Measures for the Management of Generative AI Services
+short_name: Generative AI Measures
+issuing_body: Cyberspace Administration of China (CAC), jointly with the National Development and Reform Commission, Ministry
+  of Education, Ministry of Science and Technology, Ministry of Industry and Information Technology, Ministry of Public Security,
+  and National Radio and Television Administration
+jurisdiction: China (mainland China)
+status: in_force
+effective_date: '2023-08-15'
+scope_summary: Applies to generative AI services that use generative AI technology to provide text, image, audio, or video
+  content to the public in mainland China. It covers service providers and their obligations around lawful training data,
+  content safety, transparency, user protections, labeling, complaint handling, and regulatory filing; purely internal R&D
+  not offered to the public is outside scope.
+primary_url: https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm
+applies_to: Organizations, platforms, and individuals providing generative AI services to the public in mainland China, including
+  services delivered through APIs; applies regardless of industry, especially for services with public-opinion influence or
+  social-mobilization capacity. Pure internal development, research, or testing not offered to the public is generally out
+  of scope, but downstream providers may still have obligations when they launch public services.
+penalties: Enforced by CAC and other sector regulators. Violations may result in warnings, public criticism, orders to correct,
+  and suspension of related services; if other PRC laws apply, penalties under those laws may also apply, and serious conduct
+  can trigger administrative detention or criminal liability. The Measures themselves do not specify a single numeric maximum
+  penalty.
+sources:
+- title: CAC official text
+  url: https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm
+- title: State Council summary
+  url: https://english.www.gov.cn/news/202307/13/content_WS64aff5b3c6d0868f4e8ddc01.html
+- title: CAC notice on filing announcements
+  url: https://www.cac.gov.cn/2024-04/02/c_1713729983803145.htm
+controls:
+- id: Art. 2
+  statement: Determine whether the offering is a generative AI service provided to the mainland China public and document
+    scope determination; purely non-public R&D is out of scope.
+  evidence_types:
+  - scope_assessment
+  - service_inventory
+  - legal_memo
+  severity: high
+  weight: 8
+- id: Art. 4
+  statement: Prohibit generation of unlawful content and implement measures to prevent discrimination, rights violations,
+    monopoly/unfair competition, and low transparency or unreliability.
+  evidence_types:
+  - content_policy
+  - safety_filter_configuration
+  - risk_assessment
+  - testing_records
+  severity: critical
+  weight: 10
+- id: Art. 7
+  statement: Use lawful sources for training data and base models, respect IP and personal information rules, and improve
+    training data quality and diversity.
+  evidence_types:
+  - data_source_register
+  - license_or_consent_records
+  - ip_review
+  - data_quality_checks
+  severity: high
+  weight: 9
+- id: Art. 8
+  statement: Define clear, specific, operable data-labeling rules, assess labeling quality, and train annotators appropriately.
+  evidence_types:
+  - labeling_standard
+  - qa_reports
+  - annotator_training_records
+  severity: high
+  weight: 7
+- id: Art. 9
+  statement: Assume network information content producer and personal information processor duties, and execute service agreements
+    with users.
+  evidence_types:
+  - terms_of_service
+  - privacy_notice
+  - processor_register
+  - user_contracts
+  severity: high
+  weight: 8
+- id: Art. 10
+  statement: Publicly disclose the intended users, scenarios, and purposes of the service and implement measures to prevent
+    minors from overdependence or addiction.
+  evidence_types:
+  - product_disclosure
+  - user_facing_docs
+  - minor_protection_controls
+  - age_gate_logs
+  severity: high
+  weight: 7
+- id: Art. 11
+  statement: Protect prompts and usage records, minimize collection of non-essential personal information, and honor access/copy/correction/deletion
+    requests.
+  evidence_types:
+  - data_retention_policy
+  - access_request_log
+  - privacy_controls
+  - minimization_review
+  severity: high
+  weight: 8
+- id: Art. 12
+  statement: Label generated images and videos in accordance with the deep synthesis rules.
+  evidence_types:
+  - content_labeling_controls
+  - sample_outputs
+  - labeling_test_results
+  severity: medium
+  weight: 6
+- id: Art. 14
+  statement: Detect illegal content, stop generation and transmission, remediate via model optimization where needed, preserve
+    records, and report to authorities.
+  evidence_types:
+  - incident_log
+  - escalation_records
+  - remediation_plan
+  - authority_reports
+  severity: critical
+  weight: 10
+- id: Art. 15
+  statement: Maintain a usable complaint and reporting mechanism with published handling流程 and response times.
+  evidence_types:
+  - complaint_channel
+  - sla_policy
+  - case_management_records
+  severity: medium
+  weight: 5
+- id: Art. 17
+  statement: For services with public opinion influence or social mobilization capacity, complete security assessment and
+    algorithm filing/changes/cancellation as required.
+  evidence_types:
+  - security_assessment
+  - algorithm_filing_receipts
+  - change_logs
+  - regulator_correspondence
+  severity: critical
+  weight: 9
+- id: Art. 19
+  statement: Provide regulators with required information on training data sources, scale, type, labeling rules, and algorithm
+    mechanisms during supervision.
+  evidence_types:
+  - supervisory_response_package
+  - model_documentation
+  - data_documentation
+  severity: high
+  weight: 7
+lang: en
+translations: {}

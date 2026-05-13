@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="aida-canada" status="proposed" jurisdiction="Canada" lang="en">
+  <name>Artificial Intelligence and Data Act</name>
+  <short_name>AIDA</short_name>
+  <issuing_body>Parliament of Canada / Government of Canada (Innovation, Science and Industry Canada)</issuing_body>
+  <effective_date>TBD — draft</effective_date>
+  <scope>The Artificial Intelligence and Data Act (AIDA) is the proposed AI law in Bill C-27 that would regulate international and interprovincial trade and commerce in artificial intelligence systems. It would apply primarily to persons responsible for high-impact AI systems, requiring risk assessment, mitigation, monitoring, record-keeping, transparency, and reporting duties, and it also creates offence provisions for certain harmful or unlawful AI-related conduct.</scope>
+  <primary_url>https://www.parl.ca/Content/Bills/441/Government/C-27/C-27_1/C-27_1.PDF</primary_url>
+  <applies_to>Persons carrying out regulated activities in international or interprovincial trade and commerce: organizations that process data for AI design/development/use, or design, develop, make available for use, or manage the operation of AI systems. Core obligations focus on high-impact AI systems; government institutions and certain national-security controlled activities are excluded.</applies_to>
+  <penalties>Enforcement includes ministerial orders, mandatory audits, publication orders, and Federal Court enforceability. The draft also provides for administrative monetary penalties to be set by regulation, regulatory offences for contraventions of sections 6 to 12 and obstruction/false statements, and separate criminal offences. For offences under sections 38 and 39, corporate fines can reach the greater of CAD 25 million or 5% of gross global revenue on indictment, or the greater of CAD 20 million or 4% on summary conviction; individuals face fines and possible imprisonment.</penalties>
+  <controls>
+    <control id="s.7" severity="high" weight="7">
+      <statement>Assess whether each AI system is a high-impact system in accordance with the regulations before applying the Act's high-impact duties.</statement>
+      <evidence_types>
+        <type>risk_classification_assessment</type>
+        <type>legal_register</type>
+        <type>decision_record</type>
+      </evidence_types>
+    </control>
+    <control id="s.8" severity="high" weight="10">
+      <statement>Establish measures to identify, assess, and mitigate risks of harm or biased output for each high-impact system.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>mitigation_plan</type>
+        <type>control_design_document</type>
+      </evidence_types>
+    </control>
+    <control id="s.9" severity="high" weight="9">
+      <statement>Monitor compliance with mitigation measures and their effectiveness for each high-impact system.</statement>
+      <evidence_types>
+        <type>monitoring_report</type>
+        <type>control_testing_results</type>
+        <type>kpi_dashboard</type>
+      </evidence_types>
+    </control>
+    <control id="s.10" severity="medium" weight="8">
+      <statement>Keep records describing the measures established under sections 6, 8, and 9 and the reasons supporting the high-impact assessment under section 7.</statement>
+      <evidence_types>
+        <type>records_register</type>
+        <type>assessment_memo</type>
+        <type>policy_document</type>
+      </evidence_types>
+    </control>
+    <control id="s.11" severity="medium" weight="6">
+      <statement>Publish a plain-language description of each high-impact system, including intended use, outputs or decisions, mitigation measures, and any prescribed information.</statement>
+      <evidence_types>
+        <type>public_disclosure</type>
+        <type>website_content</type>
+        <type>product_documentation</type>
+      </evidence_types>
+    </control>
+    <control id="s.12" severity="high" weight="8">
+      <statement>Notify the Minister as soon as feasible if the use of a high-impact system results or is likely to result in material harm.</statement>
+      <evidence_types>
+        <type>incident_report</type>
+        <type>regulatory_notification</type>
+        <type>escalation_log</type>
+      </evidence_types>
+    </control>
+    <control id="s.13" severity="high" weight="7">
+      <statement>Provide the Minister with requested records under subsection 10(1) when ordered.</statement>
+      <evidence_types>
+        <type>regulatory_request_response</type>
+        <type>records_package</type>
+        <type>delivery_receipt</type>
+      </evidence_types>
+    </control>
+    <control id="s.14" severity="high" weight="7">
+      <statement>Provide the Minister with requested records relating to harm or biased output concerns under subsection 10(2) when ordered.</statement>
+      <evidence_types>
+        <type>regulatory_request_response</type>
+        <type>records_package</type>
+        <type>delivery_receipt</type>
+      </evidence_types>
+    </control>
+    <control id="s.15" severity="high" weight="9">
+      <statement>Conduct or facilitate an independent audit when the Minister orders an audit for a possible contravention.</statement>
+      <evidence_types>
+        <type>audit_report</type>
+        <type>independent_auditor_engagement</type>
+        <type>audit_scope</type>
+      </evidence_types>
+    </control>
+    <control id="s.17" severity="critical" weight="10">
+      <statement>Cease using or making available a high-impact system if ordered because it gives rise to a serious risk of imminent harm.</statement>
+      <evidence_types>
+        <type>shutdown_record</type>
+        <type>incident_response_record</type>
+        <type>executive_order</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.parl.ca/Content/Bills/441/Government/C-27/C-27_1/C-27_1.PDF" title="Parliament of Canada Bill C-27 PDF"/>
+    <source url="https://ised-isde.canada.ca/site/innovation-better-canada/en/artificial-intelligence-and-data-act-aida-companion-document" title="Innovation, Science and Economic Development Canada AIDA companion document"/>
+    <source url="https://www.parl.ca/legisinfo/en/bill/44-1/c-27" title="LEGISinfo Bill C-27 status"/>
+  </sources>
+</framework>

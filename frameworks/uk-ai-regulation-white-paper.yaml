@@ -1,0 +1,126 @@
+framework_id: uk-ai-regulation-white-paper
+full_name: A pro-innovation approach to AI regulation
+short_name: UK AI White Paper
+issuing_body: Department for Science, Innovation and Technology (DSIT), UK Government
+jurisdiction: United Kingdom
+status: draft
+effective_date: TBD — draft
+scope_summary: This is the UK government’s proposed cross-sector AI governance framework, intended to guide how existing UK
+  regulators interpret and apply five common AI principles within their own remits. It is context-based and non-statutory
+  in its current form, covering AI use across sectors while leaving defence, national security, and other existing exemptions
+  to sector-specific regimes.
+primary_url: https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper
+applies_to: All UK sectors using AI, with implementation by existing sector regulators; especially relevant to developers
+  and deployers of high-impact AI, highly capable general-purpose AI systems, and public-sector bodies subject to regulator
+  guidance or procurement/assurance standards. Exemptions or tailored treatment may apply where existing regimes already address
+  unique operating requirements, including defence and national security.
+penalties: No AI-specific penalties are set in the white paper or 2024 government response. Enforcement is expected through
+  existing regulator powers and laws; the framework is currently non-statutory/voluntary, with possible future statutory duties
+  or targeted binding requirements for frontier AI systems.
+sources:
+- title: 'AI regulation: a pro-innovation approach'
+  url: https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper
+- title: 'A pro-innovation approach to AI regulation: government response'
+  url: https://www.gov.uk/government/consultations/ai-regulation-a-pro-innovation-approach-policy-proposals/outcome/a-pro-innovation-approach-to-ai-regulation-government-response
+- title: Implementing the UK's AI regulatory principles
+  url: https://www.gov.uk/government/publications/implementing-the-uks-ai-regulatory-principles-initial-guidance-for-regulators
+controls:
+- id: Safety, security and robustness
+  statement: AI applications should function in a secure, safe and robust way, with risks carefully managed throughout their
+    lifecycle.
+  evidence_types:
+  - risk_assessment
+  - testing_report
+  - model_validation
+  - incident_log
+  severity: high
+  weight: 10
+- id: Appropriate transparency and explainability
+  statement: Organisations developing or deploying AI should be able to communicate when and how AI is used and explain decision-making
+    to an appropriate level of detail.
+  evidence_types:
+  - user_notice
+  - model_card
+  - explanation_policy
+  - disclosure_log
+  severity: high
+  weight: 9
+- id: Fairness
+  statement: AI must be used in a way that complies with existing UK law and does not discriminate or create unfair commercial
+    outcomes.
+  evidence_types:
+  - bias_test_results
+  - impact_assessment
+  - legal_review
+  - fairness_mitigation_plan
+  severity: high
+  weight: 10
+- id: Accountability and governance
+  statement: There must be appropriate oversight of AI use and clear accountability for AI outcomes.
+  evidence_types:
+  - governance_charter
+  - RACI_matrix
+  - board_minutes
+  - control_ownership_records
+  severity: high
+  weight: 9
+- id: Contestability and redress
+  statement: People must have clear routes to dispute harmful AI-generated outcomes or decisions.
+  evidence_types:
+  - complaints_process
+  - appeals_process
+  - customer_notice
+  - redress_log
+  severity: medium
+  weight: 8
+- id: Regulatory guidance within remit
+  statement: Each regulator should interpret and apply the five principles within its own sectoral remit and issue practical
+    guidance for regulated entities.
+  evidence_types:
+  - regulator_guidance
+  - implementation_plan
+  - sector_playbook
+  - compliance_communication
+  severity: medium
+  weight: 7
+- id: Cross-economy risk monitoring
+  statement: Government should monitor and assess AI risks across the economy and maintain a cross-economy understanding of
+    emerging harms and gaps.
+  evidence_types:
+  - risk_register
+  - horizon_scanning_report
+  - cross_sector_review
+  - risk_assessment_framework
+  severity: medium
+  weight: 8
+- id: Regulator coordination
+  statement: Government and key regulators should coordinate AI governance, share knowledge, and align approaches where risks
+    overlap across sectors.
+  evidence_types:
+  - steering_committee_minutes
+  - coordination_workplan
+  - interregulator_MOU
+  - shared_guidance
+  severity: medium
+  weight: 7
+- id: Capability and tools
+  statement: Regulators should build the capability, skills, and tools needed to identify and address AI risks effectively.
+  evidence_types:
+  - training_records
+  - capability_assessment
+  - tooling_inventory
+  - skills_plan
+  severity: medium
+  weight: 6
+- id: Future binding requirements for frontier systems
+  statement: Government should consider targeted binding requirements for developers of highly capable general-purpose AI
+    systems if voluntary measures are insufficient.
+  evidence_types:
+  - policy_proposal
+  - threshold_analysis
+  - frontier_model_assessment
+  - consultation_response
+  severity: critical
+  weight: 9
+lang: en
+translations: {}

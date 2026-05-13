@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="australia-ai-ethics-voluntary-ai-safety-standard" status="voluntary" jurisdiction="Australia" lang="en">
+  <name>Australia’s AI Ethics Principles and Voluntary AI Safety Standard</name>
+  <short_name>AI Ethics + VAISS</short_name>
+  <issuing_body>Department of Industry, Science and Resources (National AI Centre / Australian Government)</issuing_body>
+  <effective_date>2019-11-07 (AI Ethics Principles); 2024-09-05 / 2025-10-21 page update for Voluntary AI Safety Standard — voluntary</effective_date>
+  <scope>Australia’s AI Ethics Principles provide a voluntary ethical baseline for designing, developing, and implementing AI in ways that are safe, fair, transparent, accountable, and human-centred. The Voluntary AI Safety Standard is a voluntary implementation guide for industry that sets out practical guardrails for organisations using, developing, or supplying AI systems, especially where higher-risk applications are involved.</scope>
+  <primary_url>https://www.industry.gov.au/publications/voluntary-ai-safety-standard</primary_url>
+  <applies_to>Australian industry and government use cases referenced by the principles; the voluntary standard is aimed at organisations using, developing, supplying, or procuring AI systems, including businesses of all sizes and sectors, especially higher-risk deployments.</applies_to>
+  <penalties>No legal penalties for the voluntary standard or AI Ethics Principles; compliance is encouraged through guidance and procurement/governance expectations rather than enforcement. The 2024 mandatory-guardrails proposal contemplated future enforcement, but no penalties attach to the voluntary framework itself.</penalties>
+  <controls>
+    <control id="C-01" severity="high" weight="9">
+      <statement>Establish organisational accountability for AI governance and assign clear responsibility for safe and responsible AI use across development, deployment, and monitoring.</statement>
+      <evidence_types>
+        <type>governance_charter</type>
+        <type>RACI_matrix</type>
+        <type>board_or_executive_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="C-02" severity="high" weight="9">
+      <statement>Assess intended use, context, and potential harms before adopting or deploying an AI system, including whether the use case is high-risk.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>use_case_register</type>
+        <type>impact_assessment</type>
+      </evidence_types>
+    </control>
+    <control id="C-03" severity="high" weight="8">
+      <statement>Test AI systems before release and at key lifecycle stages to verify performance, safety, fairness, and reliability against defined acceptance criteria.</statement>
+      <evidence_types>
+        <type>test_plan</type>
+        <type>validation_report</type>
+        <type>acceptance_criteria</type>
+      </evidence_types>
+    </control>
+    <control id="C-04" severity="high" weight="8">
+      <statement>Monitor AI systems after deployment and maintain processes to detect drift, incidents, and emerging harms, with prompt remediation and re-testing where needed.</statement>
+      <evidence_types>
+        <type>monitoring_logs</type>
+        <type>incident_register</type>
+        <type>model_drift_report</type>
+      </evidence_types>
+    </control>
+    <control id="C-05" severity="high" weight="8">
+      <statement>Maintain appropriate human oversight and intervention capability so a person can review, override, or halt AI outputs or decisions where necessary.</statement>
+      <evidence_types>
+        <type>human_oversight_procedure</type>
+        <type>override_records</type>
+        <type>escalation_workflow</type>
+      </evidence_types>
+    </control>
+    <control id="C-06" severity="medium" weight="7">
+      <statement>Provide transparency to affected users about when AI is used and, where appropriate, how outputs are generated or influenced.</statement>
+      <evidence_types>
+        <type>user_notice</type>
+        <type>disclosure_text</type>
+        <type>product_documentation</type>
+      </evidence_types>
+    </control>
+    <control id="C-07" severity="high" weight="8">
+      <statement>Protect privacy and security by limiting unnecessary data collection, securing data and models, and managing sensitive or personal information lawfully.</statement>
+      <evidence_types>
+        <type>privacy_impact_assessment</type>
+        <type>security_controls</type>
+        <type>data_minimisation_policy</type>
+      </evidence_types>
+    </control>
+    <control id="C-08" severity="high" weight="8">
+      <statement>Manage fairness and non-discrimination risks by checking for bias, unequal performance, and disparate impacts across affected groups.</statement>
+      <evidence_types>
+        <type>fairness_testing</type>
+        <type>bias_analysis</type>
+        <type>demographic_performance_metrics</type>
+      </evidence_types>
+    </control>
+    <control id="C-09" severity="medium" weight="7">
+      <statement>Document decisions, limitations, and assurance evidence so AI system behavior, risks, and governance actions are traceable and contestable.</statement>
+      <evidence_types>
+        <type>model_card</type>
+        <type>decision_log</type>
+        <type>assurance_report</type>
+      </evidence_types>
+    </control>
+    <control id="C-10" severity="medium" weight="6">
+      <statement>Engage relevant stakeholders and provide channels for feedback, complaints, and contestation when AI causes concern or adverse impact.</statement>
+      <evidence_types>
+        <type>stakeholder_consultation_notes</type>
+        <type>complaints_process</type>
+        <type>feedback_records</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.industry.gov.au/publications/australias-ai-ethics-principles" title="Australia’s AI Ethics Principles"/>
+    <source url="https://www.industry.gov.au/publications/voluntary-ai-safety-standard" title="Voluntary AI Safety Standard"/>
+    <source url="https://www.minister.industry.gov.au/ministers/husic/transcripts/press-conference-ai-guardrails-policy" title="AI guardrails policy announcement"/>
+  </sources>
+</framework>

@@ -1,0 +1,79 @@
+framework_id: eu-ai-act
+lang: es
+translation_status: human_verified
+full_name: Reglamento (UE) 2024/1689 del Parlamento Europeo y del Consejo, de 13 de junio de 2024, por el que se establecen
+  normas armonizadas en materia de inteligencia artificial y se modifican los Reglamentos (CE) n.º 300/2008, (UE) n.º 167/2013,
+  (UE) n.º 168/2013, (UE) 2018/858, (UE) 2018/1139 y (UE) n.º 2019/2144 y las Directivas 2014/90/UE, (UE) 2016/797 y (UE)
+  2020/1828 (Ley de Inteligencia Artificial) (Texto pertinente a efectos del EEE)
+short_name: EU AI Act
+scope_summary: La Ley de IA de la UE es la ley horizontal de inteligencia artificial de la Unión Europea, que establece
+  normas armonizadas para la comercialización, la puesta en servicio y el uso de sistemas de IA. Prohíbe ciertas prácticas
+  de riesgo inaceptable, impone obligaciones detalladas a los sistemas de IA de alto riesgo y a los modelos de IA de uso
+  general, e introduce requisitos de transparencia, gobernanza, vigilancia del mercado y aplicación para proveedores, responsables
+  del despliegue, importadores, distribuidores y otros operadores.
+applies_to: Proveedores, responsables del despliegue, importadores, distribuidores, fabricantes de productos, representantes
+  autorizados y operadores afectados de sistemas de IA en la UE; en particular, los sistemas de IA de alto riesgo y los
+  proveedores de modelos de IA de uso general. El ámbito también alcanza ciertas prácticas de IA con independencia del sector,
+  además de autoridades públicas y algunos operadores de terceros países cuando sus resultados se utilizan en la UE.
+penalties: Se aplica mediante autoridades nacionales competentes y vigilancia del mercado, con multas previstas en el artículo
+  99 que pueden alcanzar hasta 35 millones de euros o el 7 % del volumen de negocios anual mundial por prácticas de IA prohibidas,
+  hasta 15 millones de euros o el 3 % por otros incumplimientos, y hasta 7,5 millones de euros o el 1,5 % por información
+  incorrecta o incompleta; el artículo 101 contempla multas específicas para los proveedores de modelos de IA de uso general,
+  y el artículo 100 establece multas para las instituciones y organismos de la UE.
+controls:
+  - id: Art. 9
+    severity: high
+    weight: 10
+    statement: Los proveedores de sistemas de IA de alto riesgo deben establecer, implementar, documentar y mantener un sistema
+      de gestión de riesgos a lo largo de todo el ciclo de vida de la IA, incluyendo pruebas iterativas y mitigación de los
+      riesgos identificados.
+  - id: Art. 10
+    severity: high
+    weight: 9
+    statement: Los sistemas de IA de alto riesgo deben utilizar prácticas de datos y de gobernanza de datos que garanticen
+      que los datos de entrenamiento, validación y prueba sean pertinentes, representativos, libres de errores en la medida
+      de lo posible y adecuados para la finalidad prevista.
+  - id: Art. 11
+    severity: high
+    weight: 8
+    statement: Los proveedores deben elaborar y mantener actualizada la documentación técnica antes de comercializar un sistema
+      de IA de alto riesgo o ponerlo en servicio.
+  - id: Art. 12
+    severity: high
+    weight: 8
+    statement: Los sistemas de IA de alto riesgo deben diseñarse y desarrollarse con capacidades de registro automático que
+      permitan la trazabilidad de su funcionamiento y de los eventos a efectos de seguimiento posterior a la comercialización
+      y supervisión.
+  - id: Art. 13
+    severity: medium
+    weight: 7
+    statement: Los proveedores deben garantizar que los sistemas de IA de alto riesgo vayan acompañados de instrucciones
+      e información claras para los responsables del despliegue, que cubran la finalidad prevista, las capacidades, las limitaciones
+      y el uso adecuado.
+  - id: Art. 14
+    severity: high
+    weight: 8
+    statement: Los sistemas de IA de alto riesgo deben diseñarse y desarrollarse de modo que puedan ser supervisados de manera
+      efectiva por personas físicas durante su uso.
+  - id: Art. 15
+    severity: critical
+    weight: 10
+    statement: Los sistemas de IA de alto riesgo deben alcanzar un nivel adecuado de precisión, solidez y ciberseguridad,
+      y dichas propiedades deben validarse y mantenerse.
+  - id: Art. 27
+    severity: high
+    weight: 9
+    statement: Los responsables del despliegue de determinados sistemas de IA de alto riesgo deben llevar a cabo una evaluación
+      de impacto en los derechos fundamentales antes del primer uso y documentar los riesgos residuales y las medidas de
+      mitigación.
+  - id: Art. 72
+    severity: high
+    weight: 9
+    statement: Los proveedores de sistemas de IA de alto riesgo deben establecer y mantener un sistema y un plan de seguimiento
+      posterior a la comercialización para recopilar, documentar y analizar activamente la información sobre el rendimiento
+      y los incidentes después del despliegue.
+  - id: Art. 99
+    severity: critical
+    weight: 10
+    statement: Los Estados miembros deben establecer sanciones efectivas, proporcionadas y disuasorias para las infracciones
+      del Reglamento y garantizar que existan mecanismos de aplicación.

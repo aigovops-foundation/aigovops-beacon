@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="texas-responsible-ai-governance-act" status="proposed" jurisdiction="Texas, United States" lang="en">
+  <name>Texas Responsible Artificial Intelligence Governance Act</name>
+  <short_name>TRAIGA</short_name>
+  <issuing_body>Texas Legislature; enforced by the Texas Attorney General and related state agencies</issuing_body>
+  <effective_date>January 1, 2026</effective_date>
+  <scope>Proposed Texas state legislation governing the development, deployment, disclosure, testing, and enforcement of artificial intelligence systems used by covered businesses, deployers, developers, and certain state agencies in Texas. It establishes consumer disclosure duties, prohibited AI uses, a regulatory sandbox, a Texas Artificial Intelligence Council, and Attorney General enforcement with civil penalties and injunctive relief.</scope>
+  <primary_url>https://capitol.texas.gov/tlodocs/89R/billtext/pdf/HB00149I.pdf</primary_url>
+  <applies_to>Persons or business entities that promote, advertise, or conduct business in Texas; produce products or services used by Texas residents; or develop or deploy AI systems in Texas. The bill also applies to certain Texas government agencies, and it creates a sandbox for innovative AI testing with limited exemptions. It is broad across sectors, including healthcare, finance, education, and public services, with specific heightened restrictions for government uses and consumer-facing interactions.</applies_to>
+  <penalties>Enforced primarily by the Texas Attorney General through civil investigative demands, injunctions, and civil actions. Civil penalties include $10,000-$12,000 per uncured violation, $80,000-$200,000 per uncurable violation, and $2,000-$40,000 per day for continuing violations; state agency sanctions may include suspension, probation, revocation, and monetary penalties up to $100,000.</penalties>
+  <controls>
+    <control id="551.004" severity="medium" weight="7">
+      <statement>Covered government agencies making an AI system available to consumers must disclose that the person is interacting with an artificial intelligence system before or at the time of interaction, in clear, conspicuous, plain-language form without dark patterns.</statement>
+      <evidence_types>
+        <type>consumer_notice</type>
+        <type>product_ui_screenshot</type>
+        <type>policy_document</type>
+        <type>legal_review</type>
+      </evidence_types>
+    </control>
+    <control id="551.051" severity="critical" weight="10">
+      <statement>AI systems must not be intentionally developed or deployed to incite or encourage self-harm, harm to others, or criminal activity.</statement>
+      <evidence_types>
+        <type>model_policy</type>
+        <type>red_team_results</type>
+        <type>safety_test_report</type>
+        <type>approval_record</type>
+      </evidence_types>
+    </control>
+    <control id="551.053" severity="high" weight="9">
+      <statement>Government entities must not use AI systems for social scoring that evaluates or classifies people in ways that lead to unjustified detrimental treatment or chilling of rights.</statement>
+      <evidence_types>
+        <type>use_case_inventory</type>
+        <type>impact_assessment</type>
+        <type>legal_review</type>
+        <type>deployment_record</type>
+      </evidence_types>
+    </control>
+    <control id="551.054" severity="high" weight="9">
+      <statement>Government entities must not develop or deploy AI systems using biometric identifiers and public-source media for uniquely identifying a specific individual where this would infringe or chill protected rights.</statement>
+      <evidence_types>
+        <type>data_inventory</type>
+        <type>biometric_processing_log</type>
+        <type>impact_assessment</type>
+        <type>consent_analysis</type>
+      </evidence_types>
+    </control>
+    <control id="551.056" severity="high" weight="9">
+      <statement>AI systems must not be developed or deployed to intentionally cause political viewpoint discrimination or suppress protected expression.</statement>
+      <evidence_types>
+        <type>content_moderation_policy</type>
+        <type>model_eval</type>
+        <type>bias_test_report</type>
+        <type>complaint_log</type>
+      </evidence_types>
+    </control>
+    <control id="551.058" severity="high" weight="9">
+      <statement>AI systems must not be developed or deployed with the intent to unlawfully discriminate against a protected class under state or federal law.</statement>
+      <evidence_types>
+        <type>fairness_test_report</type>
+        <type>training_data_review</type>
+        <type>legal_review</type>
+        <type>human_oversight_record</type>
+      </evidence_types>
+    </control>
+    <control id="551.061" severity="critical" weight="10">
+      <statement>AI systems must not be developed or deployed with the sole intent of producing, assisting, or distributing unlawful sexual material or unlawful deepfake content.</statement>
+      <evidence_types>
+        <type>model_scope_statement</type>
+        <type>safety_test_report</type>
+        <type>marketing_review</type>
+        <type>terms_of_use</type>
+      </evidence_types>
+    </control>
+    <control id="551.105(b)(1)(C)" severity="high" weight="8">
+      <statement>To preserve the affirmative defense, a developer or deployer must identify and cure violations using feedback, testing such as adversarial testing or red-teaming, internal review, and compliance with NIST AI RMF, ISO/IEC 42001, or another recognized AI risk management framework.</statement>
+      <evidence_types>
+        <type>red_team_report</type>
+        <type>internal_audit</type>
+        <type>framework_mapping</type>
+        <type>corrective_action_plan</type>
+      </evidence_types>
+    </control>
+    <control id="551.106" severity="high" weight="8">
+      <statement>The Attorney General may seek injunctive relief and civil penalties for uncured or uncureable violations, with specified fine ranges per violation and per day of continuing violation.</statement>
+      <evidence_types>
+        <type>investigation_file</type>
+        <type>notice_of_violation</type>
+        <type>cure_response</type>
+        <type>penalty_assessment</type>
+      </evidence_types>
+    </control>
+    <control id="552.102" severity="medium" weight="6">
+      <statement>Sandbox participants must file quarterly reports on performance metrics, risk mitigation updates, and consumer or stakeholder feedback, and the department must issue an annual report to the legislature.</statement>
+      <evidence_types>
+        <type>quarterly_report</type>
+        <type>metrics_dashboard</type>
+        <type>stakeholder_feedback</type>
+        <type>annual_report</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://capitol.texas.gov/tlodocs/89R/billtext/pdf/HB00149I.pdf" title="Texas Legislature Online bill text"/>
+    <source url="https://capitol.texas.gov/tlodocs/89R/analysis/html/HB00149S.htm" title="Texas Legislature Online bill analysis"/>
+    <source url="https://legiscan.com/TX/bill/HB1709/2025" title="LegiScan bill history"/>
+  </sources>
+</framework>

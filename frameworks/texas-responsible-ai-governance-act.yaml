@@ -1,0 +1,132 @@
+framework_id: texas-responsible-ai-governance-act
+full_name: Texas Responsible Artificial Intelligence Governance Act
+short_name: TRAIGA
+issuing_body: Texas Legislature; enforced by the Texas Attorney General and related state agencies
+jurisdiction: Texas, United States
+status: proposed
+effective_date: January 1, 2026
+scope_summary: Proposed Texas state legislation governing the development, deployment, disclosure, testing, and enforcement
+  of artificial intelligence systems used by covered businesses, deployers, developers, and certain state agencies in Texas.
+  It establishes consumer disclosure duties, prohibited AI uses, a regulatory sandbox, a Texas Artificial Intelligence Council,
+  and Attorney General enforcement with civil penalties and injunctive relief.
+primary_url: https://capitol.texas.gov/tlodocs/89R/billtext/pdf/HB00149I.pdf
+applies_to: Persons or business entities that promote, advertise, or conduct business in Texas; produce products or services
+  used by Texas residents; or develop or deploy AI systems in Texas. The bill also applies to certain Texas government agencies,
+  and it creates a sandbox for innovative AI testing with limited exemptions. It is broad across sectors, including healthcare,
+  finance, education, and public services, with specific heightened restrictions for government uses and consumer-facing interactions.
+penalties: Enforced primarily by the Texas Attorney General through civil investigative demands, injunctions, and civil actions.
+  Civil penalties include $10,000-$12,000 per uncured violation, $80,000-$200,000 per uncurable violation, and $2,000-$40,000
+  per day for continuing violations; state agency sanctions may include suspension, probation, revocation, and monetary penalties
+  up to $100,000.
+sources:
+- title: Texas Legislature Online bill text
+  url: https://capitol.texas.gov/tlodocs/89R/billtext/pdf/HB00149I.pdf
+- title: Texas Legislature Online bill analysis
+  url: https://capitol.texas.gov/tlodocs/89R/analysis/html/HB00149S.htm
+- title: LegiScan bill history
+  url: https://legiscan.com/TX/bill/HB1709/2025
+controls:
+- id: '551.004'
+  statement: Covered government agencies making an AI system available to consumers must disclose that the person is interacting
+    with an artificial intelligence system before or at the time of interaction, in clear, conspicuous, plain-language form
+    without dark patterns.
+  evidence_types:
+  - consumer_notice
+  - product_ui_screenshot
+  - policy_document
+  - legal_review
+  severity: medium
+  weight: 7
+- id: '551.051'
+  statement: AI systems must not be intentionally developed or deployed to incite or encourage self-harm, harm to others,
+    or criminal activity.
+  evidence_types:
+  - model_policy
+  - red_team_results
+  - safety_test_report
+  - approval_record
+  severity: critical
+  weight: 10
+- id: '551.053'
+  statement: Government entities must not use AI systems for social scoring that evaluates or classifies people in ways that
+    lead to unjustified detrimental treatment or chilling of rights.
+  evidence_types:
+  - use_case_inventory
+  - impact_assessment
+  - legal_review
+  - deployment_record
+  severity: high
+  weight: 9
+- id: '551.054'
+  statement: Government entities must not develop or deploy AI systems using biometric identifiers and public-source media
+    for uniquely identifying a specific individual where this would infringe or chill protected rights.
+  evidence_types:
+  - data_inventory
+  - biometric_processing_log
+  - impact_assessment
+  - consent_analysis
+  severity: high
+  weight: 9
+- id: '551.056'
+  statement: AI systems must not be developed or deployed to intentionally cause political viewpoint discrimination or suppress
+    protected expression.
+  evidence_types:
+  - content_moderation_policy
+  - model_eval
+  - bias_test_report
+  - complaint_log
+  severity: high
+  weight: 9
+- id: '551.058'
+  statement: AI systems must not be developed or deployed with the intent to unlawfully discriminate against a protected class
+    under state or federal law.
+  evidence_types:
+  - fairness_test_report
+  - training_data_review
+  - legal_review
+  - human_oversight_record
+  severity: high
+  weight: 9
+- id: '551.061'
+  statement: AI systems must not be developed or deployed with the sole intent of producing, assisting, or distributing unlawful
+    sexual material or unlawful deepfake content.
+  evidence_types:
+  - model_scope_statement
+  - safety_test_report
+  - marketing_review
+  - terms_of_use
+  severity: critical
+  weight: 10
+- id: 551.105(b)(1)(C)
+  statement: To preserve the affirmative defense, a developer or deployer must identify and cure violations using feedback,
+    testing such as adversarial testing or red-teaming, internal review, and compliance with NIST AI RMF, ISO/IEC 42001, or
+    another recognized AI risk management framework.
+  evidence_types:
+  - red_team_report
+  - internal_audit
+  - framework_mapping
+  - corrective_action_plan
+  severity: high
+  weight: 8
+- id: '551.106'
+  statement: The Attorney General may seek injunctive relief and civil penalties for uncured or uncureable violations, with
+    specified fine ranges per violation and per day of continuing violation.
+  evidence_types:
+  - investigation_file
+  - notice_of_violation
+  - cure_response
+  - penalty_assessment
+  severity: high
+  weight: 8
+- id: '552.102'
+  statement: Sandbox participants must file quarterly reports on performance metrics, risk mitigation updates, and consumer
+    or stakeholder feedback, and the department must issue an annual report to the legislature.
+  evidence_types:
+  - quarterly_report
+  - metrics_dashboard
+  - stakeholder_feedback
+  - annual_report
+  severity: medium
+  weight: 6
+lang: en
+translations: {}

@@ -1,0 +1,96 @@
+framework_id: ieee-7000-2021
+full_name: 'IEEE/ISO/IEC International Standard—Systems and software engineering—Life cycle management—Part 7000: Standard
+  model process for addressing ethical concerns during system design'
+short_name: IEEE 7000
+issuing_body: IEEE Standards Association
+jurisdiction: Global
+status: in_force
+effective_date: '2021-09-15'
+scope_summary: IEEE 7000-2021 establishes a model process for addressing ethical concerns during system design by integrating
+  ethical values into concept exploration, development, and requirements definition. It is intended for organizations of all
+  sizes and types that use their own life cycle models, including those working on autonomous intelligent systems or other
+  systems where human and social values need to be translated into design decisions.
+primary_url: https://standards.ieee.org/standard/7000-2021.html
+applies_to: All sizes and types of organizations; systems and software engineering teams; organizations developing or revising
+  products or services; especially relevant to autonomous intelligent systems and other AI-enabled or high-impact socio-technical
+  systems.
+penalties: Voluntary standard; no direct statutory penalties. Enforcement is via market adoption, procurement requirements,
+  certification programs, contractual obligations, or internal governance. No maximum penalty specified.
+sources:
+- title: IEEE Standards Association standard page
+  url: https://standards.ieee.org/standard/7000-2021.html
+- title: IEEE launch announcement
+  url: https://standards.ieee.org/news/ieee-7000/
+- title: Harvard Global Flourishing Study page
+  url: https://hfh.fas.harvard.edu/global-flourishing-study
+controls:
+- id: IEEE7000-1
+  statement: Organizations shall include consideration of ethical values throughout concept exploration and development.
+  evidence_types:
+  - lifecycle_process_document
+  - project_plan
+  - design_review_minutes
+  severity: high
+  weight: 9
+- id: IEEE7000-2
+  statement: Management and engineering shall communicate transparently with selected stakeholders to elicit and prioritize
+    ethical values.
+  evidence_types:
+  - stakeholder_register
+  - meeting_minutes
+  - values_workshop_artifacts
+  severity: high
+  weight: 8
+- id: IEEE7000-3
+  statement: Ethical values shall be traced through the operational concept, value propositions, and value dispositions in
+    system design.
+  evidence_types:
+  - traceability_matrix
+  - operational_concept
+  - requirements_artefacts
+  severity: high
+  weight: 9
+- id: IEEE7000-4
+  statement: Ethical values shall be traced in the concept of operations, ethical requirements, and ethical risk-based design.
+  evidence_types:
+  - concept_of_operations
+  - ethical_requirements_specification
+  - design_risk_register
+  severity: high
+  weight: 10
+- id: IEEE7000-5
+  statement: Ethical concerns shall be translated into system requirements and design practices.
+  evidence_types:
+  - requirements_document
+  - design_specification
+  - decision_log
+  severity: high
+  weight: 8
+- id: IEEE7000-6
+  statement: The organization shall maintain a systematic, transparent, and traceable approach to ethical decision-making
+    across the lifecycle.
+  evidence_types:
+  - governance_policy
+  - audit_trail
+  - traceability_matrix
+  severity: high
+  weight: 9
+- id: IEEE7000-7
+  statement: The organization shall apply the model process within its own lifecycle model, regardless of organization size
+    or type.
+  evidence_types:
+  - process_mapping
+  - lifecycle_model
+  - management_attestation
+  severity: medium
+  weight: 6
+- id: IEEE7000-8
+  statement: Ethical and functional requirements shall be integrated to reduce risk in system engineering product design.
+  evidence_types:
+  - risk_assessment
+  - requirements_trace
+  - verification_plan
+  severity: high
+  weight: 8
+lang: en
+translations: {}

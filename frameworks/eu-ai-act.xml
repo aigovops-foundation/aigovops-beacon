@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="eu-ai-act" status="in_force" jurisdiction="European Union (EEA relevance stated)" lang="en">
+  <name>Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence and amending Regulations (EC) No 300/2008, (EU) No 167/2013, (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1139 and (EU) No 2019/2144 and Directives 2014/90/EU, (EU) 2016/797 and (EU) 2020/1828 (Artificial Intelligence Act) (Text with EEA relevance)</name>
+  <short_name>EU AI Act</short_name>
+  <issuing_body>European Parliament and Council of the European Union; enforced by the European Commission and national competent authorities</issuing_body>
+  <effective_date>2024-08-01 (entered into force); applies in phases through 2027 and beyond</effective_date>
+  <scope>The EU AI Act is the European Union’s horizontal AI law, setting harmonised rules for the placing on the market, putting into service, and use of AI systems. It bans certain unacceptable-risk practices, imposes detailed obligations on high-risk AI systems and general-purpose AI models, and adds transparency, governance, market surveillance, and enforcement requirements for providers, deployers, importers, distributors, and other operators.</scope>
+  <primary_url>https://eur-lex.europa.eu/eli/reg/2024/1689/oj</primary_url>
+  <applies_to>Providers, deployers, importers, distributors, product manufacturers, authorized representatives, and affected operators of AI systems in the EU; especially high-risk AI systems and general-purpose AI model providers. Scope also reaches certain AI practices regardless of sector, plus public authorities and some third-country operators where outputs are used in the EU.</applies_to>
+  <penalties>Enforced through national competent authorities and market surveillance, with fines under Article 99 that may reach up to EUR 35 million or 7% of worldwide annual turnover for prohibited AI practices, up to EUR 15 million or 3% for other non-compliance, and up to EUR 7.5 million or 1.5% for incorrect/incomplete information; Article 101 provides separate fines for GPAI model providers, and Article 100 sets fines for EU institutions and bodies.</penalties>
+  <controls>
+    <control id="Art. 9" severity="high" weight="10">
+      <statement>Providers of high-risk AI systems must establish, implement, document, and maintain a risk management system across the AI lifecycle, including iterative testing and mitigation of identified risks.</statement>
+      <evidence_types>
+        <type>risk_management_policy</type>
+        <type>risk_register</type>
+        <type>test_results</type>
+        <type>mitigation_tracker</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 10" severity="high" weight="9">
+      <statement>High-risk AI systems must use data and data governance practices that ensure training, validation, and testing data are relevant, representative, free of errors as far as possible, and fit for the intended purpose.</statement>
+      <evidence_types>
+        <type>data_governance_policy</type>
+        <type>dataset_documentation</type>
+        <type>bias_testing_results</type>
+        <type>data_quality_checks</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 11" severity="high" weight="8">
+      <statement>Providers must draw up and keep up to date technical documentation before placing a high-risk AI system on the market or putting it into service.</statement>
+      <evidence_types>
+        <type>technical_documentation</type>
+        <type>system_description</type>
+        <type>conformity_file</type>
+        <type>change_log</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 12" severity="high" weight="8">
+      <statement>High-risk AI systems must be designed and developed with automatic logging capabilities that enable traceability of operation and events for post-market monitoring and oversight.</statement>
+      <evidence_types>
+        <type>logging_specification</type>
+        <type>audit_logs</type>
+        <type>event_retention_policy</type>
+        <type>traceability_reports</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 13" severity="medium" weight="7">
+      <statement>Providers must ensure high-risk AI systems are accompanied by clear instructions and information for deployers covering intended purpose, capabilities, limitations, and proper use.</statement>
+      <evidence_types>
+        <type>user_instructions</type>
+        <type>product_labels</type>
+        <type>deployers_guidance</type>
+        <type>release_notes</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 14" severity="high" weight="8">
+      <statement>High-risk AI systems must be designed and developed so that they can be effectively overseen by natural persons during use.</statement>
+      <evidence_types>
+        <type>human_oversight_design</type>
+        <type>override_procedures</type>
+        <type>training_materials</type>
+        <type>usability_tests</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 15" severity="critical" weight="10">
+      <statement>High-risk AI systems must achieve an appropriate level of accuracy, robustness, and cybersecurity, and those properties must be validated and maintained.</statement>
+      <evidence_types>
+        <type>validation_reports</type>
+        <type>robustness_testing</type>
+        <type>security_assessments</type>
+        <type>incident_records</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 27" severity="high" weight="9">
+      <statement>Deployers of certain high-risk AI systems must conduct a fundamental rights impact assessment before first use and document residual risks and mitigation measures.</statement>
+      <evidence_types>
+        <type>impact_assessment</type>
+        <type>legal_review</type>
+        <type>stakeholder_review</type>
+        <type>mitigation_plan</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 72" severity="high" weight="9">
+      <statement>Providers of high-risk AI systems must establish and keep a post-market monitoring system and plan to actively collect, document, and analyze performance and incident information after deployment.</statement>
+      <evidence_types>
+        <type>post_market_monitoring_plan</type>
+        <type>incident_analysis</type>
+        <type>complaint_logs</type>
+        <type>corrective_action_records</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 99" severity="critical" weight="10">
+      <statement>Member States must lay down effective, proportionate, and dissuasive penalties for infringements of the Regulation and ensure enforcement mechanisms are in place.</statement>
+      <evidence_types>
+        <type>enforcement_policy</type>
+        <type>sanctions_matrix</type>
+        <type>regulator_guidance</type>
+        <type>legal_register</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" title="EUR-Lex Regulation (EU) 2024/1689"/>
+    <source url="https://commission.europa.eu/news-and-media/news/ai-act-enters-force-2024-08-01_en" title="European Commission: AI Act enters into force"/>
+    <source url="https://artificialintelligenceact.eu/the-act/" title="EU Artificial Intelligence Act overview"/>
+  </sources>
+</framework>

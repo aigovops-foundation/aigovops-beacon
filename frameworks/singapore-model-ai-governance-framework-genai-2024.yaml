@@ -1,0 +1,103 @@
+framework_id: singapore-model-ai-governance-framework-genai-2024
+full_name: Model AI Governance Framework for Generative AI
+short_name: GenAI MGF
+issuing_body: Infocomm Media Development Authority (IMDA) and AI Verify Foundation
+jurisdiction: Singapore
+status: voluntary
+effective_date: '2024-05-30'
+scope_summary: A voluntary, sector-agnostic governance framework for organisations developing, deploying, or using generative
+  AI systems. It sets out nine dimensions to be considered in totality so stakeholders can manage GenAI risks while supporting
+  innovation, with emphasis on explainability, human oversight, accountability, testing, security, provenance, and data protection.
+primary_url: https://aiverifyfoundation.sg/resources/mgf-gen-ai/
+applies_to: Private-sector organisations and other stakeholders developing, deploying, or using generative AI in Singapore;
+  sector- and technology-agnostic; relevant across organization sizes where GenAI is used, including model developers, deployers,
+  policymakers, research community, and end users.
+penalties: No legal enforcement mechanism or statutory penalties are stated; the framework is voluntary and non-binding guidance
+  from IMDA and AI Verify Foundation.
+sources:
+- title: IMDA press release
+  url: https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/factsheets/2024/gen-ai-and-digital-foss-ai-governance-playbook
+- title: IMDA GenAI annex
+  url: https://www.imda.gov.sg/-/media/imda/files/news-and-events/media-room/media-releases/2024/01/public-consult-model-ai-governance-framework-genai/annex-nine-dimensions-of-the-proposed-model-ai-governance-framework.pdf
+- title: PDPC Model AI Governance Framework page
+  url: https://www.pdpc.gov.sg/help-and-resources/2020/01/model-ai-governance-framework
+controls:
+- id: D1
+  statement: Ensure users can understand the capabilities and limitations of the generative AI system and know when they are
+    interacting with AI-generated content.
+  evidence_types:
+  - user_disclosure_text
+  - product_ui_screenshots
+  - model_card
+  severity: medium
+  weight: 8
+- id: D2
+  statement: Maintain human oversight over generative AI systems, especially for high-risk use cases, with defined checkpoints
+    for human intervention.
+  evidence_types:
+  - human_oversight_procedure
+  - approval_logs
+  - risk_assessment
+  severity: high
+  weight: 9
+- id: D3
+  statement: Assign clear accountability for the development, deployment, and use of generative AI systems.
+  evidence_types:
+  - RACI_matrix
+  - policy_document
+  - control_owner_attestation
+  severity: high
+  weight: 9
+- id: D4
+  statement: Establish data, model, and system governance practices to manage risks throughout the AI lifecycle.
+  evidence_types:
+  - data_governance_policy
+  - model_registry
+  - lifecycle_risk_log
+  severity: high
+  weight: 8
+- id: D5
+  statement: Test and evaluate generative AI systems before deployment and periodically thereafter to confirm they are safe,
+    robust, and fit for purpose.
+  evidence_types:
+  - test_plan
+  - red_team_results
+  - periodic_assurance_report
+  severity: high
+  weight: 10
+- id: D6
+  statement: Implement mechanisms to report, respond to, and learn from incidents involving generative AI systems.
+  evidence_types:
+  - incident_register
+  - response_playbook
+  - post_incident_review
+  severity: high
+  weight: 8
+- id: D7
+  statement: Put appropriate security measures in place to protect generative AI systems and related assets from malicious
+    attacks and misuse.
+  evidence_types:
+  - security_controls
+  - threat_model
+  - penetration_test_results
+  severity: high
+  weight: 9
+- id: D8
+  statement: Enable users to identify AI-generated content and its origin, where feasible, through provenance mechanisms.
+  evidence_types:
+  - provenance_metadata
+  - content_watermarking_records
+  - disclosure_policy
+  severity: medium
+  weight: 7
+- id: D9
+  statement: Respect data protection obligations and intellectual property rights when building and operating generative AI
+    systems.
+  evidence_types:
+  - privacy_impact_assessment
+  - training_data_provenance
+  - ip_review
+  severity: high
+  weight: 9
+lang: en
+translations: {}

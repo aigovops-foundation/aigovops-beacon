@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="nist-ai-rmf" status="voluntary" jurisdiction="United States" lang="en">
+  <name>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</name>
+  <short_name>AI RMF</short_name>
+  <issuing_body>National Institute of Standards and Technology (NIST)</issuing_body>
+  <effective_date>January 2023</effective_date>
+  <scope>A voluntary, cross-sector framework for organizations that design, develop, deploy, or use AI systems to manage AI-related risks and promote trustworthy and responsible AI. It addresses trustworthiness considerations across the AI lifecycle, including governance, mapping context and impacts, measurement of risks and performance, and ongoing management. It is intended to be adaptable across industries, organization sizes, and AI use cases.</scope>
+  <primary_url>https://www.nist.gov/itl/ai-risk-management-framework</primary_url>
+  <applies_to>Any organization that designs, develops, deploys, evaluates, or uses AI systems; applicable across sectors, organization sizes, and AI model types, including generative AI. It is guidance rather than a legal requirement and is meant to be adapted to specific use cases.</applies_to>
+  <penalties>No legal penalties because the framework is voluntary; enforcement is through organizational adoption, procurement expectations, audit/customer requirements, or incorporation into policy and contracts.</penalties>
+  <controls>
+    <control id="GOVERN-1.1" severity="high" weight="9">
+      <statement>AI-related policies, processes, procedures, and practices are established, implemented, and maintained to manage AI risks.</statement>
+      <evidence_types>
+        <type>ai_policy</type>
+        <type>process_documentation</type>
+        <type>control_testing</type>
+      </evidence_types>
+    </control>
+    <control id="GOVERN-2.1" severity="high" weight="8">
+      <statement>Roles, responsibilities, and accountability for AI risk management are documented and assigned.</statement>
+      <evidence_types>
+        <type>raci_matrix</type>
+        <type>org_chart</type>
+        <type>control_owner_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="MAP-1.1" severity="medium" weight="8">
+      <statement>The context in which the AI system operates, including intended purpose, benefits, stakeholders, and affected parties, is documented.</statement>
+      <evidence_types>
+        <type>use_case_document</type>
+        <type>stakeholder_analysis</type>
+        <type>system_context_record</type>
+      </evidence_types>
+    </control>
+    <control id="MAP-2.1" severity="high" weight="8">
+      <statement>Data sources, data quality, and relevant data limitations for the AI system are identified and documented.</statement>
+      <evidence_types>
+        <type>data_inventory</type>
+        <type>data_quality_assessment</type>
+        <type>lineage_record</type>
+      </evidence_types>
+    </control>
+    <control id="MEASURE-2.1" severity="high" weight="9">
+      <statement>AI system performance and risk-related outcomes are measured using appropriate, validated methods.</statement>
+      <evidence_types>
+        <type>test_results</type>
+        <type>validation_report</type>
+        <type>metric_dashboard</type>
+      </evidence_types>
+    </control>
+    <control id="MEASURE-2.7" severity="critical" weight="10">
+      <statement>Adverse impacts, including bias and other harms, are assessed and tracked across relevant populations and contexts.</statement>
+      <evidence_types>
+        <type>fairness_analysis</type>
+        <type>impact_assessment</type>
+        <type>incident_log</type>
+      </evidence_types>
+    </control>
+    <control id="MANAGE-1.1" severity="high" weight="9">
+      <statement>Risk treatment actions are prioritized, assigned, and tracked to reduce AI risks to acceptable levels.</statement>
+      <evidence_types>
+        <type>risk_register</type>
+        <type>remediation_plan</type>
+        <type>issue_tracker</type>
+      </evidence_types>
+    </control>
+    <control id="MANAGE-2.1" severity="high" weight="9">
+      <statement>Processes are in place to monitor AI systems after deployment and respond to changes, incidents, or emerging risks.</statement>
+      <evidence_types>
+        <type>monitoring_plan</type>
+        <type>incident_response_procedure</type>
+        <type>post_deployment_review</type>
+      </evidence_types>
+    </control>
+    <control id="MANAGE-3.1" severity="medium" weight="7">
+      <statement>Residual AI risks and tradeoffs are communicated to relevant stakeholders and decision makers.</statement>
+      <evidence_types>
+        <type>risk_acceptance_record</type>
+        <type>management_report</type>
+        <type>stakeholder_comms</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.nist.gov/itl/ai-risk-management-framework" title="NIST AI RMF overview"/>
+    <source url="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf" title="AI RMF 1.0 PDF"/>
+    <source url="https://www.nist.gov/itl/ai-risk-management-framework/nist-ai-rmf-playbook" title="NIST AI RMF Playbook"/>
+  </sources>
+</framework>

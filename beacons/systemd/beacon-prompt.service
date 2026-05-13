@@ -1,0 +1,24 @@
+[Unit]
+Description=AIGovOps Beacon — prompt/log tailer
+Documentation=https://github.com/bobrapp/aigovops-beacon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=beacon
+Group=beacon
+WorkingDirectory=/opt/aigovops-beacon/beacons
+Environment=BEACON_LOG_DIR=/var/log/proxy
+ExecStart=/usr/bin/python3 /opt/aigovops-beacon/beacons/prompt_beacon.py --log-dir ${BEACON_LOG_DIR} --pattern "*.log" --interval 5
+Restart=on-failure
+RestartSec=15
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ReadWritePaths=/var/lib/beacon /home/beacon/.beacon
+ReadOnlyPaths=/var/log/proxy
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="us-ai-bill-of-rights" status="voluntary" jurisdiction="United States" lang="en">
+  <name>Blueprint for an AI Bill of Rights: Making Automated Systems Work for the American People</name>
+  <short_name>AI Bill of Rights</short_name>
+  <issuing_body>White House Office of Science and Technology Policy (OSTP)</issuing_body>
+  <effective_date>N/A — voluntary</effective_date>
+  <scope>This White House blueprint is a non-binding policy framework for automated systems that may meaningfully affect rights, opportunities, or access to critical resources or services. It is intended to guide governments at all levels, companies, and other organizations in designing, deploying, and overseeing AI and other automated systems in ways that protect civil rights, civil liberties, privacy, and democratic values.</scope>
+  <primary_url>https://www.whitehouse.gov/ostp/ai-bill-of-rights/</primary_url>
+  <applies_to>Any organization — public or private — that creates, deploys, oversees, or uses automated systems with the potential to meaningfully impact civil rights, civil liberties, privacy, equal opportunity, or access to critical resources or services. The framework is sector-agnostic and especially relevant to high-impact use cases in housing, employment, credit, education, healthcare, financial services, social services, safety, and government benefits.</applies_to>
+  <penalties>No direct enforcement mechanism or monetary penalty. This is a voluntary OSTP blueprint and does not create enforceable legal rights or obligations; compliance is driven by policy adoption, procurement, oversight, and reputational/organizational risk rather than statutory penalties.</penalties>
+  <controls>
+    <control id="SAFE-1" severity="high" weight="9">
+      <statement>Automated systems should undergo pre-deployment testing, risk identification and mitigation, and ongoing monitoring to demonstrate they are safe and effective for their intended use.</statement>
+      <evidence_types>
+        <type>test_plan</type>
+        <type>risk_assessment</type>
+        <type>monitoring_report</type>
+        <type>launch_go_no_go_record</type>
+      </evidence_types>
+    </control>
+    <control id="SAFE-2" severity="high" weight="8">
+      <statement>Independent evaluation and reporting should confirm safety and effectiveness, including steps taken to mitigate potential harms, and results should be made public whenever possible.</statement>
+      <evidence_types>
+        <type>independent_audit_report</type>
+        <type>public_transparency_report</type>
+        <type>remediation_log</type>
+      </evidence_types>
+    </control>
+    <control id="SAFE-3" severity="critical" weight="10">
+      <statement>Automated systems should not be designed with intent or a reasonably foreseeable possibility of endangering people’s safety, including through unintended but foreseeable uses or impacts.</statement>
+      <evidence_types>
+        <type>safety_case</type>
+        <type>hazard_analysis</type>
+        <type>abuse_case_review</type>
+      </evidence_types>
+    </control>
+    <control id="ALG-1" severity="high" weight="9">
+      <statement>Designers, developers, and deployers should conduct proactive equity assessments in design and during acquisition to identify potential discrimination and effects on equity.</statement>
+      <evidence_types>
+        <type>equity_assessment</type>
+        <type>design_review</type>
+        <type>procurement_review</type>
+      </evidence_types>
+    </control>
+    <control id="ALG-2" severity="high" weight="9">
+      <statement>Automated systems should be tested for disparities before deployment and during use, with documented mitigation or justification for any remaining disparate impacts.</statement>
+      <evidence_types>
+        <type>disparity_test_results</type>
+        <type>bias_mitigation_plan</type>
+        <type>exception_justification</type>
+      </evidence_types>
+    </control>
+    <control id="ALG-3" severity="high" weight="8">
+      <statement>Representative data, proxy controls, accessibility checks, and ongoing monitoring should be used to prevent algorithmic discrimination across protected classes.</statement>
+      <evidence_types>
+        <type>data_provenance</type>
+        <type>proxy_analysis</type>
+        <type>accessibility_test</type>
+        <type>ongoing_monitoring_report</type>
+      </evidence_types>
+    </control>
+    <control id="PRIV-1" severity="high" weight="8">
+      <statement>Data collection should be limited to what is strictly necessary for the specific context and should conform to reasonable user expectations.</statement>
+      <evidence_types>
+        <type>data_minimization_policy</type>
+        <type>data_inventory</type>
+        <type>purpose_limitation_review</type>
+      </evidence_types>
+    </control>
+    <control id="PRIV-2" severity="high" weight="8">
+      <statement>Users should be given agency over collection, use, access, transfer, and deletion of their data through meaningful consent or alternative privacy-by-design safeguards.</statement>
+      <evidence_types>
+        <type>consent_flow_review</type>
+        <type>privacy_notice</type>
+        <type>DSAR/workflow_records</type>
+      </evidence_types>
+    </control>
+    <control id="NOTICE-1" severity="medium" weight="7">
+      <statement>People impacted by an automated system should receive plain-language notice that the system is in use, who is responsible, and timely explanations of outcomes and significant changes.</statement>
+      <evidence_types>
+        <type>notice_text</type>
+        <type>user-facing disclosures</type>
+        <type>change-log</type>
+        <type>explanation_samples</type>
+      </evidence_types>
+    </control>
+    <control id="HUM-1" severity="high" weight="9">
+      <statement>Where appropriate, people should be able to opt out to a human alternative and obtain timely human review, escalation, and remedy for adverse outcomes or system errors.</statement>
+      <evidence_types>
+        <type>appeals_process</type>
+        <type>human-review SLA</type>
+        <type>training_records</type>
+        <type>case-resolution logs</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.whitehouse.gov/wp-content/uploads/2022/10/Blueprint-for-an-AI-Bill-of-Rights.pdf" title="Blueprint for an AI Bill of Rights"/>
+    <source url="https://www.whitehouse.gov/ostp/ai-bill-of-rights/" title="OSTP AI Bill of Rights page"/>
+    <source url="https://www.whitehouse.gov/ostp/ai-bill-of-rights/applying-the-blueprint-for-an-ai-bill-of-rights/" title="Applying the Blueprint for an AI Bill of Rights"/>
+  </sources>
+</framework>

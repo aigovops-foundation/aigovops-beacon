@@ -1,0 +1,24 @@
+[Unit]
+Description=AIGovOps Beacon — model egress sniffer
+Documentation=https://github.com/bobrapp/aigovops-beacon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=beacon
+Group=beacon
+WorkingDirectory=/opt/aigovops-beacon/beacons
+ExecStart=/usr/bin/python3 /opt/aigovops-beacon/beacons/model_beacon.py --interval 30
+Restart=on-failure
+RestartSec=15
+# Beacons need NET_ADMIN-ish access to enumerate sockets via /proc.
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ReadWritePaths=/var/lib/beacon /home/beacon/.beacon
+
+[Install]
+WantedBy=multi-user.target

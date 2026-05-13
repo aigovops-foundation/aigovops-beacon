@@ -1,0 +1,139 @@
+- framework_id: iso-iec-23894
+  short_name: AI risk management
+  status: voluntary
+  jurisdiction: Global
+  control_count: 10
+  max_weight: 76
+- framework_id: soc-2-tsc
+  short_name: SOC 2 TSC
+  status: voluntary
+  jurisdiction: United States; used internationally in SOC 2 engagements
+  control_count: 10
+  max_weight: 83
+- framework_id: hipaa-security-rule
+  short_name: HIPAA Security Rule
+  status: in_force
+  jurisdiction: United States
+  control_count: 10
+  max_weight: 83
+- framework_id: iso-iec-42001
+  short_name: ISO 42001
+  status: voluntary
+  jurisdiction: Global
+  control_count: 10
+  max_weight: 79
+- framework_id: gdpr-article-22-35
+  short_name: GDPR
+  status: in_force
+  jurisdiction: European Union / EEA member-state implementation
+  control_count: 10
+  max_weight: 87
+- framework_id: eu-ai-act
+  short_name: EU AI Act
+  status: in_force
+  jurisdiction: European Union (EEA relevance stated)
+  control_count: 10
+  max_weight: 88
+- framework_id: nist-ai-rmf
+  short_name: AI RMF
+  status: voluntary
+  jurisdiction: United States
+  control_count: 9
+  max_weight: 77
+- framework_id: colorado-ai-act-sb24-205
+  short_name: Colorado AI Act
+  status: in_force
+  jurisdiction: Colorado, United States
+  control_count: 10
+  max_weight: 80
+- framework_id: china-interim-measures-generative-ai-services
+  short_name: Generative AI Measures
+  status: in_force
+  jurisdiction: China (mainland China)
+  control_count: 12
+  max_weight: 94
+- framework_id: oecd-ai-principles
+  short_name: OECD AI Principles
+  status: voluntary
+  jurisdiction: Global / international (OECD Adherents and non-Adherents invited to
+    take account)
+  control_count: 9
+  max_weight: 64
+- framework_id: brazil-pl-2338-2023-lgpd
+  short_name: Brazil AI Bill / LGPD
+  status: draft
+  jurisdiction: Brazil
+  control_count: 10
+  max_weight: 85
+- framework_id: singapore-model-ai-governance-framework-genai-2024
+  short_name: GenAI MGF
+  status: voluntary
+  jurisdiction: Singapore
+  control_count: 9
+  max_weight: 77
+- framework_id: nyc-local-law-144
+  short_name: Local Law 144
+  status: in_force
+  jurisdiction: New York City, United States
+  control_count: 10
+  max_weight: 81
+- framework_id: us-ai-bill-of-rights
+  short_name: AI Bill of Rights
+  status: voluntary
+  jurisdiction: United States
+  control_count: 10
+  max_weight: 85
+- framework_id: un-ga-a-78-l-49
+  short_name: UN AI resolution
+  status: in_force
+  jurisdiction: Global
+  control_count: 8
+  max_weight: 59
+- framework_id: aida-canada
+  short_name: AIDA
+  status: proposed
+  jurisdiction: Canada
+  control_count: 10
+  max_weight: 81
+- framework_id: uk-ai-regulation-white-paper
+  short_name: UK AI White Paper
+  status: draft
+  jurisdiction: United Kingdom
+  control_count: 10
+  max_weight: 83
+- framework_id: texas-responsible-ai-governance-act
+  short_name: TRAIGA
+  status: proposed
+  jurisdiction: Texas, United States
+  control_count: 10
+  max_weight: 85
+- framework_id: australia-ai-ethics-voluntary-ai-safety-standard
+  short_name: AI Ethics + VAISS
+  status: voluntary
+  jurisdiction: Australia
+  control_count: 10
+  max_weight: 78
+- framework_id: korea-ai-basic-act
+  short_name: AI Basic Act
+  status: in_force
+  jurisdiction: South Korea
+  control_count: 10
+  max_weight: 81
+- framework_id: sb-53-ca
+  short_name: SB 53
+  status: in_force
+  jurisdiction: California, United States
+  control_count: 9
+  max_weight: 74
+- framework_id: ieee-7000-2021
+  short_name: IEEE 7000
+  status: in_force
+  jurisdiction: Global
+  control_count: 8
+  max_weight: 67
+- framework_id: india-dpdp-act
+  short_name: DPDP Act
+  status: in_force
+  jurisdiction: India
+  control_count: 10
+  max_weight: 85

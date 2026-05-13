@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="india-dpdp-act" status="in_force" jurisdiction="India" lang="en">
+  <name>The Digital Personal Data Protection Act, 2023</name>
+  <short_name>DPDP Act</short_name>
+  <issuing_body>Ministry of Electronics and Information Technology (Government of India); enforced by the Data Protection Board of India</issuing_body>
+  <effective_date>2023-08-11 (enactment); operative provisions implemented via notified rules / notifications</effective_date>
+  <scope>India's national personal data protection law for digital personal data. It applies to processing of digital personal data in India and to certain processing outside India when connected to offering goods or services to individuals in India. For AI systems, it functions as a governance baseline wherever an AI system processes personal data, requiring lawful basis, notice, consent management, security safeguards, breach reporting, and stronger controls for children and significant data fiduciaries.</scope>
+  <primary_url>https://www.indiacode.nic.in/handle/123456789/22037?locale=en</primary_url>
+  <applies_to>Any organization processing digital personal data in India; also extraterritorial processing tied to offering goods or services to individuals in India. In practice this covers most consumer, employee, platform, SaaS, fintech, health, telecom, and AI/ML systems that ingest or infer from personal data, regardless of company size; enhanced duties can apply to entities notified as Significant Data Fiduciaries.</applies_to>
+  <penalties>Enforced by the Data Protection Board of India. The Act's Schedule sets monetary penalties up to INR 250 crore for failure to maintain reasonable security safeguards, INR 200 crore for breach notification failures, INR 200 crore for children's-data obligations, INR 150 crore for Significant Data Fiduciary obligations, INR 50 crore for any other provision, and INR 10,000 for breach of Data Principal duties.</penalties>
+  <controls>
+    <control id="3" severity="high" weight="8">
+      <statement>Determine and document whether the AI system's processing of digital personal data falls within the Act's territorial and subject-matter scope.</statement>
+      <evidence_types>
+        <type>data_flow_map</type>
+        <type>processing_inventory</type>
+        <type>jurisdiction_analysis</type>
+      </evidence_types>
+    </control>
+    <control id="4" severity="high" weight="9">
+      <statement>Process personal data only for a lawful purpose under the Act, using consent or a permitted legitimate use.</statement>
+      <evidence_types>
+        <type>lawful_basis_record</type>
+        <type>consent_log</type>
+        <type>purpose_register</type>
+      </evidence_types>
+    </control>
+    <control id="5" severity="high" weight="8">
+      <statement>Provide clear notice before or at consent collection, including data categories, processing purpose, rights, and complaint mechanism.</statement>
+      <evidence_types>
+        <type>privacy_notice</type>
+        <type>ui_screenshots</type>
+        <type>notice_approval</type>
+      </evidence_types>
+    </control>
+    <control id="6" severity="critical" weight="10">
+      <statement>Obtain valid, specific, informed, unambiguous, affirmative consent and support easy withdrawal and consent-manager handling where used.</statement>
+      <evidence_types>
+        <type>consent_flow_test</type>
+        <type>consent_records</type>
+        <type>withdrawal_procedure</type>
+      </evidence_types>
+    </control>
+    <control id="8(1)-(8)" severity="critical" weight="10">
+      <statement>Maintain organizational accountability for processor use, data quality for consequential decisions, security safeguards, breach notification, retention/erasure, DPO contact, and grievance redressal.</statement>
+      <evidence_types>
+        <type>processor_contracts</type>
+        <type>security_controls</type>
+        <type>incident_register</type>
+        <type>retention_schedule</type>
+        <type>grievance_log</type>
+      </evidence_types>
+    </control>
+    <control id="9" severity="critical" weight="10">
+      <statement>If the AI system processes children's data, obtain verifiable parental or guardian consent and avoid tracking, behavioural monitoring, and targeted advertising to children.</statement>
+      <evidence_types>
+        <type>age_assurance_process</type>
+        <type>parental_consent_record</type>
+        <type>child_safety_review</type>
+      </evidence_types>
+    </control>
+    <control id="10(1)-(2)" severity="critical" weight="9">
+      <statement>If designated a Significant Data Fiduciary, appoint an India-based DPO, engage an independent auditor, and perform periodic DPIAs and audits.</statement>
+      <evidence_types>
+        <type>board_resolution</type>
+        <type>dpo_appointment</type>
+        <type>audit_report</type>
+        <type>dpia</type>
+      </evidence_types>
+    </control>
+    <control id="11-14" severity="high" weight="8">
+      <statement>Support data principal rights to access, correction, erasure, grievance redressal, and nomination through operational procedures and system capabilities.</statement>
+      <evidence_types>
+        <type>rights_request_workflow</type>
+        <type>case_logs</type>
+        <type>sop</type>
+      </evidence_types>
+    </control>
+    <control id="15" severity="medium" weight="4">
+      <statement>Ensure users exercising rights or providing personal data do not impersonate others, submit false complaints, or provide non-authentic information.</statement>
+      <evidence_types>
+        <type>user_attestation</type>
+        <type>fraud_controls</type>
+        <type>complaint_screening</type>
+      </evidence_types>
+    </control>
+    <control id="27-33" severity="critical" weight="9">
+      <statement>Be prepared for Data Protection Board inquiries, directions, and monetary penalties, including preservation of evidence and remediation tracking.</statement>
+      <evidence_types>
+        <type>regulatory_response_plan</type>
+        <type>evidence_hold_notice</type>
+        <type>remediation_tracker</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.indiacode.nic.in/handle/123456789/22037?locale=en" title="India Code"/>
+    <source url="https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf" title="MeitY PDF"/>
+    <source url="https://www.meity.gov.in/static/uploads/2025/11/53b1bcf01cab9a0adde463e73fbc3417.pdf" title="Data Protection Board notification"/>
+  </sources>
+</framework>

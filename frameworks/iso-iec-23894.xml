@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="iso-iec-23894" status="voluntary" jurisdiction="Global" lang="en">
+  <name>ISO/IEC 23894:2023 Information technology — Artificial intelligence — Guidance on risk management</name>
+  <short_name>AI risk management</short_name>
+  <issuing_body>ISO/IEC (published by ISO/IEC JTC 1/SC 42)</issuing_body>
+  <effective_date>N/A — voluntary</effective_date>
+  <scope>ISO/IEC 23894:2023 provides guidance for organizations that develop, produce, deploy, or use products, systems, and services that utilize artificial intelligence (AI) to manage AI-related risk. It is intended to help organizations integrate AI risk management into their AI-related activities and functions, and the application can be customized to any organization and context.</scope>
+  <primary_url>https://www.iso.org/standard/77304.html</primary_url>
+  <applies_to>Organizations of any size in any sector that develop, produce, deploy, or use AI-enabled products, systems, or services.</applies_to>
+  <penalties>No direct legal penalties; ISO/IEC 23894:2023 is a voluntary international guidance standard. Consequences of non-adoption are indirect, such as failed audits, weaker assurance, contractual non-compliance, or increased operational and safety risk.</penalties>
+  <controls>
+    <control id="5.2" severity="high" weight="8">
+      <statement>The organization shall integrate AI risk management into AI-related activities and functions as part of its governance and operating model.</statement>
+      <evidence_types>
+        <type>risk_management_policy</type>
+        <type>governance_charter</type>
+        <type>process_maps</type>
+        <type>management_review_minutes</type>
+      </evidence_types>
+    </control>
+    <control id="5.3" severity="high" weight="7">
+      <statement>The organization shall establish the context for AI risk management, including internal and external factors and the intended purpose of the AI system.</statement>
+      <evidence_types>
+        <type>context_analysis</type>
+        <type>system_description</type>
+        <type>stakeholder_register</type>
+        <type>assumptions_log</type>
+      </evidence_types>
+    </control>
+    <control id="5.4" severity="high" weight="9">
+      <statement>The organization shall identify AI-related risks across the lifecycle of the system, including foreseeable misuse and impacts to people and society.</statement>
+      <evidence_types>
+        <type>risk_register</type>
+        <type>hazard_analysis</type>
+        <type>use_case_review</type>
+        <type>misuse_assessment</type>
+      </evidence_types>
+    </control>
+    <control id="5.5" severity="high" weight="8">
+      <statement>The organization shall assess AI risks using defined criteria for likelihood, impact, and risk acceptability.</statement>
+      <evidence_types>
+        <type>risk_criteria</type>
+        <type>assessment_workpapers</type>
+        <type>scoring_model</type>
+        <type>approval_records</type>
+      </evidence_types>
+    </control>
+    <control id="5.6" severity="high" weight="8">
+      <statement>The organization shall treat AI risks using planned controls or other risk treatment actions and assign owners and due dates.</statement>
+      <evidence_types>
+        <type>risk_treatment_plan</type>
+        <type>control_implementation_records</type>
+        <type>owner_assignments</type>
+        <type>action_tracker</type>
+      </evidence_types>
+    </control>
+    <control id="5.7" severity="high" weight="8">
+      <statement>The organization shall monitor AI risks and the effectiveness of treatments throughout the AI system lifecycle.</statement>
+      <evidence_types>
+        <type>monitoring_reports</type>
+        <type>kpi_dashboards</type>
+        <type>incident_logs</type>
+        <type>control_testing_results</type>
+      </evidence_types>
+    </control>
+    <control id="5.8" severity="medium" weight="6">
+      <statement>The organization shall communicate and consult on AI risks with relevant internal and external stakeholders.</statement>
+      <evidence_types>
+        <type>communications_plan</type>
+        <type>stakeholder_meeting_notes</type>
+        <type>briefings</type>
+        <type>consultation_records</type>
+      </evidence_types>
+    </control>
+    <control id="5.9" severity="medium" weight="7">
+      <statement>The organization shall record and retain documented information about AI risk management activities, decisions, and outcomes.</statement>
+      <evidence_types>
+        <type>risk_files</type>
+        <type>decision_logs</type>
+        <type>document_retention_policy</type>
+        <type>audit_trail</type>
+      </evidence_types>
+    </control>
+    <control id="6.1" severity="high" weight="9">
+      <statement>The organization shall plan and implement risk management throughout the AI system lifecycle, including design, development, deployment, operation, and decommissioning.</statement>
+      <evidence_types>
+        <type>lifecycle_risk_plan</type>
+        <type>stage_gates</type>
+        <type>deployment_checklists</type>
+        <type>retirement_plan</type>
+      </evidence_types>
+    </control>
+    <control id="6.2" severity="medium" weight="6">
+      <statement>The organization shall tailor AI risk management activities to the organization, system, and context, including the type of AI and its intended use.</statement>
+      <evidence_types>
+        <type>tailoring_justification</type>
+        <type>scope_definition</type>
+        <type>context_matrix</type>
+        <type>policy_exceptions</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.iso.org/standard/77304.html" title="ISO standard page"/>
+    <source url="https://www.iso.org/committee/6794475.html" title="ISO/IEC JTC 1/SC 42 committee page"/>
+    <source url="https://www.iso.org/artificial-intelligence/machine-learning" title="ISO AI standards overview"/>
+  </sources>
+</framework>

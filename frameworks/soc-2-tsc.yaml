@@ -1,0 +1,121 @@
+framework_id: soc-2-tsc
+full_name: 2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (With
+  Revised Points of Focus – 2022)
+short_name: SOC 2 TSC
+issuing_body: AICPA’s Assurance Services Executive Committee (ASEC)
+jurisdiction: United States; used internationally in SOC 2 engagements
+status: voluntary
+effective_date: N/A — voluntary
+scope_summary: The Trust Services Criteria are AICPA control criteria used in attestation or consulting engagements to evaluate
+  and report on controls over the security, availability, processing integrity, confidentiality, or privacy of information
+  and systems used to provide products or services. They are designed for service organizations and can be applied across
+  an entire entity or to a subsidiary, division, or operating unit, including systems used to process users’ data.[AICPA](https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022)
+primary_url: https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022
+applies_to: Service organizations of any size and industry that provide products or services using systems subject to SOC
+  2 reporting; commonly cloud, SaaS, data processing, managed services, fintech, healthcare vendors, and other outsourced
+  service providers. Can cover one or more trust services categories (security, availability, processing integrity, confidentiality,
+  privacy) and may be scoped to an entity, subsidiary, division, or operating unit.
+penalties: No direct statutory penalty regime; compliance is voluntary and enforcement is contractual or market-based through
+  customer requirements, procurement, and independent CPA attestation. No maximum penalty is specified by the AICPA criteria
+  themselves.
+sources:
+- title: AICPA 2017 Trust Services Criteria
+  url: https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022
+- title: AICPA SOC 2 Overview
+  url: https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2
+- title: AICPA SOC Suite of Services
+  url: https://www.aicpa-cima.com/resources/landing/system-and-organization-controls-soc-suite-of-services
+controls:
+- id: CC1.1
+  statement: Management demonstrates a commitment to integrity and ethical values and establishes oversight of the entity’s
+    internal control responsibilities.
+  evidence_types:
+  - governance_policy
+  - board_minutes
+  - code_of_conduct
+  - management_attestation
+  severity: high
+  weight: 8
+- id: CC2.1
+  statement: The entity specifies objectives with sufficient clarity to enable identification and assessment of risks relating
+    to objectives.
+  evidence_types:
+  - control_framework
+  - risk_register
+  - objective_documentation
+  severity: high
+  weight: 8
+- id: CC3.1
+  statement: The entity identifies and assesses risks to the achievement of objectives across the system and selects suitable
+    responses.
+  evidence_types:
+  - risk_assessment
+  - risk_treatment_plan
+  - control_design_matrix
+  severity: high
+  weight: 9
+- id: CC4.1
+  statement: The entity selects and develops control activities that contribute to the mitigation of risks to acceptable levels.
+  evidence_types:
+  - control_matrix
+  - procedure_documentation
+  - testing_workpapers
+  severity: high
+  weight: 9
+- id: CC5.1
+  statement: The entity selects and develops general controls over technology to support the achievement of objectives.
+  evidence_types:
+  - it_general_controls
+  - access_reviews
+  - change_management_logs
+  severity: high
+  weight: 9
+- id: CC6.1
+  statement: The entity implements activities to obtain and use relevant quality information to support internal control.
+  evidence_types:
+  - data_quality_controls
+  - monitoring_reports
+  - system-generated_reports
+  severity: medium
+  weight: 6
+- id: CC7.1
+  statement: The entity evaluates and communicates internal control deficiencies to those responsible for taking corrective
+    action, including senior management and the board as appropriate.
+  evidence_types:
+  - deficiency_log
+  - remediation_tracking
+  - board_reporting
+  severity: high
+  weight: 8
+- id: A1.1
+  statement: The entity maintains, monitors, and updates its infrastructure, software, and data to meet its availability commitments
+    and recover from disruptions.
+  evidence_types:
+  - availability_sla
+  - backup_restore_tests
+  - bcdr_plan
+  - uptime_reports
+  severity: high
+  weight: 8
+- id: PI1.1
+  statement: The entity performs processing activities completely, accurately, timely, and authorized as required by the processing
+    integrity objective.
+  evidence_types:
+  - batch_reconciliation
+  - input_validation
+  - exception_reports
+  - job_run_logs
+  severity: high
+  weight: 9
+- id: P1.1
+  statement: The entity identifies and addresses privacy commitments, legal requirements, and disclosures for personal information
+    throughout its lifecycle.
+  evidence_types:
+  - privacy_notice
+  - data_inventory
+  - law_register
+  - privacy_controls_testing
+  severity: high
+  weight: 9
+lang: en
+translations: {}

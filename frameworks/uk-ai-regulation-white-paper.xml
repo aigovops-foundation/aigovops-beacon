@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="uk-ai-regulation-white-paper" status="draft" jurisdiction="United Kingdom" lang="en">
+  <name>A pro-innovation approach to AI regulation</name>
+  <short_name>UK AI White Paper</short_name>
+  <issuing_body>Department for Science, Innovation and Technology (DSIT), UK Government</issuing_body>
+  <effective_date>TBD — draft</effective_date>
+  <scope>This is the UK government’s proposed cross-sector AI governance framework, intended to guide how existing UK regulators interpret and apply five common AI principles within their own remits. It is context-based and non-statutory in its current form, covering AI use across sectors while leaving defence, national security, and other existing exemptions to sector-specific regimes.</scope>
+  <primary_url>https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper</primary_url>
+  <applies_to>All UK sectors using AI, with implementation by existing sector regulators; especially relevant to developers and deployers of high-impact AI, highly capable general-purpose AI systems, and public-sector bodies subject to regulator guidance or procurement/assurance standards. Exemptions or tailored treatment may apply where existing regimes already address unique operating requirements, including defence and national security.</applies_to>
+  <penalties>No AI-specific penalties are set in the white paper or 2024 government response. Enforcement is expected through existing regulator powers and laws; the framework is currently non-statutory/voluntary, with possible future statutory duties or targeted binding requirements for frontier AI systems.</penalties>
+  <controls>
+    <control id="Safety, security and robustness" severity="high" weight="10">
+      <statement>AI applications should function in a secure, safe and robust way, with risks carefully managed throughout their lifecycle.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>testing_report</type>
+        <type>model_validation</type>
+        <type>incident_log</type>
+      </evidence_types>
+    </control>
+    <control id="Appropriate transparency and explainability" severity="high" weight="9">
+      <statement>Organisations developing or deploying AI should be able to communicate when and how AI is used and explain decision-making to an appropriate level of detail.</statement>
+      <evidence_types>
+        <type>user_notice</type>
+        <type>model_card</type>
+        <type>explanation_policy</type>
+        <type>disclosure_log</type>
+      </evidence_types>
+    </control>
+    <control id="Fairness" severity="high" weight="10">
+      <statement>AI must be used in a way that complies with existing UK law and does not discriminate or create unfair commercial outcomes.</statement>
+      <evidence_types>
+        <type>bias_test_results</type>
+        <type>impact_assessment</type>
+        <type>legal_review</type>
+        <type>fairness_mitigation_plan</type>
+      </evidence_types>
+    </control>
+    <control id="Accountability and governance" severity="high" weight="9">
+      <statement>There must be appropriate oversight of AI use and clear accountability for AI outcomes.</statement>
+      <evidence_types>
+        <type>governance_charter</type>
+        <type>RACI_matrix</type>
+        <type>board_minutes</type>
+        <type>control_ownership_records</type>
+      </evidence_types>
+    </control>
+    <control id="Contestability and redress" severity="medium" weight="8">
+      <statement>People must have clear routes to dispute harmful AI-generated outcomes or decisions.</statement>
+      <evidence_types>
+        <type>complaints_process</type>
+        <type>appeals_process</type>
+        <type>customer_notice</type>
+        <type>redress_log</type>
+      </evidence_types>
+    </control>
+    <control id="Regulatory guidance within remit" severity="medium" weight="7">
+      <statement>Each regulator should interpret and apply the five principles within its own sectoral remit and issue practical guidance for regulated entities.</statement>
+      <evidence_types>
+        <type>regulator_guidance</type>
+        <type>implementation_plan</type>
+        <type>sector_playbook</type>
+        <type>compliance_communication</type>
+      </evidence_types>
+    </control>
+    <control id="Cross-economy risk monitoring" severity="medium" weight="8">
+      <statement>Government should monitor and assess AI risks across the economy and maintain a cross-economy understanding of emerging harms and gaps.</statement>
+      <evidence_types>
+        <type>risk_register</type>
+        <type>horizon_scanning_report</type>
+        <type>cross_sector_review</type>
+        <type>risk_assessment_framework</type>
+      </evidence_types>
+    </control>
+    <control id="Regulator coordination" severity="medium" weight="7">
+      <statement>Government and key regulators should coordinate AI governance, share knowledge, and align approaches where risks overlap across sectors.</statement>
+      <evidence_types>
+        <type>steering_committee_minutes</type>
+        <type>coordination_workplan</type>
+        <type>interregulator_MOU</type>
+        <type>shared_guidance</type>
+      </evidence_types>
+    </control>
+    <control id="Capability and tools" severity="medium" weight="6">
+      <statement>Regulators should build the capability, skills, and tools needed to identify and address AI risks effectively.</statement>
+      <evidence_types>
+        <type>training_records</type>
+        <type>capability_assessment</type>
+        <type>tooling_inventory</type>
+        <type>skills_plan</type>
+      </evidence_types>
+    </control>
+    <control id="Future binding requirements for frontier systems" severity="critical" weight="9">
+      <statement>Government should consider targeted binding requirements for developers of highly capable general-purpose AI systems if voluntary measures are insufficient.</statement>
+      <evidence_types>
+        <type>policy_proposal</type>
+        <type>threshold_analysis</type>
+        <type>frontier_model_assessment</type>
+        <type>consultation_response</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper" title="AI regulation: a pro-innovation approach"/>
+    <source url="https://www.gov.uk/government/consultations/ai-regulation-a-pro-innovation-approach-policy-proposals/outcome/a-pro-innovation-approach-to-ai-regulation-government-response" title="A pro-innovation approach to AI regulation: government response"/>
+    <source url="https://www.gov.uk/government/publications/implementing-the-uks-ai-regulatory-principles-initial-guidance-for-regulators" title="Implementing the UK's AI regulatory principles"/>
+  </sources>
+</framework>

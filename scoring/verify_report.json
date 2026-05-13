@@ -1,0 +1,1023 @@
+{
+  "receipt_count": 46,
+  "evidence_type_count": 46,
+  "controls_present": 97,
+  "frameworks": [
+    {
+      "framework_id": "aida-canada",
+      "short_name": "AIDA",
+      "score": 29.63,
+      "covered": 3,
+      "total": 10,
+      "max_weight": 81,
+      "covered_weight": 24,
+      "gaps": [
+        {
+          "control_id": "s.7",
+          "statement": "Assess whether each AI system is a high-impact system in accordance with the regulations before applying the Act's high-impact duties.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "s.9",
+          "statement": "Monitor compliance with mitigation measures and their effectiveness for each high-impact system.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "s.12",
+          "statement": "Notify the Minister as soon as feasible if the use of a high-impact system results or is likely to result in material harm.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "s.13",
+          "statement": "Provide the Minister with requested records under subsection 10(1) when ordered.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "s.14",
+          "statement": "Provide the Minister with requested records relating to harm or biased output concerns under subsection 10(2) when ordered.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "s.15",
+          "statement": "Conduct or facilitate an independent audit when the Minister orders an audit for a possible contravention.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "s.17",
+          "statement": "Cease using or making available a high-impact system if ordered because it gives rise to a serious risk of imminent harm.",
+          "severity": "critical",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "framework_id": "australia-ai-ethics-voluntary-ai-safety-standard",
+      "short_name": "AI Ethics + VAISS",
+      "score": 61.54,
+      "covered": 6,
+      "total": 10,
+      "max_weight": 78,
+      "covered_weight": 48,
+      "gaps": [
+        {
+          "control_id": "C-04",
+          "statement": "Monitor AI systems after deployment and maintain processes to detect drift, incidents, and emerging harms, with prompt remediation and re-testing where needed.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "C-07",
+          "statement": "Protect privacy and security by limiting unnecessary data collection, securing data and models, and managing sensitive or personal information lawfully.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "C-08",
+          "statement": "Manage fairness and non-discrimination risks by checking for bias, unequal performance, and disparate impacts across affected groups.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "C-10",
+          "statement": "Engage relevant stakeholders and provide channels for feedback, complaints, and contestation when AI causes concern or adverse impact.",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "brazil-pl-2338-2023-lgpd",
+      "short_name": "Brazil AI Bill / LGPD",
+      "score": 61.18,
+      "covered": 6,
+      "total": 10,
+      "max_weight": 85,
+      "covered_weight": 52,
+      "gaps": [
+        {
+          "control_id": "ART-19",
+          "statement": "Affected persons must receive the protections and procedural rights established for AI decisions and risk management in the bill.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "ART-34",
+          "statement": "Where the bill shifts the burden of proof or creates consumer/individual protection rules, the organization must preserve records sufficient to defend its compl",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "ART-40",
+          "statement": "Governance obligations for AI systems must be implemented and monitored continuously, not only at launch.",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "LGPD-PRINCIPLES",
+          "statement": "Personal data processed by AI must comply with LGPD principles including purpose, adequacy, necessity, transparency, security, prevention, nondiscrimination, ac",
+          "severity": "critical",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "framework_id": "china-interim-measures-generative-ai-services",
+      "short_name": "Generative AI Measures",
+      "score": 19.15,
+      "covered": 2,
+      "total": 12,
+      "max_weight": 94,
+      "covered_weight": 18,
+      "gaps": [
+        {
+          "control_id": "Art. 2",
+          "statement": "Determine whether the offering is a generative AI service provided to the mainland China public and document scope determination; purely non-public R&D is out o",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 7",
+          "statement": "Use lawful sources for training data and base models, respect IP and personal information rules, and improve training data quality and diversity.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "Art. 8",
+          "statement": "Define clear, specific, operable data-labeling rules, assess labeling quality, and train annotators appropriately.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "Art. 10",
+          "statement": "Publicly disclose the intended users, scenarios, and purposes of the service and implement measures to prevent minors from overdependence or addiction.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "Art. 11",
+          "statement": "Protect prompts and usage records, minimize collection of non-essential personal information, and honor access/copy/correction/deletion requests.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 12",
+          "statement": "Label generated images and videos in accordance with the deep synthesis rules.",
+          "severity": "medium",
+          "weight": 6
+        },
+        {
+          "control_id": "Art. 14",
+          "statement": "Detect illegal content, stop generation and transmission, remediate via model optimization where needed, preserve records, and report to authorities.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "Art. 15",
+          "statement": "Maintain a usable complaint and reporting mechanism with published handling\u6d41\u7a0b and response times.",
+          "severity": "medium",
+          "weight": 5
+        },
+        {
+          "control_id": "Art. 17",
+          "statement": "For services with public opinion influence or social mobilization capacity, complete security assessment and algorithm filing/changes/cancellation as required.",
+          "severity": "critical",
+          "weight": 9
+        },
+        {
+          "control_id": "Art. 19",
+          "statement": "Provide regulators with required information on training data sources, scale, type, labeling rules, and algorithm mechanisms during supervision.",
+          "severity": "high",
+          "weight": 7
+        }
+      ]
+    },
+    {
+      "framework_id": "colorado-ai-act-sb24-205",
+      "short_name": "Colorado AI Act",
+      "score": 47.5,
+      "covered": 5,
+      "total": 10,
+      "max_weight": 80,
+      "covered_weight": 38,
+      "gaps": [
+        {
+          "control_id": "6-1-1702(1)",
+          "statement": "A developer of a high-risk artificial intelligence system must use reasonable care to protect consumers from known or reasonably foreseeable risks of algorithmi",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "6-1-1702(5)",
+          "statement": "A developer must notify the Attorney General and known deployers or developers of known or reasonably foreseeable algorithmic discrimination risks within 90 day",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "6-1-1703(4)(a)-(c)",
+          "statement": "Before a consequential decision, a deployer must notify the consumer that AI was used, explain the decision context, provide contact information and plain-langu",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "6-1-1703(4)(b)(I)-(III)",
+          "statement": "For adverse consequential decisions, a deployer must provide principal reasons, an opportunity to correct incorrect personal data, and an appeal process with hu",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "6-1-1704(1)-(2)",
+          "statement": "A person doing business in Colorado that deploys or makes available an AI system intended to interact with consumers must disclose that the consumer is interact",
+          "severity": "medium",
+          "weight": 7
+        }
+      ]
+    },
+    {
+      "framework_id": "eu-ai-act",
+      "short_name": "EU AI Act",
+      "score": 50.0,
+      "covered": 5,
+      "total": 10,
+      "max_weight": 88,
+      "covered_weight": 44,
+      "gaps": [
+        {
+          "control_id": "Art. 12",
+          "statement": "High-risk AI systems must be designed and developed with automatic logging capabilities that enable traceability of operation and events for post-market monitor",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 13",
+          "statement": "Providers must ensure high-risk AI systems are accompanied by clear instructions and information for deployers covering intended purpose, capabilities, limitati",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "Art. 15",
+          "statement": "High-risk AI systems must achieve an appropriate level of accuracy, robustness, and cybersecurity, and those properties must be validated and maintained.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "Art. 72",
+          "statement": "Providers of high-risk AI systems must establish and keep a post-market monitoring system and plan to actively collect, document, and analyze performance and in",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "Art. 99",
+          "statement": "Member States must lay down effective, proportionate, and dissuasive penalties for infringements of the Regulation and ensure enforcement mechanisms are in plac",
+          "severity": "critical",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "framework_id": "gdpr-article-22-35",
+      "short_name": "GDPR",
+      "score": 32.18,
+      "covered": 3,
+      "total": 10,
+      "max_weight": 87,
+      "covered_weight": 28,
+      "gaps": [
+        {
+          "control_id": "Art. 22(1)",
+          "statement": "Do not subject a data subject to a decision based solely on automated processing, including profiling, that produces legal effects or similarly significantly af",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "Art. 22(2)(a)",
+          "statement": "If relying on contract necessity, document why the automated decision is necessary for entering into or performing the contract.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 22(2)(b)",
+          "statement": "If relying on Union or Member State law, identify the enabling law and its suitable safeguards for rights, freedoms, and legitimate interests.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 22(2)(c)",
+          "statement": "If relying on explicit consent, capture and retain proof of valid explicit consent before the automated decision is applied.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 22(4)",
+          "statement": "Do not base qualifying automated decisions on special-category personal data unless Article 9(2)(a) or 9(2)(g) applies and safeguards are in place.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "Art. 35(3)(a)",
+          "statement": "Perform a DPIA for systematic and extensive evaluation of personal aspects based on automated processing, including profiling, when decisions produce legal effe",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "Art. 35(2),(9),(11)",
+          "statement": "Where designated, seek the DPO\u2019s advice during the DPIA, consider data subjects\u2019 views where appropriate, and review the DPIA when risks change.",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "hipaa-security-rule",
+      "short_name": "HIPAA Security Rule",
+      "score": 32.53,
+      "covered": 3,
+      "total": 10,
+      "max_weight": 83,
+      "covered_weight": 27,
+      "gaps": [
+        {
+          "control_id": "164.308(a)(1)(ii)(D)",
+          "statement": "Regularly review system activity records, access reports, and security incident tracking reports.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "164.308(a)(5)(ii)(B)",
+          "statement": "Implement procedures for guarding against, detecting, and reporting malicious software.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "164.308(a)(6)(ii)",
+          "statement": "Identify and respond to suspected or known security incidents, mitigate harmful effects, and document incidents and outcomes.",
+          "severity": "critical",
+          "weight": 9
+        },
+        {
+          "control_id": "164.308(a)(7)(ii)(A)",
+          "statement": "Establish and implement a data backup plan to create and maintain retrievable exact copies of ePHI.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "164.308(a)(7)(ii)(D)",
+          "statement": "Implement periodic testing and revision procedures for contingency plans.",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "164.308(a)(8)",
+          "statement": "Perform periodic technical and nontechnical evaluations, and repeat them after environmental or operational changes affecting ePHI security.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "164.312(a)(1)",
+          "statement": "Implement access controls for systems maintaining ePHI so that only authorized persons or software programs can access it.",
+          "severity": "critical",
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "framework_id": "ieee-7000-2021",
+      "short_name": "IEEE 7000",
+      "score": 37.31,
+      "covered": 3,
+      "total": 8,
+      "max_weight": 67,
+      "covered_weight": 25,
+      "gaps": [
+        {
+          "control_id": "IEEE7000-1",
+          "statement": "Organizations shall include consideration of ethical values throughout concept exploration and development.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "IEEE7000-3",
+          "statement": "Ethical values shall be traced through the operational concept, value propositions, and value dispositions in system design.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "IEEE7000-4",
+          "statement": "Ethical values shall be traced in the concept of operations, ethical requirements, and ethical risk-based design.",
+          "severity": "high",
+          "weight": 10
+        },
+        {
+          "control_id": "IEEE7000-5",
+          "statement": "Ethical concerns shall be translated into system requirements and design practices.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "IEEE7000-7",
+          "statement": "The organization shall apply the model process within its own lifecycle model, regardless of organization size or type.",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "india-dpdp-act",
+      "short_name": "DPDP Act",
+      "score": 9.41,
+      "covered": 1,
+      "total": 10,
+      "max_weight": 85,
+      "covered_weight": 8,
+      "gaps": [
+        {
+          "control_id": "3",
+          "statement": "Determine and document whether the AI system's processing of digital personal data falls within the Act's territorial and subject-matter scope.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "4",
+          "statement": "Process personal data only for a lawful purpose under the Act, using consent or a permitted legitimate use.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "6",
+          "statement": "Obtain valid, specific, informed, unambiguous, affirmative consent and support easy withdrawal and consent-manager handling where used.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "8(1)-(8)",
+          "statement": "Maintain organizational accountability for processor use, data quality for consequential decisions, security safeguards, breach notification, retention/erasure,",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "9",
+          "statement": "If the AI system processes children's data, obtain verifiable parental or guardian consent and avoid tracking, behavioural monitoring, and targeted advertising ",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "10(1)-(2)",
+          "statement": "If designated a Significant Data Fiduciary, appoint an India-based DPO, engage an independent auditor, and perform periodic DPIAs and audits.",
+          "severity": "critical",
+          "weight": 9
+        },
+        {
+          "control_id": "11-14",
+          "statement": "Support data principal rights to access, correction, erasure, grievance redressal, and nomination through operational procedures and system capabilities.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "15",
+          "statement": "Ensure users exercising rights or providing personal data do not impersonate others, submit false complaints, or provide non-authentic information.",
+          "severity": "medium",
+          "weight": 4
+        },
+        {
+          "control_id": "27-33",
+          "statement": "Be prepared for Data Protection Board inquiries, directions, and monetary penalties, including preservation of evidence and remediation tracking.",
+          "severity": "critical",
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "framework_id": "iso-iec-23894",
+      "short_name": "AI risk management",
+      "score": 80.26,
+      "covered": 8,
+      "total": 10,
+      "max_weight": 76,
+      "covered_weight": 61,
+      "gaps": [
+        {
+          "control_id": "6.1",
+          "statement": "The organization shall plan and implement risk management throughout the AI system lifecycle, including design, development, deployment, operation, and decommis",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "6.2",
+          "statement": "The organization shall tailor AI risk management activities to the organization, system, and context, including the type of AI and its intended use.",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "iso-iec-42001",
+      "short_name": "ISO 42001",
+      "score": 65.82,
+      "covered": 6,
+      "total": 10,
+      "max_weight": 79,
+      "covered_weight": 52,
+      "gaps": [
+        {
+          "control_id": "6.2",
+          "statement": "AI objectives shall be established at relevant functions and levels and be monitored, communicated, and updated as appropriate.",
+          "severity": "medium",
+          "weight": 6
+        },
+        {
+          "control_id": "8.2",
+          "statement": "The organization shall perform AI risk assessment at planned intervals and when significant changes are proposed or occur, and retain documented information of ",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "9.1",
+          "statement": "The organization shall determine what needs to be monitored and measured, the methods for monitoring and measurement, and when the results shall be analyzed and",
+          "severity": "medium",
+          "weight": 6
+        },
+        {
+          "control_id": "10.2",
+          "statement": "The organization shall continually improve the suitability, adequacy, and effectiveness of the AI management system.",
+          "severity": "medium",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "framework_id": "korea-ai-basic-act",
+      "short_name": "AI Basic Act",
+      "score": 45.68,
+      "covered": 4,
+      "total": 10,
+      "max_weight": 81,
+      "covered_weight": 37,
+      "gaps": [
+        {
+          "control_id": "Art. 4",
+          "statement": "Determine and document whether AI activities fall within the Act\u2019s territorial and subject-matter scope, including extraterritorial impacts and national defense",
+          "severity": "high",
+          "weight": 7
+        },
+        {
+          "control_id": "Art. 33",
+          "statement": "Perform a prior review to determine whether an AI system is high-impact and retain evidence supporting the classification decision.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 36",
+          "statement": "If a foreign AI business operator meets the threshold, designate and report a domestic agent within the required timeframe.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "Art. 40",
+          "statement": "Respond to fact-finding investigations and, where required, submit data and comply with cease or correction orders for suspected violations of transparency, saf",
+          "severity": "critical",
+          "weight": 9
+        },
+        {
+          "control_id": "Art. 42",
+          "statement": "Protect committee confidentiality and prohibit disclosure or misuse of confidential information obtained through committee service.",
+          "severity": "medium",
+          "weight": 4
+        },
+        {
+          "control_id": "Art. 43",
+          "statement": "Avoid administrative-fine-triggering failures, including missing required notices, missing domestic-agent designation, or failing to comply with cease/correct o",
+          "severity": "high",
+          "weight": 8
+        }
+      ]
+    },
+    {
+      "framework_id": "nist-ai-rmf",
+      "short_name": "AI RMF",
+      "score": 58.44,
+      "covered": 5,
+      "total": 9,
+      "max_weight": 77,
+      "covered_weight": 45,
+      "gaps": [
+        {
+          "control_id": "GOVERN-2.1",
+          "statement": "Roles, responsibilities, and accountability for AI risk management are documented and assigned.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "MAP-1.1",
+          "statement": "The context in which the AI system operates, including intended purpose, benefits, stakeholders, and affected parties, is documented.",
+          "severity": "medium",
+          "weight": 8
+        },
+        {
+          "control_id": "MANAGE-2.1",
+          "statement": "Processes are in place to monitor AI systems after deployment and respond to changes, incidents, or emerging risks.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "MANAGE-3.1",
+          "statement": "Residual AI risks and tradeoffs are communicated to relevant stakeholders and decision makers.",
+          "severity": "medium",
+          "weight": 7
+        }
+      ]
+    },
+    {
+      "framework_id": "nyc-local-law-144",
+      "short_name": "Local Law 144",
+      "score": 25.93,
+      "covered": 3,
+      "total": 10,
+      "max_weight": 81,
+      "covered_weight": 21,
+      "gaps": [
+        {
+          "control_id": "20-871(a)(1)",
+          "statement": "Do not use an AEDT to screen a candidate or employee unless the tool has undergone a bias audit no more than one year before use.",
+          "severity": "high",
+          "weight": 10
+        },
+        {
+          "control_id": "20-871(a)(2)",
+          "statement": "Make a summary of the most recent bias audit and the AEDT distribution date publicly available on the employer or employment agency website before use.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "20-871(b)(1)",
+          "statement": "Provide NYC-resident candidates or employees notice that an AEDT will be used in the assessment or evaluation at least ten business days before use and include ",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "20-871(b)(2)",
+          "statement": "Provide advance notice of the job qualifications and characteristics the AEDT will assess at least ten business days before use.",
+          "severity": "medium",
+          "weight": 8
+        },
+        {
+          "control_id": "20-872(a)",
+          "statement": "Avoid each civil-penalty-triggering violation of the subchapter or implementing rule, including unlawful AEDT use and notice failures.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "20-872(c)",
+          "statement": "Ensure each notice obligation is met, because failure to provide any required notice is a separate violation.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "20-873",
+          "statement": "Be prepared for enforcement proceedings by the corporation counsel or designated city officials in OATH or another designated tribunal for correction and civil ",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "oecd-ai-principles",
+      "short_name": "OECD AI Principles",
+      "score": 50.0,
+      "covered": 4,
+      "total": 9,
+      "max_weight": 64,
+      "covered_weight": 32,
+      "gaps": [
+        {
+          "control_id": "1.4",
+          "statement": "AI systems should be robust, secure, and safe throughout their lifecycle, with mechanisms to override, repair, or decommission systems safely if they risk causi",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "2.1",
+          "statement": "Governments should consider long-term public investment and encourage private investment in AI R&D, open science, open-source tools, and representative open dat",
+          "severity": "medium",
+          "weight": 5
+        },
+        {
+          "control_id": "2.3",
+          "statement": "Governments should promote an agile, interoperable governance and policy environment for AI, including experimentation, outcome-based approaches, and cross-juri",
+          "severity": "medium",
+          "weight": 6
+        },
+        {
+          "control_id": "2.4",
+          "statement": "Governments should build human capacity and support fair labour transition measures, including skills development, social dialogue, and worker support as AI is ",
+          "severity": "medium",
+          "weight": 6
+        },
+        {
+          "control_id": "2.5",
+          "statement": "Governments should cooperate internationally to advance the principles, share AI knowledge, develop global technical standards, and use comparable indicators to",
+          "severity": "medium",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "framework_id": "sb-53-ca",
+      "short_name": "SB 53",
+      "score": 36.49,
+      "covered": 3,
+      "total": 9,
+      "max_weight": 74,
+      "covered_weight": 27,
+      "gaps": [
+        {
+          "control_id": "C-03",
+          "statement": "A large frontier developer must review and, as appropriate, update its frontier AI framework at least annually and publish any material modification with justif",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "C-05",
+          "statement": "A frontier developer must report any critical safety incident to OES within 15 days of discovery and, if there is imminent risk of death or serious physical inj",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "C-06",
+          "statement": "Large frontier developers must submit summaries of catastrophic-risk assessments for internal use to OES on a recurring confidential schedule and OES must prote",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "C-07",
+          "statement": "A frontier developer or large frontier developer must not make materially false or misleading statements about catastrophic risk or compliance with its frontier",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "C-08",
+          "statement": "Covered employees must be protected when they disclose specific and substantial public-safety risks or legal violations through the bill\u2019s whistleblower channel",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "C-09",
+          "statement": "The state must establish CalCompute governance and submit a framework for a public cloud computing cluster that advances safe, ethical, equitable, and sustainab",
+          "severity": "medium",
+          "weight": 5
+        }
+      ]
+    },
+    {
+      "framework_id": "singapore-model-ai-governance-framework-genai-2024",
+      "short_name": "GenAI MGF",
+      "score": 57.14,
+      "covered": 5,
+      "total": 9,
+      "max_weight": 77,
+      "covered_weight": 44,
+      "gaps": [
+        {
+          "control_id": "D6",
+          "statement": "Implement mechanisms to report, respond to, and learn from incidents involving generative AI systems.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "D7",
+          "statement": "Put appropriate security measures in place to protect generative AI systems and related assets from malicious attacks and misuse.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "D8",
+          "statement": "Enable users to identify AI-generated content and its origin, where feasible, through provenance mechanisms.",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "D9",
+          "statement": "Respect data protection obligations and intellectual property rights when building and operating generative AI systems.",
+          "severity": "high",
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "framework_id": "soc-2-tsc",
+      "short_name": "SOC 2 TSC",
+      "score": 69.88,
+      "covered": 7,
+      "total": 10,
+      "max_weight": 83,
+      "covered_weight": 58,
+      "gaps": [
+        {
+          "control_id": "CC7.1",
+          "statement": "The entity evaluates and communicates internal control deficiencies to those responsible for taking corrective action, including senior management and the board",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "A1.1",
+          "statement": "The entity maintains, monitors, and updates its infrastructure, software, and data to meet its availability commitments and recover from disruptions.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "PI1.1",
+          "statement": "The entity performs processing activities completely, accurately, timely, and authorized as required by the processing integrity objective.",
+          "severity": "high",
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "framework_id": "texas-responsible-ai-governance-act",
+      "short_name": "TRAIGA",
+      "score": 29.41,
+      "covered": 3,
+      "total": 10,
+      "max_weight": 85,
+      "covered_weight": 25,
+      "gaps": [
+        {
+          "control_id": "551.051",
+          "statement": "AI systems must not be intentionally developed or deployed to incite or encourage self-harm, harm to others, or criminal activity.",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "551.056",
+          "statement": "AI systems must not be developed or deployed to intentionally cause political viewpoint discrimination or suppress protected expression.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "551.058",
+          "statement": "AI systems must not be developed or deployed with the intent to unlawfully discriminate against a protected class under state or federal law.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "551.061",
+          "statement": "AI systems must not be developed or deployed with the sole intent of producing, assisting, or distributing unlawful sexual material or unlawful deepfake content",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "551.105(b)(1)(C)",
+          "statement": "To preserve the affirmative defense, a developer or deployer must identify and cure violations using feedback, testing such as adversarial testing or red-teamin",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "551.106",
+          "statement": "The Attorney General may seek injunctive relief and civil penalties for uncured or uncureable violations, with specified fine ranges per violation and per day o",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "552.102",
+          "statement": "Sandbox participants must file quarterly reports on performance metrics, risk mitigation updates, and consumer or stakeholder feedback, and the department must ",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "uk-ai-regulation-white-paper",
+      "short_name": "UK AI White Paper",
+      "score": 62.65,
+      "covered": 6,
+      "total": 10,
+      "max_weight": 83,
+      "covered_weight": 52,
+      "gaps": [
+        {
+          "control_id": "Contestability and redress",
+          "statement": "People must have clear routes to dispute harmful AI-generated outcomes or decisions.",
+          "severity": "medium",
+          "weight": 8
+        },
+        {
+          "control_id": "Regulatory guidance within remit",
+          "statement": "Each regulator should interpret and apply the five principles within its own sectoral remit and issue practical guidance for regulated entities.",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "Regulator coordination",
+          "statement": "Government and key regulators should coordinate AI governance, share knowledge, and align approaches where risks overlap across sectors.",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "Future binding requirements for frontier systems",
+          "statement": "Government should consider targeted binding requirements for developers of highly capable general-purpose AI systems if voluntary measures are insufficient.",
+          "severity": "critical",
+          "weight": 9
+        }
+      ]
+    },
+    {
+      "framework_id": "un-ga-a-78-l-49",
+      "short_name": "UN AI resolution",
+      "score": 25.42,
+      "covered": 2,
+      "total": 8,
+      "max_weight": 59,
+      "covered_weight": 15,
+      "gaps": [
+        {
+          "control_id": "OP1",
+          "statement": "Member States and stakeholders should promote safe, secure and trustworthy AI systems that support sustainable development and the Sustainable Development Goals",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "OP3",
+          "statement": "The same rights people have offline must be protected online, including throughout the life cycle of AI systems.",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "OP4",
+          "statement": "States and stakeholders should refrain from or cease using AI systems that cannot operate in compliance with international human rights law or that pose undue r",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "OP5",
+          "statement": "States, the private sector, civil society, research organizations and the media should develop and support regulatory and governance approaches and frameworks f",
+          "severity": "medium",
+          "weight": 7
+        },
+        {
+          "control_id": "OP7",
+          "statement": "States should recognize and address differing levels of technological development between and within countries when implementing AI governance measures.",
+          "severity": "medium",
+          "weight": 5
+        },
+        {
+          "control_id": "OP8",
+          "statement": "Member States and stakeholders should foster international cooperation on AI governance consistent with UN efforts and related initiatives.",
+          "severity": "medium",
+          "weight": 6
+        }
+      ]
+    },
+    {
+      "framework_id": "us-ai-bill-of-rights",
+      "short_name": "AI Bill of Rights",
+      "score": 40.0,
+      "covered": 4,
+      "total": 10,
+      "max_weight": 85,
+      "covered_weight": 34,
+      "gaps": [
+        {
+          "control_id": "SAFE-2",
+          "statement": "Independent evaluation and reporting should confirm safety and effectiveness, including steps taken to mitigate potential harms, and results should be made publ",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "SAFE-3",
+          "statement": "Automated systems should not be designed with intent or a reasonably foreseeable possibility of endangering people\u2019s safety, including through unintended but fo",
+          "severity": "critical",
+          "weight": 10
+        },
+        {
+          "control_id": "ALG-1",
+          "statement": "Designers, developers, and deployers should conduct proactive equity assessments in design and during acquisition to identify potential discrimination and effec",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "ALG-2",
+          "statement": "Automated systems should be tested for disparities before deployment and during use, with documented mitigation or justification for any remaining disparate imp",
+          "severity": "high",
+          "weight": 9
+        },
+        {
+          "control_id": "ALG-3",
+          "statement": "Representative data, proxy controls, accessibility checks, and ongoing monitoring should be used to prevent algorithmic discrimination across protected classes.",
+          "severity": "high",
+          "weight": 8
+        },
+        {
+          "control_id": "NOTICE-1",
+          "statement": "People impacted by an automated system should receive plain-language notice that the system is in use, who is responsible, and timely explanations of outcomes a",
+          "severity": "medium",
+          "weight": 7
+        }
+      ]
+    }
+  ],
+  "org_ai_risk_index": 55.42
+}

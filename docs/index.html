@@ -89,7 +89,7 @@
           <div class="hero-copy">
             <span class="kicker"><span class="dot" aria-hidden="true"></span> Verifiable AI governance — Apache-2.0, no SaaS lock-in</span>
             <h1>Find every AI on your network. Sign what matters. Hand the auditor a bundle they can verify themselves.</h1>
-            <p class="lede">Shadow AI to signed evidence — in one afternoon. Beacon discovers the models running in your environment, attests them against NIST AI RMF, the EU AI Act, ISO/IEC 42001, HIPAA, and a Human Flourishing oath, then produces a cryptographically signed bundle anyone can re-verify with one command.</p>
+            <p class="lede">Shadow AI to signed evidence — in one afternoon. Beacon discovers the models running in your environment, attests them against <strong>23 global audit frameworks</strong> — NIST AI RMF, EU AI Act, ISO/IEC 42001, HIPAA, GDPR, Colorado AI Act, Korea AI Basic Act, and more — then produces a cryptographically signed bundle anyone can re-verify with one command.</p>
             <div class="cta-row">
               <a href="#demo" class="btn-primary">See it sign — live ↓</a>
               <a href="./downloads/aigovops-beacon-starter.zip" class="btn-ghost" download>Download starter (.zip)</a>
@@ -108,6 +108,27 @@
           <div class="telemetry-body" id="telemetryBody">
             <div class="telemetry-row"><span class="t">--:--:--</span><span class="ev">awaiting</span><span class="body">Press “See it sign” to begin the demo</span><span class="sig">—</span></div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2b. ELEVATOR PITCH VIDEO ============ -->
+    <section class="pitch">
+      <div class="shell">
+        <span class="kicker">60-second elevator pitch</span>
+        <h2 class="reveal">Watch Beacon do it.</h2>
+        <p class="lede reveal">From shadow AI to signed evidence to a green risk score — in one minute.</p>
+        <div class="pitch-frame reveal">
+          <video
+            controls
+            playsinline
+            preload="metadata"
+            poster="./assets/beacon-elevator-pitch-poster.jpg"
+            aria-label="AIGovOps Beacon elevator pitch video">
+            <source src="./assets/beacon-elevator-pitch.mp4" type="video/mp4">
+            Your browser doesn't support embedded video.
+            <a href="./assets/beacon-elevator-pitch.mp4" download>Download the MP4</a>.
+          </video>
         </div>
       </div>
     </section>
@@ -231,78 +252,111 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
       </div>
     </section>
 
-    <!-- ============ 7. THE FRAMEWORK ============ -->
+    <!-- ============ 6b. POLICY AS CODE — BEACONS ============ -->
+    <section class="beacons" id="beacons">
+      <div class="shell">
+        <span class="kicker">Policy as code</span>
+        <h2 class="reveal">Three beacons watch your network. Privacy by default.</h2>
+        <p class="lede reveal">Manual checklist first — wizard walks each control. Then deploy three passive collectors. They never store prompts or outputs. Only signed metadata that proves your AI is governed.</p>
+
+        <div class="cards three reveal">
+          <article class="card beacon-card">
+            <span class="pill teal">Model beacon</span>
+            <h3>Discovers every model in use</h3>
+            <p>Watches egress to known AI API hosts (OpenAI, Anthropic, Bedrock, Vertex, Azure OpenAI, Cohere, Mistral, Groq, Perplexity, DeepSeek…) and resolves to processes. One signed receipt per (host, process) pair.</p>
+            <p class="kicker">No payloads stored. Metadata only.</p>
+          </article>
+          <article class="card beacon-card">
+            <span class="pill teal">Prompt beacon</span>
+            <h3>Counts traffic, not content</h3>
+            <p>Log-tail mode reads existing CASB / SIEM exports (Splunk, Sentinel). Extracts model name, token count, route. Optional TLS proxy mode is opt-in and clearly labelled. Default is privacy-preserving.</p>
+            <p class="kicker">Configurable retention. Signed every run.</p>
+          </article>
+          <article class="card beacon-card">
+            <span class="pill teal">Artifact beacon</span>
+            <h3>Tracks AI-generated outputs</h3>
+            <p>Watches S3 buckets, SharePoint folders, Confluence spaces. Detects C2PA provenance markers and AI-generation signatures. Tags every artifact with a receipt that follows it through the org.</p>
+            <p class="kicker">Provenance you can verify months later.</p>
+          </article>
+        </div>
+
+        <p class="lede reveal" style="margin-top:var(--space-6)"><a href="https://github.com/bobrapp/aigovops-beacon/tree/main/beacons" target="_blank" rel="noopener">See the beacons source on GitHub ↗</a> · <a href="https://github.com/bobrapp/aigovops-beacon/tree/main/checklist" target="_blank" rel="noopener">Or run the manual wizard first ↗</a></p>
+      </div>
+    </section>
+
+    <!-- ============ 6c. SCORING ============ -->
+    <section class="scoring" id="scoring">
+      <div class="shell">
+        <span class="kicker">Daily risk score</span>
+        <h2 class="reveal">One number your board will actually understand.</h2>
+        <p class="lede reveal">Every receipt rolls into a weighted score per framework. Frameworks roll into one <strong>AI Risk Index</strong> from 0 (no evidence) to 100 (every control attested). Updated daily. Reproducible from the receipts alone.</p>
+
+        <div class="score-card reveal">
+          <div class="score-gauge">
+            <svg viewBox="0 0 200 110" aria-hidden="true">
+              <defs>
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ff5b3c"/>
+                  <stop offset="50%" stop-color="#f5a623"/>
+                  <stop offset="100%" stop-color="#2ecc71"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round"/>
+              <line x1="100" y1="100" x2="148" y2="42" stroke="#0e1b1c" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="100" cy="100" r="6" fill="#0e1b1c"/>
+            </svg>
+            <div class="score-number">55.4</div>
+            <div class="score-label">Sample AI Risk Index</div>
+          </div>
+          <div class="score-table">
+            <table>
+              <thead><tr><th>Framework</th><th>Score</th><th>Status</th></tr></thead>
+              <tbody id="scoreTable">
+                <tr><td>ISO/IEC 23894</td><td>80.3</td><td><span class="pill teal">Strong</span></td></tr>
+                <tr><td>SOC 2 TSC</td><td>69.9</td><td><span class="pill teal">Strong</span></td></tr>
+                <tr><td>ISO/IEC 42001</td><td>65.8</td><td><span class="pill warn">Watch</span></td></tr>
+                <tr><td>NIST AI RMF</td><td>58.1</td><td><span class="pill warn">Watch</span></td></tr>
+                <tr><td>EU AI Act</td><td>42.6</td><td><span class="pill warn">Watch</span></td></tr>
+                <tr><td>NYC LL 144</td><td>25.9</td><td><span class="pill fail">Gap</span></td></tr>
+                <tr><td>India DPDP</td><td>9.4</td><td><span class="pill fail">Gap</span></td></tr>
+              </tbody>
+            </table>
+            <p class="kicker"><a href="https://github.com/bobrapp/aigovops-beacon/blob/main/scoring/sample_report.md" target="_blank" rel="noopener">Read the sample report ↗</a> · <a href="https://github.com/bobrapp/aigovops-beacon/tree/main/scoring" target="_blank" rel="noopener">Scoring engine source ↗</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. THE FRAMEWORK GRID ============ -->
     <section id="framework">
       <div class="shell">
-        <span class="kicker">The framework</span>
-        <h2 class="reveal">Five audit lenses. One signed answer per article.</h2>
-        <p class="lede reveal">Beacon ships with the five checklists below as machine-readable YAML <em>and</em> human-readable PDF. Each control row produces a receipt — pass, fail, or warn — that survives long after the auditor leaves.</p>
+        <span class="kicker">The framework registry</span>
+        <h2 class="reveal">23 audit frameworks. Global. In force and in draft.</h2>
+        <p class="lede reveal">Every framework ships as machine-readable YAML and XML — same schema, mapped to control IDs from the source text. Auto-translation into any written language is wired in (Spanish and Arabic shipped today). Filter by status and jurisdiction.</p>
 
-        <div class="framework-grid reveal">
-          <article class="framework-card">
-            <span class="auth">U.S. · NIST</span>
-            <h3>NIST AI RMF</h3>
-            <p>Govern, Map, Measure, Manage — turned into 38 attestable control rows. Anchored in the published functions.</p>
-            <div class="actions">
-              <a href="./downloads/nist-ai-rmf.pdf" class="btn-ghost btn-sm" download>PDF</a>
-              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/nist-ai-rmf.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
-              <a href="https://www.nist.gov/itl/ai-risk-management-framework" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
-            </div>
-          </article>
+        <div class="framework-filters reveal" role="toolbar" aria-label="Filter frameworks">
+          <button class="filter-pill active" data-filter="all" type="button">All <span class="count" id="countAll">23</span></button>
+          <button class="filter-pill" data-filter="in_force" type="button">In force <span class="count" id="countInForce">—</span></button>
+          <button class="filter-pill" data-filter="voluntary" type="button">Voluntary <span class="count" id="countVoluntary">—</span></button>
+          <button class="filter-pill" data-filter="draft" type="button">Draft <span class="count" id="countDraft">—</span></button>
+          <button class="filter-pill" data-filter="proposed" type="button">Proposed <span class="count" id="countProposed">—</span></button>
+        </div>
 
-          <article class="framework-card">
-            <span class="auth">EU</span>
-            <h3>EU AI Act — Article 13</h3>
-            <p>Transparency obligations for high-risk systems. Disclosure receipts users can verify before they accept output.</p>
-            <div class="actions">
-              <a href="./downloads/eu-ai-act-art13.pdf" class="btn-ghost btn-sm" download>PDF</a>
-              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/eu-ai-act-art13.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
-              <a href="https://artificialintelligenceact.eu/article/13/" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
-            </div>
-          </article>
+        <div class="framework-grid reveal" id="frameworkGrid">
+          <!-- populated by js/frameworks.js from frameworks/index.json -->
+          <p class="framework-loading kicker">Loading framework registry…</p>
+        </div>
 
-          <article class="framework-card">
-            <span class="auth">ISO/IEC</span>
-            <h3>ISO/IEC 42001</h3>
-            <p>The AI Management System standard. Beacon maps clauses 4–10 to signed evidence — not slideware.</p>
-            <div class="actions">
-              <a href="./downloads/iso-iec-42001.pdf" class="btn-ghost btn-sm" download>PDF</a>
-              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/iso-iec-42001.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
-              <a href="https://www.iso.org/standard/81230.html" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
-            </div>
-          </article>
-
-          <article class="framework-card">
-            <span class="auth">U.S. · HHS</span>
-            <h3>HIPAA for AI</h3>
-            <p>PHI handling, model training boundaries, BAA scope, and the inference-time minimum-necessary rule — receipted.</p>
-            <div class="actions">
-              <a href="./downloads/hipaa-for-ai.pdf" class="btn-ghost btn-sm" download>PDF</a>
-              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/hipaa-for-ai.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
-              <a href="https://www.hhs.gov/hipaa/index.html" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
-            </div>
-          </article>
-
-          <article class="framework-card">
-            <span class="auth">AIGovOps Foundation</span>
-            <h3>Human Flourishing Oath</h3>
-            <p>The Foundation's own lens. Are these models making people's lives better? An honest question, attestable monthly.</p>
-            <div class="actions">
-              <a href="./downloads/human-flourishing.pdf" class="btn-ghost btn-sm" download>PDF</a>
-              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/human-flourishing.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
-              <a href="https://www.aigovopsfoundation.org/" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
-            </div>
-          </article>
-
-          <article class="framework-card" style="background:var(--hydra-teal-soft); border-color:rgba(1,105,111,.3)">
-            <span class="auth">Combined</span>
-            <h3>The complete audit framework</h3>
-            <p>One PDF, all five lenses, every control row, every evidence prompt. Hand this to your audit committee.</p>
-            <div class="actions">
-              <a href="./downloads/aigovops-audit-framework.pdf" class="btn-primary btn-sm" download>Combined PDF</a>
-              <a href="./downloads/AI_Model_Inventory_Template.xlsx" class="btn-ghost btn-sm" download>Inventory template (.xlsx)</a>
-            </div>
-          </article>
+        <div class="combined-cta reveal">
+          <div class="combined-cta-text">
+            <h3>The complete audit framework — all 23 lenses</h3>
+            <p>One PDF, every framework, every control row, every evidence prompt. Hand this to your audit committee. Or grab the full YAML/XML registry for your own tooling.</p>
+          </div>
+          <div class="combined-cta-actions">
+            <a href="./downloads/aigovops-audit-framework.pdf" class="btn-primary btn-sm" download>Combined PDF</a>
+            <a href="./downloads/AI_Model_Inventory_Template.xlsx" class="btn-ghost btn-sm" download>Inventory template (.xlsx)</a>
+            <a href="https://github.com/bobrapp/aigovops-beacon/tree/main/frameworks" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML/XML registry ↗</a>
+          </div>
         </div>
       </div>
     </section>
@@ -408,5 +462,6 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
   <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="./js/site.js" defer></script>
+  <script src="./js/frameworks.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+[Unit]
+Description=AIGovOps Beacon — artifact provenance scanner
+Documentation=https://github.com/bobrapp/aigovops-beacon
+After=local-fs.target
+
+[Service]
+Type=simple
+User=beacon
+Group=beacon
+WorkingDirectory=/opt/aigovops-beacon/beacons
+Environment=BEACON_SCAN_ROOT=/srv/content
+ExecStart=/usr/bin/python3 /opt/aigovops-beacon/beacons/artifact_beacon.py --path ${BEACON_SCAN_ROOT} --max-depth 8
+Restart=on-failure
+RestartSec=300
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ReadWritePaths=/var/lib/beacon /home/beacon/.beacon
+ReadOnlyPaths=/srv/content
+
+[Install]
+WantedBy=multi-user.target

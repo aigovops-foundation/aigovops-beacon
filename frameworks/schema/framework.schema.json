@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigovops.org/schemas/framework.schema.json",
+  "title": "AIGovOps Beacon Framework",
+  "description": "Canonical shape for one AI governance framework in the global registry. YAML and XML representations are isomorphic — this schema describes both.",
+  "type": "object",
+  "required": [
+    "framework_id",
+    "full_name",
+    "short_name",
+    "issuing_body",
+    "jurisdiction",
+    "status",
+    "scope_summary",
+    "primary_url",
+    "controls",
+    "lang"
+  ],
+  "properties": {
+    "framework_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Stable identifier (kebab-case)."
+    },
+    "full_name": {"type": "string"},
+    "short_name": {"type": "string"},
+    "issuing_body": {"type": "string"},
+    "jurisdiction": {"type": "string"},
+    "status": {
+      "type": "string",
+      "enum": ["in_force", "draft", "proposed", "voluntary"]
+    },
+    "effective_date": {"type": "string"},
+    "scope_summary": {"type": "string"},
+    "primary_url": {"type": "string", "format": "uri"},
+    "applies_to": {"type": "string"},
+    "penalties": {"type": "string"},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "title": {"type": "string"},
+          "url": {"type": "string", "format": "uri"}
+        }
+      }
+    },
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "evidence_types", "severity", "weight"],
+        "properties": {
+          "id": {"type": "string"},
+          "statement": {"type": "string"},
+          "evidence_types": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "weight": {"type": "integer", "minimum": 1, "maximum": 10}
+        }
+      }
+    },
+    "lang": {"type": "string", "minLength": 2, "maxLength": 5},
+    "translations": {
+      "type": "object",
+      "description": "Map of ISO-639-1 language codes to translation file paths or inline overrides.",
+      "additionalProperties": true
+    }
+  }
+}

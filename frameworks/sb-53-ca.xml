@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="sb-53-ca" status="in_force" jurisdiction="California, United States" lang="en">
+  <name>Transparency in Frontier Artificial Intelligence Act</name>
+  <short_name>SB 53</short_name>
+  <issuing_body>California Legislature; enforced by the California Attorney General and Office of Emergency Services</issuing_body>
+  <effective_date>TBD — enacted Sep. 29, 2025; operative date not stated in the cited official page</effective_date>
+  <scope>California’s post-veto successor framework to SB 1047 is SB 53 / the Transparency in Frontier Artificial Intelligence Act. It regulates frontier AI developers and, for the strongest obligations, large frontier developers, requiring public transparency frameworks, incident reporting, whistleblower protections, and periodic updates to the law. The framework focuses on models trained above a compute threshold and developers above a revenue threshold, while also creating CalCompute to expand safe and equitable access to compute.</scope>
+  <primary_url>https://www.gov.ca.gov/2025/09/29/governor-newsom-signs-sb-53-advancing-californias-world-leading-artificial-intelligence-industry/</primary_url>
+  <applies_to>Frontier AI developers training frontier models above 10^26 integer or floating-point operations; large frontier developers with annual gross revenue above $500 million; applies statewide in California and includes both public transparency obligations and confidential reporting obligations. Core obligations are aimed at frontier model developers, while whistleblower protections apply to covered employees involved in assessing or addressing critical safety risk.</applies_to>
+  <penalties>Civil penalties enforced by the California Attorney General; official governor summary states noncompliance is subject to civil penalty, and committee analysis indicates a maximum civil penalty of $1 million per violation.</penalties>
+  <controls>
+    <control id="C-01" severity="high" weight="10">
+      <statement>A large frontier developer must write, implement, comply with, and clearly and conspicuously publish a frontier AI framework describing how it manages catastrophic risk.</statement>
+      <evidence_types>
+        <type>published_framework</type>
+        <type>policy_document</type>
+        <type>website_snapshot</type>
+      </evidence_types>
+    </control>
+    <control id="C-02" severity="high" weight="9">
+      <statement>The frontier AI framework must cover incorporation of standards and best practices, threshold-setting for catastrophic-risk capabilities, mitigations, third-party assessments, cybersecurity for unreleased model weights, incident response, internal governance, and internal-use risk management.</statement>
+      <evidence_types>
+        <type>framework_crosswalk</type>
+        <type>risk_assessment</type>
+        <type>security_policy</type>
+        <type>third_party_assessment_report</type>
+      </evidence_types>
+    </control>
+    <control id="C-03" severity="medium" weight="7">
+      <statement>A large frontier developer must review and, as appropriate, update its frontier AI framework at least annually and publish any material modification with justification within 30 days.</statement>
+      <evidence_types>
+        <type>annual_review_record</type>
+        <type>change_log</type>
+        <type>publication_timestamp</type>
+      </evidence_types>
+    </control>
+    <control id="C-04" severity="medium" weight="8">
+      <statement>Before or concurrently with deploying a new or substantially modified frontier model, a frontier developer must publish a transparency report describing the model, its intended uses, restrictions, language and modality support, and a public contact mechanism.</statement>
+      <evidence_types>
+        <type>transparency_report</type>
+        <type>model_card</type>
+        <type>release_notice</type>
+      </evidence_types>
+    </control>
+    <control id="C-05" severity="critical" weight="10">
+      <statement>A frontier developer must report any critical safety incident to OES within 15 days of discovery and, if there is imminent risk of death or serious physical injury, notify the appropriate authority within 24 hours.</statement>
+      <evidence_types>
+        <type>incident_log</type>
+        <type>regulatory_notification</type>
+        <type>legal_hold_record</type>
+      </evidence_types>
+    </control>
+    <control id="C-06" severity="high" weight="8">
+      <statement>Large frontier developers must submit summaries of catastrophic-risk assessments for internal use to OES on a recurring confidential schedule and OES must protect those reports from unauthorized access.</statement>
+      <evidence_types>
+        <type>confidential_submission_receipt</type>
+        <type>internal_risk_assessment</type>
+        <type>access_control_log</type>
+      </evidence_types>
+    </control>
+    <control id="C-07" severity="high" weight="9">
+      <statement>A frontier developer or large frontier developer must not make materially false or misleading statements about catastrophic risk or compliance with its frontier AI framework.</statement>
+      <evidence_types>
+        <type>public_disclosure_review</type>
+        <type>attestation</type>
+        <type>communications_approval_record</type>
+      </evidence_types>
+    </control>
+    <control id="C-08" severity="high" weight="8">
+      <statement>Covered employees must be protected when they disclose specific and substantial public-safety risks or legal violations through the bill’s whistleblower channels, and large frontier developers must provide an anonymous internal disclosure process with monthly status updates.</statement>
+      <evidence_types>
+        <type>whistleblower_policy</type>
+        <type>anonymous_reporting_channel</type>
+        <type>retaliation_training</type>
+        <type>case_log</type>
+      </evidence_types>
+    </control>
+    <control id="C-09" severity="medium" weight="5">
+      <statement>The state must establish CalCompute governance and submit a framework for a public cloud computing cluster that advances safe, ethical, equitable, and sustainable AI development.</statement>
+      <evidence_types>
+        <type>program_charter</type>
+        <type>consortium_report</type>
+        <type>appropriation_record</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.gov.ca.gov/2025/09/29/governor-newsom-signs-sb-53-advancing-californias-world-leading-artificial-intelligence-industry/" title="Governor of California – SB 53 signing announcement"/>
+    <source url="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB53" title="California Legislative Information – SB 53 bill text"/>
+    <source url="https://apcp.assembly.ca.gov/system/files/2025-09/sb-53-wiener-apcp-analysis-9.11.pdf" title="California Assembly Committee Analysis – SB 53"/>
+  </sources>
+</framework>

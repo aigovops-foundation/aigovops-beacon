@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="ieee-7000-2021" status="in_force" jurisdiction="Global" lang="en">
+  <name>IEEE/ISO/IEC International Standard—Systems and software engineering—Life cycle management—Part 7000: Standard model process for addressing ethical concerns during system design</name>
+  <short_name>IEEE 7000</short_name>
+  <issuing_body>IEEE Standards Association</issuing_body>
+  <effective_date>2021-09-15</effective_date>
+  <scope>IEEE 7000-2021 establishes a model process for addressing ethical concerns during system design by integrating ethical values into concept exploration, development, and requirements definition. It is intended for organizations of all sizes and types that use their own life cycle models, including those working on autonomous intelligent systems or other systems where human and social values need to be translated into design decisions.</scope>
+  <primary_url>https://standards.ieee.org/standard/7000-2021.html</primary_url>
+  <applies_to>All sizes and types of organizations; systems and software engineering teams; organizations developing or revising products or services; especially relevant to autonomous intelligent systems and other AI-enabled or high-impact socio-technical systems.</applies_to>
+  <penalties>Voluntary standard; no direct statutory penalties. Enforcement is via market adoption, procurement requirements, certification programs, contractual obligations, or internal governance. No maximum penalty specified.</penalties>
+  <controls>
+    <control id="IEEE7000-1" severity="high" weight="9">
+      <statement>Organizations shall include consideration of ethical values throughout concept exploration and development.</statement>
+      <evidence_types>
+        <type>lifecycle_process_document</type>
+        <type>project_plan</type>
+        <type>design_review_minutes</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-2" severity="high" weight="8">
+      <statement>Management and engineering shall communicate transparently with selected stakeholders to elicit and prioritize ethical values.</statement>
+      <evidence_types>
+        <type>stakeholder_register</type>
+        <type>meeting_minutes</type>
+        <type>values_workshop_artifacts</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-3" severity="high" weight="9">
+      <statement>Ethical values shall be traced through the operational concept, value propositions, and value dispositions in system design.</statement>
+      <evidence_types>
+        <type>traceability_matrix</type>
+        <type>operational_concept</type>
+        <type>requirements_artefacts</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-4" severity="high" weight="10">
+      <statement>Ethical values shall be traced in the concept of operations, ethical requirements, and ethical risk-based design.</statement>
+      <evidence_types>
+        <type>concept_of_operations</type>
+        <type>ethical_requirements_specification</type>
+        <type>design_risk_register</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-5" severity="high" weight="8">
+      <statement>Ethical concerns shall be translated into system requirements and design practices.</statement>
+      <evidence_types>
+        <type>requirements_document</type>
+        <type>design_specification</type>
+        <type>decision_log</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-6" severity="high" weight="9">
+      <statement>The organization shall maintain a systematic, transparent, and traceable approach to ethical decision-making across the lifecycle.</statement>
+      <evidence_types>
+        <type>governance_policy</type>
+        <type>audit_trail</type>
+        <type>traceability_matrix</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-7" severity="medium" weight="6">
+      <statement>The organization shall apply the model process within its own lifecycle model, regardless of organization size or type.</statement>
+      <evidence_types>
+        <type>process_mapping</type>
+        <type>lifecycle_model</type>
+        <type>management_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="IEEE7000-8" severity="high" weight="8">
+      <statement>Ethical and functional requirements shall be integrated to reduce risk in system engineering product design.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>requirements_trace</type>
+        <type>verification_plan</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://standards.ieee.org/standard/7000-2021.html" title="IEEE Standards Association standard page"/>
+    <source url="https://standards.ieee.org/news/ieee-7000/" title="IEEE launch announcement"/>
+    <source url="https://hfh.fas.harvard.edu/global-flourishing-study" title="Harvard Global Flourishing Study page"/>
+  </sources>
+</framework>

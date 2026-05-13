@@ -1,0 +1,117 @@
+framework_id: aida-canada
+full_name: Artificial Intelligence and Data Act
+short_name: AIDA
+issuing_body: Parliament of Canada / Government of Canada (Innovation, Science and Industry Canada)
+jurisdiction: Canada
+status: proposed
+effective_date: TBD — draft
+scope_summary: The Artificial Intelligence and Data Act (AIDA) is the proposed AI law in Bill C-27 that would regulate international
+  and interprovincial trade and commerce in artificial intelligence systems. It would apply primarily to persons responsible
+  for high-impact AI systems, requiring risk assessment, mitigation, monitoring, record-keeping, transparency, and reporting
+  duties, and it also creates offence provisions for certain harmful or unlawful AI-related conduct.
+primary_url: https://www.parl.ca/Content/Bills/441/Government/C-27/C-27_1/C-27_1.PDF
+applies_to: 'Persons carrying out regulated activities in international or interprovincial trade and commerce: organizations
+  that process data for AI design/development/use, or design, develop, make available for use, or manage the operation of
+  AI systems. Core obligations focus on high-impact AI systems; government institutions and certain national-security controlled
+  activities are excluded.'
+penalties: Enforcement includes ministerial orders, mandatory audits, publication orders, and Federal Court enforceability.
+  The draft also provides for administrative monetary penalties to be set by regulation, regulatory offences for contraventions
+  of sections 6 to 12 and obstruction/false statements, and separate criminal offences. For offences under sections 38 and
+  39, corporate fines can reach the greater of CAD 25 million or 5% of gross global revenue on indictment, or the greater
+  of CAD 20 million or 4% on summary conviction; individuals face fines and possible imprisonment.
+sources:
+- title: Parliament of Canada Bill C-27 PDF
+  url: https://www.parl.ca/Content/Bills/441/Government/C-27/C-27_1/C-27_1.PDF
+- title: Innovation, Science and Economic Development Canada AIDA companion document
+  url: https://ised-isde.canada.ca/site/innovation-better-canada/en/artificial-intelligence-and-data-act-aida-companion-document
+- title: LEGISinfo Bill C-27 status
+  url: https://www.parl.ca/legisinfo/en/bill/44-1/c-27
+controls:
+- id: s.7
+  statement: Assess whether each AI system is a high-impact system in accordance with the regulations before applying the
+    Act's high-impact duties.
+  evidence_types:
+  - risk_classification_assessment
+  - legal_register
+  - decision_record
+  severity: high
+  weight: 7
+- id: s.8
+  statement: Establish measures to identify, assess, and mitigate risks of harm or biased output for each high-impact system.
+  evidence_types:
+  - risk_assessment
+  - mitigation_plan
+  - control_design_document
+  severity: high
+  weight: 10
+- id: s.9
+  statement: Monitor compliance with mitigation measures and their effectiveness for each high-impact system.
+  evidence_types:
+  - monitoring_report
+  - control_testing_results
+  - kpi_dashboard
+  severity: high
+  weight: 9
+- id: s.10
+  statement: Keep records describing the measures established under sections 6, 8, and 9 and the reasons supporting the high-impact
+    assessment under section 7.
+  evidence_types:
+  - records_register
+  - assessment_memo
+  - policy_document
+  severity: medium
+  weight: 8
+- id: s.11
+  statement: Publish a plain-language description of each high-impact system, including intended use, outputs or decisions,
+    mitigation measures, and any prescribed information.
+  evidence_types:
+  - public_disclosure
+  - website_content
+  - product_documentation
+  severity: medium
+  weight: 6
+- id: s.12
+  statement: Notify the Minister as soon as feasible if the use of a high-impact system results or is likely to result in
+    material harm.
+  evidence_types:
+  - incident_report
+  - regulatory_notification
+  - escalation_log
+  severity: high
+  weight: 8
+- id: s.13
+  statement: Provide the Minister with requested records under subsection 10(1) when ordered.
+  evidence_types:
+  - regulatory_request_response
+  - records_package
+  - delivery_receipt
+  severity: high
+  weight: 7
+- id: s.14
+  statement: Provide the Minister with requested records relating to harm or biased output concerns under subsection 10(2)
+    when ordered.
+  evidence_types:
+  - regulatory_request_response
+  - records_package
+  - delivery_receipt
+  severity: high
+  weight: 7
+- id: s.15
+  statement: Conduct or facilitate an independent audit when the Minister orders an audit for a possible contravention.
+  evidence_types:
+  - audit_report
+  - independent_auditor_engagement
+  - audit_scope
+  severity: high
+  weight: 9
+- id: s.17
+  statement: Cease using or making available a high-impact system if ordered because it gives rise to a serious risk of imminent
+    harm.
+  evidence_types:
+  - shutdown_record
+  - incident_response_record
+  - executive_order
+  severity: critical
+  weight: 10
+lang: en
+translations: {}

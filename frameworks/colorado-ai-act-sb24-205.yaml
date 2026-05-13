@@ -1,0 +1,127 @@
+framework_id: colorado-ai-act-sb24-205
+full_name: Consumer Protections for Artificial Intelligence
+short_name: Colorado AI Act
+issuing_body: Colorado General Assembly; enforced by the Colorado Attorney General
+jurisdiction: Colorado, United States
+status: in_force
+effective_date: May 17, 2024 (with key AI duties effective February 1, 2026)
+scope_summary: Colorado SB 24-205 regulates developers and deployers of high-risk artificial intelligence systems that make
+  or substantially factor into consequential decisions affecting Colorado consumers. It requires risk management, impact assessments,
+  disclosures, consumer notice and appeal rights, and reporting to the Attorney General, with separate consumer-facing disclosure
+  duties for AI systems that interact with consumers.
+primary_url: https://leg.colorado.gov/bills/sb24-205
+applies_to: Persons doing business in Colorado that develop or deploy high-risk artificial intelligence systems; also any
+  person making available an AI system intended to interact with consumers. High-risk systems are those that make or substantially
+  factor into consequential decisions affecting education, employment, financial services, housing, insurance, health care,
+  legal services, or essential government services. The statute generally targets business entities rather than a specific
+  size threshold, though deployer reasonableness considers size and complexity.
+penalties: Exclusive enforcement by the Colorado Attorney General; violations are deceptive/unfair trade practices under Colorado
+  Consumer Protection Act, with no private right of action. Civil penalty exposure is up to $20,000 per violation, with additional
+  penalties possible for violating court orders or injunctions.
+sources:
+- title: Colorado General Assembly bill page
+  url: https://leg.colorado.gov/bills/sb24-205
+- title: Colorado SB24-205 PDF text
+  url: https://leg.colorado.gov/bill_files/47770/download
+- title: Colorado fiscal note
+  url: https://leg.colorado.gov/bill_files/47804/download
+controls:
+- id: 6-1-1702(1)
+  statement: A developer of a high-risk artificial intelligence system must use reasonable care to protect consumers from
+    known or reasonably foreseeable risks of algorithmic discrimination arising from intended and contracted uses.
+  evidence_types:
+  - developer_policy
+  - risk_analysis
+  - legal_register
+  - control_testing
+  severity: high
+  weight: 9
+- id: 6-1-1702(2)(a)-(d)
+  statement: A developer must provide deployers with documentation on foreseeable uses, harmful uses, training-data summaries,
+    limitations, intended benefits, evaluation and mitigation, monitoring guidance, and other information needed for deployer
+    compliance.
+  evidence_types:
+  - technical_documentation
+  - model_card
+  - dataset_card
+  - developer_attestation
+  severity: high
+  weight: 8
+- id: 6-1-1702(4)(a)-(b)
+  statement: A developer must publish and maintain a public statement summarizing the high-risk AI systems it develops or
+    substantially modifies and how it manages discrimination risks, updating it after substantial modification.
+  evidence_types:
+  - public_disclosure
+  - website_archive
+  - change_log
+  severity: medium
+  weight: 6
+- id: 6-1-1702(5)
+  statement: A developer must notify the Attorney General and known deployers or developers of known or reasonably foreseeable
+    algorithmic discrimination risks within 90 days of discovery or receipt of a credible report.
+  evidence_types:
+  - incident_report
+  - regulatory_notification
+  - email_log
+  severity: high
+  weight: 8
+- id: 6-1-1703(2)(a)(I)-(IV)
+  statement: A deployer must implement a reasonable risk management policy and program for each high-risk AI system, considering
+    recognized frameworks, organizational size and complexity, system scope, and sensitivity and volume of data.
+  evidence_types:
+  - risk_management_policy
+  - framework_mapping
+  - board_or_executive_approval
+  - control_owner_attestation
+  severity: high
+  weight: 9
+- id: 6-1-1703(3)(a)-(g)
+  statement: A deployer or contracted third party must complete and retain an impact assessment at least annually and after
+    substantial modification, and review deployments to ensure they are not causing algorithmic discrimination.
+  evidence_types:
+  - impact_assessment
+  - review_minutes
+  - retention_schedule
+  - test_results
+  severity: high
+  weight: 9
+- id: 6-1-1703(4)(a)-(c)
+  statement: Before a consequential decision, a deployer must notify the consumer that AI was used, explain the decision context,
+    provide contact information and plain-language notice, and supply opt-out information where applicable.
+  evidence_types:
+  - consumer_notice
+  - notification_template
+  - call_center_script
+  - accessible_format_record
+  severity: high
+  weight: 8
+- id: 6-1-1703(4)(b)(I)-(III)
+  statement: For adverse consequential decisions, a deployer must provide principal reasons, an opportunity to correct incorrect
+    personal data, and an appeal process with human review if technically feasible unless not in the consumer’s best interest.
+  evidence_types:
+  - adverse_action_notice
+  - appeal_workflow
+  - human_review_log
+  - data_correction_record
+  severity: critical
+  weight: 10
+- id: 6-1-1703(5)(a)-(b)
+  statement: A deployer must maintain a public website statement describing deployed high-risk AI systems, risk management,
+    and the nature, source, and extent of information collected and used, and update it periodically.
+  evidence_types:
+  - public_disclosure
+  - website_archive
+  - content_review_record
+  severity: medium
+  weight: 6
+- id: 6-1-1704(1)-(2)
+  statement: A person doing business in Colorado that deploys or makes available an AI system intended to interact with consumers
+    must disclose that the consumer is interacting with AI unless that is obvious to a reasonable person.
+  evidence_types:
+  - consumer_disclosure
+  - user_interface_review
+  - conversation_transcript
+  severity: medium
+  weight: 7
+lang: en
+translations: {}

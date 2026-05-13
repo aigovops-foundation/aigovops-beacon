@@ -1,0 +1,117 @@
+framework_id: iso-iec-42001
+full_name: ISO/IEC 42001:2023 Information technology — Artificial intelligence — Management system
+short_name: ISO 42001
+issuing_body: International Organization for Standardization (ISO) and International Electrotechnical Commission (IEC), via
+  ISO/IEC JTC 1/SC 42
+jurisdiction: Global
+status: voluntary
+effective_date: 2023-12
+scope_summary: ISO/IEC 42001 is an international management system standard for establishing, implementing, maintaining, and
+  continually improving an Artificial Intelligence Management System (AIMS). It is intended for organizations of any size
+  and across all industries that develop, provide, or use AI-based products or services, including public sector bodies, companies,
+  and non-profits.
+primary_url: https://www.iso.org/standard/42001
+applies_to: Organizations of any size across all industries that develop, provide, or use AI-based products or services; applicable
+  to public sector agencies, companies, and non-profits.
+penalties: Voluntary standard; no direct statutory penalties. Conformity can be certified by independent certification bodies,
+  and nonconformity can lead to failed audits, loss or denial of certification, and contractual or customer consequences.
+sources:
+- title: ISO/IEC 42001:2023
+  url: https://www.iso.org/standard/42001
+- title: 'AI management systems: What businesses need to know'
+  url: https://www.iso.org/artificial-intelligence/ai-management-systems
+- title: ISO - Certification
+  url: https://www.iso.org/certification.html
+controls:
+- id: '4.1'
+  statement: The organization shall determine external and internal issues relevant to its purpose and affecting its ability
+    to achieve the intended result(s) of its AI management system.
+  evidence_types:
+  - context_analysis
+  - strategic_risk_register
+  - management_review_minutes
+  severity: high
+  weight: 8
+- id: '4.2'
+  statement: The organization shall determine the interested parties relevant to the AI management system and the relevant
+    requirements of those interested parties.
+  evidence_types:
+  - stakeholder_register
+  - requirements_matrix
+  - legal_register
+  severity: high
+  weight: 7
+- id: '5.1'
+  statement: Top management shall demonstrate leadership and commitment to the AI management system and ensure the AI policy
+    and objectives are established and compatible with the organization’s strategic direction.
+  evidence_types:
+  - ai_policy
+  - executive_approval
+  - board_minutes
+  severity: high
+  weight: 9
+- id: 6.1.2
+  statement: The organization shall plan actions to address AI risks and opportunities, integrating and implementing those
+    actions into the AI management system processes.
+  evidence_types:
+  - risk_assessment
+  - risk_treatment_plan
+  - action_tracker
+  severity: critical
+  weight: 10
+- id: '6.2'
+  statement: AI objectives shall be established at relevant functions and levels and be monitored, communicated, and updated
+    as appropriate.
+  evidence_types:
+  - kpi_dashboard
+  - ai_objectives
+  - performance_reports
+  severity: medium
+  weight: 6
+- id: '7.2'
+  statement: The organization shall determine the necessary competence of persons doing work under its control that affects
+    AI management system performance and ensure competent persons are assigned.
+  evidence_types:
+  - competency_matrix
+  - training_records
+  - role_descriptions
+  severity: high
+  weight: 8
+- id: '8.2'
+  statement: The organization shall perform AI risk assessment at planned intervals and when significant changes are proposed
+    or occur, and retain documented information of the results.
+  evidence_types:
+  - risk_assessment_reports
+  - change_log
+  - document_retention_records
+  severity: critical
+  weight: 10
+- id: '8.3'
+  statement: The organization shall implement AI risk treatment, determine how treatment will be performed, and retain documented
+    information on the treatment results.
+  evidence_types:
+  - risk_treatment_plan
+  - control_implementation_records
+  - test_results
+  severity: critical
+  weight: 10
+- id: '9.1'
+  statement: The organization shall determine what needs to be monitored and measured, the methods for monitoring and measurement,
+    and when the results shall be analyzed and evaluated.
+  evidence_types:
+  - monitoring_plan
+  - metrics_reports
+  - analysis_outputs
+  severity: medium
+  weight: 6
+- id: '10.2'
+  statement: The organization shall continually improve the suitability, adequacy, and effectiveness of the AI management
+    system.
+  evidence_types:
+  - corrective_action_log
+  - continual_improvement_register
+  - management_review_outputs
+  severity: medium
+  weight: 5
+lang: en
+translations: {}

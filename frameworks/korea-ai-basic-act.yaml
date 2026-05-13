@@ -1,0 +1,122 @@
+framework_id: korea-ai-basic-act
+full_name: Act on the Development of Artificial Intelligence and Establishment of Trust Foundation
+short_name: AI Basic Act
+issuing_body: Ministry of Science and ICT (Republic of Korea)
+jurisdiction: South Korea
+status: in_force
+effective_date: '2026-01-22'
+scope_summary: This act establishes South Korea’s national AI governance framework, including a presidential AI committee,
+  policy support bodies, learning-data policies, trust and safety measures, and rules for high-impact and generative AI. It
+  applies broadly to AI activities affecting the domestic market or users, including some extraterritorial conduct, while
+  excluding AI developed and used solely for national defense or national security as prescribed by Presidential Decree.
+primary_url: https://law.go.kr/lsInfoP.do?lsiSeq=268543&lsId=014820&chrClsCd=&urlMode=engLsInfoR&viewCls=engLsInfoR&efYd=20260122&vSct=%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5&ancYnChk=
+applies_to: AI developers, providers, and business operators whose activities affect the Korean market or Korean users, including
+  foreign operators above applicable thresholds; the Act also creates special obligations for high-impact AI, generative AI,
+  and AI systems meeting the prescribed computation threshold. State and local governments, designated committees, policy
+  centers, and safety institutions are also addressed for governance and support functions.
+penalties: Enforcement includes Ministerial fact-finding investigations and cease/correct orders under Article 40. Article
+  42 provides criminal punishment of up to 3 years’ imprisonment or a fine up to KRW 30 million for breaching committee confidentiality,
+  and Article 43 provides administrative fines up to KRW 30 million for certain notice, domestic-agent, and order-compliance
+  failures.
+sources:
+- title: Korean Law Information Center — Act on the Development of Artificial Intelligence and Establishment of Trust Foundation
+  url: https://law.go.kr/lsInfoP.do?lsiSeq=268543&lsId=014820&chrClsCd=&urlMode=engLsInfoR&viewCls=engLsInfoR&efYd=20260122&vSct=%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5&ancYnChk=
+- title: Korea Policy Briefing — AI Basic Act support desk
+  url: https://www.korea.kr/news/policyNewsView.do?newsId=148958442
+- title: Korean Law Information Center — enforcement decree
+  url: https://www.law.go.kr/LSW/lsRvsDocListP.do?lsId=015032&chrClsCd=010202&lsRvsGubun=all
+controls:
+- id: Art. 4
+  statement: Determine and document whether AI activities fall within the Act’s territorial and subject-matter scope, including
+    extraterritorial impacts and national defense/security exclusions.
+  evidence_types:
+  - scope_assessment
+  - legal_memo
+  - product_catalog
+  severity: high
+  weight: 7
+- id: Art. 31
+  statement: Provide prior notice and required labeling for high-impact AI and generative AI outputs, including AI-generated
+    sound, images, and video where applicable.
+  evidence_types:
+  - user_notice
+  - labeling_specification
+  - release_checklist
+  severity: high
+  weight: 9
+- id: Art. 32
+  statement: Implement lifecycle AI safety risk identification, assessment, mitigation, and management controls for AI systems
+    meeting the prescribed computation threshold, and submit implementation results to the Minister.
+  evidence_types:
+  - risk_register
+  - safety_case
+  - mitigation_plan
+  - submission_receipt
+  severity: critical
+  weight: 10
+- id: Art. 33
+  statement: Perform a prior review to determine whether an AI system is high-impact and retain evidence supporting the classification
+    decision.
+  evidence_types:
+  - classification_assessment
+  - decision_record
+  - technical_description
+  severity: high
+  weight: 8
+- id: Art. 34
+  statement: For high-impact AI, maintain operator responsibilities covering risk management, explanation plans, human oversight,
+    user protection, and required records.
+  evidence_types:
+  - risk_management_plan
+  - human_oversight_procedure
+  - user_protection_controls
+  - logs
+  severity: critical
+  weight: 10
+- id: Art. 35
+  statement: Conduct or endeavor to conduct a high-impact AI impact assessment and retain the assessment outputs and any related
+    prioritization evidence for public-sector procurement.
+  evidence_types:
+  - impact_assessment
+  - review_minutes
+  - procurement_records
+  severity: high
+  weight: 8
+- id: Art. 36
+  statement: If a foreign AI business operator meets the threshold, designate and report a domestic agent within the required
+    timeframe.
+  evidence_types:
+  - domestic_agent_appointment
+  - regulatory_notice
+  - compliance_tracker
+  severity: high
+  weight: 8
+- id: Art. 40
+  statement: Respond to fact-finding investigations and, where required, submit data and comply with cease or correction orders
+    for suspected violations of transparency, safety, or high-impact AI duties.
+  evidence_types:
+  - regulatory_request_log
+  - response_package
+  - remediation_record
+  severity: critical
+  weight: 9
+- id: Art. 42
+  statement: Protect committee confidentiality and prohibit disclosure or misuse of confidential information obtained through
+    committee service.
+  evidence_types:
+  - confidentiality_policy
+  - training_attestation
+  - access_controls
+  severity: medium
+  weight: 4
+- id: Art. 43
+  statement: Avoid administrative-fine-triggering failures, including missing required notices, missing domestic-agent designation,
+    or failing to comply with cease/correct orders.
+  evidence_types:
+  - notice_log
+  - designation_record
+  - order_response_record
+  severity: high
+  weight: 8
+lang: en
+translations: {}

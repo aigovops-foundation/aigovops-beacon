@@ -1,0 +1,124 @@
+framework_id: india-dpdp-act
+full_name: The Digital Personal Data Protection Act, 2023
+short_name: DPDP Act
+issuing_body: Ministry of Electronics and Information Technology (Government of India); enforced by the Data Protection Board
+  of India
+jurisdiction: India
+status: in_force
+effective_date: 2023-08-11 (enactment); operative provisions implemented via notified rules / notifications
+scope_summary: India's national personal data protection law for digital personal data. It applies to processing of digital
+  personal data in India and to certain processing outside India when connected to offering goods or services to individuals
+  in India. For AI systems, it functions as a governance baseline wherever an AI system processes personal data, requiring
+  lawful basis, notice, consent management, security safeguards, breach reporting, and stronger controls for children and
+  significant data fiduciaries.
+primary_url: https://www.indiacode.nic.in/handle/123456789/22037?locale=en
+applies_to: Any organization processing digital personal data in India; also extraterritorial processing tied to offering
+  goods or services to individuals in India. In practice this covers most consumer, employee, platform, SaaS, fintech, health,
+  telecom, and AI/ML systems that ingest or infer from personal data, regardless of company size; enhanced duties can apply
+  to entities notified as Significant Data Fiduciaries.
+penalties: Enforced by the Data Protection Board of India. The Act's Schedule sets monetary penalties up to INR 250 crore
+  for failure to maintain reasonable security safeguards, INR 200 crore for breach notification failures, INR 200 crore for
+  children's-data obligations, INR 150 crore for Significant Data Fiduciary obligations, INR 50 crore for any other provision,
+  and INR 10,000 for breach of Data Principal duties.
+sources:
+- title: India Code
+  url: https://www.indiacode.nic.in/handle/123456789/22037?locale=en
+- title: MeitY PDF
+  url: https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf
+- title: Data Protection Board notification
+  url: https://www.meity.gov.in/static/uploads/2025/11/53b1bcf01cab9a0adde463e73fbc3417.pdf
+controls:
+- id: '3'
+  statement: Determine and document whether the AI system's processing of digital personal data falls within the Act's territorial
+    and subject-matter scope.
+  evidence_types:
+  - data_flow_map
+  - processing_inventory
+  - jurisdiction_analysis
+  severity: high
+  weight: 8
+- id: '4'
+  statement: Process personal data only for a lawful purpose under the Act, using consent or a permitted legitimate use.
+  evidence_types:
+  - lawful_basis_record
+  - consent_log
+  - purpose_register
+  severity: high
+  weight: 9
+- id: '5'
+  statement: Provide clear notice before or at consent collection, including data categories, processing purpose, rights,
+    and complaint mechanism.
+  evidence_types:
+  - privacy_notice
+  - ui_screenshots
+  - notice_approval
+  severity: high
+  weight: 8
+- id: '6'
+  statement: Obtain valid, specific, informed, unambiguous, affirmative consent and support easy withdrawal and consent-manager
+    handling where used.
+  evidence_types:
+  - consent_flow_test
+  - consent_records
+  - withdrawal_procedure
+  severity: critical
+  weight: 10
+- id: 8(1)-(8)
+  statement: Maintain organizational accountability for processor use, data quality for consequential decisions, security
+    safeguards, breach notification, retention/erasure, DPO contact, and grievance redressal.
+  evidence_types:
+  - processor_contracts
+  - security_controls
+  - incident_register
+  - retention_schedule
+  - grievance_log
+  severity: critical
+  weight: 10
+- id: '9'
+  statement: If the AI system processes children's data, obtain verifiable parental or guardian consent and avoid tracking,
+    behavioural monitoring, and targeted advertising to children.
+  evidence_types:
+  - age_assurance_process
+  - parental_consent_record
+  - child_safety_review
+  severity: critical
+  weight: 10
+- id: 10(1)-(2)
+  statement: If designated a Significant Data Fiduciary, appoint an India-based DPO, engage an independent auditor, and perform
+    periodic DPIAs and audits.
+  evidence_types:
+  - board_resolution
+  - dpo_appointment
+  - audit_report
+  - dpia
+  severity: critical
+  weight: 9
+- id: 11-14
+  statement: Support data principal rights to access, correction, erasure, grievance redressal, and nomination through operational
+    procedures and system capabilities.
+  evidence_types:
+  - rights_request_workflow
+  - case_logs
+  - sop
+  severity: high
+  weight: 8
+- id: '15'
+  statement: Ensure users exercising rights or providing personal data do not impersonate others, submit false complaints,
+    or provide non-authentic information.
+  evidence_types:
+  - user_attestation
+  - fraud_controls
+  - complaint_screening
+  severity: medium
+  weight: 4
+- id: 27-33
+  statement: Be prepared for Data Protection Board inquiries, directions, and monetary penalties, including preservation of
+    evidence and remediation tracking.
+  evidence_types:
+  - regulatory_response_plan
+  - evidence_hold_notice
+  - remediation_tracker
+  severity: critical
+  weight: 9
+lang: en
+translations: {}

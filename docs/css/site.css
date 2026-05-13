@@ -855,3 +855,194 @@ section.recover { background: linear-gradient(180deg, rgba(46,204,113,0.05) 0%, 
 
 /* Honor the `hidden` attribute even when display rules are stronger */
 [hidden] { display: none !important; }
+
+/* ============ Pitch video section ============ */
+.pitch { background: linear-gradient(180deg, var(--paper) 0%, var(--hydra-teal-soft) 100%); }
+.pitch-frame {
+  margin-top: var(--space-6);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -28px rgba(11,20,36,0.45), 0 2px 8px rgba(11,20,36,0.08);
+  background: #0b1424;
+  max-width: 1100px;
+}
+.pitch-frame video { display: block; width: 100%; height: auto; }
+
+/* ============ Beacons section ============ */
+.beacons { background: var(--paper); }
+.beacon-card .pill.teal { background: rgba(1,105,111,0.10); color: var(--hydra-teal); border: 1px solid rgba(1,105,111,0.25); }
+.beacon-card h3 { margin-top: var(--space-3); }
+
+/* ============ Scoring section ============ */
+.scoring { background: linear-gradient(180deg, var(--paper) 0%, #fdf7e8 100%); }
+.score-card {
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  padding: var(--space-6);
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  box-shadow: 0 12px 32px -20px rgba(11,20,36,0.18);
+}
+@media (max-width: 760px) {
+  .score-card { grid-template-columns: 1fr; }
+}
+.score-gauge { text-align: center; }
+.score-gauge svg { width: 220px; height: auto; }
+.score-number {
+  font-family: "DM Mono", monospace;
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  margin-top: var(--space-2);
+}
+.score-label {
+  font-family: "DM Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: var(--space-2);
+}
+.score-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+.score-table th, .score-table td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border-soft);
+}
+.score-table th {
+  font-family: "DM Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.score-table td:nth-child(2) { font-family: "DM Mono", monospace; font-weight: 600; }
+
+/* ============ Framework filters ============ */
+.framework-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-6) 0 var(--space-4);
+}
+.filter-pill {
+  font-family: "DM Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: white;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.filter-pill:hover { border-color: var(--hydra-teal); color: var(--hydra-teal); }
+.filter-pill.active {
+  background: var(--hydra-teal);
+  color: white;
+  border-color: var(--hydra-teal);
+}
+.filter-pill .count {
+  background: rgba(255,255,255,0.18);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+.filter-pill:not(.active) .count {
+  background: var(--hydra-teal-soft);
+  color: var(--hydra-teal);
+}
+
+/* ============ Framework card refinements ============ */
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+.framework-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.framework-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -16px rgba(11,20,36,0.20);
+  border-color: rgba(1,105,111,0.3);
+}
+.framework-card .fc-head {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2);
+}
+.framework-card .auth {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.framework-card h3 {
+  font-size: var(--text-base);
+  margin: 0;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.framework-card .fc-scope {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+.framework-card .fc-meta {
+  font-size: var(--text-xs);
+  margin: 0;
+  color: var(--ink-faint);
+  display: flex; gap: var(--space-2); flex-wrap: wrap;
+}
+.framework-card .actions {
+  margin-top: auto;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.framework-card .actions .btn-ghost.btn-sm { padding: 6px 10px; font-size: 11px; }
+.framework-loading { padding: var(--space-6); text-align: center; grid-column: 1 / -1; color: var(--ink-faint); }
+
+/* ============ Combined CTA ============ */
+.combined-cta {
+  margin-top: var(--space-6);
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--hydra-teal) 0%, #013a40 100%);
+  color: white;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-6);
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .combined-cta { grid-template-columns: 1fr; }
+}
+.combined-cta h3 { color: white; margin: 0 0 var(--space-2); font-size: var(--text-lg); }
+.combined-cta p { color: rgba(255,255,255,0.85); margin: 0; font-size: var(--text-sm); }
+.combined-cta-actions { display: flex; flex-direction: column; gap: var(--space-2); }
+.combined-cta-actions .btn-primary { background: white; color: var(--hydra-teal); border-color: white; }
+.combined-cta-actions .btn-primary:hover { background: var(--paper); }
+.combined-cta-actions .btn-ghost { color: white; border-color: rgba(255,255,255,0.35); background: transparent; }
+.combined-cta-actions .btn-ghost:hover { background: rgba(255,255,255,0.10); }

@@ -1,0 +1,123 @@
+framework_id: iso-iec-23894
+full_name: ISO/IEC 23894:2023 Information technology — Artificial intelligence — Guidance on risk management
+short_name: AI risk management
+issuing_body: ISO/IEC (published by ISO/IEC JTC 1/SC 42)
+jurisdiction: Global
+status: voluntary
+effective_date: N/A — voluntary
+scope_summary: ISO/IEC 23894:2023 provides guidance for organizations that develop, produce, deploy, or use products, systems,
+  and services that utilize artificial intelligence (AI) to manage AI-related risk. It is intended to help organizations integrate
+  AI risk management into their AI-related activities and functions, and the application can be customized to any organization
+  and context.
+primary_url: https://www.iso.org/standard/77304.html
+applies_to: Organizations of any size in any sector that develop, produce, deploy, or use AI-enabled products, systems, or
+  services.
+penalties: No direct legal penalties; ISO/IEC 23894:2023 is a voluntary international guidance standard. Consequences of non-adoption
+  are indirect, such as failed audits, weaker assurance, contractual non-compliance, or increased operational and safety risk.
+sources:
+- title: ISO standard page
+  url: https://www.iso.org/standard/77304.html
+- title: ISO/IEC JTC 1/SC 42 committee page
+  url: https://www.iso.org/committee/6794475.html
+- title: ISO AI standards overview
+  url: https://www.iso.org/artificial-intelligence/machine-learning
+controls:
+- id: '5.2'
+  statement: The organization shall integrate AI risk management into AI-related activities and functions as part of its governance
+    and operating model.
+  evidence_types:
+  - risk_management_policy
+  - governance_charter
+  - process_maps
+  - management_review_minutes
+  severity: high
+  weight: 8
+- id: '5.3'
+  statement: The organization shall establish the context for AI risk management, including internal and external factors
+    and the intended purpose of the AI system.
+  evidence_types:
+  - context_analysis
+  - system_description
+  - stakeholder_register
+  - assumptions_log
+  severity: high
+  weight: 7
+- id: '5.4'
+  statement: The organization shall identify AI-related risks across the lifecycle of the system, including foreseeable misuse
+    and impacts to people and society.
+  evidence_types:
+  - risk_register
+  - hazard_analysis
+  - use_case_review
+  - misuse_assessment
+  severity: high
+  weight: 9
+- id: '5.5'
+  statement: The organization shall assess AI risks using defined criteria for likelihood, impact, and risk acceptability.
+  evidence_types:
+  - risk_criteria
+  - assessment_workpapers
+  - scoring_model
+  - approval_records
+  severity: high
+  weight: 8
+- id: '5.6'
+  statement: The organization shall treat AI risks using planned controls or other risk treatment actions and assign owners
+    and due dates.
+  evidence_types:
+  - risk_treatment_plan
+  - control_implementation_records
+  - owner_assignments
+  - action_tracker
+  severity: high
+  weight: 8
+- id: '5.7'
+  statement: The organization shall monitor AI risks and the effectiveness of treatments throughout the AI system lifecycle.
+  evidence_types:
+  - monitoring_reports
+  - kpi_dashboards
+  - incident_logs
+  - control_testing_results
+  severity: high
+  weight: 8
+- id: '5.8'
+  statement: The organization shall communicate and consult on AI risks with relevant internal and external stakeholders.
+  evidence_types:
+  - communications_plan
+  - stakeholder_meeting_notes
+  - briefings
+  - consultation_records
+  severity: medium
+  weight: 6
+- id: '5.9'
+  statement: The organization shall record and retain documented information about AI risk management activities, decisions,
+    and outcomes.
+  evidence_types:
+  - risk_files
+  - decision_logs
+  - document_retention_policy
+  - audit_trail
+  severity: medium
+  weight: 7
+- id: '6.1'
+  statement: The organization shall plan and implement risk management throughout the AI system lifecycle, including design,
+    development, deployment, operation, and decommissioning.
+  evidence_types:
+  - lifecycle_risk_plan
+  - stage_gates
+  - deployment_checklists
+  - retirement_plan
+  severity: high
+  weight: 9
+- id: '6.2'
+  statement: The organization shall tailor AI risk management activities to the organization, system, and context, including
+    the type of AI and its intended use.
+  evidence_types:
+  - tailoring_justification
+  - scope_definition
+  - context_matrix
+  - policy_exceptions
+  severity: medium
+  weight: 6
+lang: en
+translations: {}

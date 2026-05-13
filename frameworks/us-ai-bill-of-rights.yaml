@@ -1,0 +1,123 @@
+framework_id: us-ai-bill-of-rights
+full_name: 'Blueprint for an AI Bill of Rights: Making Automated Systems Work for the American People'
+short_name: AI Bill of Rights
+issuing_body: White House Office of Science and Technology Policy (OSTP)
+jurisdiction: United States
+status: voluntary
+effective_date: N/A — voluntary
+scope_summary: This White House blueprint is a non-binding policy framework for automated systems that may meaningfully affect
+  rights, opportunities, or access to critical resources or services. It is intended to guide governments at all levels, companies,
+  and other organizations in designing, deploying, and overseeing AI and other automated systems in ways that protect civil
+  rights, civil liberties, privacy, and democratic values.
+primary_url: https://www.whitehouse.gov/ostp/ai-bill-of-rights/
+applies_to: Any organization — public or private — that creates, deploys, oversees, or uses automated systems with the potential
+  to meaningfully impact civil rights, civil liberties, privacy, equal opportunity, or access to critical resources or services.
+  The framework is sector-agnostic and especially relevant to high-impact use cases in housing, employment, credit, education,
+  healthcare, financial services, social services, safety, and government benefits.
+penalties: No direct enforcement mechanism or monetary penalty. This is a voluntary OSTP blueprint and does not create enforceable
+  legal rights or obligations; compliance is driven by policy adoption, procurement, oversight, and reputational/organizational
+  risk rather than statutory penalties.
+sources:
+- title: Blueprint for an AI Bill of Rights
+  url: https://www.whitehouse.gov/wp-content/uploads/2022/10/Blueprint-for-an-AI-Bill-of-Rights.pdf
+- title: OSTP AI Bill of Rights page
+  url: https://www.whitehouse.gov/ostp/ai-bill-of-rights/
+- title: Applying the Blueprint for an AI Bill of Rights
+  url: https://www.whitehouse.gov/ostp/ai-bill-of-rights/applying-the-blueprint-for-an-ai-bill-of-rights/
+controls:
+- id: SAFE-1
+  statement: Automated systems should undergo pre-deployment testing, risk identification and mitigation, and ongoing monitoring
+    to demonstrate they are safe and effective for their intended use.
+  evidence_types:
+  - test_plan
+  - risk_assessment
+  - monitoring_report
+  - launch_go_no_go_record
+  severity: high
+  weight: 9
+- id: SAFE-2
+  statement: Independent evaluation and reporting should confirm safety and effectiveness, including steps taken to mitigate
+    potential harms, and results should be made public whenever possible.
+  evidence_types:
+  - independent_audit_report
+  - public_transparency_report
+  - remediation_log
+  severity: high
+  weight: 8
+- id: SAFE-3
+  statement: Automated systems should not be designed with intent or a reasonably foreseeable possibility of endangering people’s
+    safety, including through unintended but foreseeable uses or impacts.
+  evidence_types:
+  - safety_case
+  - hazard_analysis
+  - abuse_case_review
+  severity: critical
+  weight: 10
+- id: ALG-1
+  statement: Designers, developers, and deployers should conduct proactive equity assessments in design and during acquisition
+    to identify potential discrimination and effects on equity.
+  evidence_types:
+  - equity_assessment
+  - design_review
+  - procurement_review
+  severity: high
+  weight: 9
+- id: ALG-2
+  statement: Automated systems should be tested for disparities before deployment and during use, with documented mitigation
+    or justification for any remaining disparate impacts.
+  evidence_types:
+  - disparity_test_results
+  - bias_mitigation_plan
+  - exception_justification
+  severity: high
+  weight: 9
+- id: ALG-3
+  statement: Representative data, proxy controls, accessibility checks, and ongoing monitoring should be used to prevent algorithmic
+    discrimination across protected classes.
+  evidence_types:
+  - data_provenance
+  - proxy_analysis
+  - accessibility_test
+  - ongoing_monitoring_report
+  severity: high
+  weight: 8
+- id: PRIV-1
+  statement: Data collection should be limited to what is strictly necessary for the specific context and should conform to
+    reasonable user expectations.
+  evidence_types:
+  - data_minimization_policy
+  - data_inventory
+  - purpose_limitation_review
+  severity: high
+  weight: 8
+- id: PRIV-2
+  statement: Users should be given agency over collection, use, access, transfer, and deletion of their data through meaningful
+    consent or alternative privacy-by-design safeguards.
+  evidence_types:
+  - consent_flow_review
+  - privacy_notice
+  - DSAR/workflow_records
+  severity: high
+  weight: 8
+- id: NOTICE-1
+  statement: People impacted by an automated system should receive plain-language notice that the system is in use, who is
+    responsible, and timely explanations of outcomes and significant changes.
+  evidence_types:
+  - notice_text
+  - user-facing disclosures
+  - change-log
+  - explanation_samples
+  severity: medium
+  weight: 7
+- id: HUM-1
+  statement: Where appropriate, people should be able to opt out to a human alternative and obtain timely human review, escalation,
+    and remedy for adverse outcomes or system errors.
+  evidence_types:
+  - appeals_process
+  - human-review SLA
+  - training_records
+  - case-resolution logs
+  severity: high
+  weight: 9
+lang: en
+translations: {}

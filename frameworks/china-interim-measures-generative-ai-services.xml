@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="china-interim-measures-generative-ai-services" status="in_force" jurisdiction="China (mainland China)" lang="en">
+  <name>Interim Measures for the Management of Generative AI Services</name>
+  <short_name>Generative AI Measures</short_name>
+  <issuing_body>Cyberspace Administration of China (CAC), jointly with the National Development and Reform Commission, Ministry of Education, Ministry of Science and Technology, Ministry of Industry and Information Technology, Ministry of Public Security, and National Radio and Television Administration</issuing_body>
+  <effective_date>2023-08-15</effective_date>
+  <scope>Applies to generative AI services that use generative AI technology to provide text, image, audio, or video content to the public in mainland China. It covers service providers and their obligations around lawful training data, content safety, transparency, user protections, labeling, complaint handling, and regulatory filing; purely internal R&amp;D not offered to the public is outside scope.</scope>
+  <primary_url>https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm</primary_url>
+  <applies_to>Organizations, platforms, and individuals providing generative AI services to the public in mainland China, including services delivered through APIs; applies regardless of industry, especially for services with public-opinion influence or social-mobilization capacity. Pure internal development, research, or testing not offered to the public is generally out of scope, but downstream providers may still have obligations when they launch public services.</applies_to>
+  <penalties>Enforced by CAC and other sector regulators. Violations may result in warnings, public criticism, orders to correct, and suspension of related services; if other PRC laws apply, penalties under those laws may also apply, and serious conduct can trigger administrative detention or criminal liability. The Measures themselves do not specify a single numeric maximum penalty.</penalties>
+  <controls>
+    <control id="Art. 2" severity="high" weight="8">
+      <statement>Determine whether the offering is a generative AI service provided to the mainland China public and document scope determination; purely non-public R&amp;D is out of scope.</statement>
+      <evidence_types>
+        <type>scope_assessment</type>
+        <type>service_inventory</type>
+        <type>legal_memo</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 4" severity="critical" weight="10">
+      <statement>Prohibit generation of unlawful content and implement measures to prevent discrimination, rights violations, monopoly/unfair competition, and low transparency or unreliability.</statement>
+      <evidence_types>
+        <type>content_policy</type>
+        <type>safety_filter_configuration</type>
+        <type>risk_assessment</type>
+        <type>testing_records</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 7" severity="high" weight="9">
+      <statement>Use lawful sources for training data and base models, respect IP and personal information rules, and improve training data quality and diversity.</statement>
+      <evidence_types>
+        <type>data_source_register</type>
+        <type>license_or_consent_records</type>
+        <type>ip_review</type>
+        <type>data_quality_checks</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 8" severity="high" weight="7">
+      <statement>Define clear, specific, operable data-labeling rules, assess labeling quality, and train annotators appropriately.</statement>
+      <evidence_types>
+        <type>labeling_standard</type>
+        <type>qa_reports</type>
+        <type>annotator_training_records</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 9" severity="high" weight="8">
+      <statement>Assume network information content producer and personal information processor duties, and execute service agreements with users.</statement>
+      <evidence_types>
+        <type>terms_of_service</type>
+        <type>privacy_notice</type>
+        <type>processor_register</type>
+        <type>user_contracts</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 10" severity="high" weight="7">
+      <statement>Publicly disclose the intended users, scenarios, and purposes of the service and implement measures to prevent minors from overdependence or addiction.</statement>
+      <evidence_types>
+        <type>product_disclosure</type>
+        <type>user_facing_docs</type>
+        <type>minor_protection_controls</type>
+        <type>age_gate_logs</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 11" severity="high" weight="8">
+      <statement>Protect prompts and usage records, minimize collection of non-essential personal information, and honor access/copy/correction/deletion requests.</statement>
+      <evidence_types>
+        <type>data_retention_policy</type>
+        <type>access_request_log</type>
+        <type>privacy_controls</type>
+        <type>minimization_review</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 12" severity="medium" weight="6">
+      <statement>Label generated images and videos in accordance with the deep synthesis rules.</statement>
+      <evidence_types>
+        <type>content_labeling_controls</type>
+        <type>sample_outputs</type>
+        <type>labeling_test_results</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 14" severity="critical" weight="10">
+      <statement>Detect illegal content, stop generation and transmission, remediate via model optimization where needed, preserve records, and report to authorities.</statement>
+      <evidence_types>
+        <type>incident_log</type>
+        <type>escalation_records</type>
+        <type>remediation_plan</type>
+        <type>authority_reports</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 15" severity="medium" weight="5">
+      <statement>Maintain a usable complaint and reporting mechanism with published handling流程 and response times.</statement>
+      <evidence_types>
+        <type>complaint_channel</type>
+        <type>sla_policy</type>
+        <type>case_management_records</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 17" severity="critical" weight="9">
+      <statement>For services with public opinion influence or social mobilization capacity, complete security assessment and algorithm filing/changes/cancellation as required.</statement>
+      <evidence_types>
+        <type>security_assessment</type>
+        <type>algorithm_filing_receipts</type>
+        <type>change_logs</type>
+        <type>regulator_correspondence</type>
+      </evidence_types>
+    </control>
+    <control id="Art. 19" severity="high" weight="7">
+      <statement>Provide regulators with required information on training data sources, scale, type, labeling rules, and algorithm mechanisms during supervision.</statement>
+      <evidence_types>
+        <type>supervisory_response_package</type>
+        <type>model_documentation</type>
+        <type>data_documentation</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm" title="CAC official text"/>
+    <source url="https://english.www.gov.cn/news/202307/13/content_WS64aff5b3c6d0868f4e8ddc01.html" title="State Council summary"/>
+    <source url="https://www.cac.gov.cn/2024-04/02/c_1713729983803145.htm" title="CAC notice on filing announcements"/>
+  </sources>
+</framework>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="hipaa-security-rule" status="in_force" jurisdiction="United States" lang="en">
+  <name>HIPAA Security Rule</name>
+  <short_name>HIPAA Security Rule</short_name>
+  <issuing_body>U.S. Department of Health and Human Services Office for Civil Rights (OCR)</issuing_body>
+  <effective_date>April 21, 2005</effective_date>
+  <scope>The HIPAA Security Rule establishes national standards to protect individuals’ electronic protected health information (ePHI) that is created, received, used, or maintained by covered entities and their business associates. It requires administrative, physical, and technical safeguards to ensure the confidentiality, integrity, and availability of ePHI, and it applies across the health care sector and group health plans to the extent they handle ePHI.</scope>
+  <primary_url>https://www.hhs.gov/hipaa/for-professionals/security/index.html</primary_url>
+  <applies_to>Covered entities, business associates, and group health plans in the U.S. health care ecosystem that create, receive, maintain, or transmit ePHI; all sizes and all AI/ML systems insofar as they access, process, store, or transmit ePHI.</applies_to>
+  <penalties>Enforced by OCR through complaints, compliance reviews, corrective action, resolution agreements, and civil money penalties; HIPAA civil money penalties can reach up to approximately $2 million per violation category per year, adjusted for inflation, with criminal penalties available under 42 U.S.C. 1320d-6 for certain wrongful conduct.</penalties>
+  <controls>
+    <control id="164.308(a)(1)(ii)(A)" severity="critical" weight="10">
+      <statement>Conduct an accurate and thorough risk analysis of potential risks and vulnerabilities to the confidentiality, integrity, and availability of ePHI.</statement>
+      <evidence_types>
+        <type>risk_assessment</type>
+        <type>asset_inventory</type>
+        <type>threat_model</type>
+        <type>control_owner_attestation</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(1)(ii)(B)" severity="critical" weight="10">
+      <statement>Implement security measures sufficient to reduce identified risks and vulnerabilities to a reasonable and appropriate level.</statement>
+      <evidence_types>
+        <type>risk_treatment_plan</type>
+        <type>control_implementation_records</type>
+        <type>remediation_tracking</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(1)(ii)(D)" severity="high" weight="8">
+      <statement>Regularly review system activity records, access reports, and security incident tracking reports.</statement>
+      <evidence_types>
+        <type>log_review_records</type>
+        <type>siem_reports</type>
+        <type>monitoring_procedures</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(3)(ii)(A)" severity="high" weight="7">
+      <statement>Authorize and supervise workforce members who work with ePHI or in locations where ePHI might be accessed.</statement>
+      <evidence_types>
+        <type>workforce_access_policy</type>
+        <type>training_records</type>
+        <type>supervision_logs</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(5)(ii)(B)" severity="high" weight="7">
+      <statement>Implement procedures for guarding against, detecting, and reporting malicious software.</statement>
+      <evidence_types>
+        <type>malware_protection_policy</type>
+        <type>endpoint_security_logs</type>
+        <type>incident_reports</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(6)(ii)" severity="critical" weight="9">
+      <statement>Identify and respond to suspected or known security incidents, mitigate harmful effects, and document incidents and outcomes.</statement>
+      <evidence_types>
+        <type>incident_response_plan</type>
+        <type>incident_ticketing_records</type>
+        <type>post_incident_reviews</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(7)(ii)(A)" severity="high" weight="8">
+      <statement>Establish and implement a data backup plan to create and maintain retrievable exact copies of ePHI.</statement>
+      <evidence_types>
+        <type>backup_policy</type>
+        <type>backup_job_logs</type>
+        <type>restore_test_results</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(7)(ii)(D)" severity="high" weight="7">
+      <statement>Implement periodic testing and revision procedures for contingency plans.</statement>
+      <evidence_types>
+        <type>disaster_recovery_test_results</type>
+        <type>tabletop_exercises</type>
+        <type>plan_revision_history</type>
+      </evidence_types>
+    </control>
+    <control id="164.308(a)(8)" severity="high" weight="8">
+      <statement>Perform periodic technical and nontechnical evaluations, and repeat them after environmental or operational changes affecting ePHI security.</statement>
+      <evidence_types>
+        <type>evaluation_report</type>
+        <type>change_management_records</type>
+        <type>audit_findings</type>
+      </evidence_types>
+    </control>
+    <control id="164.312(a)(1)" severity="critical" weight="9">
+      <statement>Implement access controls for systems maintaining ePHI so that only authorized persons or software programs can access it.</statement>
+      <evidence_types>
+        <type>access_control_matrix</type>
+        <type>system_configuration</type>
+        <type>access_review_records</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://www.hhs.gov/hipaa/for-professionals/security/index.html" title="HHS HIPAA Security Rule"/>
+    <source url="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C" title="eCFR 45 CFR Part 164 Subpart C"/>
+    <source url="https://www.hhs.gov/hipaa/for-professionals/compliance-enforcement/examples/how-ocr-enforces-the-hipaa-privacy-and-security-rules/index.html" title="HHS OCR enforcement overview"/>
+  </sources>
+</framework>

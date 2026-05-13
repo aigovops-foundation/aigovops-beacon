@@ -1,0 +1,119 @@
+framework_id: nyc-local-law-144
+full_name: New York City Local Law 144 of 2021, amending the Administrative Code of the City of New York in relation to automated
+  employment decision tools
+short_name: Local Law 144
+issuing_body: New York City Council; enforced by the NYC Department of Consumer and Worker Protection (DCWP)
+jurisdiction: New York City, United States
+status: in_force
+effective_date: January 1, 2023 (DCWP enforcement began July 5, 2023)
+scope_summary: Local Law 144 regulates employers and employment agencies that use automated employment decision tools (AEDTs)
+  to screen candidates or employees for hiring or promotion decisions in New York City. It requires an annual independent
+  bias audit, public disclosure of audit results, and advance notice to affected New York City residents before an AEDT is
+  used.
+primary_url: https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page
+applies_to: Employers and employment agencies that use AEDTs in New York City for hiring or promotion screening, including
+  jobs located in NYC at least part time, fully remote roles tied to a NYC office, and employment agencies in NYC or otherwise
+  connected to such NYC roles. It applies to companies of any size when the AEDT is used to substantially assist or replace
+  discretionary decision-making in employment decisions affecting natural persons.
+penalties: Enforced by DCWP, with civil penalties for violations of the subchapter or rules. The statute provides up to $500
+  for a first violation and each additional violation on the same day, and $500 to $1,500 for each subsequent violation; each
+  day of unlawful AEDT use and each notice failure is a separate violation.
+sources:
+- title: NYC DCWP AEDT page
+  url: https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page
+- title: NYC Council Local Law 144 bill page
+  url: https://legistar.council.nyc.gov/LegislationDetail.aspx?GUID=B051915D-A9AC-451E-81F8-6596032FA3F9&ID=4344524
+- title: NYC AEDT FAQ
+  url: https://www.nyc.gov/assets/dca/downloads/pdf/about/DCWP-AEDT-FAQ.pdf
+controls:
+- id: 20-871(a)(1)
+  statement: Do not use an AEDT to screen a candidate or employee unless the tool has undergone a bias audit no more than
+    one year before use.
+  evidence_types:
+  - independent_audit_report
+  - audit_date_record
+  - vendor_attestation
+  severity: high
+  weight: 10
+- id: 20-871(a)(2)
+  statement: Make a summary of the most recent bias audit and the AEDT distribution date publicly available on the employer
+    or employment agency website before use.
+  evidence_types:
+  - website_capture
+  - public_disclosure_log
+  - audit_summary
+  severity: high
+  weight: 9
+- id: 20-871(b)(1)
+  statement: Provide NYC-resident candidates or employees notice that an AEDT will be used in the assessment or evaluation
+    at least ten business days before use and include accommodation instructions.
+  evidence_types:
+  - notice_template
+  - delivery_log
+  - job_posting_or_email
+  severity: high
+  weight: 9
+- id: 20-871(b)(2)
+  statement: Provide advance notice of the job qualifications and characteristics the AEDT will assess at least ten business
+    days before use.
+  evidence_types:
+  - notice_template
+  - job_posting
+  - delivery_log
+  severity: medium
+  weight: 8
+- id: 20-871(b)(3)
+  statement: If not disclosed on the website, provide upon written request the data type collected, data source, and data
+    retention policy within 30 days, subject to legal and law-enforcement limits.
+  evidence_types:
+  - data_inventory
+  - privacy_notice
+  - request_response_records
+  severity: medium
+  weight: 7
+- id: 20-872(a)
+  statement: Avoid each civil-penalty-triggering violation of the subchapter or implementing rule, including unlawful AEDT
+    use and notice failures.
+  evidence_types:
+  - compliance_review
+  - legal_signoff
+  - incident_log
+  severity: critical
+  weight: 10
+- id: 20-872(b)
+  statement: Ensure no day of unlawful AEDT use continues, because each day of use in violation of the section is a separate
+    violation.
+  evidence_types:
+  - system_usage_logs
+  - deployment_records
+  - audit_trail
+  severity: high
+  weight: 9
+- id: 20-872(c)
+  statement: Ensure each notice obligation is met, because failure to provide any required notice is a separate violation.
+  evidence_types:
+  - notice_delivery_logs
+  - template_approvals
+  - recipient_records
+  severity: high
+  weight: 8
+- id: 20-873
+  statement: Be prepared for enforcement proceedings by the corporation counsel or designated city officials in OATH or another
+    designated tribunal for correction and civil penalties.
+  evidence_types:
+  - legal_holding_file
+  - investigation_response_plan
+  - subpoena_log
+  severity: medium
+  weight: 6
+- id: 20-874
+  statement: Recognize that compliance with Local Law 144 does not limit a candidate’s or employee’s civil claims or the NYC
+    Commission on Human Rights’ enforcement authority under title 8.
+  evidence_types:
+  - legal_risk_assessment
+  - training_materials
+  - policy_acknowledgment
+  severity: medium
+  weight: 5
+lang: en
+translations: {}

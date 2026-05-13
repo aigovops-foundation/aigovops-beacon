@@ -1,0 +1,97 @@
+framework_id: un-ga-a-78-l-49
+full_name: Seizing the opportunities of safe, secure and trustworthy artificial intelligence systems for sustainable development
+short_name: UN AI resolution
+issuing_body: United Nations General Assembly
+jurisdiction: Global
+status: in_force
+effective_date: '2024-03-21'
+scope_summary: This General Assembly resolution sets out a global policy framework for the safe, secure, and trustworthy use
+  of AI systems in support of sustainable development. It calls on Member States and other stakeholders to align AI development,
+  deployment, and use with international human rights law, protect rights throughout the AI lifecycle, and strengthen international
+  cooperation, especially for developing countries.
+primary_url: https://docs.un.org/en/A/res/78/265
+applies_to: All UN Member States and a broad set of stakeholders, including the private sector, civil society, research organizations,
+  and the media; applies globally across AI systems and related governance activities, with special attention to developing
+  countries and capacity-building.
+penalties: No direct legal penalties or enforcement mechanism; this is a General Assembly resolution and is politically influential
+  rather than legally binding. Noncompliance carries no specified monetary penalty.
+sources:
+- title: UN Digital Library draft record
+  url: https://digitallibrary.un.org/record/4040897
+- title: UN Digital Library adopted resolution record
+  url: https://digitallibrary.un.org/record/4043244
+- title: UN News coverage
+  url: https://news.un.org/en/story/2024/03/1147831
+controls:
+- id: OP1
+  statement: Member States and stakeholders should promote safe, secure and trustworthy AI systems that support sustainable
+    development and the Sustainable Development Goals.
+  evidence_types:
+  - policy_statement
+  - ai_strategy
+  - program_design
+  severity: medium
+  weight: 7
+- id: OP2
+  statement: Human rights must be respected, protected and promoted in the design, development, deployment and use of AI systems.
+  evidence_types:
+  - human_rights_policy
+  - impact_assessment
+  - design_review
+  severity: high
+  weight: 9
+- id: OP3
+  statement: The same rights people have offline must be protected online, including throughout the life cycle of AI systems.
+  evidence_types:
+  - rights_mapping
+  - lifecycle_control
+  - review_minutes
+  severity: high
+  weight: 9
+- id: OP4
+  statement: States and stakeholders should refrain from or cease using AI systems that cannot operate in compliance with
+    international human rights law or that pose undue risks to the enjoyment of human rights.
+  evidence_types:
+  - use_case_assessment
+  - risk_acceptance_record
+  - shutdown_or_blocking_log
+  severity: critical
+  weight: 10
+- id: OP5
+  statement: States, the private sector, civil society, research organizations and the media should develop and support regulatory
+    and governance approaches and frameworks for safe, secure and trustworthy AI.
+  evidence_types:
+  - governance_framework
+  - cross_stakeholder_plan
+  - working_group_minutes
+  severity: medium
+  weight: 7
+- id: OP6
+  statement: Member States and stakeholders should cooperate with and support developing countries so they can benefit from
+    inclusive and equitable access, close the digital divide, and increase digital literacy.
+  evidence_types:
+  - capacity_building_plan
+  - international_cooperation_records
+  - training_materials
+  severity: medium
+  weight: 6
+- id: OP7
+  statement: States should recognize and address differing levels of technological development between and within countries
+    when implementing AI governance measures.
+  evidence_types:
+  - context_risk_assessment
+  - equity_analysis
+  - implementation_plan
+  severity: medium
+  weight: 5
+- id: OP8
+  statement: Member States and stakeholders should foster international cooperation on AI governance consistent with UN efforts
+    and related initiatives.
+  evidence_types:
+  - partnership_agreements
+  - coordination_notes
+  - external_engagement_log
+  severity: medium
+  weight: 6
+lang: en
+translations: {}

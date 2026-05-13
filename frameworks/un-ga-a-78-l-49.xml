@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<framework framework_id="un-ga-a-78-l-49" status="in_force" jurisdiction="Global" lang="en">
+  <name>Seizing the opportunities of safe, secure and trustworthy artificial intelligence systems for sustainable development</name>
+  <short_name>UN AI resolution</short_name>
+  <issuing_body>United Nations General Assembly</issuing_body>
+  <effective_date>2024-03-21</effective_date>
+  <scope>This General Assembly resolution sets out a global policy framework for the safe, secure, and trustworthy use of AI systems in support of sustainable development. It calls on Member States and other stakeholders to align AI development, deployment, and use with international human rights law, protect rights throughout the AI lifecycle, and strengthen international cooperation, especially for developing countries.</scope>
+  <primary_url>https://docs.un.org/en/A/res/78/265</primary_url>
+  <applies_to>All UN Member States and a broad set of stakeholders, including the private sector, civil society, research organizations, and the media; applies globally across AI systems and related governance activities, with special attention to developing countries and capacity-building.</applies_to>
+  <penalties>No direct legal penalties or enforcement mechanism; this is a General Assembly resolution and is politically influential rather than legally binding. Noncompliance carries no specified monetary penalty.</penalties>
+  <controls>
+    <control id="OP1" severity="medium" weight="7">
+      <statement>Member States and stakeholders should promote safe, secure and trustworthy AI systems that support sustainable development and the Sustainable Development Goals.</statement>
+      <evidence_types>
+        <type>policy_statement</type>
+        <type>ai_strategy</type>
+        <type>program_design</type>
+      </evidence_types>
+    </control>
+    <control id="OP2" severity="high" weight="9">
+      <statement>Human rights must be respected, protected and promoted in the design, development, deployment and use of AI systems.</statement>
+      <evidence_types>
+        <type>human_rights_policy</type>
+        <type>impact_assessment</type>
+        <type>design_review</type>
+      </evidence_types>
+    </control>
+    <control id="OP3" severity="high" weight="9">
+      <statement>The same rights people have offline must be protected online, including throughout the life cycle of AI systems.</statement>
+      <evidence_types>
+        <type>rights_mapping</type>
+        <type>lifecycle_control</type>
+        <type>review_minutes</type>
+      </evidence_types>
+    </control>
+    <control id="OP4" severity="critical" weight="10">
+      <statement>States and stakeholders should refrain from or cease using AI systems that cannot operate in compliance with international human rights law or that pose undue risks to the enjoyment of human rights.</statement>
+      <evidence_types>
+        <type>use_case_assessment</type>
+        <type>risk_acceptance_record</type>
+        <type>shutdown_or_blocking_log</type>
+      </evidence_types>
+    </control>
+    <control id="OP5" severity="medium" weight="7">
+      <statement>States, the private sector, civil society, research organizations and the media should develop and support regulatory and governance approaches and frameworks for safe, secure and trustworthy AI.</statement>
+      <evidence_types>
+        <type>governance_framework</type>
+        <type>cross_stakeholder_plan</type>
+        <type>working_group_minutes</type>
+      </evidence_types>
+    </control>
+    <control id="OP6" severity="medium" weight="6">
+      <statement>Member States and stakeholders should cooperate with and support developing countries so they can benefit from inclusive and equitable access, close the digital divide, and increase digital literacy.</statement>
+      <evidence_types>
+        <type>capacity_building_plan</type>
+        <type>international_cooperation_records</type>
+        <type>training_materials</type>
+      </evidence_types>
+    </control>
+    <control id="OP7" severity="medium" weight="5">
+      <statement>States should recognize and address differing levels of technological development between and within countries when implementing AI governance measures.</statement>
+      <evidence_types>
+        <type>context_risk_assessment</type>
+        <type>equity_analysis</type>
+        <type>implementation_plan</type>
+      </evidence_types>
+    </control>
+    <control id="OP8" severity="medium" weight="6">
+      <statement>Member States and stakeholders should foster international cooperation on AI governance consistent with UN efforts and related initiatives.</statement>
+      <evidence_types>
+        <type>partnership_agreements</type>
+        <type>coordination_notes</type>
+        <type>external_engagement_log</type>
+      </evidence_types>
+    </control>
+  </controls>
+  <sources>
+    <source url="https://digitallibrary.un.org/record/4040897" title="UN Digital Library draft record"/>
+    <source url="https://digitallibrary.un.org/record/4043244" title="UN Digital Library adopted resolution record"/>
+    <source url="https://news.un.org/en/story/2024/03/1147831" title="UN News coverage"/>
+  </sources>
+</framework>
