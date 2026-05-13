@@ -1,0 +1,47 @@
+{
+  "name": "@aigovops/beacon-server",
+  "version": "0.1.0",
+  "description": "AIGovOps Beacon — discovery, signed receipts, checklist→policy, and audit export. Run it where your AI runs.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "beacon": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "init": "node src/cli.js init",
+    "keygen": "node src/cli.js keygen",
+    "seed": "node src/cli.js seed",
+    "test": "node --test test/"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "express": "^4.21.1",
+    "cors": "^2.8.5",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "tweetnacl": "^1.0.3",
+    "ulid": "^2.3.0",
+    "yaml": "^2.6.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  },
+  "keywords": [
+    "ai-governance",
+    "audit",
+    "compliance",
+    "aigovops",
+    "nist-ai-rmf",
+    "eu-ai-act",
+    "iso-42001",
+    "hipaa",
+    "ed25519",
+    "policy-as-code"
+  ]
+}

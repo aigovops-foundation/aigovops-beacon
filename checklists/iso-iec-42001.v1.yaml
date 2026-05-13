@@ -1,0 +1,210 @@
+# ISO/IEC 42001:2023 — AI Management System Checklist Pack
+# A Beacon-flavored distillation of ISO/IEC 42001 control objectives,
+# focused on the controls that produce evidence Beacon can capture or
+# attest. This is not a substitute for a certified audit. It is a way
+# to get your house in order before one.
+#
+# Source: ISO/IEC 42001:2023 — Information technology — Artificial
+#         intelligence — Management system.
+# License: Apache-2.0 for this pack. ISO/IEC text is © ISO.
+
+id: iso-iec-42001
+version: 1.0.0
+title: ISO/IEC 42001 — AI Management System
+short_title: ISO/IEC 42001
+authority: International Organization for Standardization
+publication: ISO/IEC 42001:2023
+url: https://www.iso.org/standard/81230.html
+applies_to:
+  - all_models
+  - organizations_seeking_certification
+trust_tier_minimum: T2
+human_readable_summary: >
+  ISO/IEC 42001 is the first management-system standard for AI. This
+  pack tracks the control objectives most relevant to model inventory,
+  evidence, and accountability — the parts Beacon was built to support.
+
+functions:
+
+  # ─── CONTEXT (Clause 4) ────────────────────────────────────────────────
+  - id: CTX
+    title: Context of the organization
+    description: Clause 4 — context, interested parties, scope.
+    items:
+      - id: CTX-4.1
+        prompt: Has the organization determined external and internal issues
+                relevant to its AI management system?
+        evidence: context_analysis_uri
+        severity: medium
+      - id: CTX-4.2
+        prompt: Have interested parties relevant to the AIMS been identified?
+        evidence: stakeholder_register_uri
+        severity: medium
+      - id: CTX-4.3
+        prompt: Is the scope of the AIMS documented and current?
+        evidence: aims_scope_doc
+        gate: aims_scope_present
+        severity: high
+
+  # ─── LEADERSHIP (Clause 5) ─────────────────────────────────────────────
+  - id: LEAD
+    title: Leadership
+    description: Clause 5 — leadership and commitment, policy, roles.
+    items:
+      - id: LEAD-5.1
+        prompt: Does top management demonstrate leadership and commitment to
+                the AIMS through a documented policy?
+        evidence: ai_policy_signed_uri
+        gate: governance_policy_present
+        severity: critical
+      - id: LEAD-5.2
+        prompt: Are AI roles, responsibilities, and authorities assigned and
+                communicated?
+        evidence: raci_uri
+        severity: high
+
+  # ─── PLANNING (Clause 6) ───────────────────────────────────────────────
+  - id: PLAN
+    title: Planning
+    description: Clause 6 — risks, opportunities, objectives, AI system
+                 impact assessment.
+    items:
+      - id: PLAN-6.1
+        prompt: Are risks and opportunities for the AIMS identified and
+                addressed?
+        evidence: risk_register_uri
+        severity: high
+      - id: PLAN-6.2
+        prompt: Is an AI system impact assessment performed for each system?
+        evidence: aisia_uri
+        gate: aisia_present
+        severity: critical
+      - id: PLAN-6.3
+        prompt: Are AI objectives documented, measurable, and reviewed?
+        evidence: objectives_doc
+        severity: medium
+
+  # ─── SUPPORT (Clause 7) ────────────────────────────────────────────────
+  - id: SUP
+    title: Support
+    description: Clause 7 — resources, competence, awareness, documented
+                 information.
+    items:
+      - id: SUP-7.1
+        prompt: Is competence required for AI roles defined and recorded?
+        evidence: competence_matrix_uri
+        severity: medium
+      - id: SUP-7.2
+        prompt: Is documented information controlled (versioned, access-
+                managed, retention-managed)?
+        evidence: doc_control_uri
+        severity: medium
+
+  # ─── OPERATION (Clause 8) — Annex A controls ───────────────────────────
+  - id: OP
+    title: Operation
+    description: Clause 8 and Annex A — operational planning and control.
+    items:
+      - id: OP-A.2.2
+        prompt: Are AI policies aligned with organizational objectives?
+        evidence: policy_alignment_review
+        severity: medium
+      - id: OP-A.3.2
+        prompt: Are processes for reporting concerns about AI systems
+                established (whistleblowing, incident reporting)?
+        evidence: concerns_channel_uri
+        severity: high
+      - id: OP-A.4.2
+        prompt: Are AI system resources (data, tooling, compute, human)
+                documented?
+        evidence: resources_inventory_uri
+        gate: inventory_complete
+        severity: high
+        auto_check: true
+      - id: OP-A.5.2
+        prompt: Is an AI system impact assessment process defined and used?
+        evidence: aisia_process_uri
+        severity: critical
+      - id: OP-A.6.1
+        prompt: Are objectives for responsible development of AI systems
+                established?
+        evidence: responsible_dev_charter
+        severity: medium
+      - id: OP-A.6.2
+        prompt: Are AI system requirements and specifications documented for
+                each system in scope?
+        evidence: model_card_uri
+        gate: model_card_present
+        severity: high
+      - id: OP-A.7.2
+        prompt: Are data-quality requirements for AI systems documented?
+        evidence: data_quality_spec
+        severity: high
+      - id: OP-A.7.3
+        prompt: Is data provenance recorded?
+        evidence: data_lineage_uri
+        severity: high
+      - id: OP-A.8.2
+        prompt: Is information to interested parties about AI systems
+                provided (instructions, intended use, limitations)?
+        evidence: instructions_uri
+        severity: high
+      - id: OP-A.9.2
+        prompt: Are processes for responsible use of AI systems established
+                (acceptable-use policy)?
+        evidence: aup_uri
+        severity: medium
+      - id: OP-A.9.3
+        prompt: Are objectives for human oversight of AI systems documented?
+        evidence: oversight_design_uri
+        gate: human_oversight_defined
+        severity: critical
+      - id: OP-A.10.2
+        prompt: Are third-party AI system relationships managed (vendor
+                review, contractual controls)?
+        evidence: vendor_review_uri
+        severity: high
+
+  # ─── PERFORMANCE EVALUATION (Clause 9) ─────────────────────────────────
+  - id: EVAL
+    title: Performance evaluation
+    description: Clause 9 — monitoring, internal audit, management review.
+    items:
+      - id: EVAL-9.1
+        prompt: Are monitoring, measurement, analysis, and evaluation of the
+                AIMS performed at planned intervals?
+        evidence: monitoring_dashboard_uri
+        gate: monitoring_active
+        severity: high
+        auto_check: true
+      - id: EVAL-9.2
+        prompt: Are internal audits of the AIMS conducted at planned
+                intervals?
+        evidence: internal_audit_log
+        severity: high
+      - id: EVAL-9.3
+        prompt: Are management reviews of the AIMS conducted and recorded?
+        evidence: mgmt_review_minutes
+        severity: medium
+
+  # ─── IMPROVEMENT (Clause 10) ───────────────────────────────────────────
+  - id: IMP
+    title: Improvement
+    description: Clause 10 — nonconformity, corrective action, continual
+                 improvement.
+    items:
+      - id: IMP-10.1
+        prompt: Are nonconformities recorded with corrective actions and
+                effectiveness reviews?
+        evidence: capa_log_uri
+        severity: high
+      - id: IMP-10.2
+        prompt: Is continual improvement of the AIMS demonstrated?
+        evidence: improvement_log
+        severity: low
+
+# Scoring:
+# - PASS threshold defaults to 0.85 for self-assessment; certification
+#   bodies will apply their own.
+# - This pack does not certify. It produces evidence that a certifier
+#   can use, signed and timestamped via Beacon receipts.

@@ -1,0 +1,49 @@
+# fly.toml — AIGovOps Beacon
+# Deploy: `fly launch --no-deploy --copy-config` then `fly deploy --remote-only`
+# Before going live, set OIDC secrets:
+#   fly secrets set OIDC_CLIENT_ID=… OIDC_CLIENT_SECRET=… OIDC_ISSUER_URL=…
+
+app = "aigovops-beacon"
+primary_region = "iad"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[build]
+  dockerfile = "deploy/Dockerfile"
+
+[env]
+  BEACON_HOST = "0.0.0.0"
+  BEACON_PORT = "8787"
+  BEACON_DATA_DIR = "/data"
+  BEACON_CAPTURE_MODE = "redacted"
+  NODE_ENV = "production"
+
+[[mounts]]
+  source = "beacon_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 8787
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 200
+    soft_limit = 150
+
+[checks]
+  [checks.health]
+    type = "http"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/api/v1/health"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIGovOps Beacon — Find every AI. Sign what matters. Hand the auditor a bundle.</title>
+  <meta name="description" content="An afternoon, not a year. AIGovOps Beacon discovers shadow AI, signs the receipts, and hands the auditor a cryptographic bundle they can verify themselves." />
+  <meta name="theme-color" content="#01696f" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AIGovOps Beacon — Verifiable AI governance, in an afternoon" />
+  <meta property="og:description" content="From shadow AI to signed evidence. Discover, sign, and hand the auditor a bundle they can verify themselves." />
+  <meta property="og:image" content="./assets/beacon-medallion.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/site.css" />
+
+  <!-- Favicon: simple Beacon mark -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body>
+
+  <!-- ============ 1. STICKY HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="shell">
+      <a href="#top" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <!-- mini medallion -->
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">AIGovOps Foundation</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="#demo" class="btn-ghost btn-sm desktop-only">Try it</a>
+        <a href="#framework" class="btn-ghost btn-sm desktop-only">Framework</a>
+        <a href="#run" class="btn-ghost btn-sm desktop-only">Run it</a>
+        <a href="./downloads/aigovops-beacon-starter.zip" class="btn-primary btn-sm" download>Get the zip</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ 2. HERO ============ -->
+    <section class="hero">
+      <div class="shell">
+        <div class="hero-grid">
+
+          <!-- Animated medallion -->
+          <div class="medallion-wrap" aria-hidden="true">
+            <div class="medallion-halo">
+              <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="ringPath" d="M 300,300 m -260,0 a 260,260 0 1,1 520,0 a 260,260 0 1,1 -520,0" />
+                </defs>
+                <text font-family="DM Mono, monospace" font-size="22" font-weight="500" fill="#01696f" letter-spacing="6">
+                  <textPath href="#ringPath" startOffset="0%">
+                    LET THE TOKENS FLOW  ·  YES — SHIP AI  ·  YES — STEADY AI  ·  YES — RECOVER AI  ·  
+                  </textPath>
+                </text>
+                <!-- Tick marks every 30deg -->
+                <g stroke="#2ecc71" stroke-width="2" opacity="0.45">
+                  <line x1="300" y1="20" x2="300" y2="34"/>
+                  <line x1="300" y1="566" x2="300" y2="580"/>
+                  <line x1="20" y1="300" x2="34" y2="300"/>
+                  <line x1="566" y1="300" x2="580" y2="300"/>
+                </g>
+              </svg>
+            </div>
+            <div class="medallion-pulse" id="medallionPulse"></div>
+            <img src="./assets/beacon-medallion.jpg" alt="" class="medallion-image" />
+          </div>
+
+          <!-- Headline -->
+          <div class="hero-copy">
+            <span class="kicker"><span class="dot" aria-hidden="true"></span> Verifiable AI governance — Apache-2.0, no SaaS lock-in</span>
+            <h1>Find every AI on your network. Sign what matters. Hand the auditor a bundle they can verify themselves.</h1>
+            <p class="lede">Shadow AI to signed evidence — in one afternoon. Beacon discovers the models running in your environment, attests them against NIST AI RMF, the EU AI Act, ISO/IEC 42001, HIPAA, and a Human Flourishing oath, then produces a cryptographically signed bundle anyone can re-verify with one command.</p>
+            <div class="cta-row">
+              <a href="#demo" class="btn-primary">See it sign — live ↓</a>
+              <a href="./downloads/aigovops-beacon-starter.zip" class="btn-ghost" download>Download starter (.zip)</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-ghost" target="_blank" rel="noopener">View on GitHub ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry strip -->
+        <div class="telemetry" aria-live="polite" aria-label="Live demo telemetry">
+          <div class="telemetry-head">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>Live receipts — Ed25519 / JCS canonical</span>
+            <span class="t" id="telemetryStatus">idle</span>
+          </div>
+          <div class="telemetry-body" id="telemetryBody">
+            <div class="telemetry-row"><span class="t">--:--:--</span><span class="ev">awaiting</span><span class="body">Press “See it sign” to begin the demo</span><span class="sig">—</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. THE PROBLEM ============ -->
+    <section>
+      <div class="shell">
+        <span class="kicker">The problem</span>
+        <h2 class="reveal">Three failure modes every AI program hits.</h2>
+        <p class="lede reveal">Beacon was built because none of these are solvable with another policy PDF.</p>
+
+        <div class="cards three reveal">
+          <article class="card">
+            <span class="pill warn">Shadow AI</span>
+            <h3>You don't know what's running</h3>
+            <p>Models show up on developer laptops, in vendor SaaS, embedded in features no one filed a memo for. The first risk register is always wrong.</p>
+          </article>
+          <article class="card">
+            <span class="pill fail">PDF theater</span>
+            <h3>Your evidence is a screenshot</h3>
+            <p>Audits today are PDFs of dashboards of claims. Nothing is verifiable months later. Nothing survives a key rotation. Nothing is portable.</p>
+          </article>
+          <article class="card">
+            <span class="pill teal">Aspiration without proof</span>
+            <h3>“We follow NIST AI RMF” — show me</h3>
+            <p>Frameworks turn into checkboxes with no underlying evidence. Beacon makes the checkbox <em>and</em> the cryptographic receipt the same artifact.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. GET TO YES — SHIP AI ============ -->
+    <section class="ship" id="demo">
+      <div class="shell">
+        <div class="state-band">
+          <span class="state-badge active"><span class="dot"></span><span>Act 1 of 3 · GET TO YES</span></span>
+          <span class="state-badge"><span class="dot"></span><span>Act 2 · Stay at yes</span></span>
+          <span class="state-badge"><span class="dot"></span><span>Act 3 · Recover to yes</span></span>
+        </div>
+        <h2>Ship AI — discovery, not paperwork.</h2>
+        <p class="lede">Paste an inventory CSV or let the demo run itself. Beacon tags every model with vendor, capability, residency, and the framework articles it must answer to.</p>
+
+        <div class="demo-stage" aria-live="polite">
+          <div class="stage-head">
+            <h3>Discovery — Act 1</h3>
+            <div class="stage-controls">
+              <button id="btnAutoplay" class="btn-primary btn-sm" type="button">▶ Play the demo</button>
+              <button id="btnInteractive" class="btn-ghost btn-sm" type="button" disabled>Use my own CSV</button>
+              <button id="btnReset" class="btn-ghost btn-sm" type="button" disabled>Reset</button>
+            </div>
+          </div>
+
+          <div class="csv-input" id="csvInputWrap" hidden>
+            <label for="csvInput" class="kicker">Paste model inventory (vendor,model,capability,residency)</label>
+            <textarea id="csvInput" spellcheck="false">OpenAI,gpt-4o,chat-completions,us-east
+Anthropic,claude-3-5-sonnet,chat-completions,us-west
+Cohere,embed-multilingual-v3,embeddings,eu-central
+Stability AI,sdxl-1.0,image-generation,us-east
+Mistral,mistral-large,chat-completions,eu-west</textarea>
+            <div class="cta-row" style="margin-top:var(--space-3)">
+              <button id="btnRunInteractive" class="btn-primary btn-sm" type="button">Sign these →</button>
+            </div>
+          </div>
+
+          <div class="inventory-board" id="inventoryBoard" aria-label="Discovered models"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. STAY AT YES — STEADY AI ============ -->
+    <section class="steady">
+      <div class="shell">
+        <div class="state-band">
+          <span class="state-badge"><span class="dot"></span><span>Act 1 · Ship</span></span>
+          <span class="state-badge active"><span class="dot"></span><span>Act 2 of 3 · STAY AT YES</span></span>
+          <span class="state-badge"><span class="dot"></span><span>Act 3 · Recover</span></span>
+        </div>
+        <h2>Steady AI — every claim is a signed receipt.</h2>
+        <p class="lede">For each model, Beacon serializes the attestation in <a href="https://www.rfc-editor.org/rfc/rfc8785" target="_blank" rel="noopener">JCS canonical form (RFC 8785)</a>, signs it with an Ed25519 key, and emits an NDJSON event. Click any receipt below to see the exact bytes that were signed — and verify the signature in your browser.</p>
+
+        <div class="receipt-reveal" id="receiptReveal" hidden>
+          <div class="receipt-block">
+            <span class="label">Receipt — JSON view</span>
+            <pre id="receiptJson"></pre>
+          </div>
+          <div class="receipt-block canonical">
+            <span class="label">Canonical bytes (signed)</span>
+            <pre id="receiptCanonical"></pre>
+            <div class="sig-stamp" id="sigStamp">
+              <span class="pill pass">Ed25519 ✓ verified in-browser</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="lede reveal" style="margin-top:var(--space-6)">
+          <strong>The bargain:</strong> agents do the bureaucracy — discovery, classification, evidence collection, signing. Humans hold the moral legitimacy — the policy, the exception, the override. Beacon is the audit log between them.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ 6. RECOVER TO YES — RECOVER AI ============ -->
+    <section class="recover">
+      <div class="shell">
+        <div class="state-band">
+          <span class="state-badge"><span class="dot"></span><span>Act 1 · Ship</span></span>
+          <span class="state-badge"><span class="dot"></span><span>Act 2 · Steady</span></span>
+          <span class="state-badge active"><span class="dot"></span><span>Act 3 of 3 · RECOVER TO YES</span></span>
+        </div>
+        <h2>Recover AI — hand the auditor a bundle they verify themselves.</h2>
+        <p class="lede">When the receipts settle, Beacon assembles them into a portable evidence bundle: the manifest, the NDJSON receipt log, the public keys, the policy YAMLs, the checklists, and a one-page <code>VERIFY.md</code>. Anyone with <code>openssl</code> can re-check it. No vendor login. No phoning home.</p>
+
+        <div class="bundle-board">
+          <div class="file-yard" id="fileYard" aria-label="Bundle contents"></div>
+          <aside class="bundle-result" id="bundleResult" hidden>
+            <h4>Evidence bundle assembled</h4>
+            <div class="sha"><span class="kicker">sha-256</span><code id="bundleSha"></code></div>
+            <p style="color:var(--paper-faint); font-size:var(--text-sm); margin:0">A real, downloadable .zip — built in your browser from the receipts you just signed.</p>
+            <button id="btnDownloadBundle" class="btn-primary btn-sm" type="button">Download bundle.zip</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. THE FRAMEWORK ============ -->
+    <section id="framework">
+      <div class="shell">
+        <span class="kicker">The framework</span>
+        <h2 class="reveal">Five audit lenses. One signed answer per article.</h2>
+        <p class="lede reveal">Beacon ships with the five checklists below as machine-readable YAML <em>and</em> human-readable PDF. Each control row produces a receipt — pass, fail, or warn — that survives long after the auditor leaves.</p>
+
+        <div class="framework-grid reveal">
+          <article class="framework-card">
+            <span class="auth">U.S. · NIST</span>
+            <h3>NIST AI RMF</h3>
+            <p>Govern, Map, Measure, Manage — turned into 38 attestable control rows. Anchored in the published functions.</p>
+            <div class="actions">
+              <a href="./downloads/nist-ai-rmf.pdf" class="btn-ghost btn-sm" download>PDF</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/nist-ai-rmf.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
+              <a href="https://www.nist.gov/itl/ai-risk-management-framework" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
+            </div>
+          </article>
+
+          <article class="framework-card">
+            <span class="auth">EU</span>
+            <h3>EU AI Act — Article 13</h3>
+            <p>Transparency obligations for high-risk systems. Disclosure receipts users can verify before they accept output.</p>
+            <div class="actions">
+              <a href="./downloads/eu-ai-act-art13.pdf" class="btn-ghost btn-sm" download>PDF</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/eu-ai-act-art13.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
+              <a href="https://artificialintelligenceact.eu/article/13/" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
+            </div>
+          </article>
+
+          <article class="framework-card">
+            <span class="auth">ISO/IEC</span>
+            <h3>ISO/IEC 42001</h3>
+            <p>The AI Management System standard. Beacon maps clauses 4–10 to signed evidence — not slideware.</p>
+            <div class="actions">
+              <a href="./downloads/iso-iec-42001.pdf" class="btn-ghost btn-sm" download>PDF</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/iso-iec-42001.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
+              <a href="https://www.iso.org/standard/81230.html" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
+            </div>
+          </article>
+
+          <article class="framework-card">
+            <span class="auth">U.S. · HHS</span>
+            <h3>HIPAA for AI</h3>
+            <p>PHI handling, model training boundaries, BAA scope, and the inference-time minimum-necessary rule — receipted.</p>
+            <div class="actions">
+              <a href="./downloads/hipaa-for-ai.pdf" class="btn-ghost btn-sm" download>PDF</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/hipaa-for-ai.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
+              <a href="https://www.hhs.gov/hipaa/index.html" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
+            </div>
+          </article>
+
+          <article class="framework-card">
+            <span class="auth">AIGovOps Foundation</span>
+            <h3>Human Flourishing Oath</h3>
+            <p>The Foundation's own lens. Are these models making people's lives better? An honest question, attestable monthly.</p>
+            <div class="actions">
+              <a href="./downloads/human-flourishing.pdf" class="btn-ghost btn-sm" download>PDF</a>
+              <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/checklists/human-flourishing.yaml" class="btn-ghost btn-sm" target="_blank" rel="noopener">YAML ↗</a>
+              <a href="https://www.aigovopsfoundation.org/" class="btn-ghost btn-sm" target="_blank" rel="noopener">Read ↗</a>
+            </div>
+          </article>
+
+          <article class="framework-card" style="background:var(--hydra-teal-soft); border-color:rgba(1,105,111,.3)">
+            <span class="auth">Combined</span>
+            <h3>The complete audit framework</h3>
+            <p>One PDF, all five lenses, every control row, every evidence prompt. Hand this to your audit committee.</p>
+            <div class="actions">
+              <a href="./downloads/aigovops-audit-framework.pdf" class="btn-primary btn-sm" download>Combined PDF</a>
+              <a href="./downloads/AI_Model_Inventory_Template.xlsx" class="btn-ghost btn-sm" download>Inventory template (.xlsx)</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 8. RUN IT YOURSELF ============ -->
+    <section id="run">
+      <div class="shell">
+        <span class="kicker">Run it yourself</span>
+        <h2 class="reveal">Three commands. Your own keys. Your own evidence.</h2>
+        <p class="lede reveal">No SaaS to sign up for. Beacon is a small Node server plus a static Studio. Apache-2.0 licensed. Designed to run on a free Fly.io or Railway tier — or on your laptop.</p>
+
+        <div class="run-grid reveal">
+          <pre class="code-block"><span class="c"># 1. Get the code</span>
+<span class="k">git</span> clone https://github.com/bobrapp/aigovops-beacon.git
+<span class="k">cd</span> aigovops-beacon
+
+<span class="c"># 2. Install &amp; generate your signing key</span>
+<span class="k">pnpm</span> install
+<span class="k">pnpm</span> beacon keys:generate
+
+<span class="c"># 3. Run discovery → sign → bundle</span>
+<span class="k">pnpm</span> beacon discover --csv inventory.csv
+<span class="k">pnpm</span> beacon attest --all
+<span class="k">pnpm</span> beacon bundle --out evidence.zip
+
+<span class="c"># 4. Anyone can verify, no Beacon required</span>
+<span class="k">pnpm</span> beacon verify evidence.zip
+<span class="c"># or with stock openssl — VERIFY.md walks you through it</span></pre>
+
+          <div class="run-side">
+            <h3>Deploy in one click</h3>
+            <p>Spin up the Studio (Beacon's web UI) on a free tier — no card required for the free plan on either provider.</p>
+            <div class="cta-row" style="flex-direction:column; align-items:stretch; gap:var(--space-2)">
+              <a href="https://fly.io/launch/sourceforge?repo=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">Deploy to Fly.io ↗</a>
+              <a href="https://railway.app/new/template?template=https%3A%2F%2Fgithub.com%2Fbobrapp%2Faigovops-beacon" class="btn-ghost btn-sm" target="_blank" rel="noopener">Deploy to Railway ↗</a>
+              <a href="./downloads/aigovops-beacon-starter.zip" class="btn-ghost btn-sm" download>Or grab the starter .zip</a>
+            </div>
+            <p class="kicker" style="margin-top:var(--space-4)">Required: Node 20+, pnpm 9+. No database. Receipts are append-only files.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9. THE FOUNDATION ============ -->
+    <section>
+      <div class="shell">
+        <span class="kicker">The Foundation</span>
+        <div class="pullquote reveal">
+          <blockquote>
+            “Agents do the bureaucracy; humans hold moral legitimacy.”
+          </blockquote>
+          <cite>— AIGovOps Foundation, founding principle</cite>
+        </div>
+
+        <p class="lede reveal" style="text-align:center; max-width:60ch; margin:var(--space-8) auto 0">
+          Beacon is the reference implementation of an AIGovOps Foundation idea: that AI governance should be <em>boringly verifiable</em>, not theatrically reported. Built and open-sourced by <a href="https://github.com/bobrapp" target="_blank" rel="noopener">Bob Rapp</a> and Ken Johnston for the <a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">AIGovOps Foundation</a>. Apache-2.0 — fork it, sign with your own keys, run it your way.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 10. FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div>
+          <strong>AIGovOps Beacon</strong>
+          <p>Open-source verifiable AI governance. A project of the <a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">AIGovOps Foundation</a>.</p>
+        </div>
+        <div>
+          <strong>Code</strong>
+          <ul>
+            <li><a href="https://github.com/bobrapp/aigovops-beacon" target="_blank" rel="noopener">GitHub repository ↗</a></li>
+            <li><a href="./downloads/aigovops-beacon-starter.zip" download>Starter .zip</a></li>
+            <li><a href="https://github.com/bobrapp/aigovops-beacon/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0 license ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Framework</strong>
+          <ul>
+            <li><a href="./downloads/aigovops-audit-framework.pdf" download>Combined PDF</a></li>
+            <li><a href="./downloads/AI_Model_Inventory_Template.xlsx" download>Inventory template</a></li>
+            <li><a href="https://github.com/bobrapp/aigovops-beacon/tree/main/checklists" target="_blank" rel="noopener">YAML checklists ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Contact</strong>
+          <ul>
+            <li><a href="mailto:security@aigovopsfoundation.org">security@aigovopsfoundation.org</a></li>
+            <li><a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">Foundation site ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-colophon">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0</span>
+        <span>Built with Inter + DM Mono · Hydra Teal #01696f · Signal Green #2ecc71</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JS ============ -->
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="./js/site.js" defer></script>
+</body>
+</html>

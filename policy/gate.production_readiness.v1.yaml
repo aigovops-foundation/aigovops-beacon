@@ -1,0 +1,77 @@
+# Production Readiness Gate — Beacon Policy
+#
+# This is the gate Beacon evaluates before a Trust Tier promotion or a
+# T2/T3 environment deployment. It is a roll-up: it asks the other
+# packs whether their critical items pass, and it adds a few
+# Beacon-native checks of its own.
+#
+# Compiled by server/src/services/gateEngine.js against
+# policy/rego/production_readiness.rego.
+
+id: production-readiness
+version: 1.0.0
+title: Beacon Production Readiness Gate
+short_title: Production Readiness
+authority: AIGovOps Foundation (Beacon defaults)
+url: https://github.com/bobrapp/aigovops-beacon
+applies_to:
+  - trust_tier_promotion
+  - environment_promotion
+
+# Tier-aware thresholds. Override per tenant in .beacon/config.yaml.
+thresholds:
+  T1:
+    nist-ai-rmf: 0.50
+    iso-iec-42001: 0.40
+    human-flourishing: 0.00     # not enforced at T1
+    require_signatures: false
+  T2:
+    nist-ai-rmf: 0.75
+    iso-iec-42001: 0.70
+    eu-ai-act-art13: 0.85       # if applicable
+    hipaa-for-ai: 0.95          # if applicable
+    human-flourishing: 0.50
+    require_signatures: true
+  T3:
+    nist-ai-rmf: 0.90
+    iso-iec-42001: 0.85
+    eu-ai-act-art13: 0.95
+    hipaa-for-ai: 1.00
+    human-flourishing: 1.00     # all critical items
+    require_signatures: true
+    require_dual_control: true
+
+# Native Beacon checks that always run.
+native_checks:
+  - id: NAT-1
+    prompt: Inventory row is complete (vendor, model, version, owner).
+    severity: critical
+  - id: NAT-2
+    prompt: At least one receipt has been captured in the last 24 hours
+            for this model in this environment.
+    severity: critical
+  - id: NAT-3
+    prompt: All receipts in the last 24 hours verify against the
+            published public key.
+    severity: critical
+  - id: NAT-4
+    prompt: Signing key is younger than the rotation policy (default 90
+            days).
+    severity: high
+  - id: NAT-5
+    prompt: The Merkle anchor stream is unbroken for the last 24 hours.
+    severity: high
+  - id: NAT-6
+    prompt: Export bundle for this model produces and self-verifies.
+    severity: medium
+
+# What happens on FAIL:
+#   - Trust Tier promotion to the target tier is denied.
+#   - Beacon writes a "gate_decision" receipt with the failing item ids.
+#   - The Studio shows the failing checklist in plain language and
+#     proposes the smallest next action.
+#
+# Override:
+#   A T3 human (per Foundation constitution Art. V) may grant a
+#   time-bounded exception. The exception itself is a signed receipt
+#   with event_type = "exception_granted", expires_at, and justification.

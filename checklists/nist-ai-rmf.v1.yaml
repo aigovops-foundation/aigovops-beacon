@@ -1,0 +1,210 @@
+# NIST AI Risk Management Framework — Beacon Checklist Pack
+# Maps the four NIST AI RMF functions (GOVERN, MAP, MEASURE, MANAGE) to
+# concrete, evidence-backed checks Beacon can run or attest against an
+# AI inventory item. Each item compiles to a policy gate in policy/rego/.
+#
+# Source: NIST AI 100-1 (AI RMF 1.0), Jan 2023.
+# License: this pack is Apache-2.0. NIST publication is U.S. public domain.
+
+id: nist-ai-rmf
+version: 1.0.0
+title: NIST AI Risk Management Framework (AI RMF 1.0)
+short_title: NIST AI RMF
+authority: National Institute of Standards and Technology
+publication: NIST AI 100-1
+url: https://www.nist.gov/itl/ai-risk-management-framework
+applies_to:
+  - all_models
+  - all_environments
+trust_tier_minimum: T1
+human_readable_summary: >
+  The U.S. federal baseline for trustworthy AI. If you only run one pack,
+  run this one. It will not block on its own — it produces evidence and
+  surfaces gaps your auditor can act on.
+
+functions:
+
+  # ─── GOVERN ────────────────────────────────────────────────────────────
+  - id: GOVERN
+    title: Govern
+    description: Cultivate a culture of risk management.
+    items:
+      - id: GOVERN-1.1
+        prompt: Is there a written AI policy that names an accountable owner?
+        evidence: policy_document_uri
+        gate: governance_policy_present
+        severity: high
+      - id: GOVERN-1.2
+        prompt: Are roles and responsibilities for AI risk documented?
+        evidence: raci_uri
+        gate: roles_documented
+        severity: high
+      - id: GOVERN-1.3
+        prompt: Does the organization track legal and regulatory requirements
+                relevant to its AI systems?
+        evidence: regulatory_register_uri
+        severity: medium
+      - id: GOVERN-1.4
+        prompt: Are risk tolerances for AI systems explicitly defined?
+        evidence: risk_appetite_statement_uri
+        severity: medium
+      - id: GOVERN-2.1
+        prompt: Is there a process for stakeholder input on high-risk systems?
+        evidence: stakeholder_engagement_log
+        severity: medium
+      - id: GOVERN-3.1
+        prompt: Does the inventory record vendor, model, version, and owner?
+        evidence: beacon_inventory_row
+        gate: inventory_complete
+        severity: critical
+        auto_check: true
+      - id: GOVERN-4.1
+        prompt: Is there an incident response runbook for AI failures?
+        evidence: incident_runbook_uri
+        severity: high
+      - id: GOVERN-4.2
+        prompt: Are AI incidents logged with root-cause analysis?
+        evidence: incident_log_uri
+        severity: high
+      - id: GOVERN-5.1
+        prompt: Are third-party model risks reviewed before procurement?
+        evidence: vendor_review_uri
+        severity: high
+      - id: GOVERN-6.1
+        prompt: Is signing-key rotation policy defined and enforced?
+        evidence: key_rotation_log
+        gate: key_rotation_within_90d
+        severity: critical
+        auto_check: true
+
+  # ─── MAP ───────────────────────────────────────────────────────────────
+  - id: MAP
+    title: Map
+    description: Establish context to frame AI risks.
+    items:
+      - id: MAP-1.1
+        prompt: Is the intended use of the model documented in plain language?
+        evidence: model_card_uri
+        gate: model_card_present
+        severity: high
+      - id: MAP-1.2
+        prompt: Are foreseeable misuses enumerated?
+        evidence: misuse_register_uri
+        severity: high
+      - id: MAP-1.3
+        prompt: Are affected populations identified, including vulnerable groups?
+        evidence: impact_assessment_uri
+        severity: high
+      - id: MAP-2.1
+        prompt: Is the data lineage of training/fine-tuning data documented?
+        evidence: data_lineage_uri
+        severity: medium
+      - id: MAP-2.2
+        prompt: Are licensing and provenance of third-party data verified?
+        evidence: data_license_attestation
+        severity: high
+      - id: MAP-3.1
+        prompt: Are benefits and costs of the AI system documented?
+        evidence: benefit_cost_memo
+        severity: low
+      - id: MAP-4.1
+        prompt: Are risks to civil rights, civil liberties, and privacy mapped?
+        evidence: rights_review_uri
+        severity: critical
+      - id: MAP-5.1
+        prompt: Is human oversight defined for each decision the system supports?
+        evidence: oversight_design_uri
+        gate: human_oversight_defined
+        severity: critical
+
+  # ─── MEASURE ───────────────────────────────────────────────────────────
+  - id: MEASURE
+    title: Measure
+    description: Analyze, assess, and track AI risks.
+    items:
+      - id: MEASURE-1.1
+        prompt: Are evaluation metrics defined before deployment?
+        evidence: eval_plan_uri
+        severity: high
+      - id: MEASURE-2.1
+        prompt: Is bias evaluated across protected attributes where relevant?
+        evidence: bias_report_uri
+        severity: critical
+      - id: MEASURE-2.2
+        prompt: Are robustness and adversarial tests performed and logged?
+        evidence: robustness_report_uri
+        severity: high
+      - id: MEASURE-2.3
+        prompt: Is privacy leakage tested (PII, training data extraction)?
+        evidence: privacy_eval_uri
+        severity: critical
+      - id: MEASURE-2.4
+        prompt: Are hallucination/grounding rates measured for generative systems?
+        evidence: grounding_eval_uri
+        severity: high
+      - id: MEASURE-3.1
+        prompt: Is system performance monitored in production?
+        evidence: monitoring_dashboard_uri
+        gate: monitoring_active
+        severity: high
+        auto_check: true
+      - id: MEASURE-3.2
+        prompt: Are drift detectors configured?
+        evidence: drift_config_uri
+        severity: medium
+      - id: MEASURE-4.1
+        prompt: Are receipts captured for every model invocation?
+        evidence: beacon_receipts_count
+        gate: receipts_captured
+        severity: critical
+        auto_check: true
+      - id: MEASURE-4.2
+        prompt: Are receipts cryptographically signed and verifiable?
+        evidence: beacon_signature_verify
+        gate: signatures_valid
+        severity: critical
+        auto_check: true
+
+  # ─── MANAGE ────────────────────────────────────────────────────────────
+  - id: MANAGE
+    title: Manage
+    description: Allocate risk resources to mapped and measured risks.
+    items:
+      - id: MANAGE-1.1
+        prompt: Are residual risks documented and accepted by a named owner?
+        evidence: risk_acceptance_memo
+        severity: high
+      - id: MANAGE-1.2
+        prompt: Is there a process to deprecate or retire models?
+        evidence: deprecation_policy_uri
+        severity: medium
+      - id: MANAGE-2.1
+        prompt: Are humans in the loop for high-stakes decisions?
+        evidence: hitl_config_uri
+        gate: hitl_for_high_risk
+        severity: critical
+      - id: MANAGE-2.2
+        prompt: Is there a kill-switch documented and tested?
+        evidence: killswitch_test_log
+        severity: high
+      - id: MANAGE-3.1
+        prompt: Are downstream users notified of material model changes?
+        evidence: change_log_uri
+        severity: medium
+      - id: MANAGE-4.1
+        prompt: Are incidents reported externally where required by law?
+        evidence: external_disclosure_log
+        severity: high
+      - id: MANAGE-4.2
+        prompt: Are post-incident reviews fed back into MAP/MEASURE?
+        evidence: feedback_loop_uri
+        severity: medium
+
+# How Beacon scores this pack:
+# - auto_check items are computed from receipts and inventory.
+# - non-auto items are attested by the auditor and recorded as a receipt
+#   with event_type = "attestation".
+# - severity weights for the production_readiness gate:
+#     critical: 4   high: 2   medium: 1   low: 0.5
+# - PASS threshold defaults to 0.85 of available weight, configurable per
+#   tenant in policy/gate.production_readiness.yaml.

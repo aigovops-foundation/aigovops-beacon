@@ -1,0 +1,131 @@
+# Human Flourishing Gate — Beacon Policy Pack
+#
+# The AIGovOps Foundation differentiator. NIST tells you what to measure.
+# ISO tells you how to manage. The EU tells you what to disclose.
+# Nobody tells you whether the thing you are about to ship is good for
+# the human on the other end.
+#
+# This gate makes that question unavoidable. Twelve items, three lenses:
+#
+#   • Dignity — does the system treat people as ends, not means?
+#   • Equity  — does it widen or narrow opportunity?
+#   • Delight — is it pleasant to live with, or just tolerable?
+#
+# Authored by Bob Rapp and Ken Johnston for the AIGovOps Foundation.
+# License: Apache-2.0.
+#
+# This gate is intentionally not auto-check-able. It is a forcing
+# function for human judgment. Beacon records the answers and signs
+# them. The auditor and the system owner own them.
+
+id: human-flourishing
+version: 1.0.0
+title: Human Flourishing Gate
+short_title: Human Flourishing
+authority: AIGovOps Foundation
+publication: AIGovOps Foundation Constitution, Article IV
+url: https://www.aigovopsfoundation.org/
+applies_to:
+  - all_models_at_T3
+  - any_user_facing_system
+trust_tier_minimum: T1
+human_readable_summary: >
+  Twelve questions you cannot answer with a metric. The Foundation's
+  position is simple — if you cannot answer them, you cannot promote
+  a system to Trust Tier 3, no matter how clean the receipts look.
+
+mode: attestation_only
+auto_check: false
+
+lenses:
+
+  # ─── DIGNITY ───────────────────────────────────────────────────────────
+  - id: DIGNITY
+    title: Dignity
+    description: Treat people as ends, not means.
+    items:
+      - id: DIG-1
+        prompt: If the person on the other end of this system read the
+                prompt and the result tomorrow morning, would they feel
+                respected?
+        evidence: attestation_text
+        severity: critical
+      - id: DIG-2
+        prompt: Can a person opt out of automated handling and reach a
+                competent human without penalty?
+        evidence: opt_out_path_uri
+        severity: critical
+      - id: DIG-3
+        prompt: Is the person told, in language they actually use, that an
+                AI is involved?
+        evidence: disclosure_copy_uri
+        severity: high
+      - id: DIG-4
+        prompt: Does the system avoid manipulative patterns — urgency,
+                shame, fabricated authority, sycophancy?
+        evidence: pattern_review_signoff
+        severity: high
+
+  # ─── EQUITY ────────────────────────────────────────────────────────────
+  - id: EQUITY
+    title: Equity
+    description: Widen opportunity. Do not narrow it.
+    items:
+      - id: EQ-1
+        prompt: Have outcomes been examined across at least two groups who
+                might be affected differently, with the result published
+                inside the org?
+        evidence: equity_review_uri
+        severity: critical
+      - id: EQ-2
+        prompt: Is the system accessible to people with disabilities at
+                WCAG 2.2 AA or equivalent?
+        evidence: a11y_audit_uri
+        severity: high
+      - id: EQ-3
+        prompt: Is the system useful in at least one non-English language
+                where its users live?
+        evidence: i18n_coverage_doc
+        severity: medium
+      - id: EQ-4
+        prompt: Is there a no-cost path for people who cannot pay for the
+                premium version of this capability?
+        evidence: access_tier_doc
+        severity: medium
+
+  # ─── DELIGHT ───────────────────────────────────────────────────────────
+  - id: DELIGHT
+    title: Delight
+    description: Pleasant to live with, not merely tolerable.
+    items:
+      - id: DEL-1
+        prompt: Would a thoughtful colleague describe this system as
+                pleasant to use, in writing, with their name attached?
+        evidence: peer_review_signoff
+        severity: high
+      - id: DEL-2
+        prompt: Does the system tell the truth about what it cannot do,
+                before the user discovers it the hard way?
+        evidence: limitations_copy_uri
+        severity: critical
+      - id: DEL-3
+        prompt: Is there a fast path for the user to send a complaint that
+                a human reads within five business days?
+        evidence: feedback_loop_uri
+        severity: high
+      - id: DEL-4
+        prompt: Has the team named one thing they will not do for revenue,
+                growth, or speed — and documented it?
+        evidence: line_we_will_not_cross_doc
+        severity: critical
+
+# Scoring:
+#   All four "critical" items must be answered YES with attached
+#   evidence for the gate to PASS. There is no partial credit.
+#
+# Why this gate exists:
+#   You can pass every other gate in this repository and still ship a
+#   system that quietly degrades the people who use it. The Foundation
+#   will not write a standard that pretends otherwise.
+#
+#   Agents do the bureaucracy. Humans hold moral legitimacy.
