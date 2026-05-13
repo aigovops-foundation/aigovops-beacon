@@ -1,0 +1,107 @@
+# ─────────────────────────────────────────────────────────────────
+# Beta Corp — single DMZ VM with OIDC, no SPAN port, no endpoint agent.
+# See ARCHITECTURE-BETA.md §4 for the rationale.
+#
+# Required env in .env:
+#   BEACON_PUBLIC_URL=https://beacon.corp.example.com
+#   OIDC_ISSUER_URL, OIDC_CLIENT_ID, OIDC_CLIENT_SECRET, OIDC_COOKIE_SECRET
+#   DNS_LOG_PATH=/var/log/named/queries.log   (mounted read-only)
+#   CASB_API_BASE, CASB_API_KEY               (Netskope / Zscaler / Defender)
+# ─────────────────────────────────────────────────────────────────
+
+services:
+  beacon:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: aigovops/beacon:beta
+    container_name: beacon-beta
+    restart: unless-stopped
+    environment:
+      BEACON_ENV: beta
+      BEACON_CAPTURE_MODE: redacted
+      BEACON_PUBLIC_URL: ${BEACON_PUBLIC_URL}
+    volumes:
+      - beacon_beta_data:/data
+    expose:
+      - "8787"
+    networks: [beacon_beta]
+
+  oauth2-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:latest
+    container_name: beacon-beta-oauth
+    restart: unless-stopped
+    command:
+      - --upstream=http://beacon:8787
+      - --http-address=0.0.0.0:4180
+      - --set-xauthrequest=true
+      - --pass-access-token=true
+      - --pass-user-headers=true
+      - --skip-provider-button=true
+      - --reverse-proxy=true
+    environment:
+      OAUTH2_PROXY_CLIENT_ID: ${OIDC_CLIENT_ID}
+      OAUTH2_PROXY_CLIENT_SECRET: ${OIDC_CLIENT_SECRET}
+      OAUTH2_PROXY_COOKIE_SECRET: ${OIDC_COOKIE_SECRET}
+      OAUTH2_PROXY_PROVIDER: oidc
+      OAUTH2_PROXY_OIDC_ISSUER_URL: ${OIDC_ISSUER_URL}
+      OAUTH2_PROXY_EMAIL_DOMAINS: '*'
+    ports:
+      - "443:4180"
+    depends_on: [beacon]
+    networks: [beacon_beta]
+
+  # DNS log tail — read-only watch on the corp DNS query log.
+  # Mount the actual log file from the host into /var/log/dns/queries.log.
+  dns-tail:
+    image: python:3.12-alpine
+    container_name: beacon-beta-dns
+    restart: unless-stopped
+    depends_on: [beacon]
+    working_dir: /app
+    environment:
+      BEACON_URL: http://beacon:8787
+      DNS_LOG_PATH: ${DNS_LOG_PATH:-/var/log/dns/queries.log}
+    volumes:
+      - ../scripts:/app/scripts:ro
+      - ${DNS_LOG_PATH:-/var/log/dns}:/var/log/dns:ro
+    command: ["python3", "scripts/tail_dns.py", "--watch", "/var/log/dns", "--beacon", "http://beacon:8787"]
+    networks: [beacon_beta]
+
+  # CASB poller — pulls sanctioned + shadow IT events every 5 min.
+  casb-poll:
+    image: python:3.12-alpine
+    container_name: beacon-beta-casb
+    restart: unless-stopped
+    depends_on: [beacon]
+    working_dir: /app
+    environment:
+      BEACON_URL: http://beacon:8787
+      CASB_API_BASE: ${CASB_API_BASE}
+      CASB_API_KEY: ${CASB_API_KEY}
+    volumes:
+      - ../scripts:/app/scripts:ro
+    command: ["sh", "-c", "while true; do python3 scripts/casb_poll.py || true; sleep 300; done"]
+    networks: [beacon_beta]
+
+  mcp:
+    image: node:20-alpine
+    container_name: beacon-beta-mcp
+    restart: unless-stopped
+    depends_on: [beacon]
+    working_dir: /app/mcp
+    environment:
+      MCP_TRANSPORT: sse
+      MCP_PORT: "8799"
+      BEACON_URL: http://beacon:8787
+    volumes:
+      - ../mcp:/app/mcp:ro
+    expose: ["8799"]
+    command: ["node", "server.js"]
+    networks: [beacon_beta]
+
+volumes:
+  beacon_beta_data:
+
+networks:
+  beacon_beta:

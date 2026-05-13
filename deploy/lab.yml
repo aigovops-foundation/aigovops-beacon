@@ -1,0 +1,78 @@
+# ─────────────────────────────────────────────────────────────────
+# Suitcase Lab — Beacon on a laptop, 60 seconds.
+# Used by LAB.md for workshops and tabletop exercises.
+#
+# Boot:   docker compose -f deploy/lab.yml up -d
+# Stop:   docker compose -f deploy/lab.yml down
+# Reset:  docker compose -f deploy/lab.yml down -v
+#
+# Ports: 8787 Beacon API+Studio, 8799 MCP SSE
+# ─────────────────────────────────────────────────────────────────
+
+services:
+  beacon:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: aigovops/beacon:lab
+    container_name: beacon-lab
+    restart: unless-stopped
+    environment:
+      BEACON_ENV: lab
+      BEACON_CAPTURE_MODE: redacted
+      BEACON_PUBLIC_URL: http://localhost:8787
+    ports:
+      - "8787:8787"
+    volumes:
+      - beacon_lab_data:/data
+    networks:
+      - beacon_lab
+
+  # Replays the 100-case dataset as fake DNS/SNI events into Beacon.
+  # Provides realistic load for the Studio UI and the framework scorer.
+  synth-traffic:
+    image: python:3.12-alpine
+    container_name: beacon-lab-synth
+    restart: unless-stopped
+    depends_on:
+      - beacon
+    working_dir: /app
+    volumes:
+      - ../scripts:/app/scripts:ro
+      - ../docs:/app/docs:ro
+    command: >
+      sh -c "
+        echo '[synth] waiting for beacon...';
+        until wget -qO- http://beacon:8787/api/v1/health >/dev/null 2>&1; do sleep 1; done;
+        echo '[synth] beacon up, starting replay';
+        python3 scripts/synth-traffic.py --beacon http://beacon:8787 --rate 1
+      "
+    networks:
+      - beacon_lab
+
+  # MCP server over SSE. Local Claude Desktop / Cursor users hit it via stdio
+  # directly (see mcp/README.md); SSE here is for browser-based MCP clients.
+  mcp:
+    image: node:20-alpine
+    container_name: beacon-lab-mcp
+    restart: unless-stopped
+    depends_on:
+      - beacon
+    working_dir: /app/mcp
+    environment:
+      MCP_TRANSPORT: sse
+      MCP_PORT: "8799"
+      BEACON_URL: http://beacon:8787
+    volumes:
+      - ../mcp:/app/mcp:ro
+    ports:
+      - "8799:8799"
+    command: ["node", "server.js"]
+    networks:
+      - beacon_lab
+
+volumes:
+  beacon_lab_data:
+
+networks:
+  beacon_lab:

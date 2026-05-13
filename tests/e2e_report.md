@@ -1,5 +1,5 @@
 # AIGovOps Beacon — E2E Test Report
-Run: 2026-05-13 14:56:17 UTC
+Run: 2026-05-13 15:20:30 UTC
 Root: /home/user/workspace/aigovops-beacon
 
 ## Framework registry
@@ -115,8 +115,8 @@ INFO  hard-bad URLs (first 10):
         404  https://wormhole.com/wormhole-incident-report-02-02-22/  (Wormhole bridge hack)
         404  https://ico.org.uk/media/action-weve-taken/undertakings/2014352/royal-free-undertaking-03072017.pdf  (Google DeepMind Royal Free NHS data ICO)
         404  https://roninchain.com/blog/posts/community-alert-ronin-validators-6513cc78a5edc1001b03c366  (Ronin Bridge hack 2022)
-          0  https://www.indiacode.nic.in/handle/123456789/22037?locale=en  (DPDP Act)
           0  https://www.industry.gov.au/publications/voluntary-ai-safety-standard  (AI Ethics + VAISS)
+          0  https://www.indiacode.nic.in/handle/123456789/22037?locale=en  (DPDP Act)
           0  https://robodebt.royalcommission.gov.au/publications/report  (Robodebt Australia automated welfare debt scandal)
           0  https://www.adobe.com/ai/overview/firefly/gen-ai-approach.html  (Adobe Firefly training data lawsuit)
 

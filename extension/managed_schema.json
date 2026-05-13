@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "title": "AIGovOps Beacon — managed policy",
+  "description": "Set these via Chrome ExtensionInstallForcelist + ExtensionSettings, Edge mirror, Intune ADMX, or JAMF MCX. The extension auto-configures from these values.",
+  "properties": {
+    "beaconUrl": {
+      "type": "string",
+      "title": "Beacon ingest URL",
+      "description": "HTTPS endpoint that accepts /api/events. Required."
+    },
+    "tenantSalt": {
+      "type": "string",
+      "title": "Per-tenant hostname salt",
+      "description": "Used to hash hostnames before they leave the browser. Required."
+    },
+    "allowlist": {
+      "type": "array",
+      "items": { "type": "string" },
+      "title": "AI service hostnames to record cleartext",
+      "description": "Anything not on this list is dropped at the source. Hostnames support a leading dot for subdomain match (e.g. '.openai.com')."
+    },
+    "rateLimitPerMinute": {
+      "type": "integer",
+      "title": "Receipt rate cap",
+      "description": "Hard cap on receipts per minute, per tab. Default 30."
+    },
+    "tenantId": {
+      "type": "string",
+      "title": "Tenant ID",
+      "description": "Opaque identifier sent with every receipt for routing."
+    }
+  }
+}

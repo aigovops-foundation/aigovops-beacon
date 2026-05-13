@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "aigovops-beacon": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/aigovops-beacon/mcp/server.js"],
+      "env": {
+        "BEACON_URL": "http://localhost:8787"
+      }
+    }
+  }
+}
