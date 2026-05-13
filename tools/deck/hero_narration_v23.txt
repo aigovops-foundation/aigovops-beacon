@@ -1,0 +1,25 @@
+Your company runs on AI now. So does your risk.
+
+Shadow models. Unlogged prompts. Outputs no one can verify. Auditors arriving with questions you cannot answer.
+
+Meet Beacon. Verifiable AI governance for the agent era.
+
+Every decision your agents make is signed. Cryptographically. Ed25519. Tamper-evident. Replayable. Forever.
+
+Beacon ships six tools through one Model Context Protocol server. Record a decision. Verify a receipt. Query your inventory. Score your posture against twenty-three frameworks. NIST. EU AI Act. ISO forty-two-thousand-one. HIPAA. Bundle the evidence. Replay any case, end to end.
+
+And it runs anywhere. Three deployment shapes, one repository. Run Beacon as a local desktop client for your team. Run it as a hosted MCP server, sharable across your enterprise. Or run it as a restricted public agent, on your own edge, with your own key, gated to safe operations only.
+
+Apache two-point-oh. No SaaS lock-in. No vendor capture. No black box.
+
+A two-minute walkthrough shows the whole loop. Decisions in. Receipts out. Auditor bundle, sealed and signed.
+
+This is the layer that lets a million dollar super-agent actually ship. Because trust is not a feature you bolt on. Trust is the substrate.
+
+Yes, ship AI. Yes, steady AI. Yes, recover AI.
+
+Hand the auditor a bundle they can verify themselves. Let the tokens flow.
+
+The code lives on GitHub. The community lives at the AI GovOps Foundation. Both are open. Both are waiting.
+
+Beacon. Verifiable AI governance. Available now.
