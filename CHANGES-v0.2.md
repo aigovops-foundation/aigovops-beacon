@@ -187,12 +187,11 @@ v0.2 introduced one structural role — **Project Steward**. v0.2.1 names the pe
 
 ### Files touched in v0.2.1
 
-| File | What changed |
-|---|---|
-| `docs/index.html` | Banner, hero lede, stewardship section third card, footer — all name the two new titles. |
-| `docs/draft-v0.2-glacis.html` | **New.** Public announcement of the v0.2 approach and the two new titles. Linked from the banner and the footer. |
-| `STEWARD.md` | Opener reframed around "Founding Open-Source Curator," with a clear "two names, one seat" note. New "Launch Advisor — Joe Braidwood" section. Contact list updated. |
-| `CHANGES-v0.2.md` | This addendum. |
+- **`docs/index.html`** — banner, hero lede, stewardship section third card, and footer all name the two new titles.
+- **`docs/draft-v0.2-glacis.html`** (new) — public announcement of the v0.2 approach and the two new titles. Linked from the banner and the footer.
+- **`STEWARD.md`** — opener reframed around "Founding Open-Source Curator," with a clear "two names, one seat" note. New "Launch Advisor — Joe Braidwood" section. Contact list updated.
+- **`docs/decisions/0002-steward-led-governance.md`** — addendum recording the v0.2.1 naming decision.
+- **`CHANGES-v0.2.md`** — this addendum.
 
 ### Naming rule, locked in
 
