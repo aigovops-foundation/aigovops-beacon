@@ -45,3 +45,12 @@ The principle: **if a sentence sounds like it would survive in a contract, it do
 - ADR 0001 — OVERT alignment
 - [CHANGES-v0.2.md](../../CHANGES-v0.2.md) — the full change plan that produced this branch
 - Branch: `v0.2-Glacis-as-steward-of-the-open-source-approach`
+
+## Addendum — v0.2.1 naming (14 May 2026)
+
+After v0.2 landed on the branch, Bob and Ken agreed on warmer, more specific titles for the people and companies who fill the steward seats:
+
+- **Founding Open-Source Curator** — the **company-level** title for Glacis Technologies. Sits on top of the structural **Project Steward** role this ADR defines. Two names, one seat.
+- **Launch Advisor** — a **personal**, time-scoped title for Joe Braidwood, scoped to the Beacon v1 release window. After v1 ships, Joe transitions into the steady-state Review Circle.
+
+This addendum changes no decisions — only how we name the people in them. "Project Steward" remains the canonical structural term in this repo. "Founding Open-Source Curator" and "Launch Advisor" are how we introduce the actual humans and companies to the public, in `STEWARD.md`, `docs/index.html`, and the [draft-v.2-glacias announcement page](../draft-v0.2-glacis.html).

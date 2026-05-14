@@ -1,8 +1,10 @@
 # Project Steward
 
-## Glacis Technologies, Inc — founding
+## Glacis Technologies, Inc — Founding Open-Source Curator
 
-The AIGovOps Foundation invites [**Glacis Technologies, Inc**](https://www.glacis.io/) to be the founding Project Steward of this repo, and of the wider AIGovOps Foundation open-source program.
+The AIGovOps Foundation invites [**Glacis Technologies, Inc**](https://www.glacis.io/) to be the **Founding Open-Source Curator** of this repo — the company title for the structural role of **Project Steward** of Beacon, and of the wider AIGovOps Foundation open-source program.
+
+*Two names, one seat.* "Founding Open-Source Curator" is how we name the company doing the work. "Project Steward" is the structural role they fill. Anywhere this repo says *Project Steward*, read *the Founding Open-Source Curator — Glacis Technologies*.
 
 Glacis is the steward of the [OVERT 1.0 open standard](https://overt.is/) — the standard Beacon implements. Glacis sponsored the Foundation's inaugural event. They've been generous with their time and ideas. And the most honest answer to *"how do we make sure the project stays close to the standard"* is *"have the people who steward the standard steward the project too."*
 
@@ -57,11 +59,22 @@ If the project decides the stewardship is no longer serving the community, we sa
 
 We hope neither of those happens. We are writing this down because saying it kindly, in advance, is better than hoping we never have to.
 
+## Launch Advisor — Joe Braidwood
+
+Alongside the company seat, **[Joe Braidwood](https://www.linkedin.com/in/joebraidwood/)** — CEO of Glacis and one of the authors of the OVERT Standard — joins as **Launch Advisor** for the Beacon v1 release window.
+
+This is a personal, time-scoped seat that sits next to the structural one.
+
+- **Scope.** From now through the Beacon v1 public release. After v1 ships, Joe steps back into the steady-state Review Circle convened by the Project Steward.
+- **What it means in practice.** Joe reads what we ship before we ship it, names the things that drift from OVERT, and helps us figure out the engagement model with other companies in the space.
+- **Why it is personal, not corporate.** The company seat (Founding Open-Source Curator) carries the standing-thing. The advisor seat carries the *get-v1-out-the-door* thing. Keeping them separate means each one can be honest about its own timeline.
+
 ## Status
 
 **v0.2-Glacis-as-steward-of-the-open-source-approach** · drafted 14 May 2026 · awaiting Glacis's revision.
 
 ## Contact
 
-- Project Steward: Glacis Technologies — [joe@glacis.io](mailto:joe@glacis.io)
+- Founding Open-Source Curator / Project Steward: Glacis Technologies — [joe@glacis.io](mailto:joe@glacis.io)
+- Launch Advisor: Joe Braidwood — [joe@glacis.io](mailto:joe@glacis.io) · [LinkedIn](https://www.linkedin.com/in/joebraidwood/)
 - Foundation: AIGovOps Foundation — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)

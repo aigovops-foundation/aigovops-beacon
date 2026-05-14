@@ -164,3 +164,39 @@ Below is what changes in plain terms.
 ## One sentence summary
 
 The repo should read like a community we are inviting Joe to shape, not a structure we are inviting Joe to sign.
+
+---
+
+## Addendum — v0.2.1: two new titles
+
+Added 14 May 2026, after Bob and Ken agreed on naming.
+
+v0.2 introduced one structural role — **Project Steward**. v0.2.1 names the people and companies who actually fill the seats around it.
+
+### Founding Open-Source Curator — Glacis Technologies
+
+- **Company-level title.** Warmer than "Steward Partner," honest about the standing it carries: Glacis is the first, and they are curating, not just hosting.
+- **Relationship to Project Steward.** Two names, one seat. "Founding Open-Source Curator" is who Glacis is in our story. "Project Steward" is the structural role they fill in the repo's bylaws-style docs.
+- **Where it appears.** Hero, stewardship section, footer of `docs/index.html`; opener of `STEWARD.md`; the new `docs/draft-v0.2-glacis.html` public announcement page.
+
+### Launch Advisor — Joe Braidwood
+
+- **Personal title, time-scoped.** Runs from now through the Beacon v1 release window. After v1 ships, Joe transitions into the steady-state Review Circle convened by the Project Steward.
+- **Why personal, not corporate.** The company seat carries the standing-thing. The advisor seat carries the *get-v1-out-the-door* thing. Keeping them separate means each one can be honest about its own timeline.
+- **Where it appears.** Hero, stewardship section, footer of `docs/index.html`; new section in `STEWARD.md`; the announcement page.
+
+### Files touched in v0.2.1
+
+| File | What changed |
+|---|---|
+| `docs/index.html` | Banner, hero lede, stewardship section third card, footer — all name the two new titles. |
+| `docs/draft-v0.2-glacis.html` | **New.** Public announcement of the v0.2 approach and the two new titles. Linked from the banner and the footer. |
+| `STEWARD.md` | Opener reframed around "Founding Open-Source Curator," with a clear "two names, one seat" note. New "Launch Advisor — Joe Braidwood" section. Contact list updated. |
+| `CHANGES-v0.2.md` | This addendum. |
+
+### Naming rule, locked in
+
+Project Steward → structural role. Founding Open-Source Curator → the company filling it. Launch Advisor → the person helping us ship v1.
+
+Anywhere a doc says *Project Steward*, read *the Founding Open-Source Curator — Glacis Technologies*. Anywhere a doc names a personal seat for the v1 window, that is the Launch Advisor.
+

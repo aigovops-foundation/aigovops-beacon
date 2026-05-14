@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>draft-v.2-glacias — Glacis as Founding Open-Source Curator · AIGovOps Beacon</title>
+  <meta name="description" content="Beacon v0.2: welcoming Glacis Technologies as our Founding Open-Source Curator and Joe Braidwood as Launch Advisor. A public, in-progress draft of the open-source approach." />
+  <meta name="theme-color" content="#01696f" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="draft-v.2-glacias — Glacis as Founding Open-Source Curator" />
+  <meta property="og:description" content="Handing the pen to Glacis. Joe Braidwood joins as Launch Advisor. The v0.2 changes that make Beacon a steward-led, OVERT-aligned open project." />
+  <meta property="og:image" content="./assets/beacon-medallion.jpg" />
+  <meta property="og:type" content="article" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./css/site.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+
+  <style>
+    /* page-local styles, kept tiny — reuse site tokens */
+    .draft-page { background: var(--paper); color: var(--ink); }
+    .draft-page .shell { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+
+    .draft-hero {
+      padding: 4rem 0 2.5rem;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .draft-hero .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: var(--text-sm);
+      color: var(--hydra-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 1rem;
+    }
+    .draft-hero h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 1.3rem + 2.8vw, 3.2rem);
+      line-height: 1.1;
+      margin: 0 0 1.1rem;
+      color: var(--ink);
+    }
+    .draft-hero .lede {
+      font-size: var(--text-lg);
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 60ch;
+    }
+    .draft-hero .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-top: 1.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: var(--text-xs);
+      color: var(--ink-faint);
+    }
+    .draft-hero .meta-row .meta-pill {
+      background: var(--hydra-teal-soft);
+      color: var(--hydra-teal);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(1,105,111,.25);
+    }
+
+    .section { padding: 2.75rem 0; border-bottom: 1px solid var(--border-soft); }
+    .section h2 {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 1rem;
+      color: var(--ink);
+    }
+    .section h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin: 1.4rem 0 0.4rem;
+      color: var(--ink);
+    }
+    .section p, .section li {
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .section ul { padding-left: 1.2rem; }
+    .section a { color: var(--hydra-teal); }
+    .section a:hover { color: var(--hydra-teal-hover); }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .role-card {
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .role-card .role-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--hydra-teal);
+    }
+    .role-card h3 {
+      margin: 0;
+      font-size: var(--text-lg);
+      color: var(--ink);
+    }
+    .role-card .role-who {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .role-card .role-blurb {
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .role-card a { font-size: var(--text-sm); }
+
+    .change-list { list-style: none; padding: 0; margin: 0; }
+    .change-list > li {
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed var(--border-soft);
+    }
+    .change-list > li:last-child { border-bottom: 0; }
+    .change-list .term {
+      font-family: 'DM Mono', monospace;
+      font-size: var(--text-sm);
+      color: var(--hydra-teal);
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+    .change-list .arrow { color: var(--ink-faint); }
+    .change-list .replacement {
+      font-family: 'DM Mono', monospace;
+      font-size: var(--text-sm);
+      color: var(--ink);
+    }
+    .change-list .note {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .link-row a {
+      display: inline-block;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--paper-card);
+      color: var(--hydra-teal);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: 500;
+    }
+    .link-row a:hover { background: var(--hydra-teal-soft); }
+
+    .sign-off {
+      padding: 2.5rem 0 4rem;
+      color: var(--ink-soft);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+    }
+    .sign-off .by {
+      font-family: 'DM Mono', monospace;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: var(--text-xs);
+      margin-bottom: 0.5rem;
+    }
+    .principle {
+      font-family: 'Inter', sans-serif;
+      font-style: italic;
+      font-size: var(--text-lg);
+      color: var(--hydra-teal);
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--hydra-teal);
+      background: var(--hydra-teal-soft);
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0 0;
+    }
+  </style>
+</head>
+
+<body class="draft-page">
+
+  <!-- ============ TOP BANNER ============ -->
+  <div class="draft-banner" role="status" style="background:#0c4e54;color:#f7f6f2;font:500 0.9rem/1.4 Inter,sans-serif;padding:0.6rem 1rem;text-align:center;border-bottom:1px solid #01696f;">
+    <strong style="letter-spacing:0.04em;text-transform:uppercase;color:#9bd6db;">draft-v.2-glacias</strong>
+    &nbsp;·&nbsp; Public draft. Not merged to main. Comments welcome.
+    &nbsp;<a href="./index.html" style="color:#fff;text-decoration:underline;">← Back to Beacon</a>
+  </div>
+
+  <!-- ============ STICKY HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="shell" style="display:flex;align-items:center;justify-content:space-between;max-width:1100px;">
+      <a href="./index.html" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">AIGovOps Foundation</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="./index.html" class="btn-ghost btn-sm desktop-only">Beacon home</a>
+        <a href="https://github.com/bobrapp/aigovops-beacon/pull/2" target="_blank" rel="noopener" class="btn-primary btn-sm">See PR #2 ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="draft-hero">
+      <div class="shell">
+        <div class="eyebrow">draft · v0.2 · Glacis-as-steward</div>
+        <h1>Handing the pen to Glacis.</h1>
+        <p class="lede">
+          Beacon began as a small, opinionated reference implementation. To grow into a credible
+          open-source standard for verifiable AI governance, it needs a steward who lives this work
+          every day. So we&rsquo;re welcoming <strong>Glacis Technologies</strong> as our
+          <strong>Founding Open-Source Curator</strong>, and <strong>Joe Braidwood</strong> as our
+          <strong>Launch Advisor</strong> for the v1 release window.
+        </p>
+        <div class="meta-row">
+          <span class="meta-pill">draft-v.2-glacias</span>
+          <span>Authors: Bob Rapp &amp; Ken Johnston, AIGovOps Foundation</span>
+          <span>Status: public draft on branch <code style="font-family:inherit">v0.2-Glacis-as-steward-of-the-open-source-approach</code></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THE THREE ROLES ============ -->
+    <section class="section">
+      <div class="shell">
+        <h2>The three roles, in one frame</h2>
+        <p>
+          Beacon is the reference implementation. <a href="https://overt.global/" target="_blank" rel="noopener">OVERT</a>
+          is the standard it aligns with. From v0.2 onward, the people and companies who carry that work are:
+        </p>
+        <div class="role-grid">
+
+          <div class="role-card">
+            <div class="role-tag">Standard</div>
+            <h3>OVERT</h3>
+            <div class="role-who">Authored by Glacis Technologies</div>
+            <div class="role-blurb">
+              The OVERT Standard &amp; Implementation Profile Reference. Beacon registers a public
+              implementation profile and runs against it.
+            </div>
+            <a href="https://overt.global/" target="_blank" rel="noopener">overt.global ↗</a>
+          </div>
+
+          <div class="role-card">
+            <div class="role-tag">Project Steward</div>
+            <h3>Founding Open-Source Curator</h3>
+            <div class="role-who">Glacis Technologies</div>
+            <div class="role-blurb">
+              Glacis holds the pen on Beacon&rsquo;s technical direction, profile registration, and the
+              Review Circle. Their company role is Founding Open-Source Curator; the structural seat
+              they fill is Project Steward.
+            </div>
+            <a href="https://glacis.io/" target="_blank" rel="noopener">glacis.io ↗</a>
+          </div>
+
+          <div class="role-card">
+            <div class="role-tag">Launch Advisor</div>
+            <h3>Joe Braidwood</h3>
+            <div class="role-who">CEO, Glacis · OVERT author</div>
+            <div class="role-blurb">
+              Joe joins personally as Launch Advisor through the Beacon v1 release window — helping us
+              ship a credible first version, then transitioning to the steady-state Review Circle.
+            </div>
+            <a href="https://www.linkedin.com/in/joebraidwood/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY THIS CHANGE ============ -->
+    <section class="section">
+      <div class="shell">
+        <h2>Why this change</h2>
+        <p>
+          Beacon was always meant to be a public reference, not a vendor product. As v1 approaches, two
+          things became clear:
+        </p>
+        <ul>
+          <li>The strongest implementations of OVERT come from the team that authored OVERT. It is right
+            that the project stewardship sits with them.</li>
+          <li>Beacon&rsquo;s contributors and integrators need a single, named editorial home for technical
+            decisions — not a committee of strangers.</li>
+        </ul>
+        <p>
+          Naming a Founding Open-Source Curator gives Beacon a clear voice. Naming a Launch Advisor gives
+          v1 a clear shepherd. Both are public, both are accountable, both work in the open.
+        </p>
+
+        <p class="principle">
+          If a sentence sounds like it would survive in a contract, it does not belong in this repo.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT v0.2 CHANGES ============ -->
+    <section class="section">
+      <div class="shell">
+        <h2>What v0.2 changes in the repo</h2>
+        <p>
+          The full diff lives in <a href="https://github.com/bobrapp/aigovops-beacon/pull/2" target="_blank" rel="noopener">PR #2</a>
+          and is documented in <code>CHANGES-v0.2.md</code>. The shape of it:
+        </p>
+        <ul class="change-list">
+          <li>
+            <span class="term">Steward Partner</span>
+            <span class="arrow">→</span>
+            <span class="replacement">Project Steward</span>
+            <span class="note">A structural role. Currently filled by Glacis Technologies, our Founding Open-Source Curator.</span>
+          </li>
+          <li>
+            <span class="term">Technical Review Committee (TRC)</span>
+            <span class="arrow">→</span>
+            <span class="replacement">Review Circle</span>
+            <span class="note">A lighter, public review group convened by the Project Steward. No board, no charter, no hierarchy implied.</span>
+          </li>
+          <li>
+            <span class="term">Governing Board</span>
+            <span class="arrow">→</span>
+            <span class="replacement">(removed from this repo)</span>
+            <span class="note">Foundation-level governance lives at AIGovOps Foundation, off-repo. The repo describes the project, not the foundation.</span>
+          </li>
+          <li>
+            <span class="term">501(c)(6) language</span>
+            <span class="arrow">→</span>
+            <span class="replacement">(removed from this repo)</span>
+            <span class="note">Legal-entity framing belongs in foundation documents, not in an Apache-2.0 software repo.</span>
+          </li>
+          <li>
+            <span class="term">+ new role</span>
+            <span class="arrow">→</span>
+            <span class="replacement">Launch Advisor — Joe Braidwood</span>
+            <span class="note">Personal advisor seat, scoped to the Beacon v1 release window.</span>
+          </li>
+          <li>
+            <span class="term">+ new docs</span>
+            <span class="arrow">→</span>
+            <span class="replacement">JOIN.md · MEETINGS.md · ROADMAP.md · CHANGES-v0.2.md · two ADRs</span>
+            <span class="note">How to participate, when we meet, where we&rsquo;re going, and how we got here.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OPEN QUESTIONS FOR JOE ============ -->
+    <section class="section">
+      <div class="shell">
+        <h2>Open questions we&rsquo;re asking Joe</h2>
+        <p>This page is also where we surface what we&rsquo;d like Joe&rsquo;s help on:</p>
+        <ul>
+          <li>How should the Foundation engage with other companies in the OVERT space without
+            implying preference or exclusivity?</li>
+          <li>What does &ldquo;helpful to Glacis and others&rdquo; look like in practice — joint
+            workshops, shared reference data, cross-linked profiles?</li>
+          <li>Which parts of Beacon do you, as OVERT author, most want to see hardened first?</li>
+          <li>What&rsquo;s the cleanest signal that Beacon&rsquo;s profile registration is in good
+            standing with OVERT — and where should it live publicly?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ READ MORE ============ -->
+    <section class="section">
+      <div class="shell">
+        <h2>Read more</h2>
+        <div class="link-row">
+          <a href="https://github.com/bobrapp/aigovops-beacon/pull/2" target="_blank" rel="noopener">PR #2 — v0.2 changes ↗</a>
+          <a href="https://github.com/bobrapp/aigovops-beacon/compare/main...v0.2-Glacis-as-steward-of-the-open-source-approach" target="_blank" rel="noopener">Full diff ↗</a>
+          <a href="https://github.com/bobrapp/aigovops-beacon/blob/v0.2-Glacis-as-steward-of-the-open-source-approach/CHANGES-v0.2.md" target="_blank" rel="noopener">CHANGES-v0.2.md ↗</a>
+          <a href="https://github.com/bobrapp/aigovops-beacon/blob/v0.2-Glacis-as-steward-of-the-open-source-approach/STEWARD.md" target="_blank" rel="noopener">STEWARD.md ↗</a>
+          <a href="https://github.com/bobrapp/aigovops-beacon/blob/v0.2-Glacis-as-steward-of-the-open-source-approach/docs/decisions/0001-overt-alignment.md" target="_blank" rel="noopener">ADR-0001: OVERT alignment ↗</a>
+          <a href="https://github.com/bobrapp/aigovops-beacon/blob/v0.2-Glacis-as-steward-of-the-open-source-approach/docs/decisions/0002-steward-led-governance.md" target="_blank" rel="noopener">ADR-0002: Steward-led governance ↗</a>
+          <a href="./PROFILE_REGISTRATION.md">Beacon&rsquo;s OVERT profile (AAL-1)</a>
+          <a href="./index.html">Beacon home</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SIGN-OFF ============ -->
+    <section class="sign-off">
+      <div class="shell">
+        <div class="by">Signed off by</div>
+        <p>
+          <strong>Bob Rapp</strong> — Co-founder, AIGovOps Foundation · Principal AI Architect · Ellensburg, WA<br/>
+          <strong>Ken Johnston</strong> — Co-founder, AIGovOps Foundation · Seattle, WA
+        </p>
+        <p style="margin-top:1.25rem;">
+          This draft lives on branch
+          <code>v0.2-Glacis-as-steward-of-the-open-source-approach</code>
+          and is intentionally <em>not</em> merged to <code>main</code>. Comments welcome on
+          <a href="https://github.com/bobrapp/aigovops-beacon/pull/2" target="_blank" rel="noopener">PR #2</a>.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
