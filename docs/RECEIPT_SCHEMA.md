@@ -1,8 +1,12 @@
-# Receipt schema — the AIGovOps non-negotiable
+# Receipt schema — OVERT envelope, Beacon profile
 
-A Beacon receipt is the atomic unit of evidence. Every observed interaction produces exactly one. Every governance decision produces exactly one. If something happened and there's no receipt, it didn't happen as far as the audit is concerned.
+A Beacon receipt is the wire format for an **OVERT attestation envelope** as specified in [OVERT 1.0](https://overt.is/) (Glacis Technologies, 25 March 2026). It is the atomic unit of evidence: every observed interaction produces exactly one; every governance decision produces exactly one. If something happened and there is no receipt, it did not happen as far as the audit is concerned.
+
+All required envelope fields below are **normative under OVERT**. Fields tagged `[profile]` are extensions of the `aigovops-beacon.v1` profile and are not required for OVERT conformance — see [`PROFILE_REGISTRATION.md`](PROFILE_REGISTRATION.md).
 
 This document is wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay).
+
+> **Authority of this document:** advisory under the Foundation; the [OVERT 1.0 specification](https://overt.is/) is normative. Where this document diverges from OVERT, OVERT wins and the divergence is a bug here. Steward review (Glacis Technologies) is pending; see [`../STEWARD.md`](../STEWARD.md).
 
 ---
 

@@ -1,0 +1,139 @@
+# Beacon → OVERT 1.0 crosswalk
+#
+# Maps every Beacon control surface to the six normative governance
+# domains defined in OVERT 1.0 (Glacis Technologies, 25 March 2026).
+#
+# Standard:        https://overt.is/
+# IPR policy:      https://overt.is/ipr-policy
+# Profile:         aigovops-beacon.v1 (registration in progress)
+# Authority of this file: ADVISORY — OVERT itself is normative.
+#                  This crosswalk is subject to Steward Partner review
+#                  (see ../STEWARD.md). Discrepancies between this file
+#                  and the OVERT specification are bugs in this file.
+#
+# Steward sign-off: PENDING (Glacis Technologies, Inc)
+
+version: 0.1
+profile: aigovops-beacon.v1
+implements: OVERT 1.0
+steward: Glacis Technologies, Inc
+status: draft-awaiting-steward-review
+
+domains:
+
+  govern:
+    overt_requirement: >
+      Policy authorship, ownership, lifecycle, exception handling,
+      and accountability mappings for declared governance controls.
+    beacon_controls:
+      - id: checklist.published
+        file: docs/RECEIPT_SCHEMA.md
+        description: Auditor-published checklist instance becomes a signed receipt.
+      - id: exception.granted
+        file: docs/RECEIPT_SCHEMA.md
+        description: Human-approved exception with named approver, scope, and TTL.
+      - id: gate.human-flourishing.v1
+        file: policy/gate.human-flourishing.v1.yaml
+        description: Foundation's Human Flourishing policy gate (advisory layer).
+      - id: gate.production_readiness.v1
+        file: policy/gate.production_readiness.v1.yaml
+        description: Production readiness gate.
+
+  identify:
+    overt_requirement: >
+      Inventory of AI systems, models, versions, vendors, environments,
+      and data classifications under the attested scope.
+    beacon_controls:
+      - id: discovery.session
+        file: docs/STUDIO_FLOW.md
+        description: Passive DNS/HTTP scan, cloud account scans, CSV import.
+      - id: inventory.model.added
+        file: docs/RECEIPT_SCHEMA.md
+        description: One row per detected model with vendor/version/users/env.
+      - id: inventory.trust.changed
+        file: docs/RECEIPT_SCHEMA.md
+        description: Trust-tier promotion or demotion (T0→T3), approver required.
+
+  protect:
+    overt_requirement: >
+      Runtime controls that constrain what AI systems can do, including
+      tool-call governance and capability-based access.
+    beacon_controls:
+      - id: gate.evaluated
+        file: docs/RECEIPT_SCHEMA.md
+        description: One receipt per checklist control evaluated at runtime.
+      - id: gate.failed
+        file: docs/RECEIPT_SCHEMA.md
+        description: Control failure; downstream action recorded in next receipt.
+
+  attest:
+    overt_requirement: >
+      Cryptographic proof of execution. Receipts must be signed,
+      tamper-evident, and verifiable without exporting protected content.
+    beacon_controls:
+      - id: signature.ed25519
+        file: docs/RECEIPT_SCHEMA.md
+        description: Ed25519 signature over JCS-canonicalized payload (RFC 8785).
+      - id: hash.sha256
+        file: docs/RECEIPT_SCHEMA.md
+        description: SHA-256 of prompt and result always present; full text optional.
+      - id: anchor.merkle
+        file: docs/ARCHITECTURE.md
+        description: Hourly Merkle root anchored to append-only log.
+      - id: bundle.signed
+        file: docs/RECEIPT_SCHEMA.md
+        description: Signed evidence bundle for handoff to auditor.
+
+  measure:
+    overt_requirement: >
+      Statistical safety measurement with confidence intervals,
+      sample sizes, and auditor-reproducible methodologies.
+    beacon_controls:
+      - id: inference.observed
+        file: docs/RECEIPT_SCHEMA.md
+        description: Per-call observation with latency, token counts, hashes.
+      - id: scoring.sample_report
+        file: scoring/sample_report.md
+        description: Worked example of a scoring report with confidence framing.
+      # GAP: Beacon v1 does not yet emit auditor-reproducible CIs by default.
+      # Tracked for v2; see issue tracker. Steward review will surface this.
+
+  respond:
+    overt_requirement: >
+      Incident detection, behavioral drift detection, response actions,
+      and post-incident attestation.
+    beacon_controls:
+      - id: key.rotated
+        file: docs/RECEIPT_SCHEMA.md
+        description: Signing-key rotation event with old/new fingerprints.
+      # GAP: Beacon v1 does not yet implement behavioral drift detection
+      # nor delegation-chain attestation as defined in OVERT §Agentic AI
+      # Controls. Tracked for v2.
+
+# ----------------------------------------------------------------------
+# External framework crosswalks (downstream of, and consistent with,
+# OVERT's normative crosswalks)
+# ----------------------------------------------------------------------
+external_crosswalks:
+  nist_ai_rmf:        checklists/nist-ai-rmf.v1.yaml
+  eu_ai_act_art13:    checklists/eu-ai-act-art13.v1.yaml
+  iso_iec_42001:      checklists/iso-iec-42001.v1.yaml
+  hipaa_for_ai:       checklists/hipaa-for-ai.v1.yaml
+  human_flourishing:  policy/gate.human-flourishing.v1.yaml
+
+# ----------------------------------------------------------------------
+# Known gaps vs OVERT 1.0 normative requirements
+# ----------------------------------------------------------------------
+known_gaps:
+  - domain: measure
+    requirement: Auditor-reproducible confidence intervals by default
+    status: tracked-for-v2
+  - domain: respond
+    requirement: Behavioral drift detection per OVERT §Agentic AI Controls
+    status: tracked-for-v2
+  - domain: respond
+    requirement: Delegation-chain attestation
+    status: tracked-for-v2
+  - domain: attest
+    requirement: Cross-boundary attestation protocol negotiation
+    status: scoping

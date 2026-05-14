@@ -6,16 +6,34 @@
 
 <p align="center">
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
-  An <a href="https://www.aigovopsfoundation.org/">AiGovOps Foundation</a> project.
+  An <a href="https://www.aigovopsfoundation.org/">AIGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
+  Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.
 </p>
 
 <p align="center">
-  <img alt="Status"     src="https://img.shields.io/badge/status-public%20preview-1f3a5f?style=flat-square">
-  <img alt="License"    src="https://img.shields.io/badge/license-Apache--2.0-1f3a5f?style=flat-square">
-  <img alt="Signing"    src="https://img.shields.io/badge/signing-Ed25519-01696F?style=flat-square">
-  <img alt="Audit log"  src="https://img.shields.io/badge/audit-append--only-01696F?style=flat-square">
-  <img alt="Trust tier" src="https://img.shields.io/badge/trust%20tier-T2-01696F?style=flat-square">
+  <img alt="Status"      src="https://img.shields.io/badge/status-public%20preview-1f3a5f?style=flat-square">
+  <img alt="License"     src="https://img.shields.io/badge/license-Apache--2.0-1f3a5f?style=flat-square">
+  <img alt="Implements"  src="https://img.shields.io/badge/implements-OVERT%201.0-01696F?style=flat-square">
+  <img alt="Profile"     src="https://img.shields.io/badge/profile-aigovops--beacon.v1%20(in%20progress)-01696F?style=flat-square">
+  <img alt="Signing"     src="https://img.shields.io/badge/signing-Ed25519-01696F?style=flat-square">
+  <img alt="Audit log"   src="https://img.shields.io/badge/audit-append--only-01696F?style=flat-square">
 </p>
+
+---
+
+## Standards alignment
+
+Beacon implements the [**OVERT 1.0 open standard**](https://overt.is/) for observable verification evidence at the AI runtime boundary, stewarded by [Glacis Technologies, Inc](https://www.glacis.io/). Beacon is being registered as an OVERT Protocol Profile under the royalty-free patent covenant published at [overt.is/ipr-policy](https://overt.is/ipr-policy).
+
+| | |
+|---|---|
+| **Standard** | OVERT 1.0 (Glacis Technologies, 25 March 2026) |
+| **Profile** | `aigovops-beacon.v1` — registration in progress, see [`docs/PROFILE_REGISTRATION.md`](docs/PROFILE_REGISTRATION.md) |
+| **Target conformance** | AAL-1 (self-declared) at registration · AAL-2 with IAP on roadmap |
+| **Patent covenant** | Royalty-free under [overt.is/ipr-policy](https://overt.is/ipr-policy) |
+| **Crosswalk** | [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml) — Beacon controls → OVERT six domains |
+
+The AIGovOps Foundation does **not** issue standards. We implement, adopt, teach, and build community around them. See [`STANDARDS.md`](STANDARDS.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`STEWARD.md`](STEWARD.md).
 
 ---
 
