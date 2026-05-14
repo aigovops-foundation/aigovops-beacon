@@ -24,15 +24,14 @@ If you are looking for the normative source of truth on receipts, envelopes, att
 
 ## What "downstream of OVERT" means for this repo
 
-| Layer | Owner | Authority |
+| Layer | Who | What it is |
 |---|---|---|
-| **Standard** | Glacis Technologies (steward of OVERT) | Normative |
-| **Profile** (`aigovops-beacon.v1`) | AIGovOps Foundation (this repo) | Conformant implementation under OVERT IPR policy |
-| **Sector packs / training / community materials** | AIGovOps Foundation | Advisory, non-normative |
-| **Foundation governance** | AIGovOps Foundation 501(c)(6) Board | Business governance only |
-| **Technical quality bar for Foundation OSS projects** | OVERT-aligned, set by the Foundation Steward Partner | Technical governance |
+| **The standard** | Glacis Technologies (steward of OVERT) | The source of truth |
+| **The profile** (`aigovops-beacon.v1`) | AIGovOps Foundation (this repo) | One conformant implementation under OVERT's published IPR policy |
+| **Sector packs, training, community materials** | AIGovOps Foundation | Helpful, but advisory — not the standard |
+| **The technical bar for Foundation projects** | The Project Steward (Glacis, founding) | Set in the open, reviewed in the open |
 
-See [`GOVERNANCE.md`](GOVERNANCE.md) for the business-vs-technical split, and [`STEWARD.md`](STEWARD.md) for the Steward Partner role.
+See [`GOVERNANCE.md`](GOVERNANCE.md) for how we make decisions, and [`STEWARD.md`](STEWARD.md) for the Project Steward role.
 
 ## How to register a new Foundation OSS project
 
