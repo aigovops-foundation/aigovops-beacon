@@ -77,6 +77,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .bopen{display:inline-flex;align-items:center;gap:4px;margin-top:9px;background:var(--accent);color:#fff;text-decoration:none;font-size:10px;font-weight:700;padding:4px 10px;border-radius:5px;transition:opacity .15s}
 .bopen:hover{opacity:.85}
 .qfoot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.qfoundation{border-top:1px solid var(--border);padding:12px 22px;display:flex;flex-direction:column;align-items:center;gap:5px;background:rgba(0,180,180,.03)}
+.qfoundation-line1{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;text-align:center}
+.qfoundation-line2{font-size:10px;color:var(--muted);text-align:center;line-height:1.5}
+.qfoundation-line2 a{color:var(--accent);text-decoration:none;font-weight:600}
+.qfoundation-line2 a:hover{text-decoration:underline}
 .btn-next{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:9px 24px;border-radius:var(--rs);font-size:13px;font-weight:700;cursor:pointer;display:none;align-items:center;gap:7px;transition:opacity .2s}
 .btn-next:hover{opacity:.9}.btn-next.show{display:flex}
 .qcnt{font-size:12px;color:var(--muted)}
@@ -232,6 +237,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
             Next Question
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
+        </div>
+        <div class="qfoundation">
+          <div class="qfoundation-line1">Created by the AiGovOps Foundation &middot; Open Source</div>
+          <div class="qfoundation-line2">Ready to move from PDF to practitioner? &nbsp;<a href="mailto:Ken.Johnston@aigovops.community">Ken.Johnston@aigovops.community</a> &nbsp;&middot;&nbsp; <a href="mailto:Bob.Rapp@aigovops.community">Bob.Rapp@aigovops.community</a></div>
         </div>
       </div>
     </div>
