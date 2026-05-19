@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reception spot — AIGovOps Beacon</title>
+  <meta name="description" content="The 45-second spot we showed at the AIGovOps Foundation reception. We brought a candle instead of catering — because a volunteer org shipping Policy-as-Code shouldn't ship the smell of food." />
+  <meta property="og:title" content="AIGovOps Foundation — reception spot" />
+  <meta property="og:description" content="We almost did the Costco hot dog thing. We brought a candle instead." />
+  <meta property="og:image" content="../assets/beacon-medallion.jpg" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/site.css" />
+  <style>
+    /* page-scoped overrides — match Beacon palette */
+    .video-hero {
+      padding: 4rem 0 2rem;
+      text-align: center;
+      background:
+        radial-gradient(60% 60% at 50% 0%, rgba(1,105,111,0.06), transparent 70%),
+        var(--paper);
+    }
+    .video-hero .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--hydra-teal);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .video-hero .kicker .dot {
+      width: 0.5rem; height: 0.5rem; border-radius: 50%;
+      background: var(--signal-green);
+      box-shadow: 0 0 0 4px rgba(46,204,113,0.18);
+    }
+    .video-hero h1 {
+      margin-top: 1rem;
+      font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 22ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.1;
+    }
+    .video-hero .lede {
+      max-width: 56ch;
+      margin: 1rem auto 0;
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+    }
+
+    .vstage {
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+      background: var(--paper);
+    }
+    .vstage-frame {
+      width: min(420px, 92vw);
+      aspect-ratio: 9/16;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #1B2A4A;
+      box-shadow:
+        0 1px 0 rgba(14,27,28,0.08),
+        0 24px 60px -18px rgba(14,27,28,0.4),
+        0 0 0 1px rgba(1,105,111,0.12);
+    }
+    .vstage-frame video { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+    .beats {
+      background: var(--paper-soft);
+      padding: 4rem 0;
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .beats h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.2rem);
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 2.5rem;
+      letter-spacing: -0.01em;
+    }
+    .beat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .beat {
+      background: var(--paper-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      position: relative;
+    }
+    .beat .t {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--hydra-teal);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .beat h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.4rem;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .beat p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .asks {
+      padding: 4rem 0;
+      background: var(--paper);
+    }
+    .asks h2 {
+      text-align: center;
+      font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem);
+      font-weight: 800;
+      color: var(--ink);
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .asks .lede {
+      text-align: center;
+      max-width: 56ch;
+      margin: 0 auto 2.5rem;
+      color: var(--ink-soft);
+    }
+    .ask-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .ask {
+      background: var(--paper-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .ask .pill {
+      align-self: flex-start;
+      background: rgba(1,105,111,0.1);
+      color: var(--hydra-teal);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+    }
+    .ask h3 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .ask p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+    .ask a.email {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--hydra-teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(1,105,111,0.3);
+      padding-bottom: 1px;
+      word-break: break-all;
+    }
+    .ask a.email:hover {
+      color: var(--hydra-teal-hover);
+      border-bottom-color: var(--hydra-teal-hover);
+    }
+    .ask .qr-block {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .ask .qr-block img {
+      width: 120px; height: 120px;
+      border-radius: 8px;
+      background: white;
+      padding: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .ask .qr-block .qr-meta {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+    }
+    .ask .btn-primary {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .tag {
+      text-align: center;
+      padding: 3rem 1rem 4rem;
+      background: var(--paper);
+    }
+    .tag .wordmark {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
+    }
+    .tag .motto {
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: var(--hydra-teal);
+      font-size: 1.1rem;
+    }
+    .tag .download {
+      margin-top: 1.5rem;
+      display: inline-flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (matches main Beacon site) -->
+  <header class="site-header">
+    <div class="shell">
+      <a href="../index.html" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"></circle>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"></circle>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">AIGovOps Foundation</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="../index.html#failures" class="btn-ghost btn-sm desktop-only">Failures</a>
+        <a href="../index.html#framework" class="btn-ghost btn-sm desktop-only">Frameworks</a>
+        <a href="../index.html#run" class="btn-ghost btn-sm desktop-only">Run it</a>
+        <a href="../downloads/aigovops-beacon-starter.zip" class="btn-primary btn-sm" download>Get the zip</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="video-hero">
+      <div class="shell">
+        <span class="kicker"><span class="dot" aria-hidden="true"></span> Reception spot · 45 seconds · vertical</span>
+        <h1>We brought a candle.</h1>
+        <p class="lede">
+          The 45-second spot we showed at the AIGovOps Foundation reception. We almost did the Costco hot dog thing — $1.50, a buck fifty, the candy aisle was tempting. We decided a volunteer org shipping Policy-as-Code shouldn't ship the smell of food. So we brought a candle.
+        </p>
+      </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="vstage">
+      <div class="vstage-frame">
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          poster="aigovops-event-spot-poster.jpg"
+          aria-label="AIGovOps Foundation reception spot — 45 seconds">
+          <source src="aigovops-event-spot.mp4" type="video/mp4" />
+          Your browser doesn't support embedded video.
+          <a href="aigovops-event-spot.mp4" download>Download the MP4</a>.
+        </video>
+      </div>
+    </section>
+
+    <!-- BEATS -->
+    <section class="beats">
+      <div class="shell">
+        <h2>Eight beats in 45 seconds.</h2>
+        <div class="beat-grid">
+          <article class="beat">
+            <span class="t">0.0 – 4.2s</span>
+            <h3>Cold open</h3>
+            <p>The AIGovOps Foundation throws a reception tonight. An open-source volunteer community.</p>
+          </article>
+          <article class="beat">
+            <span class="t">4.2 – 6.7s</span>
+            <h3>Costco</h3>
+            <p>$1.50 hot dog stickered as VOLUNTEERS PASS. We almost did it.</p>
+          </article>
+          <article class="beat">
+            <span class="t">6.7 – 14.7s</span>
+            <h3>The YES mantra</h3>
+            <p>YES — Ship AI. YES — Steady AI. YES — Recover AI. We marry policy and code.</p>
+          </article>
+          <article class="beat">
+            <span class="t">14.7 – 18.7s</span>
+            <h3>The candle</h3>
+            <p>Ship the smell of Policy-as-Code, not the smell of food.</p>
+          </article>
+          <article class="beat">
+            <span class="t">18.7 – 22.5s</span>
+            <h3>Beacon</h3>
+            <p>Our open-source signal fire for Policy-as-Code. Let the Tokens Flow.</p>
+          </article>
+          <article class="beat">
+            <span class="t">22.5 – 25.5s</span>
+            <h3>Volunteer with us</h3>
+            <p>Help us light it. Email Ken or Bob to plug in.</p>
+          </article>
+          <article class="beat">
+            <span class="t">25.5 – 43.0s</span>
+            <h3>Help fund the Foundation</h3>
+            <p>Use the HyperAgent referral. We run on it every day. Scan or click.</p>
+          </article>
+          <article class="beat">
+            <span class="t">43 – 45s</span>
+            <h3>Sign-off</h3>
+            <p>AIGovOps Foundation. Let the Tokens Flow.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASKS -->
+    <section class="asks">
+      <div class="shell">
+        <h2>Two ways to help us light it.</h2>
+        <p class="lede">The Foundation runs on volunteers and on HyperAgent. Pick either, pick both.</p>
+
+        <div class="ask-grid">
+          <article class="ask">
+            <span class="pill">Volunteer</span>
+            <h3>Build the community.</h3>
+            <p>Practitioners, policy folks, engineers, designers, students — we have room. Drop one of us a line and we'll find a spot for you.</p>
+            <a href="mailto:Ken.Johnston@aigovops.community?subject=Volunteer%20with%20AIGovOps%20Foundation" class="email">Ken.Johnston@aigovops.community</a>
+            <a href="mailto:Bob.Rapp@aigovops.community?subject=Volunteer%20with%20AIGovOps%20Foundation" class="email">Bob.Rapp@aigovops.community</a>
+          </article>
+
+          <article class="ask">
+            <span class="pill">Fund</span>
+            <h3>Help fund the Foundation.</h3>
+            <p>We use HyperAgent every day to build this Foundation in public. Sign up with our referral and the Foundation gets a credit — costs you nothing extra.</p>
+            <div class="qr-block">
+              <img src="aigovops-event-spot-qr.png" alt="QR code linking to hyperagent.com/refer/Y6HL5A7V" />
+              <div class="qr-meta">
+                <div><strong>hyperagent.com/refer/Y6HL5A7V</strong></div>
+                <div>Scan or click below.</div>
+              </div>
+            </div>
+            <a href="https://hyperagent.com/refer/Y6HL5A7V" class="btn-primary btn-sm" target="_blank" rel="noopener">Use our referral &rarr;</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAG -->
+    <section class="tag">
+      <div class="wordmark">AIGOVOPS FOUNDATION</div>
+      <div class="motto">"Let the Tokens Flow."</div>
+      <div class="download">
+        <a href="aigovops-event-spot.mp4" class="btn-ghost btn-sm" download>Download the MP4 ↓</a>
+        <a href="../index.html" class="btn-ghost btn-sm">Back to Beacon ↑</a>
+        <a href="https://www.aigovopsfoundation.org/" class="btn-ghost btn-sm" target="_blank" rel="noopener">Join the Foundation ↗</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
