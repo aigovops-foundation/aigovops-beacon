@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Worksheet — Level 100 · Framework Lab</title>
+  <meta name="description" content="Printable worksheet for Level 100 of the AIGovOps Beacon Framework Lab. Five curated AI failure cases plus a blank template." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/site.css" />
+  <link rel="stylesheet" href="../css/lab.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3E100%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body class="worksheet-body">
+
+  <header class="site-header no-print">
+    <div class="shell">
+      <a href="../" class="brand"><span class="brand-name">AIGovOps Beacon <span class="foundation">Worksheet 100</span></span></a>
+      <nav class="nav-actions">
+        <a href="../lab.html" class="btn-ghost btn-sm">Back to Lab</a>
+        <a href="../downloads/lab-worksheet-100.pdf" class="btn-ghost btn-sm" download>PDF version</a>
+        <button class="btn-primary btn-sm" type="button" onclick="window.print();">Print this page</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="worksheet-page">
+
+    <h1>Framework Lab — Level 100 worksheet</h1>
+    <div class="worksheet-meta">
+      <span>AIGovOps Beacon · 30-minute auditor flow</span>
+      <span>Name / date: ________________________________</span>
+    </div>
+
+    <p style="margin-bottom: var(--space-8);">
+      For each case below, fill in: who was harmed, what failed, which framework
+      applies, which Beacon artifact would have mattered most, and which YES-act
+      (Ship / Steady / Recover) it falls under. Bring your completed worksheet
+      to the review session.
+    </p>
+
+    <article class="worksheet-row">
+      <h3>Case 1 — Boeing 737 MAX MCAS software fatal crashes (2018-2019)</h3>
+      <p style="font-size:var(--text-sm); color:var(--ink-soft);">Boeing concealed a safety-critical MCAS design change from regulators and pilots; the certification process failed to catch that the system could repeatedly command nose-down trim from erroneous sensor data.</p>
+      <dl class="worksheet-fields">
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <article class="worksheet-row">
+      <h3>Case 2 — Knight Capital deployment failure (2012)</h3>
+      <p style="font-size:var(--text-sm); color:var(--ink-soft);">A deployment failed to push updated code to one of eight servers. The stale code interpreted new order-routing flags as legacy commands, generating runaway orders that bankrupted the firm in less than an hour.</p>
+      <dl class="worksheet-fields">
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <article class="worksheet-row">
+      <h3>Case 3 — Detroit wrongful arrest via facial recognition (2020)</h3>
+      <p style="font-size:var(--text-sm); color:var(--ink-soft);">A face-recognition match produced a single candidate; police arrested Robert Williams based on that match alone. No human review, no documented thresholding, no audit trail of the model version or training data.</p>
+      <dl class="worksheet-fields">
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <article class="worksheet-row">
+      <h3>Case 4 — Apple Card credit limit bias allegations (2019)</h3>
+      <p style="font-size:var(--text-sm); color:var(--ink-soft);">Couples with similar finances saw very different credit limits, including in the same household. Goldman/Apple could not explain the decisions or demonstrate disparate-impact testing.</p>
+      <dl class="worksheet-fields">
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <article class="worksheet-row">
+      <h3>Case 5 — Robodebt automated welfare debt scheme (Australia, 2016-2020)</h3>
+      <p style="font-size:var(--text-sm); color:var(--ink-soft);">An automated income-averaging algorithm was deployed against welfare recipients without legal authority, generating false debts at scale. Operational decisions were made by automation without documented review or recourse.</p>
+      <dl class="worksheet-fields">
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <article class="worksheet-row" style="border-style: dashed;">
+      <h3>Your case — fill in a real one from your organization</h3>
+      <dl class="worksheet-fields">
+        <dt>Incident / system</dt><dd></dd>
+        <dt>Year / date range</dt><dd></dd>
+        <dt>Who was harmed</dt><dd></dd>
+        <dt>What failed</dt><dd></dd>
+        <dt>Which framework(s) apply</dt><dd></dd>
+        <dt>Which Beacon artifact would have mattered most</dt><dd></dd>
+        <dt>YES-act</dt><dd>☐ Ship  ☐ Steady  ☐ Recover</dd>
+      </dl>
+    </article>
+
+    <p class="worksheet-meta" style="margin-top: var(--space-12); border-bottom: none; border-top: 1px solid var(--border); padding-top: var(--space-3);">
+      <span>Source: AIGovOps Beacon Auditor Lab Deck (30 slides)</span>
+      <span>aigovopsfoundation.org · Apache-2.0</span>
+    </p>
+  </main>
+
+</body>
+</html>

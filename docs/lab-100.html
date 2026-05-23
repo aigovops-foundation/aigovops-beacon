@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 100 — The 30-minute Beacon flow · Framework Lab</title>
+  <meta name="description" content="The 30-minute Beacon flow as taught in workshops: launch, discover, inspect a signed receipt, verify a bundle, map a failure to controls." />
+  <meta name="theme-color" content="#01696f" />
+
+  <meta property="og:title" content="Level 100 — The 30-minute Beacon flow" />
+  <meta property="og:description" content="Self-paced 30-minute curriculum for AI auditors. Includes in-browser Ed25519 sandbox." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/site.css" />
+  <link rel="stylesheet" href="./css/lab.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3E100%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body class="lesson-body" data-lab-level="100">
+
+  <header class="site-header">
+    <div class="shell">
+      <a href="./" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">Level 100 · Framework Lab</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="./" class="btn-ghost btn-sm desktop-only">Home</a>
+        <a href="./lab.html" class="btn-ghost btn-sm desktop-only" aria-current="page">Framework Lab</a>
+        <a href="./lab-200.html" class="btn-ghost btn-sm desktop-only">Level 200 →</a>
+        <a href="./howibuilt.html" class="btn-ghost btn-sm desktop-only">How I Built This</a>
+        <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ STICKY PROGRESS BAR ============ -->
+  <div class="lesson-progress">
+    <div class="shell">
+      <span class="kicker">Level 100</span>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <span class="progress-pct">0% complete</span>
+      <div class="progress-actions">
+        <button class="btn-ghost btn-sm" data-action="reset-progress" type="button">Reset</button>
+        <a href="./lab-200.html" class="btn-ghost btn-sm">Level 200 →</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="lesson-hero">
+      <div class="shell">
+        <span class="kicker">Workshop promise · 30 minutes</span>
+        <h1>Become a Beacon Framework Auditor.</h1>
+        <p class="lede">
+          <strong>Find every AI. Sign what matters. Hand the auditor a bundle.</strong>
+          In the next 30 minutes you will discover AI use, inspect signed
+          receipts, map a real failure to controls, and leave with a reusable
+          audit workflow.
+        </p>
+        <div class="lesson-outcomes">
+          <h2>By the end of this level you'll be able to:</h2>
+          <ol>
+            <li>Launch Beacon in browser or local workshop mode.</li>
+            <li>Identify what Beacon discovered and what belongs in scope.</li>
+            <li>Explain what a signed receipt proves — and what it does not.</li>
+            <li>Export and verify an auditor bundle.</li>
+            <li>Map one real-world AI failure to controls, frameworks, and missing evidence.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 1 — Why Beacon ============ -->
+    <section class="lesson-section" data-section-id="why-beacon" data-section-time="3 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 1 of 7</span>
+          <h2>Why Beacon exists.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Most AI governance today is "a PDF and a meeting." Beacon answers the
+          auditor's real question: <em>what AI models are running, who is using
+          them, what version is in use, what data is involved, and where is the
+          evidence?</em>
+        </p>
+        <p>Beacon does this through two front doors:</p>
+        <ul>
+          <li><strong>Beacon Studio</strong> — a five-step auditor-friendly workflow for non-engineers.</li>
+          <li><strong>Beacon Control Plane</strong> — raw event streams, exports, and policy-as-code outputs for power users.</li>
+        </ul>
+        <p>This level walks the Studio path. Level 200 takes the Control Plane.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2 — What ships ============ -->
+    <section class="lesson-section" data-section-id="what-ships" data-section-time="3 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 2 of 7</span>
+          <h2>What ships in the box.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">Beacon's five documented layers — each one is something an auditor can ask about and verify.</p>
+        <table class="ships-table">
+          <thead>
+            <tr><th>Layer</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="layer-name">Discovery</td>
+              <td>Detects AI usage through passive DNS/HTTP scan, proxy hooks, cloud account scans, CSV import, and an optional endpoint agent.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">Inventory</td>
+              <td>Turns detections into rows: vendor, model, version, occurrence count, users, first seen, last seen, environment, and evidence pointer.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">Transaction tracking</td>
+              <td>Creates Ed25519-signed receipts in append-only NDJSON. Prompt and result are stored or hashed. Hourly Merkle anchoring for tamper-evidence.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">Checklists</td>
+              <td>Packs for NIST AI RMF, EU AI Act Article 13, ISO/IEC 42001, HIPAA-for-AI, Human Flourishing — plus 18 more in the full registry.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">Policy as Code</td>
+              <td>Emits gate YAML, OPA/Rego, a Governance Decision Record, and a signed bundle. Builder-to-auditor bridge.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3 — The five-step Studio ============ -->
+    <section class="lesson-section" data-section-id="studio-five" data-section-time="6 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 3 of 7</span>
+          <h2>The five-step Studio.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Beacon Studio is the non-technical front door. Same evidence model as
+          the Control Plane — different wrapper. Tap each step to see the
+          facilitator prompts for both tech and policy audiences.
+        </p>
+
+        <div class="studio-steps">
+
+          <details class="studio-step" open>
+            <summary>
+              <span class="step-num">1</span>
+              <span>What network are we looking at?</span>
+              <span class="step-chevron">›</span>
+            </summary>
+            <div class="step-body">
+              <p>Paste a domain, upload a CSV, or connect a cloud account. Beacon then looks for AI models running there.</p>
+              <div class="step-prompts">
+                <dl>
+                  <dt>Tech team prompt</dt>
+                  <dd>Which discovery surface would you get approved first?</dd>
+                  <dt>Policy team prompt</dt>
+                  <dd>Which source would best satisfy an internal audit inventory request?</dd>
+                </dl>
+              </div>
+            </div>
+          </details>
+
+          <details class="studio-step">
+            <summary>
+              <span class="step-num">2</span>
+              <span>Beacon is looking — discovery and inventory.</span>
+              <span class="step-chevron">›</span>
+            </summary>
+            <div class="step-body">
+              <p>The inventory model includes vendor, model, version, occurrence count, users, first seen, last seen, environment, and evidence pointer. Each row is something the auditor can interrogate.</p>
+              <div class="step-prompts">
+                <p><strong>Lab action.</strong> Pick one discovered system and answer:</p>
+                <ul>
+                  <li>What is it?</li>
+                  <li>Who likely owns it?</li>
+                  <li>Why would an auditor care?</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <details class="studio-step">
+            <summary>
+              <span class="step-num">3</span>
+              <span>Pick what matters.</span>
+              <span class="step-chevron">›</span>
+            </summary>
+            <div class="step-body">
+              <p>Workshop mode lets you tap the rows in scope. Each row is explained in plain English, including examples like GPT-4o usage counts and team context.</p>
+              <div class="step-prompts">
+                <dl>
+                  <dt>Tech language</dt>
+                  <dd>Which row looks like technical debt — active without clear ownership?</dd>
+                  <dt>Policy language</dt>
+                  <dd>Which row likely affects regulated data, rights, safety, or human outcomes?</dd>
+                </dl>
+              </div>
+            </div>
+          </details>
+
+          <details class="studio-step">
+            <summary>
+              <span class="step-num">4</span>
+              <span>Pick your guardrails.</span>
+              <span class="step-chevron">›</span>
+            </summary>
+            <div class="step-body">
+              <p>Beacon includes checklist packs for NIST AI RMF, EU AI Act Article 13, ISO/IEC 42001, HIPAA-for-AI, and Human Flourishing. The default workshop set is NIST + Human Flourishing (with EU AI Act when discussing higher-risk scenarios).</p>
+              <div class="step-prompts">
+                <table style="width:100%; margin-top: var(--space-4); font-size: var(--text-sm);">
+                  <thead>
+                    <tr><th style="text-align:left">Framework</th><th style="text-align:left">Technical framing</th><th style="text-align:left">Policy framing</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>NIST AI RMF</strong></td>
+                      <td>Repeatable control and risk-management model you can operationalize.</td>
+                      <td>Structured way to show risk identification, governance, and treatment.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>ISO/IEC 42001</strong></td>
+                      <td>Management-system pattern for AI governance operations.</td>
+                      <td>Evidence that AI governance is systematic, not ad hoc.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>EU AI Act Article 13</strong></td>
+                      <td>Changes transparency and documentation requirements for higher-risk systems.</td>
+                      <td>Creates information duties that need inspectable evidence.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Human Flourishing</strong></td>
+                      <td>Keeps human acceptability visible in the control flow.</td>
+                      <td>Adds a human-impact test, not just a compliance test.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          <details class="studio-step">
+            <summary>
+              <span class="step-num">5</span>
+              <span>Here's your audit.</span>
+              <span class="step-chevron">›</span>
+            </summary>
+            <div class="step-body">
+              <p>The final screen is a traffic-light checklist, the receipts behind each green check, and a <strong>Make it Policy as Code</strong> button. The workshop ends with a concrete package of evidence and next-step policy artifacts — not with a static discussion.</p>
+              <div class="step-prompts">
+                <p><strong>Teaching line.</strong> Policies are promises. Controls are proof. The Make it Policy as Code button turns the promise into the proof.</p>
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4 — Receipts + Sandbox ============ -->
+    <section class="lesson-section" data-section-id="receipts" data-section-time="8 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 4 of 7</span>
+          <h2>What a signed receipt proves.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Each observed interaction becomes a replay-style receipt containing:
+          user identity, UTC timestamp, model, version, prompt or hash, result
+          or hash, an Ed25519 signature, append-only NDJSON storage, and hourly
+          Merkle anchoring.
+        </p>
+        <blockquote style="border-left:4px solid var(--hydra-teal); padding-left:var(--space-4); margin-left:0; color:var(--ink-soft); font-style:italic; max-width:60ch;">
+          A receipt is not a dashboard event. It is a portable, signed,
+          challengeable claim about what happened, when, and under whose
+          authority.
+        </blockquote>
+
+        <!-- ============ SANDBOX ============ -->
+        <div class="sandbox" data-sandbox="ed25519-receipt">
+          <div class="sandbox-head">
+            <h3>Live receipt sandbox</h3>
+            <span class="sandbox-pill" data-sandbox-pill>key · pending</span>
+            <span style="margin-left:auto; font-family:DM Mono,monospace; font-size:var(--text-xs); color:var(--ink-faint);">No network. Everything runs in your tab.</span>
+          </div>
+          <div class="sandbox-body">
+
+            <div class="sandbox-actions">
+              <button class="btn-primary btn-sm" type="button" data-action="generate-key">1 · Generate Ed25519 key</button>
+              <button class="btn-ghost btn-sm" type="button" data-action="sign-receipt">2 · Sign a receipt</button>
+              <button class="btn-ghost btn-sm" type="button" data-action="bundle">3 · Bundle &amp; download .zip</button>
+              <button class="btn-ghost btn-sm" type="button" data-action="reset-sandbox">Reset</button>
+            </div>
+
+            <p class="sandbox-status" data-sandbox-status>Press <strong>Generate Ed25519 key</strong> to begin.</p>
+
+            <div class="sandbox-block">
+              <span class="label">Public key (base64)</span>
+              <pre data-sandbox-pubkey>—</pre>
+              <span class="label" style="margin-top:var(--space-3);">Key fingerprint (first 16 bytes of SHA-256, base64-URL no-pad)</span>
+              <pre data-sandbox-fp>—</pre>
+            </div>
+
+            <div style="display:grid; gap:var(--space-3); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+              <label class="sandbox-block" style="cursor:auto;">
+                <span class="label">Vendor</span>
+                <input type="text" data-receipt-vendor value="OpenAI" style="width:100%; padding:0.4em 0.6em; border:1px solid var(--border-soft); border-radius:6px; font:inherit; background:var(--paper-card);" />
+              </label>
+              <label class="sandbox-block" style="cursor:auto;">
+                <span class="label">Model</span>
+                <input type="text" data-receipt-model value="gpt-4o-mini" style="width:100%; padding:0.4em 0.6em; border:1px solid var(--border-soft); border-radius:6px; font:inherit; background:var(--paper-card);" />
+              </label>
+              <label class="sandbox-block" style="cursor:auto;">
+                <span class="label">Environment</span>
+                <input type="text" data-receipt-env value="production" style="width:100%; padding:0.4em 0.6em; border:1px solid var(--border-soft); border-radius:6px; font:inherit; background:var(--paper-card);" />
+              </label>
+              <label class="sandbox-block" style="cursor:auto;">
+                <span class="label">Prompt</span>
+                <input type="text" data-receipt-prompt value="summarize the policy" style="width:100%; padding:0.4em 0.6em; border:1px solid var(--border-soft); border-radius:6px; font:inherit; background:var(--paper-card);" />
+              </label>
+            </div>
+
+            <div class="sandbox-block">
+              <span class="label">Receipt JSON (what you signed)</span>
+              <pre data-sandbox-receipt-json>—</pre>
+            </div>
+            <div class="sandbox-block">
+              <span class="label">Canonical bytes (JCS sorted keys, no whitespace)</span>
+              <pre data-sandbox-receipt-canon>—</pre>
+              <span class="label" style="margin-top:var(--space-3);">Ed25519 signature (base64-URL)</span>
+              <pre data-sandbox-receipt-sig>—</pre>
+              <p class="sandbox-status" data-sandbox-verify>—</p>
+            </div>
+
+            <div>
+              <span class="label" style="font-family:DM Mono,monospace; font-size:var(--text-xs); text-transform:uppercase; letter-spacing:0.12em; color:var(--ink-faint);">Receipts signed this session</span>
+              <ul class="sandbox-receipts" data-sandbox-receipts></ul>
+            </div>
+
+          </div>
+        </div>
+
+        <h3 style="margin-top: var(--space-12);">Receipt-review field guide</h3>
+        <p>Open one receipt and identify these five fields. Then answer the prompts.</p>
+        <table class="ships-table">
+          <thead>
+            <tr><th>Field</th><th>Tech prompt</th><th>Policy prompt</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="layer-name">model · version</td>
+              <td>Which belongs in SIEM and incident response?</td>
+              <td>Which fields demonstrate traceability?</td>
+            </tr>
+            <tr>
+              <td class="layer-name">environment</td>
+              <td>Belongs in release gates.</td>
+              <td>Demonstrates scope of accountability.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">timestamp</td>
+              <td>Used for replay and forensics.</td>
+              <td>Demonstrates when oversight occurred.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">signature</td>
+              <td>The thing your CI/CD can verify.</td>
+              <td>The thing that survives outside the product UI.</td>
+            </tr>
+            <tr>
+              <td class="layer-name">verify area</td>
+              <td>What you re-run in a partner team.</td>
+              <td>What the auditor takes home.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="margin-top:var(--space-6);"><strong>Teaching point:</strong> evidence should travel. Auditors should not need privileged console access to test claims.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 5 — Failure mapping mini-lab ============ -->
+    <section class="lesson-section" data-section-id="failure-mapping" data-section-time="5 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 5 of 7</span>
+          <h2>Map a real failure to controls.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Five curated cases from the 100-failure dataset — three technical, two
+          policy-facing. For each one, identify the harm, the framework that
+          applies, the Beacon artifact that would have caught the gap, and the
+          YES-act. You can save your answers (browser only — nothing leaves
+          this tab) or print the worksheet PDF and fill it in by hand.
+        </p>
+        <p>
+          <a href="./lab/worksheet-100.html" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="./downloads/lab-worksheet-100.pdf" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+        </p>
+
+        <article class="fmap-card act-ship">
+          <h4>Case 1 — Boeing 737 MAX MCAS software fatal crashes (2018-2019)</h4>
+          <div class="fmap-meta">
+            <span>Sector: Auto/Mobility</span><span>·</span><span>Damage: $2.5B DOJ resolution</span><span>·</span><span>Act: YES-Ship</span>
+          </div>
+          <p class="fmap-cause"><strong>Root cause —</strong> Boeing concealed a safety-critical MCAS design change from regulators and pilots; the certification process failed to catch that the system could repeatedly command nose-down trim from erroneous sensor data.</p>
+          <div class="fmap-control"><strong>The receipt that would have caught it —</strong> a checklist receipt requiring explicit sign-off on the safety-critical MCAS change, plus a scoring report highlighting the unresolved risk of a hidden control-law update before deployment.</div>
+          <form class="fmap-form" onsubmit="return false;">
+            <div><label>Who was harmed?</label><input type="text" placeholder="346 passengers and crew across two flights; trust in certification" /></div>
+            <div><label>Which framework(s) apply?</label><input type="text" placeholder="NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, OECD AI Principles" /></div>
+            <div><label>Which Beacon artifact mattered most?</label><input type="text" placeholder="checklist receipt + scoring report on safety-critical change" /></div>
+          </form>
+        </article>
+
+        <article class="fmap-card act-steady">
+          <h4>Case 2 — Knight Capital deployment failure (2012)</h4>
+          <div class="fmap-meta">
+            <span>Sector: Finance</span><span>·</span><span>Damage: $440M in 45 minutes</span><span>·</span><span>Act: YES-Steady</span>
+          </div>
+          <p class="fmap-cause"><strong>Root cause —</strong> A deployment failed to push updated code to one of eight servers. The stale code interpreted new order-routing flags as legacy commands, generating runaway orders that bankrupted the firm in less than an hour.</p>
+          <div class="fmap-control"><strong>The receipt that would have caught it —</strong> deployment attestation receipts per host, plus a control gate requiring all-server confirmation before the new flag could be enabled in production.</div>
+          <form class="fmap-form" onsubmit="return false;">
+            <div><label>Who was harmed?</label><input type="text" placeholder="Knight Capital shareholders, counterparties, market confidence" /></div>
+            <div><label>Which framework(s) apply?</label><input type="text" placeholder="SOC 2, NIST AI RMF (govern function), ISO/IEC 42001" /></div>
+            <div><label>Which Beacon artifact mattered most?</label><input type="text" placeholder="per-host deployment receipt + flag-gating control" /></div>
+          </form>
+        </article>
+
+        <article class="fmap-card act-recover">
+          <h4>Case 3 — Detroit wrongful arrest via facial recognition (2020)</h4>
+          <div class="fmap-meta">
+            <span>Sector: Public sector</span><span>·</span><span>Damage: civil suit, policy reform</span><span>·</span><span>Act: YES-Recover</span>
+          </div>
+          <p class="fmap-cause"><strong>Root cause —</strong> A face-recognition match produced a single candidate; police arrested Robert Williams based on that match alone. No human review, no documented thresholding, no audit trail of the model version or training data.</p>
+          <div class="fmap-control"><strong>The receipt that would have caught it —</strong> a transaction receipt per match showing the model version, confidence score, and required-human-review flag; absence of the named human approver should have blocked downstream action.</div>
+          <form class="fmap-form" onsubmit="return false;">
+            <div><label>Who was harmed?</label><input type="text" placeholder="Robert Williams (wrongful 30-hour detention) and broader trust in policing" /></div>
+            <div><label>Which framework(s) apply?</label><input type="text" placeholder="NIST AI RMF, Human Flourishing, EU AI Act Article 13 (transparency)" /></div>
+            <div><label>Which Beacon artifact mattered most?</label><input type="text" placeholder="match receipt with required-approver field + confidence threshold gate" /></div>
+          </form>
+        </article>
+
+        <article class="fmap-card act-steady">
+          <h4>Case 4 — Apple Card credit limit bias allegations (2019)</h4>
+          <div class="fmap-meta">
+            <span>Sector: Finance</span><span>·</span><span>Damage: NY DFS investigation</span><span>·</span><span>Act: YES-Steady</span>
+          </div>
+          <p class="fmap-cause"><strong>Root cause —</strong> Couples with similar finances saw very different credit limits, including in the same household. Goldman/Apple could not explain the decisions or demonstrate disparate-impact testing.</p>
+          <div class="fmap-control"><strong>The receipt that would have caught it —</strong> per-decision receipts tying input features to outputs, plus checklist receipts demonstrating ongoing fairness testing as a required control rather than an aspirational one.</div>
+          <form class="fmap-form" onsubmit="return false;">
+            <div><label>Who was harmed?</label><input type="text" placeholder="Apple Card applicants; public confidence in algorithmic credit" /></div>
+            <div><label>Which framework(s) apply?</label><input type="text" placeholder="NIST AI RMF, Human Flourishing, ECOA / state fair-lending" /></div>
+            <div><label>Which Beacon artifact mattered most?</label><input type="text" placeholder="per-decision receipt + fairness-testing checklist receipts" /></div>
+          </form>
+        </article>
+
+        <article class="fmap-card act-ship">
+          <h4>Case 5 — Robodebt automated welfare debt scheme (Australia, 2016-2020)</h4>
+          <div class="fmap-meta">
+            <span>Sector: Public sector</span><span>·</span><span>Damage: AUD 1.8B settlement, Royal Commission</span><span>·</span><span>Act: YES-Ship</span>
+          </div>
+          <p class="fmap-cause"><strong>Root cause —</strong> An automated income-averaging algorithm was deployed against welfare recipients without legal authority, generating false debts at scale. Operational decisions were made by automation without documented review or recourse.</p>
+          <div class="fmap-control"><strong>The receipt that would have caught it —</strong> a pre-deployment governance gate requiring legal sign-off on the algorithmic method, plus per-debt receipts with appeal and human-review fields demonstrating fair-process compliance.</div>
+          <form class="fmap-form" onsubmit="return false;">
+            <div><label>Who was harmed?</label><input type="text" placeholder="~470,000 Australians wrongly issued debts, deaths by suicide attributed in inquiry" /></div>
+            <div><label>Which framework(s) apply?</label><input type="text" placeholder="NIST AI RMF (Map+Govern), Human Flourishing, EU AI Act Article 14 (human oversight)" /></div>
+            <div><label>Which Beacon artifact mattered most?</label><input type="text" placeholder="pre-deployment governance gate + per-decision receipt with appeal field" /></div>
+          </form>
+        </article>
+
+        <p style="margin-top:var(--space-6);"><strong>Want all 100 cases?</strong> Level 200 includes the full interactive deep-dive with framework cross-links, harm-type filters, and per-case Beacon artifact recommendations.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 6 — Quiz ============ -->
+    <section class="lesson-section" data-section-id="quiz" data-section-time="3 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 6 of 7</span>
+          <h2>Check yourself.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">Five questions. Your answers are saved in this browser only.</p>
+
+        <div class="quiz">
+          <div class="quiz-q" data-qid="l100q1" data-correct="b">
+            <p class="q-text">1. What does a Beacon receipt prove?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l100q1" value="a"><span>That the dashboard was up at the time.</span></label>
+              <label><input type="radio" name="l100q1" value="b"><span>A portable, signed, challengeable claim about what happened, when, and under whose authority.</span></label>
+              <label><input type="radio" name="l100q1" value="c"><span>That the auditor signed off in a meeting.</span></label>
+            </div>
+            <div class="q-explainer">A receipt is portable and verifiable outside Beacon — that's what makes it survive contact with auditors and regulators. Dashboards and meeting notes don't.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l100q2" data-correct="e">
+            <p class="q-text">2. Which of these is NOT one of Beacon Studio's five steps?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l100q2" value="a"><span>What network are we looking at?</span></label>
+              <label><input type="radio" name="l100q2" value="b"><span>Beacon is looking.</span></label>
+              <label><input type="radio" name="l100q2" value="c"><span>Pick what matters.</span></label>
+              <label><input type="radio" name="l100q2" value="d"><span>Pick your guardrails.</span></label>
+              <label><input type="radio" name="l100q2" value="e"><span>Approve the deployment.</span></label>
+            </div>
+            <div class="q-explainer">The Studio walks discovery and audit. Deployment approval lives in the Policy-as-Code path (Level 200), not the Studio itself.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l100q3" data-correct="b">
+            <p class="q-text">3. What's actually IN an auditor bundle?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l100q3" value="a"><span>Just the dashboard URL and the bundle hash.</span></label>
+              <label><input type="radio" name="l100q3" value="b"><span>Manifest, signed receipt NDJSON, public key, policy YAML, checklists, and a one-page VERIFY.md.</span></label>
+              <label><input type="radio" name="l100q3" value="c"><span>A PDF screenshot of the meeting where the audit happened.</span></label>
+            </div>
+            <div class="q-explainer">The bundle is self-contained — anyone with openssl can re-verify it offline. The VERIFY.md walks them through it. No vendor login, no phoning home.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l100q4" data-correct="b">
+            <p class="q-text">4. Which Beacon artifact would have caught Boeing's MCAS failure?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l100q4" value="a"><span>Random fault injection at training time.</span></label>
+              <label><input type="radio" name="l100q4" value="b"><span>A checklist receipt requiring explicit sign-off on the safety-critical control-law change.</span></label>
+              <label><input type="radio" name="l100q4" value="c"><span>A faster CI/CD pipeline.</span></label>
+            </div>
+            <div class="q-explainer">MCAS was concealed from regulators and pilots. A checklist receipt would have forced an explicit, signed acknowledgement of the change before flight.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l100q5" data-correct="b">
+            <p class="q-text">5. How do you verify a bundle without Beacon installed?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l100q5" value="a"><span>You can't — verification requires Beacon to be running.</span></label>
+              <label><input type="radio" name="l100q5" value="b"><span>Use openssl with the included VERIFY.md, or run python -m src.audit_log verify if the bundle includes one.</span></label>
+              <label><input type="radio" name="l100q5" value="c"><span>You email Beacon support and they verify it for you.</span></label>
+            </div>
+            <div class="q-explainer">The whole point of the bundle is portability. Stock openssl is enough to test the signatures.</div>
+          </div>
+
+          <div class="quiz-summary">
+            <span>Score · <strong data-quiz-score>0 / 5</strong></span>
+            <span data-quiz-answered>0 answered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 7 — Completion attestation ============ -->
+    <section class="lesson-section" data-section-id="completion" data-section-time="2 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 7 of 7</span>
+          <h2>Completion standard.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">You've completed Level 100 when you can say all four statements clearly.</p>
+        <div class="attest">
+          <h2>Self-attestation</h2>
+          <ul class="attest-items">
+            <li><label><input type="checkbox" data-attest-n="1"><span class="attest-item-text"><strong>1.</strong> I can show what AI is in scope.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="2"><span class="attest-item-text"><strong>2.</strong> I can point to a signed receipt and explain it.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="3"><span class="attest-item-text"><strong>3.</strong> I can hand an auditor a verifiable bundle.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="4"><span class="attest-item-text"><strong>4.</strong> I can map one real failure to missing governance evidence.</span></label></li>
+          </ul>
+          <div class="attest-final">
+            <h3>Level 100 complete.</h3>
+            <p>You can now find every AI, sign what matters, and hand the auditor a bundle they verify themselves. Continue to <a href="./lab-200.html">Level 200</a> for the Suitcase Lab, the nine 20-minute lab variants, the Policy-as-Code emission, the receipt API, and the full 100-failure deep-dive.</p>
+            <p class="kicker"><a href="./lab-200.html" class="btn-primary btn-sm">Start Level 200 →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-colophon">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0 · <a href="./lab.html">Framework Lab</a> · <a href="./howibuilt.html">How I Built This</a></span>
+        <span>YES-Ship · YES-Steady · YES-Recover</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Reuse the libraries already loaded by Beacon's index -->
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="./js/lab.js" defer></script>
+  <script src="./js/lab-sandbox.js" defer></script>
+</body>
+</html>

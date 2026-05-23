@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIGovOps Foundation — Framework Lab opener</title>
+  <meta name="theme-color" content="#01696f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --hydra-teal: #01696f;
+      --hydra-teal-soft: #d8ecee;
+      --signal-green: #2ecc71;
+      --signal-green-soft: #d8f3df;
+      --ink: #0e1b1c;
+      --ink-soft: #3a4a4b;
+      --ink-faint: #7a8889;
+      --paper: #fbfaf6;
+      --paper-soft: #f1efe7;
+      --paper-card: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: var(--paper); }
+    body { font-family: "Inter", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 6vw, 6rem) clamp(2rem, 8vw, 8rem);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 320ms ease-out;
+    }
+    .slide.active { opacity: 1; pointer-events: auto; }
+
+    /* Brand corner mark */
+    .brand-mark {
+      position: absolute;
+      top: clamp(1.5rem, 3vw, 2.5rem);
+      left: clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.75rem, 0.7vw + 0.5rem, 0.85rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--hydra-teal);
+    }
+    .brand-mark svg { flex-shrink: 0; }
+
+    /* Slide counter */
+    .slide-counter {
+      position: absolute;
+      bottom: clamp(1.5rem, 3vw, 2.5rem);
+      right: clamp(1.5rem, 3vw, 2.5rem);
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.75rem, 0.7vw + 0.5rem, 0.85rem);
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+    }
+
+    /* Typography */
+    .kicker {
+      display: inline-flex; align-items: center; gap: 0.6em;
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.85rem, 0.6vw + 0.7rem, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--hydra-teal);
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+    .kicker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--signal-green); }
+
+    h1 {
+      font-size: clamp(2.4rem, 2vw + 2.6rem, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      margin: 0 0 1rem;
+      max-width: 22ch;
+    }
+    h2 {
+      font-size: clamp(2rem, 1.5vw + 2rem, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin: 0 0 1rem;
+      max-width: 22ch;
+    }
+    p.lede {
+      font-size: clamp(1.15rem, 0.8vw + 0.9rem, 1.6rem);
+      color: var(--ink-soft);
+      max-width: 60ch;
+      line-height: 1.5;
+      margin: 0 0 1.5rem;
+    }
+    p.eyebrow { font-family: "DM Mono", monospace; font-size: 0.95rem; color: var(--ink-faint); letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 0.5rem; }
+
+    /* Slide variants */
+    .slide.dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .slide.dark .kicker { color: var(--signal-green); }
+    .slide.dark .kicker::before { background: var(--signal-green); }
+    .slide.dark p.lede { color: rgba(251, 250, 246, 0.78); }
+    .slide.dark .brand-mark { color: var(--signal-green-soft); }
+    .slide.dark .slide-counter { color: rgba(251, 250, 246, 0.5); }
+
+    .slide.teal {
+      background: linear-gradient(135deg, var(--hydra-teal) 0%, #014c50 100%);
+      color: var(--paper);
+    }
+    .slide.teal .kicker { color: var(--signal-green); }
+    .slide.teal .kicker::before { background: var(--signal-green); }
+    .slide.teal p.lede { color: rgba(251, 250, 246, 0.88); }
+    .slide.teal .brand-mark { color: rgba(251, 250, 246, 0.85); }
+    .slide.teal .slide-counter { color: rgba(251, 250, 246, 0.5); }
+
+    /* Title slide */
+    .slide-title { text-align: center; align-items: center; }
+    .slide-title h1 { margin: 0 auto 1.5rem; }
+    .slide-title .medallion {
+      width: clamp(80px, 9vw, 140px);
+      height: clamp(80px, 9vw, 140px);
+      margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+      display: block;
+    }
+    .slide-title .hosts {
+      margin-top: 2rem;
+      display: flex; gap: clamp(1.5rem, 3vw, 3rem); justify-content: center;
+      font-family: "DM Mono", monospace;
+      font-size: 0.95rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+    }
+
+    /* Big-number slide */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: clamp(2rem, 3vw, 3rem);
+      margin: clamp(1.5rem, 2vw, 2rem) 0;
+    }
+    .stat-row .stat { text-align: left; }
+    .stat-row .stat-num {
+      font-size: clamp(3rem, 4vw + 1rem, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--hydra-teal);
+    }
+    .slide.dark .stat-row .stat-num, .slide.teal .stat-row .stat-num { color: var(--signal-green); }
+    .stat-row .stat-label {
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.85rem, 0.5vw + 0.7rem, 1rem);
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 0.5rem;
+    }
+    .slide.dark .stat-row .stat-label, .slide.teal .stat-row .stat-label { color: rgba(251, 250, 246, 0.6); }
+
+    /* Steps slide */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: clamp(0.8rem, 1vw, 1.4rem);
+      margin-top: clamp(1.5rem, 2vw, 2rem);
+    }
+    .steps .step {
+      padding: clamp(1rem, 1.5vw, 1.5rem);
+      background: var(--paper-card);
+      border: 1px solid #d8d4c4;
+      border-radius: 14px;
+    }
+    .slide.dark .steps .step, .slide.teal .steps .step { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.18); }
+    .steps .step-num {
+      display: inline-flex;
+      width: clamp(32px, 2.5vw, 40px); height: clamp(32px, 2.5vw, 40px);
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--hydra-teal); color: var(--paper);
+      font-family: "DM Mono", monospace; font-weight: 600;
+      font-size: clamp(0.85rem, 0.5vw + 0.7rem, 1rem);
+      margin-bottom: clamp(0.5rem, 1vw, 1rem);
+    }
+    .slide.dark .steps .step-num, .slide.teal .steps .step-num { background: var(--signal-green); color: var(--ink); }
+    .steps .step h3 {
+      font-size: clamp(0.95rem, 0.5vw + 0.7rem, 1.15rem);
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.25;
+    }
+    .slide.dark .steps .step h3, .slide.teal .steps .step h3 { color: var(--paper); }
+
+    /* Timeline slide */
+    .timeline {
+      display: flex; flex-direction: column;
+      gap: clamp(0.5rem, 0.7vw, 0.7rem);
+      margin-top: clamp(1.5rem, 2vw, 2rem);
+    }
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: clamp(1rem, 2vw, 2rem);
+      align-items: baseline;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #d8d4c4;
+    }
+    .slide.dark .timeline-row, .slide.teal .timeline-row { border-bottom-color: rgba(255, 255, 255, 0.15); }
+    .timeline-row .time {
+      font-family: "DM Mono", monospace;
+      font-weight: 600;
+      color: var(--hydra-teal);
+      font-size: clamp(0.85rem, 0.5vw + 0.7rem, 1.05rem);
+    }
+    .slide.dark .timeline-row .time, .slide.teal .timeline-row .time { color: var(--signal-green); }
+    .timeline-row .label {
+      font-size: clamp(0.95rem, 0.5vw + 0.7rem, 1.2rem);
+      line-height: 1.4;
+    }
+    .timeline-row .label strong { display: block; font-weight: 600; }
+    .timeline-row .label small { color: var(--ink-faint); font-weight: 400; }
+    .slide.dark .timeline-row .label small, .slide.teal .timeline-row .label small { color: rgba(251, 250, 246, 0.6); }
+
+    /* QR slide */
+    .qr-block {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: clamp(2rem, 4vw, 5rem);
+      align-items: center;
+      margin-top: clamp(1rem, 2vw, 2rem);
+    }
+    .qr-block .qr-info p.url {
+      font-family: "DM Mono", monospace;
+      font-size: clamp(1.1rem, 0.6vw + 0.9rem, 1.6rem);
+      color: var(--hydra-teal);
+      word-break: break-all;
+      margin: 1rem 0 0;
+    }
+    .slide.dark .qr-block .qr-info p.url, .slide.teal .qr-block .qr-info p.url { color: var(--signal-green); }
+    .qr-block .qr-svg {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 12px;
+      width: clamp(180px, 22vw, 280px);
+      height: clamp(180px, 22vw, 280px);
+    }
+    .qr-block .qr-svg svg { width: 100%; height: 100%; display: block; }
+
+    /* Two-column */
+    .two-col {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-top: clamp(1rem, 2vw, 2rem);
+    }
+    .two-col .col h3 {
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.85rem, 0.5vw + 0.7rem, 1rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--hydra-teal);
+      margin: 0 0 1rem;
+    }
+    .slide.dark .two-col .col h3, .slide.teal .two-col .col h3 { color: var(--signal-green); }
+    .two-col .col p { font-size: clamp(1rem, 0.5vw + 0.8rem, 1.25rem); line-height: 1.55; color: var(--ink-soft); }
+    .slide.dark .two-col .col p, .slide.teal .two-col .col p { color: rgba(251, 250, 246, 0.82); }
+
+    /* Pull quote */
+    .pullquote {
+      font-size: clamp(1.6rem, 1.2vw + 1.3rem, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin: 0;
+      max-width: 30ch;
+      font-style: italic;
+    }
+    .pullquote-cite {
+      margin-top: clamp(1rem, 2vw, 1.5rem);
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.8rem, 0.5vw + 0.6rem, 0.95rem);
+      color: var(--ink-faint);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .slide.dark .pullquote-cite, .slide.teal .pullquote-cite { color: rgba(251, 250, 246, 0.6); }
+
+    /* Outro CTAs */
+    .outro-ctas {
+      display: flex; flex-wrap: wrap; gap: clamp(1rem, 2vw, 2rem);
+      margin-top: clamp(2rem, 3vw, 3rem);
+    }
+    .outro-cta {
+      padding: clamp(1rem, 1.5vw, 1.5rem) clamp(1.5rem, 2vw, 2rem);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      flex: 1 1 220px;
+    }
+    .outro-cta h3 {
+      font-family: "DM Mono", monospace;
+      font-size: clamp(0.8rem, 0.5vw + 0.6rem, 0.95rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--signal-green);
+      margin: 0 0 0.5rem;
+    }
+    .outro-cta p { margin: 0; font-size: clamp(0.95rem, 0.4vw + 0.8rem, 1.1rem); color: rgba(251, 250, 246, 0.85); }
+
+    /* Nav controls */
+    .nav {
+      position: fixed;
+      bottom: clamp(1rem, 2vw, 1.5rem);
+      left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.5rem; align-items: center;
+      padding: 0.4rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 999px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      z-index: 100;
+    }
+    .nav button {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--hydra-teal);
+      transition: background 180ms;
+    }
+    .nav button:hover { background: var(--hydra-teal-soft); }
+    .nav button[disabled] { opacity: 0.3; cursor: not-allowed; }
+    .nav .dots { display: flex; gap: 0.3rem; padding: 0 0.5rem; }
+    .nav .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(1, 105, 111, 0.25); transition: background 180ms; }
+    .nav .dot.active { background: var(--hydra-teal); }
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- ============ SLIDE 1 — TITLE ============ -->
+  <section class="slide slide-title teal active" data-slide="1">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.4" opacity="0.7"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> AIGovOps Foundation · Virtual Lab</span>
+    <svg class="medallion" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="#01696f"/>
+      <circle cx="32" cy="32" r="22" fill="none" stroke="#2ecc71" stroke-width="1.8" opacity="0.7"/>
+      <text x="32" y="40" font-family="Inter" font-size="20" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+    </svg>
+    <h1>Become a Beacon Framework Auditor.</h1>
+    <p class="lede" style="margin: 0 auto;">Find every AI. Sign what matters. Hand the auditor a bundle.<br>30 minutes — about 100 of us, together.</p>
+    <div class="hosts">
+      <span>Bob Rapp</span><span>·</span><span>Ken Johnston</span><span>·</span><span>AIGovOps Foundation</span>
+    </div>
+    <span class="slide-counter">01 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 2 — WHY ============ -->
+  <section class="slide" data-slide="2">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> Why we're here</span>
+    <span class="kicker">The problem</span>
+    <h2>Most AI governance today is a PDF and a meeting.</h2>
+    <p class="lede">Today you'll leave with something the auditor can actually verify: a cryptographically signed audit checklist, a portable evidence bundle, and one real-world AI failure mapped to the framework controls that would have caught it.</p>
+    <span class="slide-counter">02 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 3 — PULL QUOTE ============ -->
+  <section class="slide dark" data-slide="3">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> Founding principle</span>
+    <p class="pullquote">"Agents do the bureaucracy.<br>Humans hold moral legitimacy."</p>
+    <p class="pullquote-cite">— AIGovOps Foundation</p>
+    <span class="slide-counter">03 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 4 — 5 STEPS ============ -->
+  <section class="slide" data-slide="4">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> The Studio</span>
+    <span class="kicker">Five steps</span>
+    <h2>Beacon walks you through it.</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span><h3>What network are we looking at?</h3></div>
+      <div class="step"><span class="step-num">2</span><h3>Beacon is looking — discovery + inventory.</h3></div>
+      <div class="step"><span class="step-num">3</span><h3>Pick what matters.</h3></div>
+      <div class="step"><span class="step-num">4</span><h3>Pick your guardrails.</h3></div>
+      <div class="step"><span class="step-num">5</span><h3>Here's your audit.</h3></div>
+    </div>
+    <span class="slide-counter">04 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 5 — TIMELINE ============ -->
+  <section class="slide" data-slide="5">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> Today's flow</span>
+    <span class="kicker">90 minutes · we move together</span>
+    <h2>Here's how we'll spend the time.</h2>
+    <div class="timeline">
+      <div class="timeline-row"><span class="time">0:00 — 0:10</span><span class="label"><strong>Open the lab.</strong><small>QR + URL · everyone loads it together</small></span></div>
+      <div class="timeline-row"><span class="time">0:10 — 0:18</span><span class="label"><strong>Walk the 5-step Studio.</strong><small>Section 3 accordion · dual-audience prompts</small></span></div>
+      <div class="timeline-row"><span class="time">0:18 — 0:25</span><span class="label"><strong>Sandbox: sign your first receipt.</strong><small>Ed25519 in your browser · download the bundle</small></span></div>
+      <div class="timeline-row"><span class="time">0:25 — 0:35</span><span class="label"><strong>Map a real failure.</strong><small>Boeing · Knight Capital · Detroit · Apple Card · Robodebt</small></span></div>
+      <div class="timeline-row"><span class="time">0:35 — 0:50</span><span class="label"><strong>Quiz + signed completion certificate.</strong><small>Your name · your key · your diploma</small></span></div>
+      <div class="timeline-row"><span class="time">0:50 — 1:30</span><span class="label"><strong>Level 200 preview + Q &amp; A.</strong><small>Suitcase Lab · Policy-as-Code · 100-case deep-dive</small></span></div>
+    </div>
+    <span class="slide-counter">05 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 6 — OPEN THE LAB (QR) ============ -->
+  <section class="slide teal" data-slide="6">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> Open the lab now</span>
+    <div class="qr-block">
+      <div class="qr-info">
+        <span class="kicker" style="color:#2ecc71;">Scan or paste</span>
+        <h2 style="color:white;">Everyone opens this.</h2>
+        <p class="lede" style="color:rgba(251,250,246,0.92);">No login, no install, no account. The lab is in your browser the moment you scan.</p>
+        <p class="url">bobrapp.github.io/aigovops-beacon/lab.html</p>
+      </div>
+      <div class="qr-svg" id="qrSlot" aria-hidden="true">
+        <!-- QR injected by JS to keep markup terse -->
+      </div>
+    </div>
+    <span class="slide-counter">06 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 7 — WHAT YOU'LL SIGN ============ -->
+  <section class="slide" data-slide="7">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> What you'll sign</span>
+    <span class="kicker">Section 4 of Level 100</span>
+    <h2>An Ed25519 key. In your browser. Never leaves your tab.</h2>
+    <div class="two-col">
+      <div class="col">
+        <h3>The signature</h3>
+        <p>A 64-byte Ed25519 signature over canonical JSON of the receipt. Sorted keys, no whitespace, UTF-8. The same canonicalization auditors will use to re-verify it later.</p>
+      </div>
+      <div class="col">
+        <h3>The bundle</h3>
+        <p>A real downloadable zip. Manifest + receipts NDJSON + your public key + a VERIFY.md that walks an auditor through verifying with stock openssl. No Beacon installation required.</p>
+      </div>
+    </div>
+    <span class="slide-counter">07 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 8 — THE 100 CASE SET ============ -->
+  <section class="slide" data-slide="8">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> The proof set</span>
+    <span class="kicker">100 real failures · publicly documented</span>
+    <h2>Every case maps to the receipt that would have caught it.</h2>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">100</div><div class="stat-label">documented failures</div></div>
+      <div class="stat"><div class="stat-num">23</div><div class="stat-label">global audit frameworks</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">curated cases in level 100</div></div>
+    </div>
+    <p class="lede">Boeing 737 MAX. Knight Capital. Detroit wrongful arrest. Apple Card. Robodebt. UK A-levels. Tesla Autopilot. Cruise robotaxi. Zillow $304M write-down. iTutorGroup hiring discrimination — every one mapped to NIST AI RMF, ISO/IEC 42001, EU AI Act, or Human Flourishing — and to the Beacon receipt that would have produced the missing evidence.</p>
+    <span class="slide-counter">08 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 9 — COMPLETION CERTIFICATE ============ -->
+  <section class="slide dark" data-slide="9">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> What you leave with</span>
+    <span class="kicker">Signed completion certificate</span>
+    <h2 style="color:white;">Your own signed diploma.</h2>
+    <div class="two-col">
+      <div class="col">
+        <h3>Self-attested</h3>
+        <p>Four statements you check yourself. Then enter your name. The page signs an attestation receipt with a fresh key right in your browser.</p>
+      </div>
+      <div class="col">
+        <h3>Foundation-stamped</h3>
+        <p>The Beacon project key fingerprint <code style="background:rgba(46,204,113,0.18);padding:0.1em 0.4em;border-radius:4px;color:#2ecc71;">TrUguILJje1UUyeQie1g6w</code> appears on every diploma. Optional counter-sign by emailing <strong>LAB</strong> to Bob and Ken.</p>
+      </div>
+    </div>
+    <span class="slide-counter">09 / 10</span>
+  </section>
+
+  <!-- ============ SLIDE 10 — OUTRO ============ -->
+  <section class="slide teal" data-slide="10">
+    <span class="brand-mark"><svg viewBox="0 0 32 32" width="22" height="22"><circle cx="16" cy="16" r="15" fill="#01696f"/><text x="16" y="20.5" font-family="Inter" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text></svg> See you in the lab</span>
+    <span class="kicker" style="color:#2ecc71;">Three things before we start</span>
+    <h2 style="color:white;">Let's go.</h2>
+    <div class="outro-ctas">
+      <div class="outro-cta">
+        <h3>The lab</h3>
+        <p>bobrapp.github.io/aigovops-beacon/lab.html</p>
+      </div>
+      <div class="outro-cta">
+        <h3>Questions, subject LAB</h3>
+        <p>bob.rapp@aigovops.community<br>ken.johnston@aigovops.community</p>
+      </div>
+      <div class="outro-cta">
+        <h3>How we built this</h3>
+        <p>bobrapp.github.io/aigovops-beacon/howibuilt.html — verify the lab with the same evidence model it teaches.</p>
+      </div>
+    </div>
+    <span class="slide-counter">10 / 10</span>
+  </section>
+
+</div>
+
+<nav class="nav" aria-label="Slide navigation">
+  <button type="button" id="prev" aria-label="Previous slide">‹</button>
+  <div class="dots" id="dots"></div>
+  <button type="button" id="next" aria-label="Next slide">›</button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var slides = document.querySelectorAll('.slide');
+  var total = slides.length;
+  var current = 1;
+
+  // Generate QR code into Slide 6
+  var qr = qrcode(0, 'H');
+  qr.addData('https://bobrapp.github.io/aigovops-beacon/lab.html');
+  qr.make();
+  var qrSlot = document.getElementById('qrSlot');
+  if (qrSlot) qrSlot.innerHTML = qr.createSvgTag({ scalable: true, margin: 0 });
+
+  // Build dots
+  var dots = document.getElementById('dots');
+  for (var i = 1; i <= total; i++) {
+    var d = document.createElement('span');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.dataset.target = String(i);
+    d.style.cursor = 'pointer';
+    dots.appendChild(d);
+  }
+
+  function show(n) {
+    if (n < 1 || n > total) return;
+    slides.forEach(function (s) {
+      s.classList.toggle('active', parseInt(s.getAttribute('data-slide'), 10) === n);
+    });
+    document.querySelectorAll('.dot').forEach(function (d) {
+      d.classList.toggle('active', parseInt(d.dataset.target, 10) === n);
+    });
+    current = n;
+    document.getElementById('prev').disabled = n === 1;
+    document.getElementById('next').disabled = n === total;
+    try { history.replaceState(null, '', '#' + n); } catch (e) {}
+  }
+
+  document.getElementById('prev').addEventListener('click', function () { show(current - 1); });
+  document.getElementById('next').addEventListener('click', function () { show(current + 1); });
+  document.getElementById('dots').addEventListener('click', function (ev) {
+    var t = ev.target.closest('.dot');
+    if (t) show(parseInt(t.dataset.target, 10));
+  });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'ArrowRight' || ev.key === ' ' || ev.key === 'PageDown') { ev.preventDefault(); show(current + 1); }
+    else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { ev.preventDefault(); show(current - 1); }
+    else if (ev.key === 'Home') { show(1); }
+    else if (ev.key === 'End') { show(total); }
+    else if (ev.key === 'Escape') { window.parent && window.parent.postMessage({ type: 'close-fullscreen' }, '*'); }
+  });
+
+  // Allow parent (Hyperagent fullscreen portal) to navigate
+  window.addEventListener('message', function (ev) {
+    var data = ev.data || {};
+    if (data.type === 'navigate') {
+      if (data.direction === 'prev') show(current - 1);
+      else if (data.direction === 'next') show(current + 1);
+    }
+  });
+
+  // Touch swipe
+  var startX = null;
+  document.addEventListener('touchstart', function (ev) { startX = ev.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (ev) {
+    if (startX == null) return;
+    var dx = ev.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+
+  // Initial slide from hash
+  var h = parseInt((location.hash || '').replace('#', ''), 10);
+  if (!isNaN(h) && h >= 1 && h <= total) show(h);
+  else show(1);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Framework Lab for AIGovOps Auditors — AIGovOps Beacon</title>
+  <meta name="description" content="A two-tier interactive lab for AI auditors. Level 100 walks the 30-minute Beacon flow; Level 200 covers the Suitcase Lab, the 9 lab variants, the 100-failure deep-dive, Policy-as-Code, and the receipt API." />
+  <meta name="theme-color" content="#01696f" />
+
+  <meta property="og:title" content="Framework Lab for AIGovOps Auditors" />
+  <meta property="og:description" content="Discover, sign, hand the auditor a bundle. Two levels. Self-paced. Built with the same evidence model it teaches." />
+  <meta property="og:image" content="./assets/beacon-medallion.jpg" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/site.css" />
+  <link rel="stylesheet" href="./css/lab.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body class="lab-body">
+
+  <header class="site-header">
+    <div class="shell">
+      <a href="./" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">AIGovOps Foundation</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="./" class="btn-ghost btn-sm desktop-only">Home</a>
+        <a href="./lab.html" class="btn-ghost btn-sm desktop-only" aria-current="page">Framework Lab</a>
+        <a href="./quiz.html" class="btn-ghost btn-sm desktop-only">Practitioner Quiz</a>
+        <a href="./walkthrough/" class="btn-ghost btn-sm desktop-only">Walkthrough</a>
+        <a href="./howibuilt.html" class="btn-ghost btn-sm desktop-only">How I Built This</a>
+        <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="lab-main">
+
+    <!-- ============ HERO ============ -->
+    <section class="lab-hero">
+      <div class="shell">
+        <span class="kicker">Framework Lab · Two levels · Self-paced</span>
+        <h1>Become a Beacon Framework Auditor.</h1>
+        <p class="lede">
+          <strong>Find every AI. Sign what matters. Hand the auditor a bundle.</strong>
+          This lab is for security, platform, architects, governance, legal, audit,
+          privacy, and policy leaders. In two levels — short and long — it turns
+          Beacon from an idea into a hands-on, auditor-ready exercise that works
+          for technical teams and policy teams using the same evidence model.
+        </p>
+
+        <ul class="lab-promise">
+          <li><strong>What you'll do</strong>Launch Beacon, discover AI, inspect a signed receipt, verify a bundle, map a real failure to controls.</li>
+          <li><strong>How long</strong>Level 100 is 30 minutes. Level 200 is ~90 minutes. Resume any time.</li>
+          <li><strong>What you'll leave with</strong>A signed audit checklist, a verified evidence bundle, and one real-world failure mapped to missing governance evidence.</li>
+          <li><strong>How verified</strong>Every page you build is itself recorded in a cryptographically signed audit log — verify it on the <a href="./howibuilt.html">How I Built This</a> page.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ TIERS ============ -->
+    <section>
+      <div class="shell">
+        <span class="kicker">Pick a level</span>
+        <h2>Start where you are.</h2>
+        <p class="lede">
+          New to Beacon? Start with Level 100 — the same 30-minute flow used in
+          workshops worldwide. Already comfortable with signed receipts and want
+          to ship Beacon yourself? Level 200 takes you through the Suitcase Lab,
+          the 9 lab variants, Policy-as-Code emission, the receipt API, and the
+          full 100-failure deep-dive.
+        </p>
+
+        <div class="lab-tiers">
+          <a href="./lab-100.html" class="lab-tier">
+            <div class="tier-rank">
+              <span>Level 100 · The 30-minute flow</span>
+              <span class="tier-progress" data-tier-readout="100" data-tier-total="7">Not started</span>
+            </div>
+            <h2>The five-step Studio.</h2>
+            <p>
+              Launch Beacon, walk the five-step Studio (network → discover → pick what matters → pick guardrails → here's your audit), sign a real receipt in your browser, verify it, and map five curated AI failures to the framework controls that would have caught them.
+            </p>
+            <div class="tier-meta">
+              <span>≈ 30 min</span>
+              <span>·</span>
+              <span>1 live sandbox</span>
+              <span>·</span>
+              <span>5 cases</span>
+              <span>·</span>
+              <span>Quiz + worksheet</span>
+            </div>
+          </a>
+
+          <a href="./lab-200.html" class="lab-tier">
+            <div class="tier-rank">
+              <span>Level 200 · Suitcase Lab + deep-dive</span>
+              <span class="tier-progress" data-tier-readout="200" data-tier-total="8">Not started</span>
+            </div>
+            <h2>Ship Beacon yourself.</h2>
+            <p>
+              Spin up the Suitcase Lab in 60 seconds with Docker Compose. Walk the nine 20-minute lab variants (first receipt, browser discovery, DNS tail, framework scoring, failure replay, MCP attest, bundle for auditor, offline USB, hosted MCP). Emit Policy-as-Code. Drill into the 100-failure dataset with framework cross-links.
+            </p>
+            <div class="tier-meta">
+              <span>≈ 90 min</span>
+              <span>·</span>
+              <span>9 lab variants</span>
+              <span>·</span>
+              <span>100 cases</span>
+              <span>·</span>
+              <span>Policy-as-Code lab</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="lab-asides">
+          <aside class="lab-aside">
+            <h3>Running a 90-minute in-person workshop?</h3>
+            <p>This lab is for individual auditors. If you're facilitating a 90-minute group session with sticky notes and field cards, use the facilitator playbook instead.</p>
+            <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/docs/AUDITOR_WORKSHOP.md" target="_blank" rel="noopener">AUDITOR_WORKSHOP.md ↗</a>
+          </aside>
+          <aside class="lab-aside">
+            <h3>How was this lab built?</h3>
+            <p>Every commit that produced these pages is in a signed Ed25519 audit log. The lab teaches the evidence model — and it's built with that model.</p>
+            <a href="./howibuilt.html">How I Built This →</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT YOU LEARN ============ -->
+    <section style="background: var(--paper-soft); margin-top: var(--space-12); padding: var(--space-12) 0;">
+      <div class="shell">
+        <span class="kicker">Learning outcomes</span>
+        <h2>By the end you'll be able to —</h2>
+        <ol style="max-width: 64ch; font-size: var(--text-lg); line-height: 1.7; color: var(--ink-soft);">
+          <li>Launch Beacon in browser or local workshop mode.</li>
+          <li>Identify what Beacon discovered and what belongs in scope.</li>
+          <li>Explain what a signed receipt proves — and what it doesn't.</li>
+          <li>Export and verify an auditor bundle without Beacon itself.</li>
+          <li>Map one real-world AI failure to controls, frameworks, and missing evidence.</li>
+        </ol>
+        <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="./data/ai_failures_top100.json" target="_blank" rel="noopener">100-case dataset</a>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div>
+          <strong>AIGovOps Beacon</strong>
+          <p>Open-source verifiable AI governance. A project of the <a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">AIGovOps Foundation</a>. Apache-2.0.</p>
+        </div>
+        <div>
+          <strong>Framework Lab</strong>
+          <ul>
+            <li><a href="./lab-100.html">Level 100 — 30-min flow</a></li>
+            <li><a href="./lab-200.html">Level 200 — Suitcase + deep-dive</a></li>
+            <li><a href="./lab/worksheet-100.html">Worksheet 100 (printable)</a></li>
+            <li><a href="./lab/worksheet-200.html">Worksheet 200 (printable)</a></li>
+            <li><a href="./downloads/lab-worksheet-100.pdf" download>Worksheet 100 (PDF)</a></li>
+            <li><a href="./downloads/lab-worksheet-200.pdf" download>Worksheet 200 (PDF)</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Provenance</strong>
+          <ul>
+            <li><a href="./howibuilt.html">How I Built This (signed log)</a></li>
+            <li><a href="https://github.com/bobrapp/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py ↗</a></li>
+            <li><a href="https://github.com/bobrapp/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener">Public key ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Contact</strong>
+          <p class="footer-tagline">YES-Ship · YES-Steady · YES-Recover</p>
+          <ul>
+            <li><a href="mailto:bob.rapp@aigovops.community">bob.rapp@aigovops.community</a></li>
+            <li><a href="mailto:ken.johnston@aigovops.community">ken.johnston@aigovops.community</a></li>
+            <li><a href="https://www.aigovopsfoundation.org/" target="_blank" rel="noopener">aigovopsfoundation.org ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-colophon">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0</span>
+        <span>Built with the same evidence model Beacon teaches.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/lab.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.AIGovOpsBeaconLab && window.AIGovOpsBeaconLab.hubReadout) {
+        window.AIGovOpsBeaconLab.hubReadout();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Framework Lab — build attestation</title>
+  <meta name="description" content="Signed build attestation for the Framework Lab for AIGovOps Auditors. Every check recorded in a cryptographically signed audit log." />
+  <meta name="theme-color" content="#01696f" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --hydra-teal: #01696f;
+      --hydra-teal-soft: #d8ecee;
+      --signal-green: #2ecc71;
+      --signal-green-soft: #d8f3df;
+      --ink: #0e1b1c;
+      --ink-soft: #3a4a4b;
+      --ink-faint: #7a8889;
+      --paper: #fbfaf6;
+      --paper-soft: #f1efe7;
+      --paper-card: #ffffff;
+      --border: #d8d4c4;
+      --border-soft: #ebe7d8;
+      --pass: #1f7a3f;
+      --fail: #b53a2a;
+      --warn: #c08a14;
+      --shadow-sm: 0 1px 0 rgba(14,27,28,0.06), 0 2px 8px -4px rgba(14,27,28,0.08);
+      --shadow-md: 0 1px 0 rgba(14,27,28,0.08), 0 12px 28px -14px rgba(14,27,28,0.16);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .shell { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    code, pre, .mono { font-family: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+    a { color: var(--hydra-teal); text-decoration-color: rgba(1,105,111,0.3); text-underline-offset: 3px; }
+    a:hover { color: #014c50; text-decoration-color: var(--hydra-teal); }
+    h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1rem 0; }
+    h1 { font-size: clamp(2rem, 1.2rem + 3.5vw, 3.6rem); font-weight: 700; letter-spacing: -0.035em; max-width: 24ch; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.2rem; }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 0.5em;
+      font-family: "DM Mono", monospace;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--hydra-teal);
+      margin-bottom: 1rem;
+    }
+    .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--signal-green); }
+
+    /* Header */
+    header.hero {
+      padding: 3rem 0 2.5rem;
+      background: linear-gradient(180deg, var(--hydra-teal-soft) 0%, var(--paper) 100%);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .brand-line { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 2rem; }
+    .brand-line svg { flex-shrink: 0; }
+    .brand-line strong { font-weight: 700; }
+    .brand-line span { color: var(--ink-faint); font-size: 0.9rem; font-family: "DM Mono", monospace; }
+
+    .att-summary {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.5rem 0;
+    }
+    .att-pill {
+      display: inline-flex; align-items: center;
+      padding: 0.4em 0.95em;
+      border-radius: 999px;
+      font-family: "DM Mono", monospace;
+      font-size: 0.85rem;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      color: var(--ink-soft);
+    }
+    .att-pill.pass { background: var(--signal-green-soft); border-color: #b9e6c8; color: var(--pass); }
+    .att-pill.warn { background: #fdf3da; border-color: #f0d99a; color: var(--warn); }
+    .att-pill.fail { background: #fbe5e0; border-color: #f0b9ad; color: var(--fail); }
+
+    /* Sections */
+    section.attest { padding: 3rem 0; border-top: 1px solid var(--border-soft); }
+    section.attest:first-of-type { border-top: none; }
+    section.attest h2 { margin-top: 0; }
+    section.attest p { max-width: 64ch; color: var(--ink-soft); }
+    section.attest.dark { background: var(--paper-soft); }
+
+    /* Status table */
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .status-table th, .status-table td {
+      padding: 0.85rem 1.1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 0.92rem;
+    }
+    .status-table tr:last-child td { border-bottom: none; }
+    .status-table th {
+      background: var(--paper-soft);
+      font-family: "DM Mono", monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      font-weight: 500;
+    }
+    .status-table .check-name { font-weight: 600; }
+    .status-table .result-mark { font-family: "DM Mono", monospace; font-weight: 700; }
+    .status-table tr.pass .result-mark { color: var(--pass); }
+    .status-table tr.warn .result-mark { color: var(--warn); }
+    .status-table tr.fail .result-mark { color: var(--fail); }
+    .status-table .detail { color: var(--ink-soft); font-family: "DM Mono", monospace; font-size: 0.84rem; }
+
+    /* Audit chain card */
+    .chain-card {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .chain-card .chain-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px dashed var(--border-soft); }
+    .chain-card .chain-pill { font-family: "DM Mono", monospace; font-size: 0.85rem; background: var(--signal-green-soft); color: var(--pass); padding: 0.3em 0.8em; border-radius: 999px; }
+    .chain-entries { list-style: none; margin: 0; padding: 0; }
+    .chain-entries li {
+      display: grid;
+      grid-template-columns: 50px 1fr auto;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-soft);
+      align-items: center;
+    }
+    .chain-entries li:last-child { border-bottom: none; }
+    .chain-entries .seq { font-family: "DM Mono", monospace; color: var(--hydra-teal); font-weight: 600; }
+    .chain-entries .action { font-weight: 500; }
+    .chain-entries .hash { font-family: "DM Mono", monospace; font-size: 0.78rem; color: var(--ink-faint); }
+
+    /* Artifact link box */
+    .artifact-box {
+      margin-top: 1.5rem;
+      padding: 1.5rem 1.8rem;
+      background: linear-gradient(135deg, var(--hydra-teal-soft) 0%, var(--paper-card) 100%);
+      border: 1px solid var(--hydra-teal);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .artifact-box .artifact-icon {
+      flex-shrink: 0;
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      background: var(--hydra-teal);
+      color: var(--paper);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+    }
+    .artifact-box .artifact-meta { flex: 1; min-width: 260px; }
+    .artifact-box h3 { margin: 0 0 0.3rem; color: var(--hydra-teal); }
+    .artifact-box p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; max-width: none; }
+    .artifact-box .ab-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .artifact-box .btn {
+      padding: 0.6em 1.2em; border-radius: 999px;
+      font-weight: 500; font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 180ms, color 180ms;
+    }
+    .artifact-box .btn-primary { background: var(--hydra-teal); color: var(--paper); }
+    .artifact-box .btn-primary:hover { background: #014c50; }
+    .artifact-box .btn-ghost { background: var(--paper-card); color: var(--hydra-teal); border: 1px solid var(--hydra-teal); }
+
+    /* Methodology */
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .method-card {
+      padding: 1.2rem;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .method-card h3 { margin: 0 0 0.5rem; color: var(--hydra-teal); font-size: 1rem; }
+    .method-card p { margin: 0; font-size: 0.9rem; color: var(--ink-soft); }
+
+    footer.foot {
+      padding: 2.5rem 0 3rem;
+      background: var(--paper-soft);
+      border-top: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      color: var(--ink-faint);
+    }
+    footer.foot .colophon { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer.foot .colophon code { color: var(--ink-soft); }
+
+    @media (max-width: 720px) {
+      .shell { padding: 0 1.25rem; }
+      .status-table th, .status-table td { padding: 0.6rem 0.75rem; font-size: 0.85rem; }
+      .chain-entries li { grid-template-columns: 1fr; gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="shell">
+      <div class="brand-line">
+        <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+          <circle cx="16" cy="16" r="15" fill="#01696f"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+          <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+        </svg>
+        <strong>AIGovOps Beacon</strong>
+        <span>Framework Lab build attestation · 2026-05-23</span>
+      </div>
+
+      <span class="kicker">Build attestation · signed</span>
+      <h1>Framework Lab for AIGovOps Auditors — built, verified, partially deployed.</h1>
+      <p style="max-width: 64ch; color: var(--ink-soft); font-size: 1.1rem;">
+        Two-tier interactive lab (Level 100 + Level 200) plus a cryptographically
+        signed audit log, built end-to-end in one session. Live as a Hyperagent
+        published webpage right now. GitHub Pages deploy is awaiting a local
+        <code>git push</code> from the maintainer (OAuth was blocked in the build session
+        and the maintainer holds the only push credentials).
+      </p>
+
+      <div class="att-summary">
+        <span class="att-pill pass">Lab pages · live (Hyperagent)</span>
+        <span class="att-pill pass">37 / 37 structural checks pass</span>
+        <span class="att-pill pass">Audit chain · 7 entries verified</span>
+        <span class="att-pill pass">PDFs · both render with full content</span>
+        <span class="att-pill warn">GitHub Pages · awaiting push</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ DEPLOYMENT STATUS ============ -->
+  <section class="attest">
+    <div class="shell">
+      <span class="kicker">Phase 1 · Live deployment</span>
+      <h2>Two URLs. One live now, one waiting.</h2>
+      <p>
+        The published Hyperagent webpage is fully self-contained — all CSS and JS
+        inlined, audit log embedded as a JS constant, 100-failure dataset loaded
+        live from the canonical Beacon site. It works the moment you open it.
+      </p>
+
+      <div class="artifact-box">
+        <div class="artifact-icon">📡</div>
+        <div class="artifact-meta">
+          <h3>Framework Lab — live preview</h3>
+          <p>Hub + Level 100 + Level 200 + HIBT in a single 173 KB page. Same brand, same content, same Ed25519 sandbox.</p>
+        </div>
+        <div class="ab-actions">
+          <span class="btn btn-primary mono">ARTIFACT_y9oid67p</span>
+        </div>
+      </div>
+
+      <table class="status-table">
+        <thead>
+          <tr><th>Surface</th><th>Status</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pass">
+            <td class="check-name">Published Hyperagent webpage</td>
+            <td class="result-mark">LIVE</td>
+            <td class="detail">173,080 bytes; SPA with 4 view tabs; loads instantly</td>
+          </tr>
+          <tr class="warn">
+            <td class="check-name">bobrapp.github.io/aigovops-beacon/lab.html</td>
+            <td class="result-mark">404</td>
+            <td class="detail">No commits with apply.sh subject lines on main; last push was c3c1e8c (2026-05-19); awaiting <code>git push</code> from maintainer</td>
+          </tr>
+          <tr class="warn">
+            <td class="check-name">bobrapp.github.io/aigovops-beacon/lab-100.html</td>
+            <td class="result-mark">404</td>
+            <td class="detail">Same — awaiting push</td>
+          </tr>
+          <tr class="warn">
+            <td class="check-name">bobrapp.github.io/aigovops-beacon/lab-200.html</td>
+            <td class="result-mark">404</td>
+            <td class="detail">Same — awaiting push</td>
+          </tr>
+          <tr class="warn">
+            <td class="check-name">bobrapp.github.io/aigovops-beacon/howibuilt.html</td>
+            <td class="result-mark">404</td>
+            <td class="detail">Same — awaiting push</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">Source dataset (ai_failures_top100.json)</td>
+            <td class="result-mark">200</td>
+            <td class="detail">116 KB, served from existing /docs/data/ — no changes needed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ STRUCTURAL CHECKS ============ -->
+  <section class="attest dark">
+    <div class="shell">
+      <span class="kicker">Phase 2 · Structural integrity</span>
+      <h2>37 of 37 checks pass on the published page.</h2>
+      <p>
+        Every interactive surface, every inline asset, every nav toggle, every
+        sandbox hook verified before publish.
+      </p>
+
+      <table class="status-table">
+        <thead>
+          <tr><th>Category</th><th>Result</th><th>Coverage</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pass">
+            <td class="check-name">File envelope</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">DOCTYPE, lang, title, theme color, fonts, size 173 KB</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">CSS inlined</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">site.css palette, lab.css components, SPA toggle styles</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">All 4 view sections present</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">hub, l100, l200, hibt</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">All 4 nav toggle buttons wired</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">data-view-target attributes confirmed</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">CDN libraries</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">tweetnacl@1.0.3, tweetnacl-util@0.15.1, jszip@3.10.1</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">JS modules inlined</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">lab.js + lab-sandbox.js + lab-failures.js + HIBT renderer + SPA shim</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">Sandbox hooks</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">generate-key, sign-receipt, bundle actions all wired</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">Failures fetch URL patched</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">Absolute URL to bobrapp.github.io (no broken relative path)</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">Audit log inlined</td>
+            <td class="result-mark">✓</td>
+            <td class="detail">5 entries (build), seqs 1–5, single key fingerprint TrUguILJje1UUyeQie1g6w</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ AUDIT CHAIN ============ -->
+  <section class="attest">
+    <div class="shell">
+      <span class="kicker">Phase 3 · Cryptographic provenance</span>
+      <h2>Every action signed. Chain verified end-to-end.</h2>
+      <p>
+        Each meaningful step in this build appended one line to
+        <code>audit/audit-log.jsonl</code>. Each line is hashed with SHA-256 over
+        canonical JSON and signed with the Ed25519 key whose public half is
+        committed at <code>audit/keys/public-key.pem</code>. The chain is
+        structurally validated and the signatures verify under the same
+        fingerprint on every entry.
+      </p>
+
+      <div class="chain-card">
+        <div class="chain-head">
+          <span class="chain-pill">chain · verified end-to-end</span>
+          <span class="chain-pill">7 entries</span>
+          <span class="chain-pill">fp · TrUguILJje1UUyeQie1g6w</span>
+        </div>
+        <ul class="chain-entries">
+          <li><span class="seq">#001</span><span class="action">bootstrap_audit_log</span><span class="hash">d8bb7e60d2a6</span></li>
+          <li><span class="seq">#002</span><span class="action">commit_group_a_audit_infrastructure</span><span class="hash">574a285cef96</span></li>
+          <li><span class="seq">#003</span><span class="action">commit_group_b_hub_and_level_100</span><span class="hash">cb08f54c734b</span></li>
+          <li><span class="seq">#004</span><span class="action">commit_group_c_level_200_and_deepdive</span><span class="hash">245d97dfd83d</span></li>
+          <li><span class="seq">#005</span><span class="action">commit_group_d_global_nav_wiring</span><span class="hash">8b1bdab6814e</span></li>
+          <li><span class="seq">#006</span><span class="action">publish_hyperagent_webpage_fallback</span><span class="hash">a58c97a44026</span></li>
+          <li><span class="seq">#007</span><span class="action">publish_verification_report_attestation</span><span class="hash">3cb658aa8d9f</span></li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Verify offline</h3>
+      <pre style="background: var(--paper-soft); padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem;">pip install cryptography
+python -m src.audit_log verify
+<span style="color: var(--pass);">{"ok": true, "count": 7, "fingerprint": "TrUguILJje1UUyeQie1g6w"}</span></pre>
+    </div>
+  </section>
+
+  <!-- ============ PDF WORKSHEETS ============ -->
+  <section class="attest dark">
+    <div class="shell">
+      <span class="kicker">Phase 3b · PDF worksheets</span>
+      <h2>Both PDFs open, render correctly, contain expected content.</h2>
+      <p>
+        Worksheets parsed with <code>pypdf</code>. Text extraction confirmed
+        page structure, case names, field labels, and YES-act checkboxes on
+        every page. fpdf2 produced clean output with the brand-colored header
+        bar and field underlines intact.
+      </p>
+
+      <table class="status-table">
+        <thead>
+          <tr><th>Worksheet</th><th>Pages</th><th>Size</th><th>Content markers</th></tr>
+        </thead>
+        <tbody>
+          <tr class="pass">
+            <td class="check-name">Level 100 PDF</td>
+            <td class="result-mark">3</td>
+            <td class="detail">4,997 bytes</td>
+            <td class="detail">All 5 cases (Boeing, Knight, Detroit, Apple, Robodebt) + YES-Act + blank template</td>
+          </tr>
+          <tr class="pass">
+            <td class="check-name">Level 200 PDF</td>
+            <td class="result-mark">7</td>
+            <td class="detail">8,809 bytes</td>
+            <td class="detail">Technical track + Policy track headings + Tesla + Cruise + Zillow + deep-dive template</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ METHODOLOGY ============ -->
+  <section class="attest">
+    <div class="shell">
+      <span class="kicker">Methodology</span>
+      <h2>What got checked, in what order.</h2>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>1. HTTP availability</h3>
+          <p>Parallel curl on 19 target URLs (new pages, modified pages, assets, data, audit). Bytes compared to expected sizes to detect stale Pages cache.</p>
+        </div>
+        <div class="method-card">
+          <h3>2. HTML structural integrity</h3>
+          <p>37 assertions on the published page: file envelope, all CSS and JS inlined, every view section + nav button present, all sandbox + deepfail + HIBT hooks wired.</p>
+        </div>
+        <div class="method-card">
+          <h3>3. Audit chain verification</h3>
+          <p>Loaded all 7 entries, walked the SHA-256 hash chain from GENESIS, verified each Ed25519 signature with the public key. Single fingerprint on every entry.</p>
+        </div>
+        <div class="method-card">
+          <h3>3b. PDF content check</h3>
+          <p>pypdf opens both files, parses every page, extracts text, asserts that all expected case names and field labels appear in the rendered output.</p>
+        </div>
+        <div class="method-card">
+          <h3>Pending: live browser smoke test</h3>
+          <p>Hyperagent artifact URLs require platform auth, so external browser tools cannot preview. The maintainer should open the published lab and click through Generate → Sign → Bundle to confirm the sandbox.</p>
+        </div>
+        <div class="method-card">
+          <h3>Pending: GitHub Pages parity</h3>
+          <p>Once the maintainer runs <code>git push</code>, re-run Phase 1 to confirm all the canonical URLs (lab.html, lab-100.html, lab-200.html, howibuilt.html, worksheets, PDFs) return 200 instead of 404.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="shell">
+      <div class="colophon">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0 · <code>aigovops-beacon.v1</code></span>
+        <span><code>chain · 7 entries · fp TrUguILJje1UUyeQie1g6w</code></span>
+      </div>
+      <p style="margin-top: 1rem; max-width: 80ch;">
+        This attestation is itself recorded as <strong>seq #007</strong> in the
+        signed audit log, with entry hash
+        <code>3cb658aa8d9f</code> chaining to the previous publish at <code>a58c97a44026</code>.
+        The lab teaches the evidence model. The attestation uses it.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

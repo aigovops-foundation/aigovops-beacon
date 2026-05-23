@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Framework Lab — pre-event diagnostic</title>
+  <meta name="description" content="30-second check that your browser is ready for the AIGovOps Foundation Framework Lab. Tests WebCrypto, CDN access, localStorage, and CORS." />
+  <meta name="theme-color" content="#01696f" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --hydra-teal: #01696f;
+      --hydra-teal-soft: #d8ecee;
+      --signal-green: #2ecc71;
+      --signal-green-soft: #d8f3df;
+      --ink: #0e1b1c;
+      --ink-soft: #3a4a4b;
+      --ink-faint: #7a8889;
+      --paper: #fbfaf6;
+      --paper-soft: #f1efe7;
+      --paper-card: #ffffff;
+      --border: #d8d4c4;
+      --pass: #1f7a3f;
+      --fail: #b53a2a;
+      --warn: #c08a14;
+      --shadow-sm: 0 1px 0 rgba(14,27,28,0.06), 0 2px 8px -4px rgba(14,27,28,0.08);
+      --shadow-md: 0 1px 0 rgba(14,27,28,0.08), 0 12px 28px -14px rgba(14,27,28,0.16);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: "Inter", system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .shell { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+    code, .mono { font-family: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+    a { color: var(--hydra-teal); }
+    h1 { font-size: clamp(2rem, 1rem + 3vw, 3rem); letter-spacing: -0.03em; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.4rem; letter-spacing: -0.02em; margin: 0 0 1rem; }
+    .kicker { display: inline-flex; align-items: center; gap: 0.5em; font-family: "DM Mono", monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--hydra-teal); margin-bottom: 1rem; }
+    .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--signal-green); }
+
+    header.diag-hero { padding: 3rem 0 2rem; background: linear-gradient(180deg, var(--hydra-teal-soft) 0%, var(--paper) 100%); border-bottom: 1px solid var(--border); }
+    .brand-line { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.5rem; font-weight: 600; color: var(--ink-soft); }
+
+    section.diag-section { padding: 2.5rem 0; }
+    section.diag-section.dark { background: var(--paper-soft); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .verdict {
+      padding: 2rem;
+      border-radius: 16px;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+    }
+    .verdict.pass { border-color: var(--signal-green); background: linear-gradient(135deg, var(--signal-green-soft) 0%, var(--paper-card) 100%); }
+    .verdict.fail { border-color: var(--fail); background: linear-gradient(135deg, #fbe5e0 0%, var(--paper-card) 100%); }
+    .verdict h2 { margin: 0 0 0.5rem; }
+    .verdict .verdict-icon { font-size: 3rem; line-height: 1; margin-bottom: 1rem; }
+    .verdict.pass .verdict-icon { color: var(--pass); }
+    .verdict.fail .verdict-icon { color: var(--fail); }
+    .verdict p { margin: 0; color: var(--ink-soft); }
+    .verdict .verdict-link { display: inline-block; margin-top: 1rem; padding: 0.7em 1.4em; border-radius: 999px; background: var(--hydra-teal); color: white; text-decoration: none; font-weight: 600; transition: background 180ms; }
+    .verdict .verdict-link:hover { background: #014c50; }
+
+    .check-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.6rem; }
+    .check-item {
+      display: grid;
+      grid-template-columns: 32px 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      transition: border-color 180ms;
+    }
+    .check-item.pass { border-color: #b9e6c8; }
+    .check-item.fail { border-color: #f0b9ad; }
+    .check-item.pending { border-color: var(--border); }
+    .check-icon { font-size: 1.4rem; line-height: 1; text-align: center; }
+    .check-item.pass .check-icon { color: var(--pass); }
+    .check-item.fail .check-icon { color: var(--fail); }
+    .check-item.pending .check-icon { color: var(--ink-faint); animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    .check-body strong { display: block; color: var(--ink); margin-bottom: 0.2em; }
+    .check-body span { color: var(--ink-soft); font-size: 0.85rem; }
+    .check-body code { font-family: "DM Mono", monospace; font-size: 0.8rem; background: var(--paper-soft); padding: 0.1em 0.4em; border-radius: 4px; }
+    .check-result { font-family: "DM Mono", monospace; font-size: 0.78rem; color: var(--ink-faint); text-align: right; }
+    .check-item.pass .check-result { color: var(--pass); }
+    .check-item.fail .check-result { color: var(--fail); font-weight: 600; }
+
+    .remediation { margin-top: 1rem; padding: 1rem; background: #fdf3da; border: 1px solid #f0d99a; border-radius: 10px; display: none; }
+    .remediation.show { display: block; }
+    .remediation h3 { font-size: 1rem; color: var(--warn); margin: 0 0 0.5rem; }
+    .remediation ul { margin: 0; padding-left: 1.5rem; }
+    .remediation li { color: var(--ink-soft); margin-bottom: 0.4rem; font-size: 0.9rem; }
+
+    footer.diag-foot { padding: 2rem 0; background: var(--paper-soft); border-top: 1px solid var(--border); text-align: center; color: var(--ink-faint); font-size: 0.85rem; }
+    footer.diag-foot code { color: var(--ink-soft); }
+
+    @media (max-width: 600px) {
+      .shell { padding: 0 1.25rem; }
+      .check-item { grid-template-columns: 32px 1fr; }
+      .check-result { grid-column: 1 / -1; text-align: left; padding-left: 48px; margin-top: -4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="diag-hero">
+    <div class="shell">
+      <div class="brand-line">
+        <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+          <circle cx="16" cy="16" r="15" fill="#01696f"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+          <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+        </svg>
+        <span>AIGovOps Beacon &middot; pre-event diagnostic</span>
+      </div>
+      <span class="kicker">30-second check &middot; before the lab</span>
+      <h1>Will your browser run the Framework Lab?</h1>
+      <p style="color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem;">
+        Run this once before the AIGovOps Foundation virtual meeting. The lab runs
+        entirely in your browser — no install, no account, no server uploads. This
+        page confirms your browser has every capability the lab needs.
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="diag-section">
+      <div class="shell">
+        <div class="verdict pending" id="verdict">
+          <div class="verdict-icon" id="verdictIcon">⟳</div>
+          <h2 id="verdictTitle">Running checks…</h2>
+          <p id="verdictDetail">This takes 5-10 seconds.</p>
+        </div>
+
+        <ul class="check-list" id="checkList">
+          <li class="check-item pending" data-check="browser"><span class="check-icon">○</span><div class="check-body"><strong>Modern browser</strong><span>Chrome, Edge, Safari, or Firefox — last 2 years</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="js"><span class="check-icon">○</span><div class="check-body"><strong>JavaScript enabled</strong><span>Required for every interactive surface</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="webcrypto"><span class="check-icon">○</span><div class="check-body"><strong>Web Crypto API</strong><span><code>crypto.subtle</code> — for key fingerprints</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="localstorage"><span class="check-icon">○</span><div class="check-body"><strong>localStorage available</strong><span>Saves your progress and quiz answers</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="signtest"><span class="check-icon">○</span><div class="check-body"><strong>Live Ed25519 sign+verify</strong><span>Generates a key, signs canonical bytes, verifies in-browser</span></div><span class="check-result">…</span></li>
+        </ul>
+
+        <div class="remediation" id="remediation">
+          <h3>What to do</h3>
+          <ul id="remediationList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="diag-section dark">
+      <div class="shell">
+        <span class="kicker">What this checks</span>
+        <h2>The lab needs each of these. Here's why.</h2>
+        <p style="color: var(--ink-soft);">The Framework Lab is the "evidence model in your browser" — keys generated locally, receipts signed locally, bundles downloaded locally. Every check above corresponds to one feature you'll use during the 30-minute walk-through.</p>
+        <ul style="color: var(--ink-soft); font-size: 0.95rem; line-height: 1.7;">
+          <li><strong>Modern browser + JavaScript</strong> — table-stakes; if these fail the lab won't load at all.</li>
+          <li><strong>Web Crypto API</strong> — used to fingerprint your Ed25519 public key for the certificate diploma.</li>
+          <li><strong>localStorage</strong> — saves your progress between sections and stores quiz answers. If disabled, the lab still works but progress resets on every reload.</li>
+          <li><strong>tweetnacl + JSZip</strong> — the Ed25519 signing library and the bundle-zipper. Both load from <code>cdn.jsdelivr.net</code>. If your network blocks the CDN, the sandbox in Section 4 of Level 100 won't work.</li>
+          <li><strong>CORS to bobrapp.github.io</strong> — the 100-failure deep-dive table in Level 200 fetches the dataset from the canonical Beacon repo. If this fails, Level 200 still works for everything except the deep-dive.</li>
+          <li><strong>Live sign + verify</strong> — end-to-end smoke test. Generates an Ed25519 keypair, signs canonical bytes, verifies the signature. If this passes, the Level 100 sandbox will work.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="diag-section">
+      <div class="shell">
+        <span class="kicker">Once you're green</span>
+        <h2>You're set. See you at the lab.</h2>
+        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
+        <p style="font-family: 'DM Mono', monospace; font-size: 0.9rem;">Email <strong>LAB</strong> to <a href="mailto:bob.rapp@aigovops.community,ken.johnston@aigovops.community?subject=LAB%20pre-event%20question">bob.rapp@aigovops.community and ken.johnston@aigovops.community</a>.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="diag-foot">
+    <div class="shell">
+      <p>© 2026 AIGovOps Foundation · Apache-2.0 · <code>aigovops-beacon.v1</code></p>
+      <p>The same evidence model the lab teaches.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var DATA_URL = 'https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json';
+    var REMEDIATION = {
+      browser:    'Update your browser to the latest Chrome, Edge, Safari, or Firefox.',
+      js:         'Enable JavaScript in your browser settings (extremely rare to be off).',
+      webcrypto:  'Your browser is too old. Upgrade to Chrome 60+, Firefox 60+, Safari 11+, Edge 79+.',
+      localstorage: 'Disable private/incognito mode, or enable storage access. The lab works without it but progress will not persist.',
+      tweetnacl:  'Your network is blocking cdn.jsdelivr.net. Ask IT to allow it, or join from a personal device on home wifi.',
+      jszip:      'Same as tweetnacl — cdn.jsdelivr.net is blocked. The sandbox will not be able to bundle receipts into a zip.',
+      dataset:    'CORS or DNS issue reaching bobrapp.github.io. Lab still works for Level 100; Level 200 deep-dive table will not populate.',
+      signtest:   'Crypto round-trip failed — likely a tweetnacl loading issue. Re-run after fixing the tweetnacl check above.'
+    };
+
+    var checks = {};
+    document.querySelectorAll('.check-item[data-check]').forEach(function (el) {
+      checks[el.getAttribute('data-check')] = el;
+    });
+
+    function mark(name, ok, detail) {
+      var el = checks[name];
+      if (!el) return;
+      el.classList.remove('pending');
+      el.classList.add(ok ? 'pass' : 'fail');
+      el.querySelector('.check-icon').textContent = ok ? '✓' : '✗';
+      el.querySelector('.check-result').textContent = detail || (ok ? 'OK' : 'FAIL');
+    }
+
+    function updateVerdict() {
+      var allDone = Object.keys(checks).every(function (n) {
+        return !checks[n].classList.contains('pending');
+      });
+      if (!allDone) return;
+
+      var failed = Object.keys(checks).filter(function (n) {
+        return checks[n].classList.contains('fail');
+      });
+      var verdict = document.getElementById('verdict');
+      var icon = document.getElementById('verdictIcon');
+      var title = document.getElementById('verdictTitle');
+      var detail = document.getElementById('verdictDetail');
+
+      verdict.classList.remove('pending');
+      if (failed.length === 0) {
+        verdict.classList.add('pass');
+        icon.textContent = '✓';
+        title.textContent = "You're ready.";
+        detail.innerHTML = 'Every check passed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
+      } else {
+        verdict.classList.add('fail');
+        icon.textContent = '!';
+        title.textContent = failed.length + ' check' + (failed.length > 1 ? 's' : '') + ' failed.';
+        detail.innerHTML = 'See remediation below. Email <a href="mailto:bob.rapp@aigovops.community,ken.johnston@aigovops.community?subject=LAB%20diagnostic%20issue">LAB to Bob &amp; Ken</a> if you need help.';
+
+        var rem = document.getElementById('remediation');
+        var remList = document.getElementById('remediationList');
+        remList.innerHTML = failed.map(function (n) {
+          return '<li><strong>' + checks[n].querySelector('strong').textContent + '</strong> — ' + REMEDIATION[n] + '</li>';
+        }).join('');
+        rem.classList.add('show');
+      }
+    }
+
+    // CHECK 1 — Browser detection
+    var ua = navigator.userAgent.toLowerCase();
+    var browserOk = /chrome|safari|firefox|edge|edg/.test(ua) && !/msie|trident/.test(ua);
+    mark('browser', browserOk, browserOk ? 'Detected' : 'Unsupported');
+
+    // CHECK 2 — JS enabled (you wouldn't see this if not)
+    mark('js', true, 'Yes');
+
+    // CHECK 3 — WebCrypto
+    var hasCrypto = !!(window.crypto && window.crypto.subtle && window.crypto.getRandomValues);
+    mark('webcrypto', hasCrypto, hasCrypto ? 'Available' : 'Missing');
+
+    // CHECK 4 — localStorage
+    var hasStorage = false;
+    try {
+      var k = '__beacon_diag_test__';
+      localStorage.setItem(k, '1');
+      hasStorage = localStorage.getItem(k) === '1';
+      localStorage.removeItem(k);
+    } catch (e) {}
+    mark('localstorage', hasStorage, hasStorage ? 'Read/write OK' : 'Disabled');
+
+    // CHECK 5 + 6 — wait briefly for CDN scripts to load, then check globals
+    setTimeout(function () {
+      var hasNacl = !!(window.nacl && window.nacl.sign && window.nacl.util);
+      mark('tweetnacl', hasNacl, hasNacl ? 'v1.0.3 loaded' : 'Blocked');
+      var hasJsZip = !!window.JSZip;
+      mark('jszip', hasJsZip, hasJsZip ? 'v3.10.1 loaded' : 'Blocked');
+
+      // CHECK 7 — CORS to bobrapp.github.io
+      fetch(DATA_URL, { cache: 'no-store' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          var n = Array.isArray(data) ? data.length : 0;
+          mark('dataset', n > 0, n + ' cases');
+        })
+        .catch(function (err) {
+          mark('dataset', false, String(err.message || err).slice(0, 30));
+        })
+        .finally(function () {
+          // CHECK 8 — full sign + verify
+          try {
+            var kp = window.nacl.sign.keyPair();
+            var msg = window.nacl.util.decodeUTF8('{"test":"diag","ts":"' + new Date().toISOString() + '"}');
+            var sig = window.nacl.sign.detached(msg, kp.secretKey);
+            var ok = window.nacl.sign.detached.verify(msg, sig, kp.publicKey);
+            mark('signtest', ok, ok ? '64-byte sig verified' : 'Verify failed');
+          } catch (e) {
+            mark('signtest', false, String(e.message || e).slice(0, 30));
+          }
+          updateVerdict();
+        });
+    }, 600);
+  })();
+  </script>
+
+</body>
+</html>

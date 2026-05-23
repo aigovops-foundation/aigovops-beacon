@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 200 — Suitcase Lab + deep-dive · Framework Lab</title>
+  <meta name="description" content="The Suitcase Lab, the nine 20-minute lab variants, Policy-as-Code emission, the receipt API, and the full 100-failure deep-dive with framework cross-links." />
+  <meta name="theme-color" content="#01696f" />
+
+  <meta property="og:title" content="Level 200 — Suitcase Lab + 100-failure deep-dive" />
+  <meta property="og:description" content="Ship Beacon yourself. 90-minute self-paced curriculum." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/site.css" />
+  <link rel="stylesheet" href="./css/lab.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3E200%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body class="lesson-body" data-lab-level="200">
+
+  <header class="site-header">
+    <div class="shell">
+      <a href="./" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">Level 200 · Framework Lab</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="./" class="btn-ghost btn-sm desktop-only">Home</a>
+        <a href="./lab.html" class="btn-ghost btn-sm desktop-only" aria-current="page">Framework Lab</a>
+        <a href="./lab-100.html" class="btn-ghost btn-sm desktop-only">← Level 100</a>
+        <a href="./howibuilt.html" class="btn-ghost btn-sm desktop-only">How I Built This</a>
+        <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ STICKY PROGRESS BAR ============ -->
+  <div class="lesson-progress">
+    <div class="shell">
+      <span class="kicker">Level 200</span>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+      <span class="progress-pct">0% complete</span>
+      <div class="progress-actions">
+        <button class="btn-ghost btn-sm" data-action="reset-progress" type="button">Reset</button>
+        <a href="./lab-100.html" class="btn-ghost btn-sm">← Level 100</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="lesson-hero">
+      <div class="shell">
+        <span class="kicker">Suitcase + Policy-as-Code + 100-failure deep-dive</span>
+        <h1>Ship Beacon yourself.</h1>
+        <p class="lede">
+          You're past the 30-minute story. Now you get the Suitcase Lab — the
+          fastest path to a working Beacon — the nine 20-minute lab variants
+          that compose a half-day workshop, the Policy-as-Code emission that
+          turns checklists into versioned controls, the receipt API for wiring
+          your own AI calls into Beacon, and the full 100-case failure
+          deep-dive with framework cross-links.
+        </p>
+        <div class="lesson-outcomes">
+          <h2>By the end of this level you'll be able to:</h2>
+          <ol>
+            <li>Spin up a complete Beacon stack on your laptop in 60 seconds.</li>
+            <li>Choose four lab variants that compose a working 90-minute workshop.</li>
+            <li>Emit Policy-as-Code (gate YAML + OPA Rego) from a checklist outcome.</li>
+            <li>Wire a real model invocation into Beacon via the receipt API.</li>
+            <li>Cross-reference any AI failure to the framework controls and Beacon artifact that would have caught it.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 1 — Suitcase Lab ============ -->
+    <section class="lesson-section" data-section-id="suitcase" data-section-time="8 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 1 of 8</span>
+          <h2>Suitcase Lab — laptop, 60 seconds.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          A laptop-first Beacon stack. Beacon core, Studio, synth-traffic
+          replay, and an optional mock DNS service run together through Docker
+          Compose. Studio shows live receipts replayed from the 100 real AI
+          failure cases.
+        </p>
+
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto;">
+<span style="color:var(--ink-faint);"># 1. One-liner</span>
+git clone https://github.com/bobrapp/aigovops-beacon
+cd aigovops-beacon
+docker compose -f deploy/lab.yml up -d
+open http://localhost:8788
+
+<span style="color:var(--ink-faint);"># 2. Sanity check</span>
+curl -s http://localhost:8787/healthz
+<span style="color:var(--ink-faint);"># {"ok":true,"version":"2.2.0","receipts":47,"keys":1}</span>
+</pre>
+
+        <h3>What's actually running</h3>
+        <table class="ships-table">
+          <thead><tr><th>Container</th><th>Port</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td class="layer-name">beacon</td><td>8787</td><td>Receipt ingest, signing key, inventory</td></tr>
+            <tr><td class="layer-name">studio</td><td>8788</td><td>Web UI — see receipts, score frameworks, export bundles</td></tr>
+            <tr><td class="layer-name">synth-traffic</td><td>—</td><td>Replays docs/data/ai_failures_top100.json as DNS/SNI events</td></tr>
+            <tr><td class="layer-name">mock-dns</td><td>5353/udp</td><td>Optional. Pretends to be a corp resolver; logs queries</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:var(--space-4);">Studio is now showing receipts replayed live. Click any receipt → <strong>Verify</strong> → green check.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2 — Nine lab variants ============ -->
+    <section class="lesson-section" data-section-id="variants" data-section-time="12 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 2 of 8</span>
+          <h2>Nine 20-minute lab variants.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Each variant is a self-contained block. Pick four for a 90-minute
+          workshop. Pick all nine for a half-day. The 30-minute Level 100 flow
+          maps to Labs 1, 4, and 7. Labs 8 and 9 are v2.3 additions.
+        </p>
+
+        <div class="variants-grid">
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 1</div>
+            <h3>First receipt</h3>
+            <div class="variant-time">15 min · `docker compose up`</div>
+            <p>Make a real decision in Studio (e.g., approve a fine-tune). Watch the receipt land. Hash it. Verify the signature with the public key.</p>
+            <p class="variant-evidence">Evidence: one signed receipt, ready to hand off.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 2</div>
+            <h3>Discover models in your browser</h3>
+            <div class="variant-time">20 min · MV3 extension</div>
+            <p>Load the unpacked extension. Visit chatgpt.com, claude.ai, gemini.google.com, copilot.microsoft.com. Discovery tab fills with hostnames.</p>
+            <p class="variant-evidence">Evidence: discovery rows tied to user identity.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 3</div>
+            <h3>Tail a DNS log</h3>
+            <div class="variant-time">15 min · scripts/tail_dns.py</div>
+            <p>Drop a DNS query CSV in the watched folder. Run the tail script. AI hostnames light up in Studio's Discovery tab.</p>
+            <p class="variant-evidence">Evidence: every AI hostname resolved by any device.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 4</div>
+            <h3>Score a framework</h3>
+            <div class="variant-time">20 min · nist-ai-rmf-1.0</div>
+            <p>Pick a framework. Walk the 23-control checklist. Mark each ✓ / ✗ / N/A. Export the receipt bundle. Open the PDF.</p>
+            <p class="variant-evidence">Evidence: a signed bundle an auditor can reproduce.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 5</div>
+            <h3>Replay a failure</h3>
+            <div class="variant-time">15 min · Studio › Failures</div>
+            <p>Pick a case (e.g., iTutorGroup hiring discrimination, #4). Click <strong>Replay as decision</strong>. Beacon emits the receipt as if you'd reviewed it pre-deploy.</p>
+            <p class="variant-evidence">Evidence: counterfactual receipt — YES-Ship, Steady, or Recover?</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 6</div>
+            <h3>MCP attest</h3>
+            <div class="variant-time">20 min · Claude Desktop</div>
+            <p>Add the MCP config snippet to Claude Desktop. Six tools appear: record_decision, verify_receipt, query_inventory, score_framework, bundle_for_auditor, replay_case.</p>
+            <p class="variant-evidence">Evidence: every agent action gets an audit trail.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 7</div>
+            <h3>Bundle for auditor</h3>
+            <div class="variant-time">15 min · Studio › Bundle</div>
+            <p>Pick a date range, framework, scope. Download the tarball. Hand it to a partner team. They run <code>beacon verify bundle.tar.gz</code> with no other access.</p>
+            <p class="variant-evidence">Evidence: portable verification — green check, no network.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 8</div>
+            <h3>Offline walkthrough on a USB stick</h3>
+            <div class="variant-time">10 min · v2.3</div>
+            <p>Copy docs/walkthrough/ to USB. Open index.html in any browser — no network, no install. 12 screens animate the full flow. Use ←/→/Space.</p>
+            <p class="variant-evidence">Evidence: governance in a single click, no infrastructure.</p>
+          </article>
+
+          <article class="variant-card">
+            <div class="variant-num">Lab 9</div>
+            <h3>Hosted MCP + restricted agent</h3>
+            <div class="variant-time">20 min · v2.3</div>
+            <p>Run the hosted MCP on a free Render dyno. Connect Claude Desktop to your MCP /sse URL. Ask the restricted Worker to bundle 30 days for an EU AI Act audit.</p>
+            <p class="variant-evidence">Evidence: an autonomous agent whose tools are exactly the six Beacon tools.</p>
+          </article>
+
+        </div>
+
+        <h3 style="margin-top:var(--space-12);">Workshop combinations</h3>
+        <ul>
+          <li><strong>30 minutes</strong> — Lab 1 (first receipt) → Lab 4 (score a framework) → Lab 7 (bundle for auditor).</li>
+          <li><strong>90 minutes</strong> — Labs 1, 2, 4, 5, 7.</li>
+          <li><strong>Half day</strong> — All nine, in the order shown.</li>
+          <li><strong>Tabletop, no admin rights</strong> — Lab 8 (offline USB) only.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3 — Policy as Code ============ -->
+    <section class="lesson-section" id="policy-as-code" data-section-id="policy-as-code" data-section-time="10 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 3 of 8</span>
+          <h2>Policy-as-Code lab.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Beacon's <strong>Make it Policy as Code</strong> path emits gate YAML,
+          OPA <code>.rego</code>, a Governance Decision Record, and a signed
+          bundle — then opens a pull request against your governance repo.
+          Checklists become versioned controls. Meeting notes become artifacts.
+        </p>
+
+        <h3>Gate YAML (governance gate spec)</h3>
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto; font-size:var(--text-sm);">
+kind: GovernanceGate
+apiVersion: aigovops.foundation/v1
+metadata:
+  name: high-risk-ai-release
+spec:
+  framework: nist-ai-rmf
+  system: hr-screen-gpt
+  requires:
+    - human_approval
+    - signed_receipt
+    - evidence_bundle
+  block_on:
+    - missing_human_approval
+    - stale_receipt: 30d
+  emit:
+    - governance_decision_record
+    - signed_bundle</pre>
+
+        <h3>OPA Rego (enforcement)</h3>
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto; font-size:var(--text-sm);">
+package aigovops.beacon.high_risk_ai_release
+
+default allow := false
+
+allow if {
+    input.framework == "nist-ai-rmf"
+    input.system == "hr-screen-gpt"
+    has_human_approval
+    has_signed_receipt
+    has_evidence_bundle
+}
+
+has_human_approval if {
+    some i
+    input.attestations[i].kind == "human_approval"
+    input.attestations[i].verified == true
+}
+
+has_signed_receipt if {
+    some i
+    input.receipts[i].signature_ed25519
+    input.receipts[i].verified == true
+}
+
+has_evidence_bundle if {
+    input.bundle.manifest_sha256
+    input.bundle.verify_passed == true
+}</pre>
+
+        <p style="margin-top:var(--space-4);">
+          That YAML and Rego are the same artifact, in two languages. The YAML
+          is what the governance team reviews. The Rego is what the CI/CD
+          gate runs. The signed receipt is what the auditor verifies — months
+          or years later — without needing Beacon installed.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4 — Receipt API ============ -->
+    <section class="lesson-section" id="receipt-api" data-section-id="receipt-api" data-section-time="8 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 4 of 8</span>
+          <h2>Receipt API lab.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Wire a real model invocation into Beacon by posting receipt data to
+          <code>/api/v1/receipts</code> with model metadata, environment,
+          prompt, result, latency, and token counts. The Beacon server signs
+          the receipt and appends it to the NDJSON log.
+        </p>
+
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto; font-size:var(--text-sm);">
+curl -s http://127.0.0.1:8787/api/v1/receipts \
+  -H "Content-Type: application/json" \
+  -H "X-Beacon-User-Sub: oidc|alice" \
+  -H "X-Beacon-User-Email: alice@example.org" \
+  -H "X-Beacon-OIDC-Issuer: https://accounts.example.org" \
+  -d '{
+    "vendor": "OpenAI",
+    "model": "gpt-4o-mini",
+    "version": "2024-07-18",
+    "environment": "production",
+    "event_type": "invocation",
+    "prompt": "summarize the policy",
+    "result": "…",
+    "latency_ms": 312,
+    "tokens": {"in": 21, "out": 47}
+  }'</pre>
+
+        <h3>What gets signed</h3>
+        <p>Beacon canonicalizes the receipt (sorted keys, no whitespace, UTF-8) and signs the bytes with its per-instance Ed25519 key. The response includes the receipt sequence number, the entry hash, and the signature — same shape as the in-browser sandbox in Level 100.</p>
+
+        <h3>Wiring it into a production AI call</h3>
+        <p>The pattern that works in production:</p>
+        <ol>
+          <li>Wrap the model client (OpenAI, Anthropic, etc.) in a thin observer that captures vendor / model / version / latency / token counts.</li>
+          <li>POST to <code>/api/v1/receipts</code> after each call — fire-and-forget, with a local retry queue if Beacon is unreachable.</li>
+          <li>Never block the user-facing path on Beacon. The receipt is observational; the model call is independent.</li>
+        </ol>
+
+        <h3>Verify a bundle from the command line</h3>
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto; font-size:var(--text-sm);">
+cd server
+node src/cli.js verify ~/.beacon/bundles/bundle-&lt;timestamp&gt;</pre>
+        <p>Or, for the lab-style audit log that built this very page, no Node needed:</p>
+        <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto; font-size:var(--text-sm);">pip install cryptography
+python -m src.audit_log verify</pre>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 5 — Full 100-failure deep-dive ============ -->
+    <section class="lesson-section" data-section-id="deepfail" data-section-time="15 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 5 of 8</span>
+          <h2>The 100-case deep-dive.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Every public AI failure in the dataset, mapped to the framework
+          controls and the Beacon artifact that would have caught it. Filter
+          by act, framework, harm type, or sector. Click any row to expand.
+          Each row's <strong>Beacon artifact</strong> hint cross-links back to
+          the Level 200 section where that artifact lives.
+        </p>
+
+        <div class="deepfail-toolbar">
+          <input type="search" id="deepfailSearch" placeholder="Search incident, regulator, root cause…" aria-label="Search failures" />
+          <select id="deepfailAct" aria-label="Filter by YES-act">
+            <option value="all">All YES-acts</option>
+            <option value="YES-Ship AI">YES-Ship</option>
+            <option value="YES-Steady AI">YES-Steady</option>
+            <option value="YES-Recover AI">YES-Recover</option>
+          </select>
+          <select id="deepfailFramework" aria-label="Filter by framework"><option value="all">All frameworks</option></select>
+          <select id="deepfailHarm" aria-label="Filter by harm type"><option value="all">All harm types</option></select>
+          <select id="deepfailSector" aria-label="Filter by sector"><option value="all">All sectors</option></select>
+        </div>
+
+        <div class="deepfail-stats" id="deepfailStats">
+          <span class="stat">Loading…</span>
+        </div>
+
+        <div id="deepfailList" class="deepfail-list" style="margin-top: var(--space-4);">
+          <p style="color:var(--ink-faint); text-align:center; padding:var(--space-8);">Loading 100 cases…</p>
+        </div>
+
+        <p style="margin-top:var(--space-6); font-size:var(--text-sm); color:var(--ink-faint);">
+          Source: <a href="./data/ai_failures_top100.json" target="_blank" rel="noopener">docs/data/ai_failures_top100.json</a>.
+          Methodology mirrors the home-page failures browser.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 6 — Worksheet ============ -->
+    <section class="lesson-section" data-section-id="worksheet" data-section-time="5 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 6 of 8</span>
+          <h2>Pick your cases — Level 200 worksheet.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          Pick five technical cases and five policy-facing cases from the
+          deep-dive above. For each, identify the missing Beacon artifact and
+          the framework controls that apply. Use the worksheet to capture your
+          analysis — bring it to your team's next AI governance review.
+        </p>
+        <p>
+          <a href="./lab/worksheet-200.html" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="./downloads/lab-worksheet-200.pdf" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+        </p>
+
+        <h3>Suggested splits</h3>
+        <table class="ships-table">
+          <thead><tr><th>Audience</th><th>Best examples</th><th>Main prompt</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="layer-name">Technical teams</td>
+              <td>Boeing 737 MAX, Tesla Autopilot, Knight Capital, Cruise robotaxi, deployment failures</td>
+              <td>Where would you instrument Beacon first?</td>
+            </tr>
+            <tr>
+              <td class="layer-name">Policy teams</td>
+              <td>Robodebt, UK A-levels, Apple Card, Detroit FR, iTutorGroup</td>
+              <td>What evidence should have existed before harm?</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 7 — Advanced quiz ============ -->
+    <section class="lesson-section" data-section-id="quiz-200" data-section-time="4 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 7 of 8</span>
+          <h2>Check yourself — advanced.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+
+        <div class="quiz">
+          <div class="quiz-q" data-qid="l200q1" data-correct="b">
+            <p class="q-text">1. Which command brings up the Suitcase Lab?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q1" value="a"><span>npm install &amp;&amp; npm start</span></label>
+              <label><input type="radio" name="l200q1" value="b"><span>docker compose -f deploy/lab.yml up -d</span></label>
+              <label><input type="radio" name="l200q1" value="c"><span>terraform apply ./suitcase</span></label>
+            </div>
+            <div class="q-explainer">Docker Compose with the lab.yml file. Beacon core, Studio, synth-traffic, and mock-dns all come up together.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l200q2" data-correct="c">
+            <p class="q-text">2. Which lab variant is the "shortest 30-minute workshop" path?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q2" value="a"><span>All nine variants in order.</span></label>
+              <label><input type="radio" name="l200q2" value="b"><span>Lab 2 (browser discovery) plus Lab 6 (MCP attest).</span></label>
+              <label><input type="radio" name="l200q2" value="c"><span>Lab 1 (first receipt), Lab 4 (score a framework), Lab 7 (bundle for auditor).</span></label>
+            </div>
+            <div class="q-explainer">The 30-minute path is the through-line of the Level 100 flow — make a decision, score it, hand off the bundle.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l200q3" data-correct="b">
+            <p class="q-text">3. What does the "Make it Policy as Code" path emit?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q3" value="a"><span>Just a PDF of the checklist.</span></label>
+              <label><input type="radio" name="l200q3" value="b"><span>Gate YAML, OPA Rego, a Governance Decision Record, and a signed bundle.</span></label>
+              <label><input type="radio" name="l200q3" value="c"><span>A Slack notification to the auditor.</span></label>
+            </div>
+            <div class="q-explainer">The four artifacts compose the builder-to-auditor bridge. The YAML is review-able; the Rego is enforce-able; the GDR is documentation; the bundle is portable evidence.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l200q4" data-correct="c">
+            <p class="q-text">4. The Receipt API endpoint is —</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q4" value="a"><span>POST /api/auditor</span></label>
+              <label><input type="radio" name="l200q4" value="b"><span>POST /receipts</span></label>
+              <label><input type="radio" name="l200q4" value="c"><span>POST /api/v1/receipts</span></label>
+            </div>
+            <div class="q-explainer">Versioned, plural, namespaced under /api. The receipt body uses headers like X-Beacon-User-Sub and X-Beacon-OIDC-Issuer to bind the actor.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l200q5" data-correct="b">
+            <p class="q-text">5. The Beacon artifact most likely to have caught Robodebt is —</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q5" value="a"><span>An MCP tool for filing welfare claims.</span></label>
+              <label><input type="radio" name="l200q5" value="b"><span>A pre-deployment governance gate requiring legal sign-off, plus per-decision receipts with appeal and human-review fields.</span></label>
+              <label><input type="radio" name="l200q5" value="c"><span>A faster DNS log tail.</span></label>
+            </div>
+            <div class="q-explainer">Robodebt was a legality failure — the algorithm lacked authority. A governance gate would have forced the legal review BEFORE the algorithm ran against citizens.</div>
+          </div>
+
+          <div class="quiz-q" data-qid="l200q6" data-correct="c">
+            <p class="q-text">6. Why is the offline USB walkthrough (Lab 8) useful?</p>
+            <div class="q-opts">
+              <label><input type="radio" name="l200q6" value="a"><span>It uses less power than Docker.</span></label>
+              <label><input type="radio" name="l200q6" value="b"><span>It's faster than the hosted MCP.</span></label>
+              <label><input type="radio" name="l200q6" value="c"><span>It's the smallest unit of governance evidence you can hand someone in one click — no network, no install, no admin rights.</span></label>
+            </div>
+            <div class="q-explainer">Sometimes you need to demonstrate Beacon in a room with no internet, on a laptop with no admin rights. The USB walkthrough proves the model still works there.</div>
+          </div>
+
+          <div class="quiz-summary">
+            <span>Score · <strong data-quiz-score>0 / 6</strong></span>
+            <span data-quiz-answered>0 answered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 8 — Completion attestation ============ -->
+    <section class="lesson-section" data-section-id="completion-200" data-section-time="3 min">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 8 of 8</span>
+          <h2>Completion standard — advanced.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">You've completed Level 200 when you can say all four statements clearly.</p>
+        <div class="attest">
+          <h2>Self-attestation</h2>
+          <ul class="attest-items">
+            <li><label><input type="checkbox" data-attest-n="1"><span class="attest-item-text"><strong>1.</strong> I can launch the Suitcase Lab and confirm it's signing receipts.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="2"><span class="attest-item-text"><strong>2.</strong> I can choose 4-9 lab variants for a specific workshop length and audience.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="3"><span class="attest-item-text"><strong>3.</strong> I can emit Policy-as-Code (gate YAML + Rego) from a checklist outcome and explain what it enforces.</span></label></li>
+            <li><label><input type="checkbox" data-attest-n="4"><span class="attest-item-text"><strong>4.</strong> I can cross-reference any case in the 100-failure dataset to the framework controls and the Beacon artifact that would have caught it.</span></label></li>
+          </ul>
+          <div class="attest-final">
+            <h3>Level 200 complete.</h3>
+            <p>You can ship Beacon yourself. Spin up the Suitcase Lab for stakeholders. Pick lab variants for any audience. Emit Policy-as-Code that turns checklists into versioned controls. And cross-reference any failure to the Beacon artifact that would have caught it.</p>
+            <p>Want to verify how this lab was built? Every commit is in a signed Ed25519 audit log.</p>
+            <p class="kicker"><a href="./howibuilt.html" class="btn-primary btn-sm">How I Built This →</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-colophon">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0 · <a href="./lab.html">Framework Lab</a> · <a href="./howibuilt.html">How I Built This</a></span>
+        <span>YES-Ship · YES-Steady · YES-Recover</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Reuse the libraries already loaded by Beacon's index -->
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="./js/lab.js" defer></script>
+  <script src="./js/lab-failures.js" defer></script>
+</body>
+</html>

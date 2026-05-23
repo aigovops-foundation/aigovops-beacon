@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How I Built This — AIGovOps Beacon</title>
+  <meta name="description" content="Cryptographically signed build log for AIGovOps Beacon. Every meaningful action recorded with Ed25519 signatures and a SHA-256 hash chain." />
+  <meta name="theme-color" content="#01696f" />
+
+  <meta property="og:title" content="How I Built This — AIGovOps Beacon" />
+  <meta property="og:description" content="Beacon is built with the same evidence model it teaches. Verify the chain yourself." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./css/site.css" />
+  <style>
+    /* HIBT page — self-contained inline styles. Will be promoted to lab.css later. */
+    .hibt-body { background: var(--paper); }
+    .hibt-main { padding-bottom: var(--space-16); }
+    .hibt-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--border-soft); }
+    .hibt-hero h1 { max-width: 22ch; }
+    .hibt-status { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-6) 0 var(--space-3); }
+    .hibt-pill { display: inline-flex; align-items: center; padding: 0.35em 0.9em; border-radius: 999px;
+      font-family: "DM Mono", ui-monospace, monospace; font-size: var(--text-sm); background: var(--paper-card);
+      border: 1px solid var(--border); color: var(--ink-soft); }
+    .hibt-pill.pass { background: var(--signal-green-soft); border-color: #b9e6c8; color: var(--pass); }
+    .hibt-pill.fail { background: #fbe5e0; border-color: #f0b9ad; color: var(--fail); }
+    .hibt-howto { margin-top: var(--space-4); }
+    .hibt-howto code { background: var(--paper-soft); padding: 0.2em 0.5em; border-radius: 4px; font-size: var(--text-sm); }
+    .hibt-log-wrap { padding: var(--space-12) 0; }
+    .hibt-toolbar { display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-6); flex-wrap: wrap; }
+    .hibt-toolbar input { flex: 1; min-width: 240px; padding: 0.7em 1em; border-radius: 999px;
+      border: 1px solid var(--border); font: inherit; background: var(--paper-card); }
+    .hibt-toolbar input:focus { outline: 2px solid var(--hydra-teal); outline-offset: 2px; }
+    .hibt-log { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-4); }
+    .hibt-entry { background: var(--paper-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: var(--space-6); box-shadow: var(--shadow-sm); }
+    .hibt-entry-head { display: flex; align-items: baseline; gap: var(--space-3); margin-bottom: var(--space-3);
+      padding-bottom: var(--space-3); border-bottom: 1px dashed var(--border-soft); flex-wrap: wrap; }
+    .hibt-seq { font-family: "DM Mono", monospace; color: var(--hydra-teal); font-weight: 600; }
+    .hibt-action { font-weight: 600; color: var(--ink); }
+    .hibt-ts { font-family: "DM Mono", monospace; font-size: var(--text-sm); color: var(--ink-faint); margin-left: auto; }
+    .hibt-entry-body p { margin: 0 0 var(--space-2) 0; max-width: none; }
+    .hibt-asset { display: inline-block; background: var(--paper-soft); padding: 0.15em 0.5em; border-radius: 4px;
+      font-size: var(--text-sm); margin: 0 0.2em 0.2em 0; }
+    .hibt-meta { font-size: var(--text-sm); color: var(--ink-faint); }
+    .hibt-receipt { margin-top: var(--space-3); }
+    .hibt-receipt summary { cursor: pointer; color: var(--hydra-teal); font-size: var(--text-sm); }
+    .hibt-receipt-fields { display: grid; grid-template-columns: max-content 1fr; gap: 0.3em 1em;
+      margin-top: var(--space-3); padding: var(--space-3); background: var(--paper-soft); border-radius: 8px;
+      font-family: "DM Mono", monospace; font-size: var(--text-sm); }
+    .hibt-receipt-fields dt { color: var(--ink-faint); }
+    .hibt-receipt-fields dd { margin: 0; }
+    .hibt-loading, .hibt-empty { text-align: center; color: var(--ink-faint); padding: var(--space-8); }
+    .hibt-explain { padding: var(--space-12) 0; border-top: 1px solid var(--border-soft); background: var(--paper-soft); }
+    .hibt-schema dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.7em 1.5em; max-width: 64ch; }
+    .hibt-schema dt { font-family: "DM Mono", monospace; color: var(--hydra-teal); }
+    .hibt-schema dd { margin: 0; color: var(--ink-soft); }
+  </style>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body class="hibt-body">
+
+  <header class="site-header">
+    <div class="shell">
+      <a href="./" class="brand" aria-label="AIGovOps Beacon home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32">
+            <circle cx="16" cy="16" r="15" fill="#01696f"/>
+            <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+            <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          </svg>
+        </span>
+        <span class="brand-name">
+          AIGovOps Beacon
+          <span class="foundation">AIGovOps Foundation</span>
+        </span>
+      </a>
+      <nav class="nav-actions" aria-label="Primary">
+        <a href="./" class="btn-ghost btn-sm desktop-only">Home</a>
+        <a href="./lab.html" class="btn-ghost btn-sm desktop-only">Framework Lab</a>
+        <a href="./quiz.html" class="btn-ghost btn-sm desktop-only">Practitioner Quiz</a>
+        <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hibt-main">
+    <section class="hibt-hero">
+      <div class="shell">
+        <span class="kicker">How I Built This · Signed build log</span>
+        <h1>Beacon is built with the same evidence model it teaches.</h1>
+        <p class="lede">
+          Every meaningful action on this repo appends one signed JSON line to
+          <code>audit/audit-log.jsonl</code>. Each line carries an Ed25519
+          signature over canonical-JSON bytes and a SHA-256 hash chain back
+          to <code>GENESIS</code>. The public key lives at
+          <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
+          You can verify the chain offline with
+          <code>python -m src.audit_log verify</code>.
+        </p>
+
+        <div class="hibt-status" id="hibtStatus" aria-live="polite">
+          <span class="hibt-pill" id="hibtChainStatus">chain · loading…</span>
+          <span class="hibt-pill" id="hibtCount">— entries</span>
+          <span class="hibt-pill" id="hibtFingerprint">fp · —</span>
+        </div>
+
+        <p class="kicker hibt-howto">
+          <strong>Verify yourself:</strong>
+          <code>git clone https://github.com/bobrapp/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
+        </p>
+      </div>
+    </section>
+
+    <section class="hibt-log-wrap">
+      <div class="shell">
+        <div class="hibt-toolbar">
+          <input type="search" id="hibtSearch" placeholder="Search action, prompt, result, asset…" aria-label="Search build log" />
+          <span class="kicker" id="hibtFilterStatus">showing all entries</span>
+        </div>
+        <ol class="hibt-log" id="hibtLog" aria-live="polite">
+          <li class="hibt-loading">Loading signed build log…</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="hibt-explain">
+      <div class="shell">
+        <span class="kicker">What's in each receipt</span>
+        <h2>The schema</h2>
+        <div class="hibt-schema">
+          <dl>
+            <dt><code>seq</code></dt><dd>Monotonic counter from 1.</dd>
+            <dt><code>timestamp_utc</code></dt><dd>ISO 8601 UTC, second precision.</dd>
+            <dt><code>user</code> · <code>user_email</code></dt><dd>Human operator who initiated the action.</dd>
+            <dt><code>model</code> · <code>platform</code> · <code>thread_id</code></dt><dd>AI assistant identity, if applicable.</dd>
+            <dt><code>action</code></dt><dd>Short verb describing the meaningful action.</dd>
+            <dt><code>prompt</code></dt><dd>Verbatim user request or summary.</dd>
+            <dt><code>result</code></dt><dd>Short outcome.</dd>
+            <dt><code>assets</code></dt><dd>Files touched.</dd>
+            <dt><code>git_sha</code></dt><dd>The commit SHA the action refers to.</dd>
+            <dt><code>prev_entry_sha256</code></dt><dd><code>GENESIS</code> for seq 1, else previous entry's hash. This is the chain.</dd>
+            <dt><code>entry_sha256</code></dt><dd>SHA-256 over canonical JSON (excluding hash, signature, fingerprint fields).</dd>
+            <dt><code>signature_ed25519</code></dt><dd>Ed25519 signature over the canonical bytes. Base64-URL no-pad.</dd>
+            <dt><code>key_fingerprint</code></dt><dd>First 16 bytes of SHA-256(public key DER), base64-URL no-pad.</dd>
+          </dl>
+        </div>
+        <p class="kicker">Source: <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell">
+      <div class="footer-colophon" style="justify-content:center; text-align:center;">
+        <span>© 2026 AIGovOps Foundation · Apache-2.0 · Built with the same evidence model Beacon teaches.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var logEl = document.getElementById('hibtLog');
+    var searchEl = document.getElementById('hibtSearch');
+    var countEl = document.getElementById('hibtCount');
+    var fpEl = document.getElementById('hibtFingerprint');
+    var chainEl = document.getElementById('hibtChainStatus');
+    var filterStatusEl = document.getElementById('hibtFilterStatus');
+
+    var state = { entries: [], q: '' };
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function shortHash(h) {
+      if (!h) return '—';
+      if (h === 'GENESIS') return 'GENESIS';
+      return h.slice(0, 8) + '…' + h.slice(-6);
+    }
+
+    function renderEntry(e) {
+      var assets = (e.assets || [])
+        .map(function (a) { return '<code class="hibt-asset">' + escapeHtml(a) + '</code>'; })
+        .join(' ');
+      var modelLine = (e.model || e.platform)
+        ? '<span class="hibt-model">' + escapeHtml(e.model || '') + (e.platform ? ' · ' + escapeHtml(e.platform) : '') + '</span>'
+        : '';
+      return ''
+        + '<li class="hibt-entry">'
+        +   '<div class="hibt-entry-head">'
+        +     '<span class="hibt-seq">#' + escapeHtml(String(e.seq).padStart(3, '0')) + '</span>'
+        +     '<span class="hibt-action">' + escapeHtml(e.action) + '</span>'
+        +     '<span class="hibt-ts">' + escapeHtml(e.timestamp_utc) + '</span>'
+        +   '</div>'
+        +   '<div class="hibt-entry-body">'
+        +     '<p class="hibt-prompt"><strong>Prompt —</strong> ' + escapeHtml(e.prompt) + '</p>'
+        +     '<p class="hibt-result"><strong>Result —</strong> ' + escapeHtml(e.result) + '</p>'
+        +     (assets ? '<p class="hibt-assets"><strong>Assets —</strong> ' + assets + '</p>' : '')
+        +     '<p class="hibt-meta">'
+        +       '<span class="hibt-user">' + escapeHtml(e.user || '') + ' · ' + escapeHtml(e.user_email || '') + '</span>'
+        +       (modelLine ? ' · ' + modelLine : '')
+        +     '</p>'
+        +     '<details class="hibt-receipt"><summary>Show signed receipt</summary>'
+        +       '<dl class="hibt-receipt-fields">'
+        +         '<dt>prev_entry_sha256</dt><dd><code>' + escapeHtml(shortHash(e.prev_entry_sha256)) + '</code></dd>'
+        +         '<dt>entry_sha256</dt><dd><code>' + escapeHtml(shortHash(e.entry_sha256)) + '</code></dd>'
+        +         '<dt>signature_ed25519</dt><dd><code>' + escapeHtml((e.signature_ed25519 || '').slice(0, 28)) + '…</code></dd>'
+        +         '<dt>key_fingerprint</dt><dd><code>' + escapeHtml(e.key_fingerprint || '—') + '</code></dd>'
+        +       '</dl>'
+        +     '</details>'
+        +   '</div>'
+        + '</li>';
+    }
+
+    function render() {
+      var q = state.q.trim().toLowerCase();
+      var rows = state.entries.filter(function (e) {
+        if (!q) return true;
+        var hay = (e.action + ' ' + e.prompt + ' ' + e.result + ' ' + (e.assets || []).join(' ')).toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+      logEl.innerHTML = rows.length
+        ? rows.slice().reverse().map(renderEntry).join('')
+        : '<li class="hibt-empty">No entries match.</li>';
+      filterStatusEl.textContent = rows.length === state.entries.length
+        ? ('showing all ' + state.entries.length + ' entries')
+        : ('showing ' + rows.length + ' of ' + state.entries.length + ' entries');
+    }
+
+    function verifyChainStructure(entries) {
+      // Lightweight structural verification: monotonic seq, chain matches.
+      // Cryptographic signature verification requires the CLI; we tell the user how.
+      if (!entries.length) return { ok: true, count: 0 };
+      var prev = 'GENESIS';
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        if (e.seq !== (i + 1)) return { ok: false, reason: 'seq gap at ' + e.seq };
+        if (e.prev_entry_sha256 !== prev) return { ok: false, reason: 'chain break at seq ' + e.seq };
+        prev = e.entry_sha256;
+      }
+      return { ok: true, count: entries.length };
+    }
+
+    if (searchEl) {
+      searchEl.addEventListener('input', function (ev) {
+        state.q = ev.target.value || '';
+        render();
+      });
+    }
+
+    fetch('../audit/audit-log.jsonl', { cache: 'no-store' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('audit-log.jsonl not found (' + r.status + ')');
+        return r.text();
+      })
+      .then(function (text) {
+        var entries = text.split('\n')
+          .map(function (line) { return line.trim(); })
+          .filter(Boolean)
+          .map(function (line) { return JSON.parse(line); });
+        state.entries = entries;
+        var check = verifyChainStructure(entries);
+        chainEl.textContent = check.ok
+          ? 'chain · structurally OK (verify signatures with python -m src.audit_log verify)'
+          : 'chain · BROKEN — ' + check.reason;
+        chainEl.classList.add(check.ok ? 'pass' : 'fail');
+        countEl.textContent = entries.length + ' entries';
+        var fp = entries.length ? entries[entries.length - 1].key_fingerprint : '—';
+        fpEl.textContent = 'fp · ' + (fp || '—');
+        render();
+      })
+      .catch(function (err) {
+        logEl.innerHTML = '<li class="hibt-empty">Could not load audit log: ' + escapeHtml(String(err.message || err)) + '</li>';
+        chainEl.textContent = 'chain · could not load';
+        chainEl.classList.add('fail');
+      });
+  })();
+  </script>
+</body>
+</html>
