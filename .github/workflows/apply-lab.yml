@@ -1,0 +1,49 @@
+# ONE-TIME workflow: downloads the Framework Lab tarball and commits it to the repo.
+# After it runs successfully, DELETE this file — it contains a temporary download URL.
+name: Apply Framework Lab
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Download Framework Lab tarball
+        run: |
+          curl -L -o /tmp/lab.tar.gz \
+          "https://hyperagent-storage-production.s3.us-east-1.amazonaws.com/integration-attachments/cmpipkp68012307ad66vebn96/ardw3wto/aigovops-beacon-framework-lab-v3.tar.gz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIA2VXG54QG3WSBI257%2F20260523%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260523T220709Z&X-Amz-Expires=14400&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEHIaCXVzLWVhc3QtMSJHMEUCIDgP4asBN6u5e6FjOxuhhhCQE3d13C67b32uWPvGtN%2FCAiEA22m7qSYHmEYEhr1YLsM686UuWqRgC1%2Flbi72sS1ehMYq6wMIOxAAGgw3MzM4NDk5Njk2NzciDIhv8I%2B4rX2vIJ4DKCrIA59ANA41YCSnmwVRwKIL7ilHUZVOruIrwxURHmGVAXwycmsHJ1%2B5vxI%2B%2FCNBVx36VWMw9pp5h6pjtz%2F8g8g50R1svWCT2uadsVnVObX4HGwZM6fLVOXMtschDoZXyzbbTsh3tPsIwgfsIpT60VUGnhB0dC6L0k12o%2FUr%2Bp05HbuxS59qyyKnsacxmkyYbHhpiI0jEbroyizPhikvM0DhCQmuSTy2KPu3b4%2Fc9yem2QkT9raEtyJIbyMILcg70xKE6GNG2Lt%2BhLQZuRMdorhM2WUTDRZb%2FdjQatnlV7eV5dds0mD5aGsP%2BXcbKjmqbVWbqpvlDIwjYsnzOILf7DJAJuSmNV5R%2FB8iXvjiHaNpnQbp4OUHgMiftNmJmTXdLyj9shWiijwxRPAxTlAAAvk6a%2FW%2BJBHRxT7r8gug4%2FYB0oBVz%2FQmnzfeUq4KIHAzRRXlIDiH01zqHNKwpI%2BMyGg0MsLFw3qT6WcFewRVmsE2WO1h1ON0%2BW%2BHgcDTRwrHHreGqEizYchkP1HGgfbNlmJa9%2BcpfOHcYmo0PYOTniuNevgh%2F5mL94NwBwAqzSbd9gHFPyBnEPotQYsdVl%2FXRuPSfVvizFik0VBkrDD9xcfQBjqlAf%2FLIfW3Bel5q4T0Yh07CI3pI7wXh5pI7RczGvL7o6A3xdbbhxwYzJcaRyKV9fEsDVrFhNX2vceqP8kY5O9i1RHqh87Bx0SUUNFf6BOuoZpPJG7axrQ%2BM%2FQOONhFkVhwjSkUbr5hOM7ixSI%2FY0ufWZk%2BbQSbLuwOyxQQuR5iy1aELN%2BGvTKgUm%2BA9xF7HUGUQqQIpLwxeHRoTFbGuycx6f24ew%2B8NQ%3D%3D&X-Amz-Signature=217aa40487f10f0b197a746420b0572182b2049c78960eb448b5b088a34a3030&X-Amz-SignedHeaders=host&response-cache-control=public%2C%20max-age%3D31536000%2C%20immutable&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+          echo "Downloaded $(stat -f%z /tmp/lab.tar.gz 2>/dev/null || stat --printf='%s' /tmp/lab.tar.gz) bytes"
+      - name: Extract lab files
+        run: |
+          tar -xzf /tmp/lab.tar.gz
+          rm /tmp/lab.tar.gz
+          echo "Extracted. File count:"
+          find . -newer .git -type f | wc -l
+      - name: Set correct audit log (5 build entries)
+        run: |
+          cp audit/audit-log-after-d.jsonl audit/audit-log.jsonl
+          echo "Audit log set to 5 entries (the build chain)"
+      - name: Update .gitignore
+        run: |
+          grep -qxF "audit/keys/private-key.pem" .gitignore || \
+          printf "\n# AIGovOps Foundation audit logger — private key NEVER committed\naudit/keys/private-key.pem\n" >> .gitignore
+      - name: Clean up files that should NOT be committed
+        run: |
+          rm -f audit/keys/private-key.pem
+          rm -f audit/audit-log-after-a.jsonl audit/audit-log-after-b.jsonl
+          rm -f audit/audit-log-after-c.jsonl audit/audit-log-after-d.jsonl
+          rm -f apply.sh APPLY.md .gitignore-additions
+          rm -f published-lab.html published-lab-offline.html
+          rm -f diagnostic.html slides.html verification-report.html
+      - name: Commit and push
+        run: |
+          git config user.name "bobrapp"
+          git config user.email "bobrapp@hotmail.com"
+          git add -A
+          git commit -m "feat(lab): Framework Lab for AIGovOps Auditors"
+          git push origin main
