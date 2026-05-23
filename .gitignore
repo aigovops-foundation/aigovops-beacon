@@ -4,3 +4,6 @@ node_modules/
 .env
 .env.local
 __pycache__/
+
+# AIGovOps Foundation audit logger — private key NEVER committed
+audit/keys/private-key.pem
