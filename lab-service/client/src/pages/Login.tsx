@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { setToken, api } from "@/lib/auth";
+import { setToken, api, apiUrl } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +26,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("/api/status").then((r) => r.json()).then(setStatus).catch(() => {});
+    fetch(apiUrl("/api/status")).then((r) => r.json()).then(setStatus).catch(() => {});
     // Auto-detect ?t= token in URL hash query (e.g. #/login?t=abc)
     const m = window.location.hash.match(/[?&]t=([a-f0-9]+)/i);
     if (m) setTraineeToken(m[1]);

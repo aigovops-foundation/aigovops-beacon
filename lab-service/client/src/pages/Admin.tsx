@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { api, getToken, setToken, useApiCall } from "@/lib/auth";
+import { api, getToken, setToken, useApiCall, apiUrl } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,7 +42,7 @@ export default function Admin() {
 
   async function refresh() {
     try {
-      const s = await fetch("/api/status").then((r) => r.json());
+      const s = await fetch(apiUrl("/api/status")).then((r) => r.json());
       setPaused(s.paused);
       setPauseMsg(s.pauseMessage);
       setTenants(s.tenants);

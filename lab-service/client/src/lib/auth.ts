@@ -5,6 +5,14 @@
  */
 import { useEffect, useState, useCallback } from "react";
 
+// API base prefix — rewritten at publish time by the deploy pipeline.
+// In dev / preview this string starts with "__", so we use a relative path.
+// In published sandboxes the literal is rewritten to "/port/5000" (or similar).
+export const API_BASE = "__PORT_5000__".startsWith("__") ? "" : "__PORT_5000__";
+export function apiUrl(path: string): string {
+  return path.startsWith("http") ? path : `${API_BASE}${path}`;
+}
+
 type Listener = (token: string | null) => void;
 const listeners = new Set<Listener>();
 let currentToken: string | null = null;
@@ -36,7 +44,7 @@ export async function api(method: string, url: string, body?: unknown): Promise<
   if (body !== undefined) headers["Content-Type"] = "application/json";
   const tok = currentToken;
   if (tok) headers["Authorization"] = `Bearer ${tok}`;
-  const res = await fetch(url, {
+  const res = await fetch(apiUrl(url), {
     method,
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,
