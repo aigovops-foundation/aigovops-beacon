@@ -4,6 +4,7 @@ import type { Request } from 'express';
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "node:http";
+import { loginIsLockedOut } from "./loginRateLimit";
 
 const app = express();
 const httpServer = createServer(app);
@@ -39,29 +40,17 @@ app.use(
 
 app.use(express.urlencoded({ extended: false, limit: "64kb" }));
 
-// Simple in-memory rate limiter for /api/admin/login (brute-force protection).
-// 8 attempts per 15 minutes per IP. Cleared by process restart.
-const loginAttempts = new Map<string, { count: number; first: number }>();
-const LOGIN_WINDOW_MS = 15 * 60 * 1000;
-const LOGIN_MAX = 8;
+// Rate limiter middleware. The actual state machine lives in ./loginRateLimit.
 app.use("/api/admin/login", (req, res, next) => {
   if (req.method !== "POST") return next();
-  const ip = (req.ip || req.socket.remoteAddress || "unknown").toString();
-  const now = Date.now();
-  const rec = loginAttempts.get(ip);
-  if (!rec || now - rec.first > LOGIN_WINDOW_MS) {
-    loginAttempts.set(ip, { count: 1, first: now });
-    return next();
-  }
-  if (rec.count >= LOGIN_MAX) {
-    const retryMs = LOGIN_WINDOW_MS - (now - rec.first);
-    res.setHeader("Retry-After", Math.ceil(retryMs / 1000).toString());
+  const lock = loginIsLockedOut();
+  if (lock.locked) {
+    res.setHeader("Retry-After", String(lock.retryAfterSec));
     return res.status(429).json({
-      error: "Too many login attempts. Try again later.",
-      retryAfterSec: Math.ceil(retryMs / 1000),
+      error: "Too many failed login attempts globally. Try again later.",
+      retryAfterSec: lock.retryAfterSec,
     });
   }
-  rec.count += 1;
   next();
 });
 

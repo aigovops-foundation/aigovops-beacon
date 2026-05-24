@@ -5,6 +5,7 @@ import { storage, db as drizzleDb } from "./storage";
 import { inventory as inventoryTable } from "@shared/schema";
 import { eq } from "drizzle-orm";
 import { bootstrap, TENANT_SEEDS, reseedTenantInventory } from "./seed";
+import { recordLoginFailure, resetLoginFailures } from "./loginRateLimit";
 import {
   buildAndSignReceipt,
   verifyReceipt,
@@ -108,7 +109,13 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
     const state = storage.getAdminState();
     if (!state) return res.status(500).json({ error: "Admin state not initialized" });
     const ok = verifyPassword(password, state.passwordSalt, state.passwordHash);
-    if (!ok) return res.status(401).json({ error: "Invalid admin password" });
+    if (!ok) {
+      recordLoginFailure();
+      return res.status(401).json({ error: "Invalid admin password" });
+    }
+    // Successful login — clear any failure counter so the legitimate admin
+    // is never locked out by prior failed attempts (own or otherwise).
+    resetLoginFailures();
     const token = randomToken();
     const now = new Date();
     const session: Session = {
