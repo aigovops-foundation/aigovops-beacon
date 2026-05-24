@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beacon Reference Architecture Blueprint — AIGovOps</title>
+  <meta name="description" content="A reference architecture blueprint mapping AI governance controls to a modern CI/CD pipeline — automated evidence collection, cryptographic audit logging, data lineage, and Policy-as-Code guardrails across Design, Deployment, and Operations." />
+  <meta name="theme-color" content="#01696f" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Beacon Reference Architecture Blueprint" />
+  <meta property="og:description" content="Map governance controls to CI/CD. Sign every gate. Hand the auditor a bundle." />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/blueprint.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="shell">
+    <a href="../" class="brand" aria-label="AIGovOps Beacon home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="32" height="32">
+          <circle cx="16" cy="16" r="15" fill="#01696f"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
+          <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+        </svg>
+      </span>
+      <span class="brand-name">
+        AIGovOps Beacon
+        <span class="foundation">Reference Architecture Blueprint</span>
+      </span>
+    </a>
+    <nav class="nav-actions" aria-label="Primary">
+      <a href="#design" class="btn-ghost btn-sm desktop-only">Design</a>
+      <a href="#deployment" class="btn-ghost btn-sm desktop-only">Deployment</a>
+      <a href="#operations" class="btn-ghost btn-sm desktop-only">Operations</a>
+      <a href="#evidence" class="btn-ghost btn-sm desktop-only">Evidence Model</a>
+      <a href="#collab" class="btn-ghost btn-sm desktop-only">Collaboration</a>
+      <a href="../" class="btn-ghost btn-sm">← Back to Beacon</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="shell">
+    <p class="eyebrow">Reference Architecture Blueprint · v1.0 · advisory under the Foundation</p>
+    <h1>Map every governance control to a CI/CD stage. <span class="accent">Sign the receipt.</span> Hand the auditor a bundle.</h1>
+    <p class="lede">
+      A reference architecture for embedding AI governance — automated evidence collection, cryptographic audit logging, data &amp; model lineage, and Policy-as-Code guardrails — into a modern GitHub-native CI/CD pipeline. One shared evidence model that policy and engineering teams both write against. Auditor-ready by design.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#stages">Tour the three stages</a>
+      <a class="btn-ghost" href="./artifacts/">Download artifacts</a>
+    </div>
+    <ul class="hero-pills">
+      <li>Ed25519 + RFC 8785 JCS</li>
+      <li>OVERT 1.0 envelope</li>
+      <li>SLSA v1.0 provenance</li>
+      <li>in-toto attestations</li>
+      <li>OpenLineage 1.x</li>
+      <li>OPA / Conftest</li>
+      <li>NIST AI RMF · ISO 42001 · EU AI Act</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="band band-light">
+  <div class="shell">
+    <h2>Six principles this blueprint is built on</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>1 · Evidence is the product</h3>
+        <p>Every governance decision emits a signed receipt. If there is no receipt, it did not happen. The build artifact, the model, the policy decision, and the deployment are all peers — each gets a signed attestation.</p>
+      </div>
+      <div class="card">
+        <h3>2 · One shared schema</h3>
+        <p>Policy team and engineering team write against the same OVERT envelope. Controls reference the receipt fields they verify. No second spreadsheet, no quarterly reconciliation.</p>
+      </div>
+      <div class="card">
+        <h3>3 · Policy lives in the repo</h3>
+        <p>Rego, gate YAML, and crosswalks are committed code. Changes go through pull request, dual-control approval, and the same CI as application code.</p>
+      </div>
+      <div class="card">
+        <h3>4 · Pipelines are the perimeter</h3>
+        <p>The only path to production is the signed pipeline. Out-of-band deploys are detected by drift checks and rejected by admission controllers.</p>
+      </div>
+      <div class="card">
+        <h3>5 · Lineage is automatic</h3>
+        <p>Datasets, prompts, models, and outputs are linked by hash from collection through inference. Auditors can replay any decision back to its inputs.</p>
+      </div>
+      <div class="card">
+        <h3>6 · Humans hold legitimacy</h3>
+        <p>Agents do the bureaucracy. Exceptions, key rotations, and trust-tier promotions require a named human approver — and that approval is itself a receipt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP-LEVEL DIAGRAM -->
+<section id="stages" class="band">
+  <div class="shell">
+    <h2>The pipeline, end to end</h2>
+    <p class="band-lede">Three lifecycle stages — <strong>Design</strong>, <strong>Deployment</strong>, <strong>Operations</strong> — sit on top of four shared planes: the <strong>Evidence Plane</strong> (signed receipts), the <strong>Policy Plane</strong> (OPA + gate YAML), the <strong>Lineage Plane</strong> (OpenLineage graph), and the <strong>Trust Plane</strong> (KMS, OIDC, transparency log).</p>
+
+    <div class="diagram-wrap">
+      <pre class="mermaid">
+flowchart TB
+    classDef design fill:#e6f3f4,stroke:#01696f,color:#01314c,stroke-width:1.5px
+    classDef deploy fill:#fef6e0,stroke:#b87b00,color:#4a3000,stroke-width:1.5px
+    classDef ops fill:#e8f5ea,stroke:#2ecc71,color:#0d3d1a,stroke-width:1.5px
+    classDef plane fill:#01314c,stroke:#01696f,color:#fff,stroke-width:1.5px
+
+    subgraph DESIGN["DESIGN STAGE"]
+      direction TB
+      D1[Use-case intake<br/>risk classification]
+      D2[Data sheet +<br/>model card draft]
+      D3[Threat model<br/>red-team plan]
+      D4[Design review<br/>signed approval]
+      D1 --> D2 --> D3 --> D4
+    end
+
+    subgraph DEPLOY["DEPLOYMENT STAGE"]
+      direction TB
+      P1[Source commit<br/>signed by dev]
+      P2[Build + SBOM<br/>SLSA provenance]
+      P3[Eval suite<br/>bias · safety · perf]
+      P4[Policy gate<br/>OPA / Conftest]
+      P5[Signed release<br/>cosign + attest]
+      P6[Admission control<br/>verify in cluster]
+      P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    end
+
+    subgraph OPS["OPERATIONS STAGE"]
+      direction TB
+      O1[Inference observed<br/>OVERT receipt]
+      O2[Drift + safety<br/>monitors]
+      O3[Incident detect<br/>+ kill switch]
+      O4[Continuous<br/>re-evaluation]
+      O1 --> O2 --> O3 --> O4 --> O1
+    end
+
+    DESIGN ==> DEPLOY ==> OPS
+
+    subgraph PLANES["SHARED PLANES"]
+      direction LR
+      EV[(Evidence Plane<br/>signed receipts<br/>Merkle anchored)]
+      PL[(Policy Plane<br/>Rego · gate YAML<br/>crosswalks)]
+      LN[(Lineage Plane<br/>OpenLineage<br/>graph)]
+      TR[(Trust Plane<br/>KMS · OIDC<br/>transparency log)]
+    end
+
+    DESIGN -.-> EV & PL & LN & TR
+    DEPLOY -.-> EV & PL & LN & TR
+    OPS -.-> EV & PL & LN & TR
+
+    class D1,D2,D3,D4 design
+    class P1,P2,P3,P4,P5,P6 deploy
+    class O1,O2,O3,O4 ops
+    class EV,PL,LN,TR plane
+      </pre>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN STAGE -->
+<section id="design" class="stage stage-design">
+  <div class="shell">
+    <div class="stage-head">
+      <span class="stage-num">01</span>
+      <div>
+        <h2>Design Stage</h2>
+        <p>Before any code is written: classify the risk, document the intent, sign the design.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>What happens</h3>
+        <ol class="numbered">
+          <li><strong>Use-case intake.</strong> A YAML use-case manifest is created in the governance repo (one PR per use case). Risk tier is set by a classifier policy (EU AI Act Annex III / NIST AI RMF Map function).</li>
+          <li><strong>Data sheet &amp; model card.</strong> Templates auto-populate from upstream inventory; the author fills gaps. Hashes of training data and base model are pinned.</li>
+          <li><strong>Threat model &amp; red-team plan.</strong> Generated from the risk tier — high-risk gets STRIDE + AI-specific (prompt injection, poisoning, confabulation) plus a mandatory red-team budget.</li>
+          <li><strong>Design review.</strong> Named approvers (product, security, privacy, ethics for high risk) sign a <code>design.approved</code> receipt. This receipt becomes the parent of every downstream attestation.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Evidence collected</h3>
+        <table class="evidence-table">
+          <thead><tr><th>Artifact</th><th>Format</th><th>Receipt event</th></tr></thead>
+          <tbody>
+            <tr><td>Use-case manifest</td><td>YAML in repo, hashed</td><td><code>design.usecase.registered</code></td></tr>
+            <tr><td>Risk classification</td><td>OPA decision log</td><td><code>design.risk.classified</code></td></tr>
+            <tr><td>Data sheet</td><td>Markdown + SHA-256</td><td><code>design.datasheet.published</code></td></tr>
+            <tr><td>Model card</td><td>Markdown + SHA-256</td><td><code>design.modelcard.published</code></td></tr>
+            <tr><td>Threat model</td><td>Markdown + STRIDE table</td><td><code>design.threatmodel.completed</code></td></tr>
+            <tr><td>Design approval</td><td>Signed PR review + Ed25519</td><td><code>design.approved</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>Controls satisfied</h4>
+      <ul class="control-list">
+        <li><strong>NIST AI RMF:</strong> MAP-1.1, MAP-2.1, MAP-3.4, MAP-4.1, GOVERN-1.2</li>
+        <li><strong>ISO/IEC 42001:</strong> 6.1.2 (AI risk assessment), 6.1.4 (AI system impact assessment), A.6.2.2 (objectives)</li>
+        <li><strong>EU AI Act:</strong> Art. 9 (risk management system), Art. 11 + Annex IV (technical documentation), Art. 27 (FRIA for high-risk)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT STAGE -->
+<section id="deployment" class="stage stage-deploy">
+  <div class="shell">
+    <div class="stage-head">
+      <span class="stage-num">02</span>
+      <div>
+        <h2>Deployment Stage</h2>
+        <p>The CI/CD pipeline is the only path to production. Every step is a signed attestation; every artifact carries its provenance.</p>
+      </div>
+    </div>
+
+    <div class="diagram-wrap">
+      <pre class="mermaid">
+flowchart LR
+    classDef step fill:#fef6e0,stroke:#b87b00,color:#4a3000,stroke-width:1.5px
+    classDef evidence fill:#01314c,stroke:#01696f,color:#fff
+    classDef gate fill:#fde2e0,stroke:#c0392b,color:#5a1410,stroke-width:1.5px
+
+    DEV[Developer<br/>signed commit<br/>gitsign] --> BUILD[GitHub Actions<br/>OIDC to cloud<br/>hermetic build]
+    BUILD --> SBOM[SBOM<br/>CycloneDX]
+    BUILD --> PROV[SLSA provenance<br/>in-toto v1]
+    BUILD --> EVAL[Model eval suite<br/>bias · safety · perf · red-team]
+    EVAL --> ATT[Eval attestation<br/>signed predicate]
+    SBOM --> GATE
+    PROV --> GATE
+    ATT --> GATE
+    GATE{Policy gate<br/>OPA / Conftest<br/>+ Beacon checklist}
+    GATE -- pass --> SIGN[cosign sign<br/>image + attestations]
+    GATE -- fail --> BLOCK[blocked + receipt<br/>gate.failed]
+    SIGN --> REG[(OCI registry<br/>+ Rekor log)]
+    REG --> ADM[Admission controller<br/>verify signatures<br/>verify attestations]
+    ADM -- pass --> PROD[Production]
+    ADM -- fail --> QUAR[Quarantine + receipt]
+
+    class DEV,BUILD,SBOM,PROV,EVAL,ATT,SIGN,REG,ADM,PROD step
+    class GATE gate
+    class BLOCK,QUAR evidence
+      </pre>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>Pipeline stages &amp; evidence</h3>
+        <table class="evidence-table">
+          <thead><tr><th>Stage</th><th>Tooling</th><th>Attestation</th></tr></thead>
+          <tbody>
+            <tr><td>Commit</td><td>gitsign + Sigstore</td><td>Signed commit, signed tag</td></tr>
+            <tr><td>Build</td><td>GH Actions, hermetic runner, OIDC</td><td>SLSA v1.0 build provenance</td></tr>
+            <tr><td>SBOM</td><td>Syft / cdxgen</td><td>CycloneDX 1.6 + sig</td></tr>
+            <tr><td>Test &amp; eval</td><td>pytest, DeepEval, Garak, OWASP LLM</td><td>in-toto eval predicate</td></tr>
+            <tr><td>Policy gate</td><td>OPA / Conftest + Beacon checklist runner</td><td><code>gate.evaluated</code> receipt</td></tr>
+            <tr><td>Sign</td><td>cosign keyless (Fulcio + Rekor)</td><td>Sigstore bundle</td></tr>
+            <tr><td>Admit</td><td>Kyverno / Gatekeeper / Connaisseur</td><td>Admission decision receipt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Policy-as-Code anatomy</h3>
+        <p>Every gate is two files committed in the governance repo:</p>
+        <ul class="check-list">
+          <li><code>gate.&lt;org&gt;.v1.yaml</code> — declarative matched-pair: which receipts to look at, which evaluations to run, what thresholds count as pass.</li>
+          <li><code>&lt;org&gt;_audit.rego</code> — the executable counterpart. Same logic, machine-checked. Conftest runs both against the bundle.</li>
+        </ul>
+        <p>When a control fires, the gate emits a <code>gate.evaluated</code> receipt referencing the inputs by hash. Auditors replay any decision deterministically.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>Controls satisfied</h4>
+      <ul class="control-list">
+        <li><strong>NIST AI RMF:</strong> MEASURE-2.3, MEASURE-2.7, MEASURE-2.11, MANAGE-1.3, MANAGE-2.2</li>
+        <li><strong>ISO/IEC 42001:</strong> 8.2 (AI system impact assessment), 8.3 (AI system lifecycle), A.6.2.5 (verification &amp; validation), A.8.2 (system documentation)</li>
+        <li><strong>EU AI Act:</strong> Art. 15 (accuracy, robustness, cybersecurity), Art. 17 (QMS), Art. 18 (record-keeping), Art. 43 (conformity assessment)</li>
+        <li><strong>SLSA v1.0:</strong> Build Levels 2–3 (hosted, hardened, isolated build)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATIONS STAGE -->
+<section id="operations" class="stage stage-ops">
+  <div class="shell">
+    <div class="stage-head">
+      <span class="stage-num">03</span>
+      <div>
+        <h2>Operations Stage</h2>
+        <p>In production, the receipts never stop. Every inference, every drift event, every kill-switch firing produces evidence that closes the loop back to design.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>What runs in production</h3>
+        <ol class="numbered">
+          <li><strong>OVERT-shaped inference receipts.</strong> The runtime SDK (or sidecar proxy) emits one <code>inference.observed</code> receipt per call: user, vendor, model, version, prompt-hash, result-hash, latency, signature.</li>
+          <li><strong>Hourly Merkle anchor.</strong> All receipts in the hour are hashed into a Merkle tree; the root is published to a transparency log (Rekor or internal) and optionally to S3 / IPFS for off-org witnesses.</li>
+          <li><strong>Drift &amp; safety monitors.</strong> Continuous evaluation against the same suites used in deployment. Threshold breach → <code>monitor.threshold.breached</code> receipt → automatic ticket + policy re-eval.</li>
+          <li><strong>Incident &amp; kill switch.</strong> Severity-tagged events trigger pre-approved runbooks. Disabling a tool, blocking a source, or pausing an agent is itself a signed receipt.</li>
+          <li><strong>Continuous re-evaluation.</strong> Quarterly (or trigger-based) re-run of the deployment policy gate against fresh production data. Drift in real behavior reopens the design loop.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Evidence collected</h3>
+        <table class="evidence-table">
+          <thead><tr><th>Event</th><th>Source</th><th>Receipt event</th></tr></thead>
+          <tbody>
+            <tr><td>Model call</td><td>SDK / proxy</td><td><code>inference.observed</code></td></tr>
+            <tr><td>Tool call</td><td>Agent runtime</td><td><code>agent.tool.called</code></td></tr>
+            <tr><td>Retrieval</td><td>RAG layer</td><td><code>agent.retrieval.hit</code></td></tr>
+            <tr><td>Drift detected</td><td>Monitor</td><td><code>monitor.drift.detected</code></td></tr>
+            <tr><td>Safety violation</td><td>LLM firewall</td><td><code>guardrail.violated</code></td></tr>
+            <tr><td>Kill switch</td><td>Runbook</td><td><code>incident.killswitch.fired</code></td></tr>
+            <tr><td>Hourly anchor</td><td>Beacon anchor svc</td><td><code>bundle.anchored</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>Controls satisfied</h4>
+      <ul class="control-list">
+        <li><strong>NIST AI RMF:</strong> MEASURE-2.8, MEASURE-3.1, MEASURE-4.1, MANAGE-2.3, MANAGE-4.1, MANAGE-4.3</li>
+        <li><strong>ISO/IEC 42001:</strong> 9.1 (monitoring &amp; measurement), 10.2 (continual improvement), A.6.2.7 (operation &amp; monitoring)</li>
+        <li><strong>EU AI Act:</strong> Art. 14 (human oversight), Art. 19 (automatically generated logs), Art. 26 (deployer obligations), Art. 72 (post-market monitoring), Art. 73 (incident reporting)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE MODEL -->
+<section id="evidence" class="band">
+  <div class="shell">
+    <h2>The shared evidence model</h2>
+    <p class="band-lede">One envelope binds policy and engineering. Beacon receipts are OVERT 1.0 envelopes with the <code>aigovops-beacon.v1</code> profile. Policy team writes controls that reference these fields; engineering writes SDKs that emit them. Same schema, two teams, zero translation overhead.</p>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>Envelope (OVERT 1.0, normative)</h3>
+<pre class="code"><code>{
+  "id": "01HXYZ8K3F2N5Q1R7S9V3W4Y6B",
+  "ts_utc": "2026-05-23T18:04:22.318Z",
+  "user": {
+    "sub": "build-runner@github",
+    "email": "actions@github.com",
+    "oidc_issuer": "https://token.actions.githubusercontent.com"
+  },
+  "vendor": "anthropic",
+  "model": "claude-sonnet-4-5",
+  "version": "2026-04-01",
+  "prompt_hash": "sha256:9f2c…",
+  "result_hash": "sha256:7b1a…",
+  "event_type": "gate.evaluated",
+  "environment": "cloud_saas",
+  "evidence_id": "01HXYZ8K3F2N5Q1R7S9V3W4Y6A",
+  "parent_receipt_id": "01HXYZ8K3F2N5Q1R7S9V3W4Y69",
+  "signature": {
+    "alg": "Ed25519",
+    "key_fpr": "SHA256:9p2x…",
+    "sig_b64": "MEUCIQ…",
+    "canonical_form": "json/c14n-rfc8785"
+  }
+}</code></pre>
+      </div>
+      <div>
+        <h3>Profile extensions (aigovops-beacon.v1)</h3>
+<pre class="code"><code>{
+  "profile": "aigovops-beacon.v1",
+  "control_refs": [
+    "nist-ai-rmf:MEASURE-2.7",
+    "iso-42001:A.6.2.5",
+    "eu-ai-act:Art.15"
+  ],
+  "subject": {
+    "name": "ghcr.io/aigovops/foo:v1.2.3",
+    "digest": {
+      "sha256": "abc123…"
+    }
+  },
+  "lineage": {
+    "openlineage_run_id": "f3b1…",
+    "parent_datasets": [
+      "sha256:111…",
+      "sha256:222…"
+    ],
+    "parent_models": [
+      "sha256:333…"
+    ]
+  },
+  "decision": {
+    "result": "pass",
+    "rules_evaluated": 47,
+    "rules_failed": 0,
+    "exception_id": null
+  }
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:2.5rem;">
+      <div>
+        <h3>How both teams use it</h3>
+        <table class="evidence-table">
+          <thead><tr><th>Field</th><th>Policy team reads</th><th>Eng team writes</th></tr></thead>
+          <tbody>
+            <tr><td><code>event_type</code></td><td>Triggers control evaluation</td><td>SDK sets per call site</td></tr>
+            <tr><td><code>subject.digest</code></td><td>What was governed</td><td>Build emits content hash</td></tr>
+            <tr><td><code>lineage.parent_*</code></td><td>Traceability check</td><td>OpenLineage hook</td></tr>
+            <tr><td><code>control_refs</code></td><td>Crosswalk lookup</td><td>Pipeline template prefills</td></tr>
+            <tr><td><code>decision.result</code></td><td>Gate verdict</td><td>OPA writes from Rego</td></tr>
+            <tr><td><code>signature</code></td><td>Verifies authenticity</td><td>KMS / cosign signs</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Receipt chains = audit trails</h3>
+        <p>Receipts link via <code>parent_receipt_id</code>. A finished bundle for one model deployment looks like:</p>
+<pre class="code"><code>design.approved
+  └─ build.completed
+       └─ eval.completed
+            └─ gate.evaluated (pass)
+                 └─ bundle.signed
+                      └─ admission.allowed
+                           └─ inference.observed × N
+                                └─ monitor.drift.detected
+                                     └─ gate.evaluated (re-eval)</code></pre>
+        <p>An auditor follows the chain backwards from any production call to the design approval — and every step is cryptographically verifiable in seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFRA REQUIREMENTS -->
+<section id="infra" class="band band-dark">
+  <div class="shell">
+    <h2>Infrastructure requirements</h2>
+    <p class="band-lede">What you actually need to stand up. Two tiers: a minimum viable governance plane that fits in a single GitHub org plus one cloud account, and a scaled tier for multi-tenant enterprise use.</p>
+
+    <div class="grid grid-2">
+      <div class="card-dark">
+        <h3>Tier 1 · Minimum viable</h3>
+        <ul class="infra-list">
+          <li><strong>Source:</strong> GitHub org with branch protection, required reviews, signed commits enforced.</li>
+          <li><strong>Build:</strong> GitHub-hosted Actions runners; OIDC federation to cloud (no long-lived secrets).</li>
+          <li><strong>Signing:</strong> Sigstore keyless (Fulcio + Rekor public good) or cloud KMS (AWS KMS / GCP KMS / Azure Key Vault).</li>
+          <li><strong>Artifact registry:</strong> GHCR or any OCI registry that stores referrers.</li>
+          <li><strong>Evidence store:</strong> S3 / GCS bucket with object lock (WORM) + Beacon NDJSON receipts.</li>
+          <li><strong>Policy engine:</strong> OPA / Conftest in CI; Kyverno or Gatekeeper at admission.</li>
+          <li><strong>Lineage:</strong> OpenLineage emitting to Marquez (self-hosted, single VM).</li>
+          <li><strong>Transparency:</strong> Public Rekor or self-hosted; Merkle anchors to S3.</li>
+        </ul>
+      </div>
+      <div class="card-dark">
+        <h3>Tier 2 · Scaled enterprise</h3>
+        <ul class="infra-list">
+          <li><strong>Source:</strong> Multiple orgs + GitHub Enterprise audit log streamed to SIEM.</li>
+          <li><strong>Build:</strong> Self-hosted ARC runners in isolated VPC; reproducible builds.</li>
+          <li><strong>Signing:</strong> HSM-backed KMS with split-key custody; private Fulcio CA.</li>
+          <li><strong>Artifact registry:</strong> Harbor / Artifactory with vulnerability scanning.</li>
+          <li><strong>Evidence store:</strong> Dedicated WORM bucket per business unit + cross-region replication; 7-year retention.</li>
+          <li><strong>Policy engine:</strong> Centralized OPA cluster + bundle service; Styra or in-house control plane.</li>
+          <li><strong>Lineage:</strong> Managed OpenLineage backend (e.g., Astronomer, DataHub) with cross-team graph.</li>
+          <li><strong>Transparency:</strong> Private Rekor instance + dual anchoring to public chain for high-risk systems.</li>
+          <li><strong>SIEM / SOAR:</strong> Receipt stream feeds detection + runbooks for incident reporting (EU AI Act Art. 73).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-dark">
+      <h4>Minimum compute footprint (Tier 1)</h4>
+      <p>The governance plane itself is small: one t3.small for Marquez, one t3.micro for the Beacon receipt service, one S3 bucket, one KMS key. The expensive part is the eval suite — budget GPU time per model release, not per receipt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLLABORATION -->
+<section id="collab" class="band">
+  <div class="shell">
+    <h2>How technical &amp; policy teams collaborate</h2>
+    <p class="band-lede">Same repo. Same pull-request workflow. Same evidence model. Different files.</p>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>Repository layout</h3>
+<pre class="code"><code>aigovops-beacon/
+├── crosswalks/             # policy team owns
+│   ├── nist-ai-rmf.yaml
+│   ├── iso-42001.yaml
+│   └── eu-ai-act.yaml
+├── policies/               # joint ownership
+│   ├── gates/              # YAML (policy team)
+│   └── rego/               # Rego (eng team)
+├── usecases/               # product owners
+│   └── *.yaml
+├── modelcards/             # ML team
+├── datasheets/             # data team
+├── attestations/           # generated, signed
+└── .github/workflows/
+    ├── design-review.yml
+    ├── build-sign-attest.yml
+    └── evidence-bundle.yml</code></pre>
+      </div>
+      <div>
+        <h3>RACI by activity</h3>
+        <table class="evidence-table compact">
+          <thead><tr><th>Activity</th><th>Policy</th><th>Eng</th><th>Product</th><th>Audit</th></tr></thead>
+          <tbody>
+            <tr><td>Crosswalk authoring</td><td><strong>R/A</strong></td><td>C</td><td>I</td><td>C</td></tr>
+            <tr><td>Rego implementation</td><td>C</td><td><strong>R/A</strong></td><td>I</td><td>I</td></tr>
+            <tr><td>Use-case intake</td><td>C</td><td>I</td><td><strong>R/A</strong></td><td>I</td></tr>
+            <tr><td>Model card</td><td>C</td><td><strong>R/A</strong></td><td>C</td><td>I</td></tr>
+            <tr><td>Design approval</td><td><strong>A</strong></td><td>R</td><td>R</td><td>I</td></tr>
+            <tr><td>Pipeline gate config</td><td>C</td><td><strong>R/A</strong></td><td>I</td><td>C</td></tr>
+            <tr><td>Exception grant</td><td><strong>A</strong></td><td>R</td><td>R</td><td>I</td></tr>
+            <tr><td>Incident response</td><td>C</td><td><strong>R/A</strong></td><td>C</td><td>I</td></tr>
+            <tr><td>Audit bundle export</td><td>R</td><td>R</td><td>I</td><td><strong>A</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2rem;">The four collaboration rituals</h3>
+    <div class="grid grid-2">
+      <div class="card">
+        <h4>Crosswalk PRs</h4>
+        <p>Policy team opens a PR mapping a new regulatory clause to existing receipt fields. CI fails if the clause references a field that does not exist in the OVERT envelope or profile — forcing schema evolution to happen with both teams in the room.</p>
+      </div>
+      <div class="card">
+        <h4>Matched-pair commits</h4>
+        <p>Every gate YAML change ships in the same PR as its Rego counterpart. Conftest verifies they agree on a synthetic test bundle before merge.</p>
+      </div>
+      <div class="card">
+        <h4>Exception receipts</h4>
+        <p>When the gate fails and business needs the release, a named approver opens a signed <code>exception.granted</code> receipt with TTL and conditions. Auditors see every exception by query.</p>
+      </div>
+      <div class="card">
+        <h4>Quarterly bundle review</h4>
+        <p>Policy and eng leads jointly export the previous quarter's bundle, run the auditor verification CLI, and review any drift between intended controls and observed receipts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDITOR READY -->
+<section id="auditor" class="band band-light">
+  <div class="shell">
+    <h2>Auditor-ready documentation, by construction</h2>
+    <p class="band-lede">The auditor never asks "do you have evidence?" — they ask "verify this hash." Three artifacts make that possible.</p>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>The bundle</h3>
+        <p><code>bundle.tar.gz</code> contains every receipt for a system over a window, the crosswalk used, the policies that ran, the data + model cards, and a manifest with Merkle roots. Generated by <code>aigovops-beacon export</code>; size is typically &lt; 50&nbsp;MB per quarter per system.</p>
+      </div>
+      <div class="card">
+        <h3>The verifier</h3>
+        <p>A 200-line Go binary (<code>beacon-verify</code>) the auditor runs themselves. It rehashes every receipt, checks every signature against the published key transparency log, walks the Merkle tree, and prints a pass/fail line per control. No SaaS, no login, no trust required.</p>
+      </div>
+      <div class="card">
+        <h3>The crosswalk</h3>
+        <p>For each control in NIST AI RMF / ISO 42001 / EU AI Act, the crosswalk YAML lists the receipts that satisfy it and the queries to run. The auditor reads one document and gets pointers into the bundle for everything they need.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>What the auditor sees on day one</h4>
+      <ol>
+        <li>Download <code>bundle.tar.gz</code> and <code>beacon-verify</code>.</li>
+        <li>Run <code>beacon-verify bundle.tar.gz</code> — exit code 0 means all signatures and Merkle proofs check.</li>
+        <li>Open <code>crosswalk-report.html</code> — each control row links to the exact receipts that satisfy it.</li>
+        <li>Sample-test by control: pick three receipts, replay the policy decision deterministically, confirm verdict.</li>
+        <li>Walk lineage from any production inference back to the design approval. Same answer every time.</li>
+      </ol>
+      <p>Total time to first opinion: hours, not weeks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STARTER WORKFLOW -->
+<section id="starter" class="band">
+  <div class="shell">
+    <h2>Starter pipeline — drop-in GitHub Actions</h2>
+    <p class="band-lede">A minimal but complete workflow you can paste into your repo to get to "signed evidence in CI" in under an hour. Full templates are in the <a href="./artifacts/">artifacts folder</a>.</p>
+
+<pre class="code"><code># .github/workflows/govern.yml
+name: AI governance pipeline
+on: [push, pull_request]
+
+permissions:
+  contents: read
+  id-token: write       # OIDC for keyless signing
+  attestations: write
+  packages: write
+
+jobs:
+  govern:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Verify signed commits
+        run: git verify-commit HEAD
+
+      - name: Build + SBOM
+        run: |
+          docker build -t $IMG .
+          syft $IMG -o cyclonedx-json > sbom.cdx.json
+
+      - name: Run eval suite
+        run: |
+          python -m evals.run --suite safety,bias,perf \
+            --out evals.json
+
+      - name: Policy gate (Conftest + Beacon checklist)
+        run: |
+          conftest test policies/gates/ \
+            --policy policies/rego/ \
+            --data evals.json sbom.cdx.json
+          aigovops-beacon checklist run \
+            --pack crosswalks/nist-ai-rmf.yaml \
+            --evidence . \
+            --emit-receipt gate.evaluated
+
+      - name: Sign image + attest
+        env:
+          COSIGN_EXPERIMENTAL: "1"
+        run: |
+          cosign sign $IMG
+          cosign attest --predicate sbom.cdx.json \
+            --type cyclonedx $IMG
+          cosign attest --predicate evals.json \
+            --type https://aigovops.org/eval/v1 $IMG
+
+      - name: Emit + anchor evidence bundle
+        run: |
+          aigovops-beacon export \
+            --window pr-$GITHUB_SHA \
+            --out bundle.tar.gz
+          aigovops-beacon anchor bundle.tar.gz \
+            --transparency rekor
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evidence-bundle
+          path: bundle.tar.gz
+</code></pre>
+  </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section id="downloads" class="band band-dark">
+  <div class="shell">
+    <h2>Take it with you</h2>
+    <div class="grid grid-3">
+      <a class="dl-card" href="./artifacts/govern.yml" download>
+        <h3>govern.yml</h3>
+        <p>Drop-in GitHub Actions workflow.</p>
+      </a>
+      <a class="dl-card" href="./artifacts/receipt.schema.json" download>
+        <h3>receipt.schema.json</h3>
+        <p>JSON Schema for the shared evidence model.</p>
+      </a>
+      <a class="dl-card" href="./artifacts/example.rego" download>
+        <h3>example.rego</h3>
+        <p>Sample Rego gate referencing receipt fields.</p>
+      </a>
+      <a class="dl-card" href="./artifacts/gate.example.yaml" download>
+        <h3>gate.example.yaml</h3>
+        <p>Matched-pair YAML for the Rego policy.</p>
+      </a>
+      <a class="dl-card" href="./artifacts/crosswalk.nist-ai-rmf.yaml" download>
+        <h3>crosswalk.nist-ai-rmf.yaml</h3>
+        <p>NIST AI RMF control → receipt mapping.</p>
+      </a>
+      <a class="dl-card" href="./artifacts/blueprint.md" download>
+        <h3>blueprint.md</h3>
+        <p>This blueprint as a single Markdown file.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell">
+    <p>
+      <strong>AIGovOps Beacon</strong> · Reference Architecture Blueprint v1.0 ·
+      Apache-2.0 ·
+      <a href="https://github.com/bobrapp/aigovops-beacon">github.com/bobrapp/aigovops-beacon</a>
+    </p>
+    <p class="footnote">
+      Authority of this document: <em>advisory under the AIGovOps Foundation</em>.
+      OVERT 1.0 envelope is normative; where this blueprint diverges, OVERT wins.
+      "Agents do the bureaucracy; humans hold moral legitimacy."
+    </p>
+  </div>
+</footer>
+
+</main>
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: 'Inter, system-ui, sans-serif',
+      primaryColor: '#e6f3f4',
+      primaryTextColor: '#01314c',
+      primaryBorderColor: '#01696f',
+      lineColor: '#01696f',
+      secondaryColor: '#fef6e0',
+      tertiaryColor: '#e8f5ea'
+    },
+    flowchart: { curve: 'basis', padding: 12 }
+  });
+</script>
+
+</body>
+</html>
