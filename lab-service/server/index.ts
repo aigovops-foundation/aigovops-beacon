@@ -8,6 +8,20 @@ import { createServer } from "node:http";
 const app = express();
 const httpServer = createServer(app);
 
+// Trust the pplx.app proxy so req.ip reflects the real client IP
+app.set("trust proxy", true);
+
+// Security headers — minimal, no external dep. Helps even though pplx.app
+// adds its own. We deliberately avoid CSP/X-Frame here because the lab is
+// served behind the Perplexity proxy which already manages framing.
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("X-DNS-Prefetch-Control", "off");
+  res.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
+  next();
+});
+
 declare module "http" {
   interface IncomingMessage {
     rawBody: unknown;
@@ -16,13 +30,40 @@ declare module "http" {
 
 app.use(
   express.json({
+    limit: "256kb",
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
   }),
 );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false, limit: "64kb" }));
+
+// Simple in-memory rate limiter for /api/admin/login (brute-force protection).
+// 8 attempts per 15 minutes per IP. Cleared by process restart.
+const loginAttempts = new Map<string, { count: number; first: number }>();
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const LOGIN_MAX = 8;
+app.use("/api/admin/login", (req, res, next) => {
+  if (req.method !== "POST") return next();
+  const ip = (req.ip || req.socket.remoteAddress || "unknown").toString();
+  const now = Date.now();
+  const rec = loginAttempts.get(ip);
+  if (!rec || now - rec.first > LOGIN_WINDOW_MS) {
+    loginAttempts.set(ip, { count: 1, first: now });
+    return next();
+  }
+  if (rec.count >= LOGIN_MAX) {
+    const retryMs = LOGIN_WINDOW_MS - (now - rec.first);
+    res.setHeader("Retry-After", Math.ceil(retryMs / 1000).toString());
+    return res.status(429).json({
+      error: "Too many login attempts. Try again later.",
+      retryAfterSec: Math.ceil(retryMs / 1000),
+    });
+  }
+  rec.count += 1;
+  next();
+});
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -49,9 +90,24 @@ app.use((req, res, next) => {
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
+      // Redact sensitive fields from response logs (tokens, signing keys)
+      const SENSITIVE = new Set([
+        "token", "signingPrivateKey", "signingPublicKey", "password", "newPassword",
+      ]);
+      const redact = (v: any): any => {
+        if (v == null || typeof v !== "object") return v;
+        if (Array.isArray(v)) return v.map(redact);
+        const out: any = {};
+        for (const k of Object.keys(v)) {
+          out[k] = SENSITIVE.has(k) ? "[redacted]" : redact(v[k]);
+        }
+        return out;
+      };
+
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      if (capturedJsonResponse && res.statusCode >= 400) {
+        // Only log full body on errors, and redact sensitive fields.
+        logLine += ` :: ${JSON.stringify(redact(capturedJsonResponse))}`;
       }
 
       log(logLine);
@@ -68,7 +124,8 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-    console.error("Internal Server Error:", err);
+    // Log error class + message only, not the full object (which can include req body w/ password)
+    console.error(`Internal Server Error: ${err?.name || "Error"}: ${err?.message || "unknown"}`);
 
     if (res.headersSent) {
       return next(err);
