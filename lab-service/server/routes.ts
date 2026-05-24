@@ -30,11 +30,56 @@ import type { Session, InventoryItem } from "@shared/schema";
 
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8; // 8h
 
+// The pplx.app published-site proxy strips any request cookie whose name
+// doesn't start with `__Host-`, so we use that exact prefix. Requirements
+// of the __Host- prefix: Secure, Path=/, no Domain attribute. We also set
+// HttpOnly so JavaScript cannot read it (XSS-resistant) and SameSite=Lax
+// so the cookie is sent on top-level GETs (refresh, direct-URL navigation,
+// magic-link clicks from email).
+const SESSION_COOKIE_NAME = "__Host-beacon_session";
+const SESSION_COOKIE_ATTRS = "Path=/; HttpOnly; Secure; SameSite=Lax";
+
+function setSessionCookie(res: Response, token: string, expiresAt: Date): void {
+  const maxAge = Math.max(0, Math.floor((expiresAt.getTime() - Date.now()) / 1000));
+  res.setHeader(
+    "Set-Cookie",
+    `${SESSION_COOKIE_NAME}=${token}; ${SESSION_COOKIE_ATTRS}; Max-Age=${maxAge}`,
+  );
+}
+
+function clearSessionCookie(res: Response): void {
+  res.setHeader(
+    "Set-Cookie",
+    `${SESSION_COOKIE_NAME}=; ${SESSION_COOKIE_ATTRS}; Max-Age=0`,
+  );
+}
+
+function getCookieToken(req: Request): string | null {
+  const raw = req.header("cookie");
+  if (!raw) return null;
+  // Parse cookies manually to avoid an extra dependency.
+  const parts = raw.split(/;\s*/);
+  for (const part of parts) {
+    const eq = part.indexOf("=");
+    if (eq < 0) continue;
+    const name = part.slice(0, eq).trim();
+    if (name === SESSION_COOKIE_NAME) {
+      const val = part.slice(eq + 1).trim();
+      return val || null;
+    }
+  }
+  return null;
+}
+
 function getBearerToken(req: Request): string | null {
+  // Prefer Authorization header (existing API clients keep working),
+  // fall back to the HttpOnly session cookie (browser SPA + page refresh).
   const auth = req.header("authorization");
-  if (!auth) return null;
-  const m = auth.match(/^Bearer\s+(.+)$/i);
-  return m ? m[1] : null;
+  if (auth) {
+    const m = auth.match(/^Bearer\s+(.+)$/i);
+    if (m) return m[1];
+  }
+  return getCookieToken(req);
 }
 
 function requireSession(req: Request, res: Response, next: NextFunction) {
@@ -128,6 +173,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       expiresAt: new Date(now.getTime() + SESSION_TTL_MS),
     };
     storage.createSession(session);
+    setSessionCookie(res, token, session.expiresAt);
     res.json({ token, session });
   });
 
@@ -158,6 +204,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       expiresAt: new Date(now.getTime() + SESSION_TTL_MS),
     };
     storage.createSession(session);
+    setSessionCookie(res, sessionToken, session.expiresAt);
     res.json({ token: sessionToken, session });
   });
 
@@ -182,6 +229,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
   app.post("/api/logout", requireSession, (req, res) => {
     const s = (req as any).session as Session;
     storage.deleteSession(s.id);
+    clearSessionCookie(res);
     res.json({ ok: true });
   });
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { api, getToken, setToken, useApiCall, apiUrl } from "@/lib/auth";
+import { api, getToken, setToken, useApiCall, apiUrl, hydrateSession, hasSession } from "@/lib/auth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,13 +32,35 @@ export default function Admin() {
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [labName, setLabName] = useState("");
 
+  const [authChecked, setAuthChecked] = useState(false);
+
   useEffect(() => {
-    if (!getToken()) {
-      navigate("/");
-      return;
-    }
-    refresh();
+    // After a page refresh the in-memory token is null but the HttpOnly
+    // session cookie may still be valid. Probe /api/me to learn the truth
+    // before deciding to redirect.
+    (async () => {
+      if (getToken() || hasSession()) {
+        setAuthChecked(true);
+        refresh();
+        return;
+      }
+      const ok = await hydrateSession();
+      if (!ok) {
+        navigate("/");
+        return;
+      }
+      setAuthChecked(true);
+      refresh();
+    })();
   }, []);
+
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-sm text-muted-foreground">Loading admin console…</div>
+      </div>
+    );
+  }
 
   async function refresh() {
     try {

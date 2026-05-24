@@ -30,7 +30,9 @@ export default function Lab() {
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (!getToken()) { navigate("/"); return; }
+    // The HttpOnly session cookie may be valid even when getToken() is null
+    // (e.g. after a page refresh). Always probe /api/me; only bounce to /
+    // if the probe fails.
     api("GET", "/api/me").then(setMe).catch(() => { setToken(null); navigate("/"); });
     const interval = setInterval(() => {
       fetch(apiUrl("/api/status")).then((r) => r.json()).then((s) => setPaused(s.paused)).catch(() => {});

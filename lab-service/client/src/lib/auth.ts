@@ -1,116 +1,112 @@
 /**
- * Auth — session token store.
+ * Auth — session lives in an HttpOnly server-set cookie.
  *
- * Storage strategy chosen to survive the published preview iframe, which
- * blocks localStorage, sessionStorage, and IndexedDB:
+ * The server sets a `__Host-beacon_session` cookie on POST /api/admin/login
+ * and POST /api/login. The pplx.app proxy preserves cookies that use the
+ * `__Host-` prefix. Every fetch goes out with `credentials: "include"` so
+ * the cookie travels automatically — no client-side storage required.
  *
- *   1. The token lives in a module-level variable for fast synchronous reads.
- *   2. It is mirrored into `window.name`, which:
- *        - Survives page refreshes and hash-route navigations in the same tab
- *        - Dies when the tab/window is closed (no cross-tab leakage)
- *        - Is not blocked by the iframe sandbox or by sandboxed-iframe CSP
- *        - Is read/written synchronously and never sent over the wire
- *      window.name is per-browsing-context and ideal for a per-tab session.
- *   3. The token is also mirrored into a non-HttpOnly cookie as a secondary
- *      fallback so that some edge cases (e.g. an opened-in-new-tab link that
- *      doesn't inherit window.name) still pick up the session.
- *   4. Any API response with HTTP 401 clears the token automatically so a
- *      stale or revoked session sends the user back to /login instead of a
- *      blank admin/lab page that silently bounces to /.
+ * We also keep an in-memory copy of the token (returned by the login
+ * response body) so existing call sites that read `getToken()` synchronously
+ * still work for the lifetime of the page. The cookie is the persistence
+ * mechanism; the in-memory token is just a render-time hint.
+ *
+ * On page load, hydrate() probes /api/me — if the cookie is valid the call
+ * succeeds and we know we are logged in even though the in-memory token is
+ * null (which is why we use `hasSession` rather than the raw token for
+ * route guards).
  */
 import { useEffect, useState, useCallback } from "react";
 
-const TOKEN_KEY = "beacon_tok=";
-const COOKIE_NAME = "beacon_session";
-
-function encodeNamePayload(t: string | null): string {
-  // Preserve any existing window.name from the host page (we just prefix our
-  // own key/value). Strip any prior beacon_tok= segment first.
-  const cur = typeof window !== "undefined" && typeof window.name === "string" ? window.name : "";
-  const cleaned = cur.replace(new RegExp(`(^|\\|)${TOKEN_KEY}[^|]*`), "").replace(/^\|/, "");
-  if (!t) return cleaned;
-  return cleaned ? `${TOKEN_KEY}${t}|${cleaned}` : `${TOKEN_KEY}${t}`;
-}
-function readFromWindowName(): string | null {
-  try {
-    if (typeof window === "undefined" || typeof window.name !== "string") return null;
-    const m = window.name.match(new RegExp(`(?:^|\\|)${TOKEN_KEY}([^|]+)`));
-    return m ? m[1] : null;
-  } catch {
-    return null;
-  }
-}
-function writeToWindowName(t: string | null): void {
-  try {
-    if (typeof window === "undefined") return;
-    window.name = encodeNamePayload(t);
-  } catch {
-    /* ignore */
-  }
-}
-function readFromCookie(): string | null {
-  try {
-    if (typeof document === "undefined") return null;
-    const m = document.cookie.match(new RegExp(`(?:^|;\\s*)${COOKIE_NAME}=([^;]+)`));
-    return m ? decodeURIComponent(m[1]) : null;
-  } catch {
-    return null;
-  }
-}
-function writeToCookie(t: string | null): void {
-  try {
-    if (typeof document === "undefined") return;
-    if (t) {
-      // Session cookie (no Max-Age / Expires) so it dies with the browser.
-      document.cookie = `${COOKIE_NAME}=${encodeURIComponent(t)}; Path=/; SameSite=Strict`;
-    } else {
-      document.cookie = `${COOKIE_NAME}=; Path=/; Max-Age=0; SameSite=Strict`;
-    }
-  } catch {
-    /* ignore */
-  }
-}
-function hydrateToken(): string | null {
-  return readFromWindowName() ?? readFromCookie();
-}
-
 // API base prefix — rewritten at publish time by the deploy pipeline.
 // In dev / preview this string starts with "__", so we use a relative path.
-// In published sandboxes the literal is rewritten to "/port/5000" (or similar).
+// In published sandboxes the literal is rewritten to "port/5000" (or similar).
 export const API_BASE = "__PORT_5000__".startsWith("__") ? "" : "__PORT_5000__";
 export function apiUrl(path: string): string {
   return path.startsWith("http") ? path : `${API_BASE}${path}`;
 }
 
-type Listener = (token: string | null) => void;
+type Listener = (hasSession: boolean) => void;
 const listeners = new Set<Listener>();
-// Hydrate from window.name / cookie on module load so a refresh keeps the session.
-let currentToken: string | null = hydrateToken();
+
+// In-memory token returned by the login response body. May be null even when
+// the user is authenticated (e.g. after a page refresh, the cookie is valid
+// but we haven't seen the response body). Always check `hasSession` for
+// route-guard decisions.
+let currentToken: string | null = null;
+let sessionKnown = false; // true once we've called hydrate() and learned the cookie's state
+let sessionValid = false; // result of the most recent /api/me probe
 
 export function getToken(): string | null {
   return currentToken;
 }
 
-export function setToken(t: string | null) {
-  currentToken = t;
-  writeToWindowName(t);
-  writeToCookie(t);
-  listeners.forEach((l) => l(t));
+/**
+ * Returns true if the browser currently has a valid session cookie.
+ * Use this for route guards instead of getToken() — the cookie may be
+ * present even when the in-memory token is null.
+ */
+export function hasSession(): boolean {
+  return sessionValid;
 }
 
-export function useAuthToken() {
-  const [tok, setTok] = useState<string | null>(currentToken);
+export function setToken(t: string | null) {
+  currentToken = t;
+  sessionValid = !!t;
+  sessionKnown = true;
+  listeners.forEach((l) => l(sessionValid));
+}
+
+function markSessionState(valid: boolean) {
+  sessionValid = valid;
+  sessionKnown = true;
+  if (!valid) currentToken = null;
+  listeners.forEach((l) => l(sessionValid));
+}
+
+/**
+ * Probe the server for an existing session cookie. Call once at app startup
+ * (and after any place that might invalidate the cookie). Returns true if
+ * the cookie is valid.
+ */
+export async function hydrateSession(): Promise<boolean> {
+  try {
+    const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
+    if (res.ok) {
+      markSessionState(true);
+      return true;
+    }
+  } catch {
+    /* network error — treat as no session */
+  }
+  markSessionState(false);
+  return false;
+}
+
+export function useAuthToken(): boolean {
+  // Subscribers receive a boolean "has session" so they don't depend on the
+  // in-memory token (which is null after a refresh even when authed).
+  const [v, setV] = useState<boolean>(sessionValid);
   useEffect(() => {
-    const l: Listener = (t) => setTok(t);
+    const l: Listener = (valid) => setV(valid);
     listeners.add(l);
     return () => {
       listeners.delete(l);
     };
   }, []);
-  return tok;
+  return v;
 }
 
-// Wrap fetch with bearer token automatically
+/**
+ * Wrap fetch. Sends:
+ *   - credentials: "include" so the __Host-beacon_session cookie travels
+ *   - Authorization: Bearer <token> if we have an in-memory token (no-op
+ *     for cookie-only sessions; this just keeps the curl-style flow
+ *     working for API clients that don't carry cookies)
+ *
+ * On HTTP 401, marks the session invalid so route guards bounce the user
+ * to /login instead of leaving them on a blank admin/lab page.
+ */
 export async function api(method: string, url: string, body?: unknown): Promise<any> {
   const headers: Record<string, string> = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
@@ -119,6 +115,7 @@ export async function api(method: string, url: string, body?: unknown): Promise<
   const res = await fetch(apiUrl(url), {
     method,
     headers,
+    credentials: "include",
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
   const text = await res.text();
@@ -129,10 +126,7 @@ export async function api(method: string, url: string, body?: unknown): Promise<
     data = { error: text };
   }
   if (!res.ok) {
-    // 401 = the token is no longer valid (expired, revoked, server restart).
-    // Clear local state so the next render shows the login screen instead
-    // of a blank admin/lab page that silently bounces to /.
-    if (res.status === 401 && currentToken) setToken(null);
+    if (res.status === 401) markSessionState(false);
     const err = new Error(data?.error || res.statusText) as any;
     err.status = res.status;
     err.data = data;
