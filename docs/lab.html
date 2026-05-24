@@ -22,15 +22,17 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
 
   <!-- v2: API base override — set before bridge loads so bridge reads it. -->
-  <!-- localhost dev: ?api=http://localhost:5050 overrides the default URL.  -->
+  <!-- Default points to the current pplx.app host. Override via ?api=...    -->
+  <!-- (e.g. ?api=http://localhost:5050 for local dev, or the future custom  -->
+  <!-- domain https://api.beacon-lab.aigovops.foundation once DNS is live.). -->
   <script>
     window.__BEACON_API_BASE__ = (
       new URLSearchParams(location.search).get("api") ||
-      "https://api.beacon-lab.aigovops.foundation"
+      "https://aigovops-beacon-lab.pplx.app/port/5000"
     );
   </script>
   <!-- v2: Bridge JS manages anon JWT + invite-token capture. -->
-  <script type="module" src="https://api.beacon-lab.aigovops.foundation/components/beacon-lab-bridge.js"></script>
+  <script type="module" src="https://aigovops-beacon-lab.pplx.app/port/5000/components/beacon-lab-bridge.js"></script>
 </head>
 
 <body class="lab-body">
@@ -233,7 +235,7 @@
             status.textContent = 'Session ready! Redirecting…';
             // Redirect to the live lab; fall back to the demo login page.
             var dest = data.redirectUrl ||
-              'https://aigovops-beacon-lab.fly.dev/lab';
+              'https://aigovops-beacon-lab.pplx.app';
             window.location.href = dest;
           } catch(e) {
             status.textContent = 'Error: ' + (e.message || 'Unknown error');

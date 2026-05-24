@@ -18,7 +18,7 @@
 
 const API_BASE =
   (typeof window !== "undefined" && window.__BEACON_API_BASE__) ||
-  "https://api.beacon-lab.aigovops.foundation";
+  "https://aigovops-beacon-lab.pplx.app/port/5000";
 
 // Tweetnacl CDN — used by <beacon-lab-receipt> for signature verification.
 const NACL_CDN = "https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js";

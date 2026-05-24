@@ -16,7 +16,7 @@
   // Read API base before the module fires (set in page <script> before this).
   const API_BASE =
     (typeof window !== "undefined" && window.__BEACON_API_BASE__) ||
-    "https://api.beacon-lab.aigovops.foundation";
+    "https://aigovops-beacon-lab.pplx.app/port/5000";
 
   const STORAGE_KEY = "beacon.jwt";
 
