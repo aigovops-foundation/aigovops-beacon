@@ -70,14 +70,32 @@ function markSessionState(valid: boolean) {
  * the cookie is valid.
  */
 export async function hydrateSession(): Promise<boolean> {
-  try {
-    const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
-    if (res.ok) {
-      markSessionState(true);
-      return true;
+  // Same cold-start retry policy as api() — a TypeError here would
+  // otherwise bounce a perfectly-authed user to /login because we'd
+  // mistake "backend not ready" for "no session".
+  const backoffsMs = [400, 1000];
+  for (let attempt = 0; attempt <= backoffsMs.length; attempt++) {
+    try {
+      const res = await fetch(apiUrl("/api/me"), { credentials: "include" });
+      if (res.ok) {
+        markSessionState(true);
+        return true;
+      }
+      // 401 = no session cookie. Don't retry; that's a definitive answer.
+      if (res.status === 401) break;
+      // 5xx — transient. Retry.
+      if (attempt < backoffsMs.length) {
+        await new Promise((r) => setTimeout(r, backoffsMs[attempt]));
+        continue;
+      }
+      break;
+    } catch {
+      // Network error — backend cold start. Retry.
+      if (attempt < backoffsMs.length) {
+        await new Promise((r) => setTimeout(r, backoffsMs[attempt]));
+        continue;
+      }
     }
-  } catch {
-    /* network error — treat as no session */
   }
   markSessionState(false);
   return false;
@@ -97,38 +115,92 @@ export function useAuthToken(): boolean {
   return v;
 }
 
+// Wait `ms` milliseconds.
+function delay(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
 /**
- * Wrap fetch. Sends:
- *   - credentials: "include" so the __Host-beacon_session cookie travels
- *   - Authorization: Bearer <token> if we have an in-memory token (no-op
- *     for cookie-only sessions; this just keeps the curl-style flow
- *     working for API clients that don't carry cookies)
- *
- * On HTTP 401, marks the session invalid so route guards bounce the user
- * to /login instead of leaving them on a blank admin/lab page.
+ * Single fetch attempt. Throws TypeError on network failure (no response),
+ * returns the Response on any HTTP status.
  */
-export async function api(method: string, url: string, body?: unknown): Promise<any> {
+async function rawFetch(method: string, url: string, body?: unknown): Promise<Response> {
   const headers: Record<string, string> = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
   const tok = currentToken;
   if (tok) headers["Authorization"] = `Bearer ${tok}`;
-  const res = await fetch(apiUrl(url), {
+  return fetch(apiUrl(url), {
     method,
     headers,
     credentials: "include",
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
-  const text = await res.text();
+}
+
+/**
+ * Wrap fetch with transient-error retry. Sends:
+ *   - credentials: "include" so the __Host-beacon_session cookie travels
+ *   - Authorization: Bearer <token> if we have an in-memory token (no-op
+ *     for cookie-only sessions; keeps the curl-style flow working for
+ *     API clients that don't carry cookies)
+ *
+ * Retries on:
+ *   - TypeError ("Failed to fetch") — network blip / cold-start
+ *   - HTTP 502 / 503 / 504 — backend not ready / restarting
+ * Up to 3 attempts with 600ms, 1500ms backoff. Idempotent and safe because
+ * the only POSTs in this app are login/state-change endpoints that are
+ * naturally idempotent (a duplicate demo login just creates a 2nd session
+ * we never see; a duplicate magic-link consume fails the 2nd attempt with
+ * a clear 401 we surface untouched).
+ *
+ * On HTTP 401, marks the session invalid so route guards bounce the user
+ * to /login instead of leaving them on a blank admin/lab page.
+ */
+export async function api(method: string, url: string, body?: unknown): Promise<any> {
+  const backoffsMs = [600, 1500];
+  let res: Response | undefined;
+  for (let attempt = 0; attempt <= backoffsMs.length; attempt++) {
+    try {
+      res = await rawFetch(method, url, body);
+      // Retry on 502/503/504 (gateway / backend-not-ready). 5xx other than
+      // these usually indicate real server errors, not cold-starts.
+      if (res.status === 502 || res.status === 503 || res.status === 504) {
+        if (attempt < backoffsMs.length) {
+          await delay(backoffsMs[attempt]);
+          continue;
+        }
+      }
+      break;
+    } catch (e) {
+      // Network error (TypeError: Failed to fetch). Almost always a cold
+      // start on the pplx.app sandbox — backend isn't accepting TCP yet.
+      if (attempt < backoffsMs.length) {
+        await delay(backoffsMs[attempt]);
+        continue;
+      }
+      // Out of retries — surface a friendlier message.
+      const msg =
+        e instanceof TypeError
+          ? "Couldn't reach the lab backend. It may be starting up — try again in a few seconds."
+          : (e as Error)?.message || String(e);
+      const err = new Error(msg) as any;
+      err.cause = e;
+      throw err;
+    }
+  }
+  // We have a Response.
+  const finalRes = res!;
+  const text = await finalRes.text();
   let data: any;
   try {
     data = text ? JSON.parse(text) : {};
   } catch {
     data = { error: text };
   }
-  if (!res.ok) {
-    if (res.status === 401) markSessionState(false);
-    const err = new Error(data?.error || res.statusText) as any;
-    err.status = res.status;
+  if (!finalRes.ok) {
+    if (finalRes.status === 401) markSessionState(false);
+    const err = new Error(data?.error || finalRes.statusText) as any;
+    err.status = finalRes.status;
     err.data = data;
     throw err;
   }
