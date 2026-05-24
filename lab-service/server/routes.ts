@@ -1,6 +1,8 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer } from "node:http";
 import type { Server } from "node:http";
+import fs from "node:fs";
+import path from "node:path";
 import { storage, db as drizzleDb } from "./storage";
 import { inventory as inventoryTable } from "@shared/schema";
 import { eq } from "drizzle-orm";
@@ -29,6 +31,23 @@ import type { Session, InventoryItem } from "@shared/schema";
 // ---------------------------------------------------------------------------
 
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8; // 8h
+
+// Bundle hash exposed via /api/status so the client can detect when a stale
+// tab has cached an old JS bundle and trigger a reload. Read once at
+// startup from the served index.html.
+function readBundleHash(): string {
+  try {
+    const indexHtml = fs.readFileSync(
+      path.resolve(__dirname, "public", "index.html"),
+      "utf8",
+    );
+    const m = indexHtml.match(/assets\/index-([A-Za-z0-9_-]+)\.js/);
+    return m ? m[1] : "";
+  } catch {
+    return "";
+  }
+}
+const BUNDLE_HASH = readBundleHash();
 
 // The pplx.app published-site proxy strips any request cookie whose name
 // doesn't start with `__Host-`, so we use that exact prefix. Requirements
@@ -140,6 +159,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       labName: process.env.LAB_NAME || "AIGovOps Beacon Lab",
       paused: state?.paused ?? false,
       pauseMessage: state?.pauseMessage ?? "",
+      bundleHash: BUNDLE_HASH,
       tenants,
     });
   });

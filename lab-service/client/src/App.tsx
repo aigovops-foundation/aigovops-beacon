@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Switch, Route, Router } from "wouter";
 import { useHashLocation as useHashLocationRaw } from "wouter/use-hash-location";
 import { queryClient } from "./lib/queryClient";
+import { installStaleBundleWatcher } from "./lib/staleBundleCheck";
 
 // Wrap useHashLocation to strip query strings, so /login?t=xyz still matches /login.
 const useHashLocation = ((options?: { ssrPath?: string }) => {
@@ -28,6 +30,9 @@ function AppRouter() {
 }
 
 function App() {
+  useEffect(() => {
+    installStaleBundleWatcher();
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
