@@ -1,0 +1,568 @@
+#!/usr/bin/env bash
+# beacon-v2 — single-command automation for the Beacon Lab v2 stack.
+#
+# Usage:
+#   beacon-v2 on              # turn the entire v2 stack on
+#   beacon-v2 off             # turn the entire v2 stack off (back to v1)
+#   beacon-v2 status          # show current state of every layer
+#   beacon-v2 on <layer>      # turn one layer on
+#   beacon-v2 off <layer>     # turn one layer off
+#
+# Layers (in dependency order):
+#   backend     Fly.io app  (api.beacon-lab.aigovops.foundation)
+#   pplx        pplx.app published site (current host, fallback)
+#   edge        Cloudflare Worker (edge.beacon.aigovops.foundation)
+#   pages-v2    GitHub Pages ?v2=1 flag — points lab.html at the v2 stack
+#   cron        Nightly receipt-sync GitHub Action
+#
+# State is persisted to ./.beacon-v2-state.json so subsequent commands know
+# what's running.  No credentials are stored — flyctl/wrangler/gh handle
+# their own auth.
+#
+# Exit codes:
+#   0  success / no-op
+#   1  partial — some layers couldn't run (missing creds, network etc.)
+#   2  hard failure — one of the layers errored after starting
+#   3  bad usage
+
+set -uo pipefail
+
+# ── Resolve paths ─────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$PROJECT_ROOT/.." 2>/dev/null && pwd || echo "$PROJECT_ROOT")"
+STATE_FILE="$PROJECT_ROOT/.beacon-v2-state.json"
+
+# Default values — override in your environment or via .beacon-v2.env
+: "${FLY_APP_NAME:=aigovops-beacon-lab}"
+: "${FLY_REGION:=sea}"
+: "${PPLX_SITE_ID:=2138e2e2-b04a-4283-a6f9-aa507069fd41}"
+: "${PPLX_APP_SLUG:=aigovops-beacon-lab}"
+: "${CORS_ALLOWED_ORIGINS:=https://bobrapp.github.io}"
+: "${ADMIN_PASSWORD:=Green2199**Green2199**}"
+: "${PAGES_REPO:=bobrapp/aigovops-beacon}"
+: "${PAGES_DEFAULT_BRANCH:=main}"
+: "${CRON_WORKFLOW_FILE:=.github/workflows/sync-from-backend.yml}"
+
+# Source a local override file if present (gitignored).
+if [[ -f "$PROJECT_ROOT/.beacon-v2.env" ]]; then
+  # shellcheck disable=SC1090
+  source "$PROJECT_ROOT/.beacon-v2.env"
+fi
+
+# ── Pretty output ─────────────────────────────────────────────────────────────
+
+C_TEAL='\033[38;5;30m'
+C_GREEN='\033[38;5;35m'
+C_RED='\033[38;5;160m'
+C_GREY='\033[38;5;243m'
+C_BOLD='\033[1m'
+C_RESET='\033[0m'
+
+step()  { printf "${C_TEAL}▸${C_RESET} %s\n" "$*"; }
+ok()    { printf "${C_GREEN}✓${C_RESET} %s\n" "$*"; }
+warn()  { printf "${C_GREY}·${C_RESET} %s\n" "$*"; }
+fail()  { printf "${C_RED}✗${C_RESET} %s\n" "$*" 1>&2; }
+hdr()   { printf "\n${C_BOLD}%s${C_RESET}\n" "$*"; }
+
+# ── State file (minimal JSON, edited via jq when available, sed otherwise) ────
+
+state_init() {
+  if [[ ! -f "$STATE_FILE" ]]; then
+    cat >"$STATE_FILE" <<JSON
+{
+  "backend":  "off",
+  "pplx":     "off",
+  "edge":     "off",
+  "pages-v2": "off",
+  "cron":     "off",
+  "updated":  ""
+}
+JSON
+  fi
+}
+
+state_get() {
+  state_init
+  local key="$1"
+  if command -v jq >/dev/null 2>&1; then
+    jq -r --arg k "$key" '.[$k] // "off"' "$STATE_FILE"
+  else
+    grep -oE "\"$key\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" "$STATE_FILE" | sed -E 's/.*"([^"]+)"$/\1/'
+  fi
+}
+
+state_set() {
+  state_init
+  local key="$1" val="$2"
+  local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  if command -v jq >/dev/null 2>&1; then
+    local tmp; tmp="$(mktemp)"
+    jq --arg k "$key" --arg v "$val" --arg t "$now" '.[$k]=$v | .updated=$t' "$STATE_FILE" >"$tmp" && mv "$tmp" "$STATE_FILE"
+  else
+    # Plain sed fallback — replaces just the value for $key.
+    sed -i.bak -E "s|\"$key\"[[:space:]]*:[[:space:]]*\"[^\"]*\"|\"$key\": \"$val\"|" "$STATE_FILE"
+    sed -i.bak -E "s|\"updated\"[[:space:]]*:[[:space:]]*\"[^\"]*\"|\"updated\": \"$now\"|" "$STATE_FILE"
+    rm -f "$STATE_FILE.bak"
+  fi
+}
+
+# ── Capability checks ─────────────────────────────────────────────────────────
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+check_node() {
+  if ! have node || ! have npm; then
+    fail "node + npm are required.  Install Node 20+ and re-run."
+    return 1
+  fi
+}
+
+check_flyctl() {
+  if ! have flyctl; then
+    warn "flyctl not installed — skipping backend layer."
+    warn "Install: curl -L https://fly.io/install.sh | sh"
+    return 1
+  fi
+  if ! flyctl auth whoami >/dev/null 2>&1; then
+    warn "flyctl not authenticated — run: flyctl auth login"
+    return 1
+  fi
+}
+
+check_wrangler() {
+  if ! have wrangler && ! have npx; then
+    warn "wrangler (or npx) not installed — skipping edge layer."
+    return 1
+  fi
+  local wrangler_cmd="wrangler"
+  have wrangler || wrangler_cmd="npx wrangler"
+  if ! $wrangler_cmd whoami >/dev/null 2>&1; then
+    warn "wrangler not authenticated — run: wrangler login"
+    return 1
+  fi
+}
+
+check_gh() {
+  if ! have gh; then
+    warn "gh CLI not installed — Pages flag + cron toggle will use git push only."
+    return 1
+  fi
+  if ! gh auth status >/dev/null 2>&1; then
+    warn "gh not authenticated — run: gh auth login"
+    return 1
+  fi
+}
+
+check_pplx() {
+  if ! have pplx-tool; then
+    warn "pplx-tool not available — pplx.app layer is unavailable in this shell."
+    return 1
+  fi
+}
+
+# ── Build (idempotent — caller decides when to invoke) ────────────────────────
+
+build_once() {
+  step "Building lab-service (npm run build)..."
+  (cd "$PROJECT_ROOT" && npm run build) >/dev/null 2>&1
+  if [[ $? -ne 0 ]]; then
+    # Run again with output so the user sees the error.
+    (cd "$PROJECT_ROOT" && npm run build)
+    fail "Build failed."
+    return 1
+  fi
+  ok "Build succeeded — dist/index.cjs + dist/public/ ready."
+}
+
+# ── Layer: backend (Fly.io) ───────────────────────────────────────────────────
+
+backend_on() {
+  hdr "Backend (Fly.io)"
+  check_flyctl || { warn "Skipped backend."; return 1; }
+  build_once || return 2
+
+  step "Ensuring Fly app exists ($FLY_APP_NAME)..."
+  if ! flyctl status -a "$FLY_APP_NAME" >/dev/null 2>&1; then
+    step "First-time launch — creating app + volume..."
+    (cd "$PROJECT_ROOT" && flyctl launch --copy-config --no-deploy --name "$FLY_APP_NAME" --region "$FLY_REGION" --yes) || {
+      fail "flyctl launch failed."
+      return 2
+    }
+    flyctl volumes create beacon_data --size 1 --region "$FLY_REGION" -a "$FLY_APP_NAME" --yes >/dev/null 2>&1 || true
+  fi
+
+  step "Setting secrets (ADMIN_PASSWORD, CORS_ALLOWED_ORIGINS)..."
+  flyctl secrets set \
+    "ADMIN_PASSWORD=$ADMIN_PASSWORD" \
+    "CORS_ALLOWED_ORIGINS=$CORS_ALLOWED_ORIGINS" \
+    "LAB_NAME=AIGovOps Beacon Lab" \
+    -a "$FLY_APP_NAME" --stage >/dev/null
+
+  step "Deploying to Fly..."
+  if (cd "$PROJECT_ROOT" && flyctl deploy --remote-only -a "$FLY_APP_NAME"); then
+    local url; url="$(flyctl status -a "$FLY_APP_NAME" --json 2>/dev/null | jq -r '.Hostname // empty' 2>/dev/null)"
+    [[ -n "$url" ]] && ok "Backend live at https://${url}" || ok "Backend deployed."
+    state_set "backend" "on"
+  else
+    fail "Fly deploy failed."
+    state_set "backend" "error"
+    return 2
+  fi
+}
+
+backend_off() {
+  hdr "Backend (Fly.io)"
+  check_flyctl || { warn "Cannot toggle without flyctl."; return 1; }
+  step "Suspending Fly app (machines stop, volume preserved)..."
+  if flyctl machine list -a "$FLY_APP_NAME" --json 2>/dev/null | jq -r '.[].id' | xargs -I{} -r flyctl machine stop {} -a "$FLY_APP_NAME" >/dev/null 2>&1; then
+    ok "Backend stopped.  Run 'beacon-v2 on backend' to resume."
+    state_set "backend" "off"
+  else
+    warn "Could not stop machines (none running?)."
+    state_set "backend" "off"
+  fi
+}
+
+# ── Layer: pplx.app (current host) ────────────────────────────────────────────
+
+pplx_on() {
+  hdr "pplx.app published site"
+  check_pplx || { warn "Skipped pplx layer."; return 1; }
+  build_once || return 2
+
+  step "Deploying to pplx.app preview..."
+  local deploy_out
+  deploy_out=$(pplx-tool deploy_website <<JSON 2>&1
+{
+  "user_description": "beacon-v2 CLI deploy",
+  "project_path": "$PROJECT_ROOT/dist/public",
+  "site_name": "AIGovOps Beacon Lab",
+  "entry_point": "index.html"
+}
+JSON
+)
+  if echo "$deploy_out" | grep -q '"status":"uploaded"'; then
+    ok "Preview deployed."
+  else
+    fail "pplx deploy_website failed:"
+    echo "$deploy_out" | head -3
+    state_set "pplx" "error"
+    return 2
+  fi
+
+  step "Republishing to ${PPLX_APP_SLUG}.pplx.app..."
+  local publish_out
+  publish_out=$(pplx-tool publish_website <<JSON 2>&1
+{
+  "user_description": "beacon-v2 CLI publish",
+  "project_path": "$PROJECT_ROOT",
+  "dist_path": "$PROJECT_ROOT/dist/public",
+  "run_command": "ADMIN_PASSWORD='$ADMIN_PASSWORD' LAB_NAME='AIGovOps Beacon Lab' CORS_ALLOWED_ORIGINS='$CORS_ALLOWED_ORIGINS' NODE_ENV=production node dist/index.cjs",
+  "install_command": "npm ci --omit=dev",
+  "port": 5000,
+  "app_name": "AIGovOps Beacon Lab",
+  "site_id": "$PPLX_SITE_ID"
+}
+JSON
+)
+  if echo "$publish_out" | grep -q '"status":"published"'; then
+    ok "Live at https://${PPLX_APP_SLUG}.pplx.app"
+    state_set "pplx" "on"
+  else
+    fail "pplx publish_website failed:"
+    echo "$publish_out" | head -3
+    state_set "pplx" "error"
+    return 2
+  fi
+}
+
+pplx_off() {
+  hdr "pplx.app published site"
+  warn "pplx.app sites cannot be unpublished from the CLI."
+  warn "Open the app preview in Comet and use the Unpublish button."
+  warn "State recorded as 'off' — re-run 'beacon-v2 on pplx' to redeploy."
+  state_set "pplx" "off"
+}
+
+# ── Layer: edge (Cloudflare Worker) ───────────────────────────────────────────
+
+edge_on() {
+  hdr "Edge (Cloudflare Worker)"
+  check_wrangler || { warn "Skipped edge layer."; return 1; }
+  local wrangler_cmd="wrangler"
+  have wrangler || wrangler_cmd="npx --yes wrangler"
+
+  step "Deploying edge worker from edge/..."
+  if (cd "$PROJECT_ROOT/edge" && $wrangler_cmd deploy); then
+    ok "Edge worker deployed."
+    state_set "edge" "on"
+  else
+    fail "wrangler deploy failed."
+    state_set "edge" "error"
+    return 2
+  fi
+}
+
+edge_off() {
+  hdr "Edge (Cloudflare Worker)"
+  check_wrangler || { warn "Cannot toggle without wrangler."; return 1; }
+  local wrangler_cmd="wrangler"
+  have wrangler || wrangler_cmd="npx --yes wrangler"
+
+  step "Deleting edge worker..."
+  if (cd "$PROJECT_ROOT/edge" && $wrangler_cmd delete --force 2>/dev/null); then
+    ok "Edge worker deleted."
+    state_set "edge" "off"
+  else
+    warn "Worker not deployed or already gone."
+    state_set "edge" "off"
+  fi
+}
+
+# ── Layer: pages-v2 flag ──────────────────────────────────────────────────────
+# Flips a single line in docs/lab.html that controls whether v2 is on by
+# default (vs. requiring ?v2=1 query parameter).  Commits + pushes via git.
+
+PAGES_FLAG_FILE="$REPO_ROOT/docs/lab.html"
+PAGES_FLAG_OFF='window.__BEACON_V2_DEFAULT__ = false;  /* v2: off */'
+PAGES_FLAG_ON='window.__BEACON_V2_DEFAULT__ = true;   /* v2: on  */'
+
+pages_ensure_flag() {
+  # Insert the flag inside <head> if it doesn't exist yet.
+  if [[ ! -f "$PAGES_FLAG_FILE" ]]; then
+    warn "docs/lab.html not found at $PAGES_FLAG_FILE — Pages layer needs the repo checked out."
+    return 1
+  fi
+  if ! grep -q "__BEACON_V2_DEFAULT__" "$PAGES_FLAG_FILE"; then
+    step "Inserting v2 default flag into docs/lab.html..."
+    # Insert before </head>.  Use a portable sed invocation.
+    local tmp; tmp="$(mktemp)"
+    awk -v ins="<script>$PAGES_FLAG_OFF</script>" '
+      /<\/head>/ && !inserted { print ins; inserted=1 }
+      { print }
+    ' "$PAGES_FLAG_FILE" >"$tmp" && mv "$tmp" "$PAGES_FLAG_FILE"
+  fi
+}
+
+pages_commit_push() {
+  local msg="$1"
+  (cd "$REPO_ROOT" && git add docs/lab.html && git diff --cached --quiet) && { warn "(no Pages changes to push)"; return 0; }
+  (cd "$REPO_ROOT" && git commit -m "$msg" && git push origin "$PAGES_DEFAULT_BRANCH") || {
+    fail "git push failed.  Check 'git status' in $REPO_ROOT."
+    return 2
+  }
+  ok "Pages updated — GitHub Pages will rebuild in ~30-90s."
+}
+
+pages_v2_on() {
+  hdr "Pages v2 flag"
+  pages_ensure_flag || return 1
+  step "Setting __BEACON_V2_DEFAULT__ = true in docs/lab.html..."
+  sed -i.bak "s|$PAGES_FLAG_OFF|$PAGES_FLAG_ON|g" "$PAGES_FLAG_FILE" && rm -f "$PAGES_FLAG_FILE.bak"
+  pages_commit_push "pages: turn v2 on by default (beacon-v2 CLI)" || return 2
+  state_set "pages-v2" "on"
+}
+
+pages_v2_off() {
+  hdr "Pages v2 flag"
+  pages_ensure_flag || return 1
+  step "Setting __BEACON_V2_DEFAULT__ = false in docs/lab.html..."
+  sed -i.bak "s|$PAGES_FLAG_ON|$PAGES_FLAG_OFF|g" "$PAGES_FLAG_FILE" && rm -f "$PAGES_FLAG_FILE.bak"
+  pages_commit_push "pages: turn v2 off by default (beacon-v2 CLI)" || return 2
+  state_set "pages-v2" "off"
+}
+
+# ── Layer: cron (nightly sync GitHub Action) ──────────────────────────────────
+
+cron_on() {
+  hdr "Nightly sync cron"
+  if [[ ! -f "$REPO_ROOT/$CRON_WORKFLOW_FILE" ]]; then
+    fail "Workflow $CRON_WORKFLOW_FILE not found.  Did you forget to pull main?"
+    return 2
+  fi
+  if check_gh 2>/dev/null; then
+    step "Enabling workflow via gh CLI..."
+    gh workflow enable "$(basename "$CRON_WORKFLOW_FILE" .yml)" -R "$PAGES_REPO" 2>/dev/null && ok "Workflow enabled."
+  else
+    warn "gh CLI unavailable — workflow runs as long as the file exists on main."
+  fi
+  state_set "cron" "on"
+}
+
+cron_off() {
+  hdr "Nightly sync cron"
+  if check_gh 2>/dev/null; then
+    step "Disabling workflow via gh CLI..."
+    gh workflow disable "$(basename "$CRON_WORKFLOW_FILE" .yml)" -R "$PAGES_REPO" 2>/dev/null && ok "Workflow disabled."
+  else
+    warn "gh CLI unavailable — cannot disable workflow remotely."
+    warn "Either install gh + 'gh auth login', or delete .github/workflows/sync-from-backend.yml and push."
+  fi
+  state_set "cron" "off"
+}
+
+# ── Health check ──────────────────────────────────────────────────────────────
+
+health_check() {
+  hdr "Health check"
+  local base
+  if [[ "$(state_get backend)" == "on" ]] && have flyctl; then
+    base="https://${FLY_APP_NAME}.fly.dev"
+  elif [[ "$(state_get pplx)" == "on" ]]; then
+    base="https://${PPLX_APP_SLUG}.pplx.app/port/5000"
+  else
+    warn "No backend appears to be on — skipping health check."
+    return 0
+  fi
+  step "Probing $base/api/status..."
+  local code; code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$base/api/status")
+  if [[ "$code" == "200" ]]; then
+    ok "Backend is responding (HTTP 200)."
+  else
+    fail "Backend returned HTTP $code from $base/api/status"
+    return 2
+  fi
+
+  step "Probing CORS preflight from $CORS_ALLOWED_ORIGINS..."
+  local cors; cors=$(curl -s -i -X OPTIONS "$base/api/anon/session" \
+    -H "Origin: $CORS_ALLOWED_ORIGINS" \
+    -H "Access-Control-Request-Method: POST" \
+    -H "Access-Control-Request-Headers: Content-Type" --max-time 10 \
+    | grep -ic "access-control-allow-origin")
+  if [[ "$cors" -ge 1 ]]; then
+    ok "CORS preflight returns Access-Control-Allow-Origin."
+  else
+    fail "CORS preflight did not include Access-Control-Allow-Origin."
+    return 2
+  fi
+}
+
+# ── Status table ──────────────────────────────────────────────────────────────
+
+show_status() {
+  state_init
+  hdr "Beacon v2 — current state"
+  local layers=(backend pplx edge "pages-v2" cron)
+  for layer in "${layers[@]}"; do
+    local v; v="$(state_get "$layer")"
+    local glyph color
+    case "$v" in
+      on)    glyph="●"; color="$C_GREEN" ;;
+      off)   glyph="○"; color="$C_GREY" ;;
+      error) glyph="✗"; color="$C_RED" ;;
+      *)     glyph="?"; color="$C_GREY" ;;
+    esac
+    printf "  ${color}${glyph}${C_RESET} %-10s ${color}%s${C_RESET}\n" "$layer" "$v"
+  done
+  echo ""
+  local updated
+  if command -v jq >/dev/null 2>&1; then
+    updated=$(jq -r '.updated // "never"' "$STATE_FILE")
+  else
+    updated=$(grep -oE '"updated"[^"]*"[^"]*"' "$STATE_FILE" | tail -1 | sed -E 's/.*"([^"]+)"$/\1/')
+  fi
+  printf "  ${C_GREY}last update:${C_RESET} %s\n" "${updated:-never}"
+}
+
+# ── Orchestration ─────────────────────────────────────────────────────────────
+
+# Dependency order for `on` — backend first because everything else needs it,
+# pplx is a fallback if backend isn't available, edge sits in front of either,
+# pages-v2 flips only after a backend exists, cron runs last.
+ALL_LAYERS=(backend pplx edge "pages-v2" cron)
+# For `off` we reverse — turn external switches off before stopping the origin.
+ALL_LAYERS_OFF=(cron "pages-v2" edge pplx backend)
+
+cmd_on() {
+  local layer="${1:-all}"
+  check_node || exit 2
+  if [[ "$layer" == "all" ]]; then
+    local rc=0
+    for l in "${ALL_LAYERS[@]}"; do
+      cmd_on "$l" || rc=$?
+    done
+    health_check || rc=$?
+    show_status
+    exit $rc
+  fi
+  case "$layer" in
+    backend)   backend_on   ;;
+    pplx)      pplx_on      ;;
+    edge)      edge_on      ;;
+    pages-v2)  pages_v2_on  ;;
+    cron)      cron_on      ;;
+    *) fail "Unknown layer: $layer"; exit 3 ;;
+  esac
+}
+
+cmd_off() {
+  local layer="${1:-all}"
+  if [[ "$layer" == "all" ]]; then
+    local rc=0
+    for l in "${ALL_LAYERS_OFF[@]}"; do
+      cmd_off "$l" || rc=$?
+    done
+    show_status
+    exit $rc
+  fi
+  case "$layer" in
+    backend)   backend_off  ;;
+    pplx)      pplx_off     ;;
+    edge)      edge_off     ;;
+    pages-v2)  pages_v2_off ;;
+    cron)      cron_off     ;;
+    *) fail "Unknown layer: $layer"; exit 3 ;;
+  esac
+}
+
+# ── Entrypoint ────────────────────────────────────────────────────────────────
+
+usage() {
+  cat <<HELP
+beacon-v2 — Beacon Lab v2 stack control
+
+Usage:
+  beacon-v2 on [<layer>]      Turn the stack on (default: all layers).
+  beacon-v2 off [<layer>]     Turn the stack off (default: all layers).
+  beacon-v2 status            Show what's running.
+  beacon-v2 health            Probe the live backend for /api/status + CORS.
+  beacon-v2 help              Show this.
+
+Layers (dependency order):
+  backend      Fly.io app  (api.beacon-lab.aigovops.foundation)
+  pplx         pplx.app published site (fallback host)
+  edge         Cloudflare Worker (edge.beacon.aigovops.foundation)
+  pages-v2     GitHub Pages v2 default flag
+  cron         Nightly receipt-sync GitHub Action
+
+Examples:
+  beacon-v2 on                # bring the whole stack up
+  beacon-v2 off               # tear it down (keeps state file, no data loss)
+  beacon-v2 on backend        # deploy only the Fly backend
+  beacon-v2 off edge          # delete just the Cloudflare worker
+  beacon-v2 status            # show the current state of every layer
+
+State is persisted to: $STATE_FILE
+Override config via:    $PROJECT_ROOT/.beacon-v2.env
+HELP
+}
+
+main() {
+  if [[ $# -eq 0 ]]; then
+    usage
+    exit 3
+  fi
+  local cmd="$1"; shift || true
+  case "$cmd" in
+    on)       cmd_on "${1:-all}" ;;
+    off)      cmd_off "${1:-all}" ;;
+    status)   show_status ;;
+    health)   health_check ;;
+    help|-h|--help) usage ;;
+    *) usage; exit 3 ;;
+  esac
+}
+
+main "$@"
