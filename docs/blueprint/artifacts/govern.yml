@@ -41,7 +41,7 @@ jobs:
             || (echo "Missing use-case manifest" && exit 1)
 
       - name: Verify signed commit (gitsign)
-        run: git verify-commit HEAD || echo "WARNING: unsigned commit"
+        run: 'git verify-commit HEAD || echo "WARNING - unsigned commit"'
 
       # ----- DEPLOYMENT STAGE EVIDENCE -----
       - name: Set up build tooling
