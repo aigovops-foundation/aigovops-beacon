@@ -1,0 +1,146 @@
+# sync-from-backend.yml
+#
+# Nightly job that pulls live data from the Beacon Lab backend and commits
+# it to the Pages site as static JSON.  This closes the "receipt sync" loop
+# described in ARCHITECTURE_V2.md §4.3 — offline verifiers can verify any
+# exported receipt without a backend call.
+#
+# Required secrets:
+#   BEACON_PROJECT_PRIVATE_KEY  — Ed25519 PEM private key for signing the
+#                                 Merkle root file. Optional: if absent the
+#                                 root file is written but not signed.
+#
+# Required permissions (set under the job):
+#   contents: write   — so the job can push to main.
+#
+# Triggered by:
+#   1. Cron: daily at 08:00 UTC (= 01:00 PT / 00:00 PDT)
+#   2. Manual: workflow_dispatch (run from Actions tab without a push)
+
+name: sync-from-backend
+
+on:
+  schedule:
+    - cron: '0 8 * * *'   # 08:00 UTC = 01:00 PT
+  workflow_dispatch:       # allow manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write          # needed for git push at end of workflow
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Step 1: Checkout main ──────────────────────────────────────────────
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── Step 2: Fetch curriculum L100 ─────────────────────────────────────
+      - name: Fetch curriculum L100
+        run: |
+          mkdir -p docs/data
+          curl -sf https://api.beacon-lab.aigovops.foundation/api/curriculum/100 \
+            -o docs/data/curriculum-100.json
+          echo "curriculum-100.json: $(wc -c < docs/data/curriculum-100.json) bytes"
+
+      # ── Step 3: Fetch curriculum L200 ─────────────────────────────────────
+      - name: Fetch curriculum L200
+        run: |
+          curl -sf https://api.beacon-lab.aigovops.foundation/api/curriculum/200 \
+            -o docs/data/curriculum-200.json
+          echo "curriculum-200.json: $(wc -c < docs/data/curriculum-200.json) bytes"
+
+      # ── Step 4: Fetch public receipts ──────────────────────────────────────
+      - name: Fetch public receipts
+        run: |
+          curl -sf https://api.beacon-lab.aigovops.foundation/api/lab/public-receipts \
+            -o docs/data/public-receipts.json
+          echo "public-receipts.json: $(wc -c < docs/data/public-receipts.json) bytes"
+
+      # ── Step 5: Compute Merkle root + optional signature ──────────────────
+      # Builds a binary SHA-256 Merkle tree over receipt IDs from the just-
+      # fetched public-receipts.json.  Outputs receipt-root.json.  If the
+      # BEACON_PROJECT_PRIVATE_KEY secret is set, signs the root file with
+      # OpenSSL (Ed25519) and writes receipt-root.sig alongside.
+      - name: Compute Merkle root
+        env:
+          BEACON_PROJECT_PRIVATE_KEY: ${{ secrets.BEACON_PROJECT_PRIVATE_KEY }}
+        run: |
+          node - <<'NODESCRIPT'
+          const fs = require('fs');
+          const crypto = require('crypto');
+
+          // Load receipt IDs from the fetched JSON.
+          const raw = fs.readFileSync('docs/data/public-receipts.json', 'utf8');
+          const { receipts } = JSON.parse(raw);
+
+          // Build SHA-256 binary Merkle tree over receipt IDs.
+          // Each leaf = SHA-256(id).  Pairs are hashed together ascending;
+          // odd node is promoted unchanged (standard Bitcoin-style tree).
+          function sha256(s) {
+            return crypto.createHash('sha256').update(s).digest('hex');
+          }
+
+          function merkleRoot(ids) {
+            if (!ids || ids.length === 0) return sha256('empty');
+            let layer = ids.map(id => sha256(id));
+            while (layer.length > 1) {
+              const next = [];
+              for (let i = 0; i < layer.length; i += 2) {
+                if (i + 1 < layer.length) {
+                  next.push(sha256(layer[i] + layer[i + 1]));
+                } else {
+                  next.push(layer[i]); // promote odd node
+                }
+              }
+              layer = next;
+            }
+            return layer[0];
+          }
+
+          const ids = (receipts || []).map(r => r.id);
+          const root = merkleRoot(ids);
+          const output = { root, count: ids.length, generatedAt: new Date().toISOString() };
+
+          fs.writeFileSync('docs/data/receipt-root.json', JSON.stringify(output, null, 2));
+          console.log('Merkle root:', root, '(', ids.length, 'receipts)');
+          NODESCRIPT
+
+      - name: Sign Merkle root (if key present)
+        env:
+          BEACON_PROJECT_PRIVATE_KEY: ${{ secrets.BEACON_PROJECT_PRIVATE_KEY }}
+        run: |
+          if [ -z "$BEACON_PROJECT_PRIVATE_KEY" ]; then
+            echo "BEACON_PROJECT_PRIVATE_KEY not set — skipping signature."
+            exit 0
+          fi
+          # Write PEM key to temp file, sign the root JSON, output DER sig as base64.
+          echo "$BEACON_PROJECT_PRIVATE_KEY" > /tmp/beacon-key.pem
+          openssl pkeyutl -sign \
+            -inkey /tmp/beacon-key.pem \
+            -in docs/data/receipt-root.json \
+            | base64 > docs/data/receipt-root.sig
+          rm -f /tmp/beacon-key.pem
+          echo "Signature written to docs/data/receipt-root.sig"
+
+      # ── Step 6: Commit and push if anything changed ────────────────────────
+      - name: Commit data files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add \
+            docs/data/curriculum-100.json \
+            docs/data/curriculum-200.json \
+            docs/data/public-receipts.json \
+            docs/data/receipt-root.json \
+            docs/data/receipt-root.sig 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No data changes — skipping commit."
+          else
+            git commit -m "data: nightly sync from backend"
+            git push
+          fi

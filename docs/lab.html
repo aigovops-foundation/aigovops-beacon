@@ -20,6 +20,17 @@
   <link rel="stylesheet" href="./css/lab.css" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+
+  <!-- v2: API base override — set before bridge loads so bridge reads it. -->
+  <!-- localhost dev: ?api=http://localhost:5050 overrides the default URL.  -->
+  <script>
+    window.__BEACON_API_BASE__ = (
+      new URLSearchParams(location.search).get("api") ||
+      "https://api.beacon-lab.aigovops.foundation"
+    );
+  </script>
+  <!-- v2: Bridge JS manages anon JWT + invite-token capture. -->
+  <script type="module" src="https://api.beacon-lab.aigovops.foundation/components/beacon-lab-bridge.js"></script>
 </head>
 
 <body class="lab-body">
@@ -168,6 +179,70 @@
         <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="./data/ai_failures_top100.json" target="_blank" rel="noopener">100-case dataset</a>.</p>
       </div>
     </section>
+
+  <!-- ============ V2: TRY LIVE LAB CTA ============ -->
+  <!-- Visible only when ?v2=1 is in the URL or localStorage has beacon.v2=1. -->
+  <!-- This section adds zero visual noise to the existing page for non-v2 visitors. -->
+  <section id="v2-live-lab" style="display:none">
+    <div class="shell" style="padding:3rem 0">
+      <span class="kicker">Live mode · No login required</span>
+      <h2>Try the live lab — no login needed.</h2>
+      <p class="lede">
+        Click below to start an anonymous demo session. Your work creates real
+        Ed25519-signed receipts, verifiable now and in the future. You can save
+        your progress by email at any time.
+      </p>
+      <button
+        id="v2-promote-btn"
+        class="btn-primary"
+        style="font-size:1.05rem;padding:0.7em 2em;"
+        type="button"
+      >
+        Start the live lab (no password)
+      </button>
+      <p id="v2-promote-status" style="margin-top:0.75rem;color:#01696f;font-size:0.9rem;"></p>
+    </div>
+  </section>
+
+  <script>
+    // v2 feature flag: show the CTA when ?v2=1 or localStorage beacon.v2=1
+    (function() {
+      var show = new URLSearchParams(location.search).get('v2') === '1' ||
+                 localStorage.getItem('beacon.v2') === '1';
+      if (show) {
+        document.getElementById('v2-live-lab').style.display = '';
+        if (new URLSearchParams(location.search).get('v2') === '1') {
+          try { localStorage.setItem('beacon.v2', '1'); } catch(e) {}
+        }
+      }
+
+      var btn = document.getElementById('v2-promote-btn');
+      var status = document.getElementById('v2-promote-status');
+      if (btn) {
+        btn.addEventListener('click', async function() {
+          btn.disabled = true;
+          status.textContent = 'Starting demo session…';
+          try {
+            // Wait for bridge to be ready (may already be).
+            await new Promise(function(resolve) {
+              if (window.beaconLabBridge && window.beaconLabBridge.getToken()) return resolve();
+              window.addEventListener('beacon-bridge-ready', resolve, { once: true });
+              setTimeout(resolve, 3000); // fallback in case event already fired
+            });
+            var data = await window.beaconLabBridge.promoteToDemo();
+            status.textContent = 'Session ready! Redirecting…';
+            // Redirect to the live lab; fall back to the demo login page.
+            var dest = data.redirectUrl ||
+              'https://aigovops-beacon-lab.fly.dev/lab';
+            window.location.href = dest;
+          } catch(e) {
+            status.textContent = 'Error: ' + (e.message || 'Unknown error');
+            btn.disabled = false;
+          }
+        });
+      }
+    })();
+  </script>
 
   </main>
 

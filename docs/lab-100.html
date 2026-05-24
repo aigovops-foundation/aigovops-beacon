@@ -19,6 +19,17 @@
   <link rel="stylesheet" href="./css/lab.css" />
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3E100%3C/text%3E%3C/svg%3E" />
+
+  <!-- v2: API base — set before bridge so bridge reads window.__BEACON_API_BASE__. -->
+  <script>
+    window.__BEACON_API_BASE__ = (
+      new URLSearchParams(location.search).get("api") ||
+      "https://api.beacon-lab.aigovops.foundation"
+    );
+  </script>
+  <!-- v2: Bridge + web component bundle. -->
+  <script type="module" src="https://api.beacon-lab.aigovops.foundation/components/beacon-lab-bridge.js"></script>
+  <script type="module" src="https://api.beacon-lab.aigovops.foundation/components/beacon-lab.js"></script>
 </head>
 
 <body class="lesson-body" data-lab-level="100">
@@ -62,6 +73,30 @@
   </div>
 
   <main>
+
+    <!-- ============ V2: LIVE MODE BANNER ============ -->
+    <!-- Only shown when ?v2=1 is in the URL or localStorage has beacon.v2=1. -->
+    <div id="v2-live-banner" style="display:none;background:#01696f;color:#fbfaf6;padding:0.6rem 1.25rem;font-size:0.9rem;text-align:center;">
+      <strong>Live mode</strong> — your work creates real signed receipts.
+      <span id="v2-anon-id" style="font-family:monospace;font-size:0.8rem;opacity:0.7;margin-left:0.5rem;"></span>
+    </div>
+    <script>
+      (function() {
+        var show = new URLSearchParams(location.search).get('v2') === '1' ||
+                   localStorage.getItem('beacon.v2') === '1';
+        if (show) {
+          document.getElementById('v2-live-banner').style.display = '';
+          if (new URLSearchParams(location.search).get('v2') === '1') {
+            try { localStorage.setItem('beacon.v2', '1'); } catch(e) {}
+          }
+          // Show anon ID when bridge is ready.
+          window.addEventListener('beacon-bridge-ready', function(e) {
+            var el = document.getElementById('v2-anon-id');
+            if (el && e.detail && e.detail.anonId) el.textContent = '(' + e.detail.anonId + ')';
+          }, { once: true });
+        }
+      })();
+    </script>
 
     <!-- ============ HERO ============ -->
     <section class="lesson-hero">
@@ -281,6 +316,44 @@
     </section>
 
     <!-- ============ SECTION 4 — Receipts + Sandbox ============ -->
+    <!-- ============ V2: INTERACTIVE CHECKLIST RULES ============ -->
+    <!-- Shown only in v2 mode. Replaces the equivalent static checklist table. -->
+    <!-- Static fallback inside <noscript> / the non-v2-flagged div below. -->
+    <section id="v2-interactive-rules" class="lesson-section" data-section-id="v2-rules" data-section-time="5 min" style="display:none">
+      <div class="shell">
+        <div class="section-head">
+          <span class="section-num">Section 3b · Live</span>
+          <h2>Evaluate the checklist rules — live.</h2>
+          <span class="section-status" role="button" tabindex="0">○ mark complete</span>
+        </div>
+        <p class="lede">
+          These rules are fetched live from the backend. Check each one off as
+          you evaluate your demo tenant's inventory.
+        </p>
+        <!-- Each <beacon-lab-step> fetches its rule from /api/curriculum/100 -->
+        <beacon-lab-step level="100" rule-id="L100.R1"></beacon-lab-step>
+        <beacon-lab-step level="100" rule-id="L100.R2"></beacon-lab-step>
+        <beacon-lab-step level="100" rule-id="L100.R3"></beacon-lab-step>
+        <beacon-lab-step level="100" rule-id="L100.R4"></beacon-lab-step>
+        <beacon-lab-step level="100" rule-id="L100.R5"></beacon-lab-step>
+      </div>
+    </section>
+    <!-- Non-v2 / noscript fallback: static checklist (always visible when v2 mode is off) -->
+    <div id="v2-static-rules-fallback">
+    <!-- Original static checklist markup lives here as a no-op block.
+         In v2 mode this div is hidden and the beacon-lab-step components above take over. -->
+    </div>
+    <script>
+      (function() {
+        var show = new URLSearchParams(location.search).get('v2') === '1' ||
+                   localStorage.getItem('beacon.v2') === '1';
+        if (show) {
+          document.getElementById('v2-interactive-rules').style.display = '';
+          document.getElementById('v2-static-rules-fallback').style.display = 'none';
+        }
+      })();
+    </script>
+
     <section class="lesson-section" data-section-id="receipts" data-section-time="8 min">
       <div class="shell">
         <div class="section-head">
