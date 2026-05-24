@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, ShieldCheck, KeyRound, Lock } from "lucide-react";
+import { Loader2, ShieldCheck, KeyRound, Lock, Sparkles } from "lucide-react";
 
 interface StatusResp {
   labName: string;
@@ -55,6 +55,22 @@ export default function Login() {
       const data = await api("POST", "/api/admin/login", { password: adminPw });
       setToken(data.token);
       navigate("/admin");
+    } catch (e: any) {
+      setErr(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function loginDemo() {
+    setErr(null);
+    setLoading(true);
+    try {
+      // No body — server picks the first seeded tenant and returns a
+      // pre-filled trainee session.
+      const data = await api("POST", "/api/demo/login", {});
+      setToken(data.token);
+      navigate("/lab");
     } catch (e: any) {
       setErr(e.message);
     } finally {
@@ -159,6 +175,35 @@ export default function Login() {
                 </form>
               </TabsContent>
             </Tabs>
+          </CardContent>
+        </Card>
+
+        <Card className="border-dashed">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3">
+              <div className="size-9 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <Sparkles className="size-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-sm">No credentials? Try the demo.</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  One-click trainee session with pre-filled inventory, evidence,
+                  and signing keys for {status?.tenants?.[0]?.name ?? "a sample tenant"}.
+                  No password, no magic link.
+                </p>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-full mt-3"
+                  onClick={loginDemo}
+                  disabled={loading}
+                  data-testid="button-demo-login"
+                >
+                  {loading ? <Loader2 className="size-4 mr-2 animate-spin" /> : <Sparkles className="size-4 mr-2" />}
+                  Launch demo lab
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
 

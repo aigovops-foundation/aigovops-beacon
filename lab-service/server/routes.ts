@@ -178,6 +178,55 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
   });
 
   // -------------------------------------------------------------------------
+  // Demo login (no password, no magic link)
+  //
+  // Purpose: provide a one-click "try the demo" path so the lab can always
+  // be shown — even if the admin password is unavailable or the magic-link
+  // flow is mis-configured. The demo session is a regular trainee session
+  // (not admin) scoped to the first seeded tenant. It is rate-limited
+  // implicitly by the global login limiter (we don't increment it here
+  // because there is no failure mode — the endpoint always succeeds when
+  // a tenant is seeded).
+  //
+  // The seeded tenants already contain pre-filled inventory, evidence,
+  // and signing keys, so the demo lands the user directly in a working
+  // lab with sample data.
+  // -------------------------------------------------------------------------
+
+  app.post("/api/demo/login", (_req, res) => {
+    // Pick the first seeded tenant (aigovops-foundation by default). Fall
+    // back to any tenant the storage layer knows about, in case seeds were
+    // customised.
+    const tenants = storage.listTenants();
+    const tenant = tenants[0];
+    if (!tenant) {
+      return res.status(503).json({ error: "No demo tenant available" });
+    }
+    const token = randomToken();
+    const now = new Date();
+    const session: Session = {
+      id: token,
+      tenantId: tenant.id,
+      label: "Demo trainee",
+      role: "trainee",
+      isAdmin: false,
+      createdAt: now,
+      expiresAt: new Date(now.getTime() + SESSION_TTL_MS),
+    };
+    storage.createSession(session);
+    setSessionCookie(res, token, session.expiresAt);
+    res.json({
+      token,
+      session,
+      tenant: {
+        id: tenant.id,
+        name: tenant.name,
+      },
+      demo: true,
+    });
+  });
+
+  // -------------------------------------------------------------------------
   // Trainee magic-link redemption (consumes link, creates session)
   // -------------------------------------------------------------------------
 
