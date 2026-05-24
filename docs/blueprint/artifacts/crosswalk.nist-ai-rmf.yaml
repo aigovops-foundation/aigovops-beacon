@@ -1,0 +1,106 @@
+# AIGovOps Beacon — NIST AI RMF crosswalk (excerpt)
+# Maps NIST AI RMF 1.0 + GenAI Profile (NIST AI 600-1) controls to the
+# Beacon receipts that satisfy them and the queries an auditor runs to
+# verify satisfaction. Full crosswalks are versioned in /crosswalks.
+
+apiVersion: aigovops.org/v1
+kind: Crosswalk
+metadata:
+  name: nist-ai-rmf
+  source_version: "1.0 + 600-1 (2024-07)"
+  beacon_profile: aigovops-beacon.v1
+
+spec:
+  framework_url: https://www.nist.gov/itl/ai-risk-management-framework
+
+  controls:
+
+    - id: GOVERN-1.2
+      title: AI risk management roles and responsibilities are defined
+      satisfied_by:
+        - receipt_event: design.approved
+          required_fields: [user.sub, user.oidc_issuer]
+          query: |
+            SELECT id, user.sub, ts_utc
+            FROM receipts
+            WHERE event_type = 'design.approved'
+              AND user.sub IN (read('approvers.txt'))
+
+    - id: MAP-1.1
+      title: Intended purpose, beneficiaries, and impacts are documented
+      satisfied_by:
+        - receipt_event: design.usecase.registered
+          required_artifacts: [usecase_manifest]
+
+    - id: MAP-3.4
+      title: Risk classification is performed and documented
+      satisfied_by:
+        - receipt_event: design.risk.classified
+          required_fields: [decision.result]
+
+    - id: MEASURE-2.3
+      title: AI system performance is evaluated against benchmarks
+      satisfied_by:
+        - receipt_event: eval.completed
+          required_artifacts: [evals.json]
+          required_thresholds: { perf: pass }
+
+    - id: MEASURE-2.7
+      title: AI system safety and trustworthy characteristics are measured
+      satisfied_by:
+        - receipt_event: eval.completed
+          required_thresholds: { safety: pass, bias: pass }
+
+    - id: MEASURE-2.11
+      title: Fairness and bias are evaluated and documented
+      satisfied_by:
+        - receipt_event: eval.completed
+          required_thresholds: { bias: pass }
+          required_artifacts: [bias-report.md]
+
+    - id: MEASURE-3.1
+      title: Approaches and metrics for risks are continuously monitored
+      satisfied_by:
+        - receipt_event: monitor.drift.detected
+        - receipt_event: monitor.threshold.breached
+
+    - id: MANAGE-1.3
+      title: Decisions to deploy are based on documented assessment
+      satisfied_by:
+        - receipt_event: gate.evaluated
+          required_fields: [decision.result, parent_receipt_id]
+          required_value: { decision.result: pass }
+
+    - id: MANAGE-2.3
+      title: Mechanisms to override, disengage, or deactivate are tested
+      satisfied_by:
+        - receipt_event: incident.killswitch.fired
+          frequency: at_least_quarterly_drill
+
+    - id: MANAGE-4.1
+      title: Post-deployment monitoring plans are implemented
+      satisfied_by:
+        - receipt_event: inference.observed
+          frequency: continuous
+        - receipt_event: bundle.anchored
+          frequency: hourly
+
+  # ----- GenAI Profile additions (NIST AI 600-1) -----
+
+    - id: GAI-2.1
+      title: Content provenance — origin and integrity tracked
+      satisfied_by:
+        - receipt_event: inference.observed
+          required_fields: [prompt_hash, result_hash, lineage.openlineage_run_id]
+
+    - id: GAI-3.2
+      title: Pre-deployment red-teaming for GenAI risks
+      satisfied_by:
+        - receipt_event: eval.completed
+          required_thresholds: { redteam: pass }
+
+    - id: GAI-4.1
+      title: Incident disclosure mechanisms are in place
+      satisfied_by:
+        - receipt_event: incident.killswitch.fired
+        - receipt_event: guardrail.violated

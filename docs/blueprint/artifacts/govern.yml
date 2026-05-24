@@ -1,0 +1,142 @@
+# AIGovOps Beacon — drop-in governance pipeline
+# Save as .github/workflows/govern.yml in your repo.
+#
+# Prerequisites:
+#   - aigovops-beacon CLI installed (pip install aigovops-beacon)
+#   - cosign installed (brew install cosign / GH Action available)
+#   - OPA / Conftest installed (or use the GH Action)
+#   - OIDC trust configured for keyless signing via Sigstore
+#
+# This workflow emits OVERT 1.0 signed receipts at each stage and bundles
+# them as auditor-ready evidence on every PR + push.
+
+name: AI governance pipeline
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write       # OIDC for keyless cosign
+  attestations: write   # GitHub Artifact Attestations
+  packages: write       # push to GHCR
+
+env:
+  IMG: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  BEACON_KEY_FPR: ${{ vars.BEACON_KEY_FPR }}
+
+jobs:
+  govern:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for commit verification)
+        uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      # ----- DESIGN STAGE EVIDENCE -----
+      - name: Verify use-case manifest exists
+        run: |
+          test -f usecases/${{ github.event.repository.name }}.yaml \
+            || (echo "Missing use-case manifest" && exit 1)
+
+      - name: Verify signed commit (gitsign)
+        run: git verify-commit HEAD || echo "WARNING: unsigned commit"
+
+      # ----- DEPLOYMENT STAGE EVIDENCE -----
+      - name: Set up build tooling
+        uses: anchore/sbom-action/download-syft@v0.17.0
+
+      - name: Install Beacon CLI
+        run: pip install aigovops-beacon
+
+      - name: Install Conftest
+        run: |
+          curl -sL https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_Linux_x86_64.tar.gz \
+            | tar xz && sudo mv conftest /usr/local/bin/
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Build container
+        run: docker build -t $IMG .
+
+      - name: Generate SBOM (CycloneDX)
+        run: syft $IMG -o cyclonedx-json > sbom.cdx.json
+
+      - name: Run AI eval suite
+        run: |
+          python -m evals.run \
+            --suite safety,bias,perf,redteam \
+            --out evals.json
+        # The suite should emit a structured JSON with thresholds, scores,
+        # and references to test datasets by sha256.
+
+      - name: Policy gate — OPA / Conftest
+        run: |
+          conftest test \
+            --policy policies/rego/ \
+            --data evals.json \
+            --data sbom.cdx.json \
+            policies/gates/
+
+      - name: Policy gate — Beacon crosswalk checklist
+        run: |
+          aigovops-beacon checklist run \
+            --pack crosswalks/nist-ai-rmf.yaml \
+            --pack crosswalks/iso-42001.yaml \
+            --pack crosswalks/eu-ai-act.yaml \
+            --evidence . \
+            --emit-receipt gate.evaluated
+
+      - name: Sign image (keyless via Sigstore)
+        env: { COSIGN_EXPERIMENTAL: "1" }
+        run: |
+          docker push $IMG
+          cosign sign --yes $IMG
+
+      - name: Attest SBOM
+        env: { COSIGN_EXPERIMENTAL: "1" }
+        run: |
+          cosign attest --yes \
+            --predicate sbom.cdx.json \
+            --type cyclonedx \
+            $IMG
+
+      - name: Attest evaluation results
+        env: { COSIGN_EXPERIMENTAL: "1" }
+        run: |
+          cosign attest --yes \
+            --predicate evals.json \
+            --type https://aigovops.org/predicate/eval/v1 \
+            $IMG
+
+      - name: GitHub native attestation (SLSA provenance)
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ${{ env.IMG }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+
+      # ----- EVIDENCE BUNDLE -----
+      - name: Export signed evidence bundle
+        run: |
+          aigovops-beacon export \
+            --window pr-$GITHUB_SHA \
+            --include receipts,sbom,evals,policies,crosswalks \
+            --out bundle.tar.gz
+
+      - name: Anchor bundle to transparency log
+        run: |
+          aigovops-beacon anchor bundle.tar.gz \
+            --transparency rekor \
+            --emit-receipt bundle.anchored
+
+      - name: Upload evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-bundle-${{ github.sha }}
+          path: |
+            bundle.tar.gz
+            bundle.sig
+            anchors.ndjson
+          retention-days: 90

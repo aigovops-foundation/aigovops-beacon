@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blueprint artifacts — AIGovOps Beacon</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/blueprint.css" />
+</head>
+<body>
+<header class="site-header"><div class="shell">
+  <a href="../" class="brand"><span class="brand-name">AIGovOps Beacon<span class="foundation">Blueprint artifacts</span></span></a>
+  <nav class="nav-actions"><a class="btn-ghost btn-sm" href="../">← Blueprint</a></nav>
+</div></header>
+<main>
+  <section class="band">
+    <div class="shell">
+      <h2>Blueprint artifacts</h2>
+      <p class="band-lede">Download the source files referenced by the reference architecture. All artifacts are Apache-2.0 licensed and ready to commit to your governance repo.</p>
+      <div class="grid grid-3">
+        <a class="card" href="./govern.yml" download>
+          <h3>govern.yml</h3>
+          <p>Drop-in GitHub Actions workflow with OIDC, SBOM, eval suite, policy gate, cosign signing, and Beacon bundle export.</p>
+        </a>
+        <a class="card" href="./receipt.schema.json" download>
+          <h3>receipt.schema.json</h3>
+          <p>JSON Schema (draft 2020-12) for the OVERT 1.0 envelope + aigovops-beacon.v1 profile extensions.</p>
+        </a>
+        <a class="card" href="./example.rego" download>
+          <h3>example.rego</h3>
+          <p>Sample Rego policy enforcing baseline high-risk AI guardrails using receipt fields as evidence.</p>
+        </a>
+        <a class="card" href="./gate.example.yaml" download>
+          <h3>gate.example.yaml</h3>
+          <p>Declarative matched-pair YAML for the Rego policy — what policy team owns and reviews.</p>
+        </a>
+        <a class="card" href="./crosswalk.nist-ai-rmf.yaml" download>
+          <h3>crosswalk.nist-ai-rmf.yaml</h3>
+          <p>NIST AI RMF 1.0 + GenAI Profile control-to-receipt mapping with auditor query strings.</p>
+        </a>
+        <a class="card" href="./blueprint.md" download>
+          <h3>blueprint.md</h3>
+          <p>The full blueprint as a single Markdown file for offline reading and PRs.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer"><div class="shell">
+  <p><strong>AIGovOps Beacon</strong> · Reference Architecture Blueprint v1.0 · Apache-2.0</p>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+# AIGovOps Beacon — example gate (matched-pair with example.rego)
+# Drop into policies/gates/example.yaml
+#
+# This is the declarative side. It says WHAT must hold; the Rego file
+# is the executable side that says HOW to check. Conftest validates that
+# both agree on a synthetic test bundle before merge.
+
+apiVersion: aigovops.org/v1
+kind: GovernanceGate
+metadata:
+  name: high-risk-ai-baseline
+  version: 1.0
+  owners:
+    policy: policy-team@aigovops.org
+    engineering: platform-eng@aigovops.org
+
+spec:
+  description: >
+    Baseline guardrail for any AI use case classified as high-risk
+    under EU AI Act Annex III or NIST AI RMF severity tier 'high'.
+    Blocks deployment unless design, evaluation, documentation, and
+    lineage requirements are all satisfied with signed evidence.
+
+  applies_when:
+    risk_tier: high
+
+  required_receipts:
+    - event_type: design.approved
+      max_age_days: 365
+    - event_type: build.completed
+      max_age_days: 30
+    - event_type: eval.completed
+      max_age_days: 30
+
+  required_attestations:
+    - type: https://slsa.dev/provenance/v1
+      builder_id: https://github.com/actions/runner
+    - type: cyclonedx
+    - type: https://aigovops.org/predicate/eval/v1
+
+  evidence_requirements:
+    eval_suites:
+      safety:   { threshold: pass }
+      bias:     { threshold: pass }
+      perf:     { threshold: pass }
+      redteam:  { threshold: pass, required_for_high_risk: true }
+
+    documentation:
+      model_card: required
+      data_sheet: required
+      threat_model: required
+      fria:                                  # EU AI Act Art. 27
+        required_for_high_risk: true
+
+  signature_requirements:
+    algorithm: Ed25519
+    canonical_form: json/c14n-rfc8785
+    key_provenance:
+      - sigstore-keyless
+      - kms-backed
+
+  control_refs:
+    - framework: nist-ai-rmf
+      controls: [MEASURE-2.3, MEASURE-2.7, MEASURE-2.11, MANAGE-1.3]
+    - framework: iso-42001
+      controls: ["8.2", "8.3", "A.6.2.5"]
+    - framework: eu-ai-act
+      articles: ["9", "11", "15", "17", "18", "27", "43"]
+
+  on_pass:
+    emit_receipt: gate.evaluated
+    decision: { result: pass }
+
+  on_fail:
+    emit_receipt: gate.failed
+    decision: { result: fail }
+    block_deployment: true
+    notify:
+      - slack: "#ai-governance"
+      - email: policy-team@aigovops.org
+
+  exceptions:
+    allowed: true
+    approver_roles: [security-lead, ai-governance-officer]
+    max_ttl_days: 30
+    emit_receipt: exception.granted

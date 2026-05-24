@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigovops.org/schemas/receipt.schema.json",
+  "title": "AIGovOps Beacon Receipt (OVERT 1.0 envelope, aigovops-beacon.v1 profile)",
+  "description": "The atomic unit of evidence. Every governance decision and every observed AI interaction produces exactly one of these. Wire-compatible with OVERT 1.0; profile fields extend the envelope.",
+  "type": "object",
+  "required": [
+    "id",
+    "ts_utc",
+    "user",
+    "vendor",
+    "model",
+    "version",
+    "prompt_hash",
+    "result_hash",
+    "event_type",
+    "environment",
+    "signature"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9A-HJKMNP-TV-Z]{26}$",
+      "description": "ULID. Sortable by time, globally unique."
+    },
+    "ts_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp in UTC, millisecond precision."
+    },
+    "user": {
+      "type": "object",
+      "required": ["sub", "oidc_issuer"],
+      "properties": {
+        "sub":          { "type": "string" },
+        "email":        { "type": "string", "format": "email" },
+        "oidc_issuer":  { "type": "string", "format": "uri" }
+      }
+    },
+    "vendor": {
+      "type": "string",
+      "enum": ["openai","anthropic","google","meta","microsoft","nvidia","aws","databricks","in-house","other"]
+    },
+    "model":   { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "not": { "const": "latest" },
+      "description": "Pinned version. Never 'latest'."
+    },
+    "prompt":      { "type": ["string", "null"] },
+    "prompt_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "result":      { "type": ["string", "null"] },
+    "result_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "discovery.session.started",
+        "discovery.session.completed",
+        "discovery.model.found",
+        "inventory.model.added",
+        "inventory.trust.changed",
+        "design.usecase.registered",
+        "design.risk.classified",
+        "design.datasheet.published",
+        "design.modelcard.published",
+        "design.threatmodel.completed",
+        "design.approved",
+        "build.completed",
+        "eval.completed",
+        "gate.evaluated",
+        "gate.failed",
+        "exception.granted",
+        "bundle.signed",
+        "bundle.anchored",
+        "admission.allowed",
+        "admission.denied",
+        "inference.observed",
+        "agent.tool.called",
+        "agent.retrieval.hit",
+        "monitor.drift.detected",
+        "monitor.threshold.breached",
+        "guardrail.violated",
+        "incident.killswitch.fired",
+        "checklist.published",
+        "key.rotated"
+      ]
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["cloud_saas","private_cloud","on_prem","edge","hybrid"]
+    },
+    "latency_ms":        { "type": "integer", "minimum": 0 },
+    "tokens_in":         { "type": "integer", "minimum": 0 },
+    "tokens_out":        { "type": "integer", "minimum": 0 },
+    "evidence_id":       { "type": "string" },
+    "parent_receipt_id": { "type": "string" },
+    "signature": {
+      "type": "object",
+      "required": ["alg","key_fpr","sig_b64","canonical_form"],
+      "properties": {
+        "alg":            { "type": "string", "enum": ["Ed25519"] },
+        "key_fpr":        { "type": "string", "pattern": "^SHA256:.+" },
+        "sig_b64":        { "type": "string" },
+        "canonical_form": { "type": "string", "enum": ["json/c14n-rfc8785"] }
+      }
+    },
+
+    "profile": {
+      "type": "string",
+      "const": "aigovops-beacon.v1",
+      "description": "Profile identifier. Marks all extension fields below."
+    },
+    "control_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Cross-framework control IDs satisfied by this receipt (e.g., nist-ai-rmf:MEASURE-2.7)."
+    },
+    "subject": {
+      "type": "object",
+      "description": "What this receipt is about (image, model, dataset).",
+      "properties": {
+        "name":   { "type": "string" },
+        "digest": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "openlineage_run_id": { "type": "string" },
+        "parent_datasets":    { "type": "array", "items": { "type": "string" } },
+        "parent_models":      { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "description": "Populated for gate.evaluated / admission.* events.",
+      "properties": {
+        "result":           { "type": "string", "enum": ["pass","review","fail"] },
+        "rules_evaluated":  { "type": "integer", "minimum": 0 },
+        "rules_failed":     { "type": "integer", "minimum": 0 },
+        "exception_id":     { "type": ["string","null"] }
+      }
+    }
+  }
+}
