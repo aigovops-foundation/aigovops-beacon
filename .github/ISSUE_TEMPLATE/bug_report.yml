@@ -1,0 +1,83 @@
+name: Bug report
+description: Something in the agent, beacons, audit log, checklists, or site is broken
+title: "bug: <one-line summary>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Bring evidence, not vibes — logs, repro steps,
+        environment. For security issues, please **do not** use this form; see
+        [SECURITY.md](https://github.com/bobrapp/aigovops-beacon/blob/main/SECURITY.md).
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of Beacon is affected?
+      options:
+        - agent (agent/)
+        - beacons (beacons/)
+        - audit log / signing (audit/)
+        - checklists (checklists/, checklist/)
+        - crosswalks (crosswalks/)
+        - deploy / systemd (deploy/, beacons/systemd/)
+        - docs site (docs/)
+        - CI workflows (.github/workflows)
+        - OVERT profile compliance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including the command you ran or the page you visited.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      placeholder: "git SHA, release tag, or beacon profile version"
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "OS, Python version, deployment (local / systemd / container)"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / audit-log excerpt
+      description: Redact any sensitive identifiers before pasting.
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/bobrapp/aigovops-beacon/blob/main/CODE_OF_CONDUCT.md).
+          required: true
