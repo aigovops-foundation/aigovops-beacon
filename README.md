@@ -7,7 +7,8 @@
 <p align="center">
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
   An <a href="https://www.aigovopsfoundation.org/">AIGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
-  Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.
+  Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.<br/>
+  <em>Beacon is an OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision. It runs alone.</em>
 </p>
 
 <p align="center">
@@ -166,6 +167,20 @@ Beacon doesn't replace anything — it sits *upstream* of the other Foundation p
 ```
 
 Receipt schema is wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay). Gate schema is wire-compatible with [`aigovops-foundation-os`](https://github.com/bobrapp/aigovops-foundation-os).
+
+For the broader Foundation context — sister projects, the umbrella policy-as-code companion, and how Beacon relates to other compliance tooling — see [`RELATED.md`](RELATED.md). Beacon does not require any of those projects.
+
+---
+
+## Performance
+
+Beacon is fast enough that you'll never be tempted to disable it under load. On commodity x86_64 hardware:
+
+- **9,000+ receipts/sec** signed by a single process
+- **84 µs p50** inline overhead per AI call (canonicalize + sign)
+- **8,000+ verifies/sec** for stream verification
+
+Full methodology, capacity-planning numbers, and a reproducible benchmark script in [`BENCHMARKS.md`](BENCHMARKS.md).
 
 ---
 

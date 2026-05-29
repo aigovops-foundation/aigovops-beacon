@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aigovops-beacon"
+version = "0.1.0"
+description = "OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [
+    { name = "AIGovOps Foundation" },
+]
+keywords = ["ai", "governance", "overt", "ed25519", "audit-log", "receipts"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+    "Topic :: System :: Logging",
+]
+dependencies = [
+    "cryptography>=41.0",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/bobrapp/aigovops-beacon"
+Issues = "https://github.com/bobrapp/aigovops-beacon/issues"
+Documentation = "https://github.com/bobrapp/aigovops-beacon#readme"
+"Standard (OVERT 1.0)" = "https://overt.is/"
+
+# beacon-verify is the auditor-facing CLI.
+# It is intentionally minimal: it accepts a path to a Beacon audit log
+# and exits 0 on a clean verification, non-zero otherwise.
+# It depends on nothing in umbrella-govops or any other Foundation project.
+[project.scripts]
+beacon-verify = "src.beacon_verify:main"
+
+[tool.setuptools]
+# Tell setuptools we only care about `src/`, `beacons/`, and `scoring/` as
+# Python packages.
+packages = ["src", "beacons", "scoring"]
+
+[tool.setuptools.package-data]
+"src" = ["py.typed"]
