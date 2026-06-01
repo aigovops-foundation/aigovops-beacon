@@ -1,11 +1,45 @@
 # Code of Conduct
 
-The AIGovOps Beacon project adopts the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+## Our pledge
 
-## In one paragraph
+We pledge to make participation in this project a welcoming experience for everyone, regardless of age, body, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, sexual identity, or orientation. We pledge to act in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
-Be the kind of person you'd want in the room when an AI system fails. Bring evidence, not vibes. Disagree on the technical question, not the human. Assume the other contributor is trying to make AI safer — and if you can't, walk away and come back tomorrow.
+## Our standards
+
+Examples of behavior that helps:
+
+- Using welcoming and inclusive language.
+- Being respectful of differing viewpoints and experiences.
+- Gracefully accepting constructive criticism.
+- Focusing on what is best for the community.
+- Showing empathy toward other community members.
+- Treating reviews as a gift.
+
+Examples of behavior that does not belong here:
+
+- Sexualized language, imagery, or unwelcome advances.
+- Trolling, insults, or political attacks.
+- Public or private harassment.
+- Publishing other people's private information.
+- Conduct that would be inappropriate in a professional setting.
+- Using a commercial relationship as leverage in a technical discussion.
+
+## Scope
+
+This applies in all project spaces — the repo, the issue tracker, PRs, discussions, calls, events — and in any space where someone is representing the project.
 
 ## Reporting
 
-Email `conduct@aigovopsfoundation.org`. Reports are read by two members of the Steward Council; neither is the maintainer being reported. Response within 72 hours.
+If something happens that doesn't feel right, tell a maintainer. Email is fine, DM is fine, in person is fine. We will keep your report confidential. We will take it seriously.
+
+- [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
+- [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
+- Project steward: [joe@glacis.io](mailto:joe@glacis.io)
+
+## Enforcement
+
+We will respond to every report. Depending on the situation, response may include a private conversation, a public correction, a temporary cooling-off, or removal from the project. We try to choose the lightest response that gets to the right outcome.
+
+## Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1.
