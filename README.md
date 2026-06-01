@@ -184,6 +184,53 @@ Full methodology, capacity-planning numbers, and a reproducible benchmark script
 
 ---
 
+## Testing
+
+Beacon ships a full test pyramid across both runtimes — the Node/Express server
+and the Python beacons/SDK. Tests are deterministic: anything random or
+fuzz-driven is seeded, with an environment-variable override for local
+exploration.
+
+| Layer | What it checks | Node | Python |
+| --- | --- | --- | --- |
+| **Unit** | Pure functions: canonicalization, signing/verify, receipt building | `npm test` (in `server/`) | `pytest tests/unit` |
+| **E2E** | Live routes answer and responses conform to the receipt schema | `npm run test:e2e` | `pytest tests/e2e` |
+| **Chaos** | Fuzzed/malformed input + injected I/O faults never crash the server | `npm run test:chaos` | `pytest tests/chaos` |
+| **Scale** | 10k+ receipts signed/bundled within a time & memory budget (gated) | — | `pytest -m scale tests/scale` |
+
+```bash
+# Node server tests (unit + E2E + chaos via auto-discovery)
+cd server && npm install && npm test
+
+# Python tests (unit + E2E + chaos; scale is excluded by default)
+pip install -e ".[dev]"
+python3 -m pytest                       # everything except scale
+python3 -m pytest -m scale tests/scale  # the heavy scale layer, on demand
+```
+
+Determinism knobs: `CHAOS_SEED` / `CHAOS_RUNS` (Node), `HYPOTHESIS_SEED` /
+`CHAOS_MAX_EXAMPLES` (Python), and `SCALE_COUNT` / `SCALE_TIME_BUDGET` /
+`SCALE_MEM_BUDGET` / `SCALE_SEED` (scale). See
+[`CONTRIBUTING.md`](CONTRIBUTING.md) for what each layer expects from a new PR.
+
+---
+
+## API
+
+The complete HTTP API is documented under [`docs/api/`](docs/api/):
+
+- **[`openapi.yaml`](docs/api/openapi.yaml)** — OpenAPI 3.1 spec for every
+  endpoint: methods, paths, request/response schemas (success and error),
+  auth, and idempotency notes.
+- **[`flows.md`](docs/api/flows.md)** — how a receipt travels the system:
+  creation → signing → bundle assembly → anchoring → consumption by Lantern,
+  with Mermaid sequence diagrams.
+- **[`actions.md`](docs/api/actions.md)** — every action verb (`gate.evaluated`,
+  `bundle.signed`, `admission.allowed`, `inference.observed`, …) with semantics,
+  required fields, and examples.
+
+---
+
 ## Repository map
 
 ```

@@ -13,7 +13,7 @@ and trustworthy for everyone:
 - **`main` is protected** — direct pushes are disabled. Every change goes
   through a pull request that requires:
   - at least one approving review from a maintainer,
-  - the e2e test suite (`python tests/e2e.py`) to pass,
+  - the CI test suite (see **Testing expectations** below) to pass,
   - signed commits where possible.
 - **Force-pushes and branch deletions are blocked** on `main`.
 - **Repository deletion** requires both maintainers to approve and is
@@ -27,12 +27,42 @@ and trustworthy for everyone:
 1. **Fork** the repository (or request collaborator access for sustained work).
 2. **Create a topic branch** off `main`: `git checkout -b add-jp-aiba`.
 3. **Make focused commits** that explain *why* in the body.
-4. **Run the e2e tests locally:** `python tests/e2e.py`
-   - The full suite covers framework YAML/XML parse, JSON-Schema validation,
-     scoring regression, signature verification, URL liveness, and contact
-     metadata presence.
+4. **Run the tests locally** (see **Testing expectations** below):
+   `cd server && npm test` and `python3 -m pytest`.
+   - Together these cover canonicalization and signing, schema-conforming
+     route responses, fuzzed/faulty-input resilience, and signature
+     verification.
 5. **Open a pull request.** Reference any framework or incident IDs you touched.
 6. A maintainer will review within a few business days.
+
+## Testing expectations
+
+Beacon keeps a four-layer test pyramid across the Node server and the Python
+beacons/SDK. New PRs are expected to keep it green and to add coverage at the
+layer that matches the change. Tests must be **deterministic** — seed anything
+random or fuzz-driven and expose an environment-variable override.
+
+| Layer | Add a test here when you… | How to run |
+| --- | --- | --- |
+| **Unit** | change a pure function (canonicalization, signing, receipt building). | `cd server && npm test` · `pytest tests/unit` |
+| **E2E** | add or change an HTTP route or its response shape. | `npm run test:e2e` · `pytest tests/e2e` |
+| **Chaos** | touch input parsing or the disk write path. | `npm run test:chaos` · `pytest tests/chaos` |
+| **Scale** | change the sign/bundle hot path. | `pytest -m scale tests/scale` |
+
+Guidelines:
+
+- **Unit** tests cover behavior in isolation — no network, no live server.
+- **E2E** tests run against a live server and assert responses conform to the
+  published receipt schema.
+- **Chaos** tests come in two flavors: fuzzed/malformed input (the server must
+  answer with a `4xx` structured error, never a `5xx` or a crash) and injected
+  I/O faults (`EACCES`, `ENOSPC`, broken pipe — the helpers must surface a real
+  error rather than corrupt state).
+- **Scale** tests are gated (excluded from the default run) and live behind the
+  `scale` marker; they run on demand and on a weekly CI schedule.
+
+The full HTTP surface is specified in [`docs/api/openapi.yaml`](docs/api/openapi.yaml);
+keep it in sync when you change a route.
 
 ## What we love receiving
 

@@ -141,7 +141,9 @@ export function createChecklistService(ctx) {
 }
 
 function countItems(pack) {
-  return allItems(pack).length;
+  let n = 0;
+  for (const _ of allItems(pack)) n++;
+  return n;
 }
 
 function* allItems(pack) {

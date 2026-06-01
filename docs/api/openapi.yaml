@@ -1,0 +1,791 @@
+openapi: 3.1.0
+info:
+  title: AIGovOps Beacon API
+  version: 0.1.0
+  summary: Discovery, signed receipts, checklist-to-policy gating, and audit export.
+  description: |
+    Beacon runs where your AI runs. It produces signed, verifiable
+    **receipts** of every governance decision and observed AI interaction,
+    indexes them, scores compliance checklists, evaluates production-
+    readiness gates, and exports self-contained audit bundles an auditor can
+    verify offline.
+
+    ## Receipts: published envelope vs. runtime profile
+
+    The canonical receipt envelope is published as JSON Schema at
+    `docs/blueprint/artifacts/receipt.schema.json`
+    (`$id: https://aigovops.org/schemas/receipt.schema.json`) and is
+    wire-compatible with **OVERT 1.0**.
+
+    The running server emits the **`aigovops-beacon.v1` runtime profile** of
+    that envelope. The profile preserves the envelope's signed-evidence
+    guarantees (canonicalize → Ed25519 sign → append-only NDJSON) but uses a
+    compact internal event vocabulary (`invocation`, `attestation`,
+    `gate_decision`, `discovery`, `trust_tier_change`) and a hex key
+    fingerprint rather than the SSH-style `SHA256:` form. Both the published
+    `OvertReceipt` and the `RuntimeReceipt` are defined under
+    `components.schemas` below; the published action vocabulary is documented
+    in `docs/api/actions.md`.
+
+    ## Authentication
+
+    Beacon trusts identity claims injected by an upstream OIDC-terminating
+    proxy via request headers (`X-Beacon-User-Sub`, `X-Beacon-User-Email`,
+    `X-Beacon-OIDC-Issuer`). Direct internet exposure without that proxy is
+    not a supported configuration.
+
+    ## Idempotency
+
+    - `POST /inventory` is idempotent on the tuple
+      `(vendor, model, version, environment)`: the first call returns `201`,
+      subsequent identical calls return `200` with the same `id`.
+    - `POST /receipts` is **not** idempotent — every call mints a new ULID and
+      appends a new signed receipt. Supply your own `id` to make a write
+      replayable.
+    - `POST /export` always produces a fresh, timestamped bundle.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: AIGovOps Foundation
+    url: https://github.com/bobrapp/aigovops-beacon
+
+servers:
+  - url: http://127.0.0.1:8787
+    description: Local default bind
+  - url: https://{host}/{basePath}
+    description: Behind your OIDC proxy
+    variables:
+      host:
+        default: beacon.internal
+      basePath:
+        default: ""
+
+tags:
+  - name: meta
+    description: Health, version, and service metadata.
+  - name: discovery
+    description: Find AI models reachable from your network from logs you already keep.
+  - name: inventory
+    description: The spine — every receipt, attestation, and gate decision hangs off an inventory row.
+  - name: receipts
+    description: Signed, verifiable units of evidence.
+  - name: checklists
+    description: Compliance packs and attestations.
+  - name: gate
+    description: Production-readiness gating.
+  - name: export
+    description: Self-contained, offline-verifiable audit bundles.
+
+security:
+  - beaconProxyIdentity: []
+
+paths:
+  /:
+    get:
+      tags: [meta]
+      summary: Service banner
+      operationId: getRoot
+      security: []
+      responses:
+        "200":
+          description: Service name, version, and guiding principle.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name: { type: string }
+                  version: { type: string }
+                  docs: { type: string, format: uri }
+                  principle: { type: string }
+
+  /api/v1/health:
+    get:
+      tags: [meta]
+      summary: Liveness probe
+      operationId: getHealth
+      security: []
+      responses:
+        "200":
+          description: Service is up.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok: { type: boolean, const: true }
+
+  /api/v1/version:
+    get:
+      tags: [meta]
+      summary: Version and active key fingerprint
+      operationId: getVersion
+      security: []
+      responses:
+        "200":
+          description: Version, receipt schema version, and active signing-key fingerprint.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, schema_version, key_fingerprint]
+                properties:
+                  version: { type: string }
+                  schema_version: { type: string }
+                  key_fingerprint: { type: string }
+
+  /api/v1/discover:
+    post:
+      tags: [discovery]
+      summary: Run a discovery pass over a log source
+      description: |
+        Reads a source you already keep — a reverse-proxy access log, a DNS
+        resolver log, or an auditor's CSV — and matches known AI vendor
+        hostnames to surface models reachable from your network. Each match
+        upserts an inventory row and writes a `discovery` receipt. No agents
+        are installed on endpoints.
+      operationId: runDiscovery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscoverRequest"
+            examples:
+              manualCsv:
+                summary: Auditor-supplied CSV
+                value:
+                  source: manual_csv
+                  payload:
+                    content: "vendor,model,version,environment\nOpenAI,gpt-4o,2024-08-06,cloud_saas\n"
+              proxyLog:
+                summary: Reverse-proxy access log on disk
+                value:
+                  source: http_proxy_log
+                  payload: { path: "/var/log/nginx/access.log" }
+      responses:
+        "200":
+          description: Discovery summary and upserted inventory rows.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscoverResult"
+        "400":
+          description: Missing or unknown source.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                missingSource: { value: { error: missing_source } }
+                unknownSource: { value: { error: unknown_source } }
+
+  /api/v1/inventory:
+    get:
+      tags: [inventory]
+      summary: List inventory
+      operationId: listInventory
+      responses:
+        "200":
+          description: All inventory rows, newest activity first.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/InventoryRow" }
+    post:
+      tags: [inventory]
+      summary: Create or upsert an inventory row
+      description: Idempotent on `(vendor, model, version, environment)`.
+      operationId: upsertInventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryCreate"
+      responses:
+        "201":
+          description: A new inventory row was created.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/InventoryRow" }
+        "200":
+          description: An existing row was touched (idempotent upsert).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/InventoryRow" }
+        "400":
+          description: Missing required fields (all four must be non-empty strings).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              examples:
+                missing: { value: { error: missing_fields } }
+
+  /api/v1/inventory/{id}:
+    get:
+      tags: [inventory]
+      summary: Get one inventory row
+      operationId: getInventory
+      parameters:
+        - $ref: "#/components/parameters/InventoryId"
+      responses:
+        "200":
+          description: The inventory row.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/InventoryRow" }
+        "404":
+          description: No such inventory row.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/inventory/{id}/trust:
+    post:
+      tags: [inventory]
+      summary: Change an inventory row's trust tier
+      description: Writes a `trust_tier_change` receipt as a side effect.
+      operationId: setTrustTier
+      parameters:
+        - $ref: "#/components/parameters/InventoryId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tier]
+              properties:
+                tier: { $ref: "#/components/schemas/TrustTier" }
+      responses:
+        "200":
+          description: Tier updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: { ok: { type: boolean, const: true } }
+        "400":
+          description: Invalid tier value.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              examples:
+                invalidTier: { value: { error: invalid_tier, message: "invalid tier: T9" } }
+        "404":
+          description: No such inventory row.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/receipts:
+    get:
+      tags: [receipts]
+      summary: List receipt index entries
+      operationId: listReceipts
+      parameters:
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 1000, default: 100 } }
+        - { name: event_type, in: query, schema: { type: string } }
+        - { name: user_sub, in: query, schema: { type: string } }
+        - { name: inventory_id, in: query, schema: { type: string } }
+      responses:
+        "200":
+          description: Index rows (pointers), newest first. Fetch a full receipt by id.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ReceiptIndexRow" }
+    post:
+      tags: [receipts]
+      summary: Write a signed receipt
+      description: |
+        Canonicalizes the body (RFC 8785), signs it with the active Ed25519
+        key, appends it to today's NDJSON, and indexes it. In the default
+        `redacted` capture mode raw `prompt`/`result` are dropped and only
+        their SHA-256 hashes are retained.
+      operationId: writeReceipt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ReceiptCreate" }
+      responses:
+        "201":
+          description: The signed receipt.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RuntimeReceipt" }
+        "400":
+          description: Missing required fields (vendor, model, version, event_type must be non-empty strings).
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "413":
+          description: Request body exceeds the 1 MB limit.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/receipts/{id}:
+    get:
+      tags: [receipts]
+      summary: Fetch a full receipt by id
+      operationId: getReceipt
+      parameters:
+        - $ref: "#/components/parameters/ReceiptId"
+      responses:
+        "200":
+          description: The full signed receipt as written to NDJSON.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/RuntimeReceipt" }
+        "404":
+          description: No such receipt.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/receipts/{id}/verify:
+    get:
+      tags: [receipts]
+      summary: Verify a receipt's signature
+      operationId: verifyReceipt
+      parameters:
+        - $ref: "#/components/parameters/ReceiptId"
+      responses:
+        "200":
+          description: Verification report.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/VerifyReport" }
+        "404":
+          description: No such receipt.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/checklists:
+    get:
+      tags: [checklists]
+      summary: List loaded checklist packs
+      operationId: listChecklists
+      responses:
+        "200":
+          description: Pack summaries with item counts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ChecklistSummary" }
+
+  /api/v1/checklists/{id}:
+    get:
+      tags: [checklists]
+      summary: Get a full checklist pack
+      operationId: getChecklist
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string }, example: nist-ai-rmf }
+      responses:
+        "200":
+          description: The full pack YAML, parsed to JSON.
+          content:
+            application/json:
+              schema: { type: object }
+        "404":
+          description: No such pack.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/checklists/attest:
+    post:
+      tags: [checklists]
+      summary: Record an attestation against a checklist item
+      description: Writes an `attestation` receipt and an index row.
+      operationId: attestChecklist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AttestRequest" }
+      responses:
+        "201":
+          description: The recorded attestation.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Attestation" }
+        "400":
+          description: Invalid answer value.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "404":
+          description: Unknown pack or item.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/checklists/{packId}/score/{inventoryId}:
+    get:
+      tags: [checklists]
+      summary: Score a pack for an inventory item
+      operationId: scoreChecklist
+      parameters:
+        - { name: packId, in: path, required: true, schema: { type: string }, example: nist-ai-rmf }
+        - { name: inventoryId, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: Weighted score with failing critical items.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ChecklistScore" }
+        "404":
+          description: Unknown pack.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/v1/gate/production-readiness:
+    post:
+      tags: [gate]
+      summary: Evaluate the production-readiness gate
+      description: |
+        Scores the applicable checklist packs against per-tier thresholds,
+        runs native checks, and records a `gate_decision` receipt plus a
+        `gate_decisions` row. Returns `PASS` or `FAIL` with reasons.
+      operationId: evaluateProductionReadiness
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/GateRequest" }
+      responses:
+        "200":
+          description: The gate decision.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GateDecision" }
+        "400":
+          description: Missing inventory_id.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "404":
+          description: Unknown inventory id.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+              examples:
+                unknown: { value: { error: unknown_inventory } }
+
+  /api/v1/export:
+    post:
+      tags: [export]
+      summary: Build a self-contained audit bundle
+      description: |
+        Copies the in-range receipts, public keys, policies, and checklists
+        into a timestamped bundle, re-verifies every receipt signature, and
+        writes a signed manifest. The bundle is verifiable offline with the
+        steps in its `VERIFY.md`.
+      operationId: buildExport
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ExportRequest" }
+      responses:
+        "201":
+          description: Bundle path, manifest hash, and self-verification report.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ExportResult" }
+
+components:
+  securitySchemes:
+    beaconProxyIdentity:
+      type: apiKey
+      in: header
+      name: X-Beacon-User-Sub
+      description: |
+        Identity is supplied by an upstream OIDC-terminating proxy via
+        `X-Beacon-User-Sub`, `X-Beacon-User-Email`, and
+        `X-Beacon-OIDC-Issuer`. Beacon does not mint identity itself.
+
+  parameters:
+    InventoryId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string }
+      description: ULID of the inventory row.
+    ReceiptId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }
+      description: ULID of the receipt.
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string, description: Stable machine-readable code, e.g. missing_fields. }
+        message: { type: string }
+        errorId: { type: string, description: Correlates with server logs for human follow-up. }
+
+    TrustTier:
+      type: string
+      enum: [T0, T1, T2, T3]
+      description: Trust tier. T0 = undeclared, T3 = highest assurance (dual control).
+
+    Vendor:
+      type: string
+      enum: [openai, anthropic, google, meta, microsoft, nvidia, aws, databricks, in-house, other]
+
+    Environment:
+      type: string
+      enum: [cloud_saas, private_cloud, on_prem, edge, hybrid]
+
+    SignatureBlock:
+      type: object
+      required: [alg, key_fpr, sig_b64, canonical_form]
+      properties:
+        alg: { type: string, enum: [Ed25519] }
+        key_fpr: { type: string, description: "Active key fingerprint. Runtime profile uses hex; published envelope uses SHA256:<b64>." }
+        sig_b64: { type: string, description: Base64 Ed25519 signature over the RFC 8785 canonical bytes of the receipt minus this block. }
+        canonical_form: { type: string, examples: [RFC8785, "json/c14n-rfc8785"] }
+
+    DiscoverRequest:
+      type: object
+      required: [source]
+      properties:
+        source:
+          type: string
+          enum: [http_proxy_log, dns_query_log, manual_csv]
+        payload:
+          type: object
+          description: Source-specific. `path` for log sources, `content` for manual_csv.
+          properties:
+            path: { type: string }
+            content: { type: string }
+
+    DiscoverResult:
+      type: object
+      required: [scanned, new_inventory_rows, touched_inventory_rows, results]
+      properties:
+        scanned: { type: integer, minimum: 0 }
+        new_inventory_rows: { type: integer, minimum: 0 }
+        touched_inventory_rows: { type: integer, minimum: 0 }
+        results:
+          type: array
+          items: { $ref: "#/components/schemas/InventoryRow" }
+
+    InventoryCreate:
+      type: object
+      required: [vendor, model, version, environment]
+      properties:
+        vendor: { type: string, minLength: 1 }
+        model: { type: string, minLength: 1 }
+        version: { type: string, minLength: 1 }
+        environment: { type: string, minLength: 1 }
+
+    InventoryRow:
+      type: object
+      properties:
+        id: { type: string }
+        vendor: { type: string }
+        model: { type: string }
+        version: { type: string }
+        environment: { type: string }
+        owner_email: { type: [string, "null"] }
+        trust_tier: { $ref: "#/components/schemas/TrustTier" }
+        first_seen_utc: { type: string, format: date-time }
+        last_seen_utc: { type: string, format: date-time }
+        discovery_src: { type: [string, "null"] }
+        notes: { type: [string, "null"] }
+        isNew: { type: boolean, description: Present on upsert responses. }
+
+    ReceiptCreate:
+      type: object
+      required: [vendor, model, version, event_type]
+      properties:
+        id: { type: string, description: Optional caller-supplied ULID for replayable writes. }
+        vendor: { type: string, minLength: 1 }
+        model: { type: string, minLength: 1 }
+        version: { type: string, minLength: 1 }
+        event_type:
+          type: string
+          description: Runtime event vocabulary.
+          enum: [invocation, attestation, gate_decision, exception_granted, discovery, trust_tier_change]
+        environment: { type: string }
+        prompt: { type: [string, "null"] }
+        result: { type: [string, "null"] }
+        latency_ms: { type: [integer, "null"], minimum: 0 }
+        tokens: { type: [integer, "null"], minimum: 0 }
+        evidence_id: { type: [string, "null"] }
+        parent_receipt_id: { type: [string, "null"] }
+        capture_mode: { type: string, enum: [hash_only, redacted, full] }
+        attributes: { type: [object, "null"] }
+
+    RuntimeReceipt:
+      type: object
+      description: |
+        The aigovops-beacon.v1 runtime profile of the OVERT receipt envelope.
+        Raw prompt/result are present only under `full` capture mode.
+      required: [id, ts_utc, schema_version, vendor, model, version, event_type, environment, signature]
+      properties:
+        id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }
+        ts_utc: { type: string, format: date-time }
+        schema_version: { type: string }
+        user:
+          type: [object, "null"]
+          properties:
+            sub: { type: [string, "null"] }
+            email: { type: [string, "null"] }
+            oidc_issuer: { type: [string, "null"] }
+        vendor: { type: string }
+        model: { type: string }
+        version: { type: string }
+        event_type: { type: string }
+        environment: { type: string }
+        latency_ms: { type: [integer, "null"] }
+        tokens: { type: [integer, "null"] }
+        evidence_id: { type: [string, "null"] }
+        parent_receipt_id: { type: [string, "null"] }
+        attributes: { type: [object, "null"] }
+        prompt: { type: [string, "null"] }
+        result: { type: [string, "null"] }
+        prompt_hash: { type: string, pattern: "^[a-f0-9]{64}$" }
+        result_hash: { type: string, pattern: "^[a-f0-9]{64}$" }
+        signature: { $ref: "#/components/schemas/SignatureBlock" }
+
+    OvertReceipt:
+      description: |
+        The published OVERT 1.0 receipt envelope. Authoritative source:
+        docs/blueprint/artifacts/receipt.schema.json
+        ($id https://aigovops.org/schemas/receipt.schema.json). Consumers
+        such as Lantern validate against this. See docs/api/actions.md for the
+        full published event/action vocabulary.
+      $ref: "https://aigovops.org/schemas/receipt.schema.json"
+
+    ReceiptIndexRow:
+      type: object
+      properties:
+        receipt_id: { type: string }
+        ts_utc: { type: string, format: date-time }
+        user_sub: { type: [string, "null"] }
+        vendor: { type: [string, "null"] }
+        model: { type: [string, "null"] }
+        version: { type: [string, "null"] }
+        event_type: { type: string }
+        environment: { type: [string, "null"] }
+        inventory_id: { type: [string, "null"] }
+
+    VerifyReport:
+      type: object
+      required: [found]
+      properties:
+        found: { type: boolean }
+        receipt_id: { type: string }
+        key_fpr: { type: string }
+        active_key_fpr: { type: string }
+        canonical_form: { type: string }
+        signature_verifies: { type: boolean }
+
+    ChecklistSummary:
+      type: object
+      properties:
+        id: { type: string }
+        version: { type: string }
+        title: { type: string }
+        short_title: { type: string }
+        authority: { type: string }
+        url: { type: [string, "null"], format: uri }
+        item_count: { type: integer, minimum: 0 }
+
+    AttestRequest:
+      type: object
+      required: [inventory_id, pack_id, item_id, answer]
+      properties:
+        inventory_id: { type: string }
+        pack_id: { type: string }
+        item_id: { type: string }
+        answer: { type: string, enum: [yes, no, na] }
+        evidence_uri: { type: [string, "null"], format: uri }
+
+    Attestation:
+      type: object
+      properties:
+        id: { type: string }
+        inventory_id: { type: string }
+        pack_id: { type: string }
+        item_id: { type: string }
+        answer: { type: string, enum: [yes, no, na] }
+        evidence_uri: { type: [string, "null"] }
+        attested_by: { type: string }
+        attested_at_utc: { type: string, format: date-time }
+        receipt_id: { type: string }
+
+    ChecklistScore:
+      type: object
+      properties:
+        pack_id: { type: string }
+        version: { type: string }
+        fraction: { type: number, minimum: 0, maximum: 1 }
+        possible_weight: { type: number }
+        earned_weight: { type: number }
+        failing_critical: { type: array, items: { type: string } }
+        items_attested: { type: integer, minimum: 0 }
+        items_total: { type: integer, minimum: 0 }
+
+    GateRequest:
+      type: object
+      required: [inventory_id]
+      properties:
+        inventory_id: { type: string }
+        tier_target: { $ref: "#/components/schemas/TrustTier" }
+        applicable_packs:
+          type: array
+          items: { type: string }
+          default: [nist-ai-rmf, iso-iec-42001, human-flourishing]
+
+    GateDecision:
+      type: object
+      required: [result, tier_target, reasons, receipt_id]
+      properties:
+        result: { type: string, enum: [PASS, FAIL] }
+        tier_target: { $ref: "#/components/schemas/TrustTier" }
+        reasons: { type: array, items: { type: string } }
+        checklist_scores:
+          type: object
+          additionalProperties: { type: number }
+        native_checks:
+          type: object
+          additionalProperties: true
+        receipt_id: { type: string, pattern: "^[0-9A-HJKMNP-TV-Z]{26}$" }
+
+    ExportRequest:
+      type: object
+      properties:
+        inventory_id: { type: [string, "null"] }
+        from_date: { type: [string, "null"], description: Inclusive YYYY-MM-DD lower bound on receipt day. }
+        to_date: { type: [string, "null"], description: Inclusive YYYY-MM-DD upper bound on receipt day. }
+
+    ExportResult:
+      type: object
+      required: [bundle_path, manifest_sha256, verification]
+      properties:
+        bundle_path: { type: string }
+        manifest_sha256: { type: string, pattern: "^[a-f0-9]{64}$" }
+        verification:
+          type: object
+          properties:
+            receipts_verified: { type: integer, minimum: 0 }
+            receipts_failed: { type: integer, minimum: 0 }
+            failures: { type: array, items: { type: string } }

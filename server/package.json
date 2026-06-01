@@ -14,15 +14,17 @@
     "init": "node src/cli.js init",
     "keygen": "node src/cli.js keygen",
     "seed": "node src/cli.js seed",
-    "test": "node --test test/"
+    "test": "node --test",
+    "test:e2e": "node --test test/e2e/",
+    "test:chaos": "node --test test/chaos/"
   },
   "engines": {
     "node": ">=20.0.0"
   },
   "dependencies": {
     "better-sqlite3": "^11.5.0",
-    "express": "^4.21.1",
     "cors": "^2.8.5",
+    "express": "^4.21.1",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0",
     "tweetnacl": "^1.0.3",
@@ -30,6 +32,7 @@
     "yaml": "^2.6.0"
   },
   "devDependencies": {
+    "fast-check": "^4.8.0",
     "supertest": "^7.0.0"
   },
   "keywords": [
