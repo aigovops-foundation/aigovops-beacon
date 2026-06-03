@@ -38,7 +38,7 @@ PATCHES = [
                 '          <ul>\n'
                 '            <li><a href="./downloads/aigovops-audit-framework.pdf" download>Combined PDF</a></li>\n'
                 '            <li><a href="./downloads/AI_Model_Inventory_Template.xlsx" download>Inventory template</a></li>\n'
-                '            <li><a href="https://github.com/bobrapp/aigovops-beacon/tree/main/checklists" target="_blank" rel="noopener">YAML checklists ↗</a></li>\n'
+                '            <li><a href="https://github.com/aigovops-foundation/aigovops-beacon/tree/main/checklists" target="_blank" rel="noopener">YAML checklists ↗</a></li>\n'
                 '          </ul>\n'
                 '        </div>',
                 '        <div>\n'
@@ -46,7 +46,7 @@ PATCHES = [
                 '          <ul>\n'
                 '            <li><a href="./downloads/aigovops-audit-framework.pdf" download>Combined PDF</a></li>\n'
                 '            <li><a href="./downloads/AI_Model_Inventory_Template.xlsx" download>Inventory template</a></li>\n'
-                '            <li><a href="https://github.com/bobrapp/aigovops-beacon/tree/main/checklists" target="_blank" rel="noopener">YAML checklists ↗</a></li>\n'
+                '            <li><a href="https://github.com/aigovops-foundation/aigovops-beacon/tree/main/checklists" target="_blank" rel="noopener">YAML checklists ↗</a></li>\n'
                 '          </ul>\n'
                 '        </div>\n'
                 '        <div>\n'

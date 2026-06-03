@@ -8,7 +8,7 @@ body:
       value: |
         Thanks for filing a bug. Bring evidence, not vibes — logs, repro steps,
         environment. For security issues, please **do not** use this form; see
-        [SECURITY.md](https://github.com/bobrapp/aigovops-beacon/blob/main/SECURITY.md).
+        [SECURITY.md](https://github.com/aigovops-foundation/aigovops-beacon/blob/main/SECURITY.md).
 
   - type: dropdown
     id: area
@@ -79,5 +79,5 @@ body:
     attributes:
       label: Code of Conduct
       options:
-        - label: I agree to follow this project's [Code of Conduct](https://github.com/bobrapp/aigovops-beacon/blob/main/CODE_OF_CONDUCT.md).
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/aigovops-foundation/aigovops-beacon/blob/main/CODE_OF_CONDUCT.md).
           required: true

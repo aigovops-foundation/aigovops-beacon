@@ -48,7 +48,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0
   contact:
     name: AIGovOps Foundation
-    url: https://github.com/bobrapp/aigovops-beacon
+    url: https://github.com/aigovops-foundation/aigovops-beacon
 
 servers:
   - url: http://127.0.0.1:8787

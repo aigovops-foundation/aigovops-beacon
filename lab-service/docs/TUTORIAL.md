@@ -30,7 +30,7 @@ of hands-on time if you go straight through.
 ```
                        ┌──────────────────────────┐
                        │  GitHub Pages (static)   │
-                       │  bobrapp.github.io/...   │
+                       │  aigovops-foundation.github.io/...   │
                        │  lab.html, lab-100.html  │
                        └─────────┬────────────────┘
                                  │  loads /components/*.js cross-origin
@@ -94,7 +94,7 @@ up piecemeal.
 ## 3. Clone + bootstrap
 
 ```bash
-git clone https://github.com/bobrapp/aigovops-beacon.git
+git clone https://github.com/aigovops-foundation/aigovops-beacon.git
 cd aigovops-beacon/lab-service
 npm ci
 cp .beacon-v2.env.example .beacon-v2.env
@@ -105,7 +105,7 @@ Open `.beacon-v2.env` and fill in:
 ```bash
 # Required for the backend layer
 ADMIN_PASSWORD='pick-a-strong-one'
-CORS_ALLOWED_ORIGINS='https://bobrapp.github.io'
+CORS_ALLOWED_ORIGINS='https://aigovops-foundation.github.io'
 
 # Optional — only needed if you want signed receipts (RS256)
 # Generate with: openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out priv.pem
@@ -125,7 +125,7 @@ secret — fine for local testing, not for prod.
 npm run build                                           # bundles to dist/
 ADMIN_PASSWORD='changeme' \
 LAB_NAME='AIGovOps Beacon Lab' \
-CORS_ALLOWED_ORIGINS='https://bobrapp.github.io' \
+CORS_ALLOWED_ORIGINS='https://aigovops-foundation.github.io' \
 NODE_ENV=production \
 node dist/index.cjs
 ```
@@ -134,7 +134,7 @@ You should see:
 
 ```
 [server] listening on :5000
-[server] CORS allowing: https://bobrapp.github.io
+[server] CORS allowing: https://aigovops-foundation.github.io
 [server] JWT algorithm: HS256 (no RS256 keys configured)
 ```
 
@@ -164,7 +164,7 @@ What it covers:
 | 3 | `POST /api/anon/promote`                          | JWT → trainee `Session` row           |
 | 4 | `GET  /api/curriculum/100`                        | 5 lab-100 rules                       |
 | 5 | `GET  /api/lab/public-receipts`                   | receipts array                        |
-| 6 | CORS preflight from `https://bobrapp.github.io`   | `Access-Control-Allow-Origin` echoed  |
+| 6 | CORS preflight from `https://aigovops-foundation.github.io`   | `Access-Control-Allow-Origin` echoed  |
 
 All six should pass before you move on. If any fail, see
 [Troubleshooting](#10-troubleshooting).
@@ -223,7 +223,7 @@ as the fallback):
 Health check
 ▸ Probing https://aigovops-beacon-lab.pplx.app/port/5000/api/status...
 ✓ Backend is responding (HTTP 200).
-▸ Probing CORS preflight from https://bobrapp.github.io...
+▸ Probing CORS preflight from https://aigovops-foundation.github.io...
 ✓ CORS preflight returns Access-Control-Allow-Origin.
 ```
 
@@ -234,12 +234,12 @@ Health check
 Open the public Pages site:
 
 ```
-https://bobrapp.github.io/aigovops-beacon/lab.html?v2=1
+https://aigovops-foundation.github.io/aigovops-beacon/lab.html?v2=1
 ```
 
 DevTools → Network. You should see:
 
-1. `lab.html` from `bobrapp.github.io` (200)
+1. `lab.html` from `aigovops-foundation.github.io` (200)
 2. `components/beacon-lab-bridge.js` from your backend (200, with CORS headers)
 3. `components/beacon-lab.js` from your backend (200)
 4. `POST /api/anon/session` from your backend (200, returns JWT)
@@ -383,7 +383,7 @@ Make sure `CORS_ALLOWED_ORIGINS` is set (comma-separated, no spaces):
 
 ```bash
 flyctl secrets set \
-  CORS_ALLOWED_ORIGINS='https://bobrapp.github.io,https://edge.beacon.aigovops.foundation' \
+  CORS_ALLOWED_ORIGINS='https://aigovops-foundation.github.io,https://edge.beacon.aigovops.foundation' \
   --app aigovops-beacon-lab
 ```
 
@@ -419,4 +419,4 @@ Fly + Cloudflare APIs.
   learners actually use this thing.
 
 Questions or bugs → open an issue on
-[bobrapp/aigovops-beacon](https://github.com/bobrapp/aigovops-beacon/issues).
+[aigovops-foundation/aigovops-beacon](https://github.com/aigovops-foundation/aigovops-beacon/issues).

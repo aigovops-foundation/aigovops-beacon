@@ -316,7 +316,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
 
     // Emit to stderr — no SMTP yet.  The link lands on Pages with #invite=<token>
     // so the bridge can exchange it for a JWT automatically.
-    const link = `https://bobrapp.github.io/aigovops-beacon/lab.html#invite=${linkToken}`;
+    const link = `https://aigovops-foundation.github.io/aigovops-beacon/lab.html#invite=${linkToken}`;
     process.stderr.write(`[magic-link] ${email} → ${link}\n`);
 
     res.json({ ok: true, message: "Magic link issued — check the server log for the URL." });

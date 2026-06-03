@@ -215,4 +215,4 @@ attestation. It is not sufficient.
 
 ---
 
-*Last verified: 29 May 2026 against the live `bobrapp/aigovops-beacon` HEAD.*
+*Last verified: 29 May 2026 against the live `aigovops-foundation/aigovops-beacon` HEAD.*

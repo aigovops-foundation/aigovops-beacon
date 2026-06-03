@@ -26,7 +26,7 @@ flyctl secrets set \
   ADMIN_PASSWORD="<your-strong-password>" \
   JWT_PRIVATE_KEY="$(cat jwt.key)" \
   JWT_PUBLIC_KEY="$(cat jwt.pub)" \
-  CORS_ALLOWED_ORIGINS="https://bobrapp.github.io"
+  CORS_ALLOWED_ORIGINS="https://aigovops-foundation.github.io"
 
 # 6. Deploy
 flyctl deploy
@@ -58,7 +58,7 @@ That's it — Fly builds the Docker image, runs the health check
 3. Follow the DNS challenge instructions Fly prints to validate.
 4. Update `CORS_ALLOWED_ORIGINS` if you add more allowed origins:
    ```bash
-   flyctl secrets set CORS_ALLOWED_ORIGINS="https://bobrapp.github.io,https://aigovops.foundation"
+   flyctl secrets set CORS_ALLOWED_ORIGINS="https://aigovops-foundation.github.io,https://aigovops.foundation"
    ```
 
 ---

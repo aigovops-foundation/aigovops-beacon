@@ -48,7 +48,7 @@ export async function bootstrap() {
     res.json({
       name: "AIGovOps Beacon",
       version: ctx.config.beaconVersion,
-      docs: "https://github.com/bobrapp/aigovops-beacon",
+      docs: "https://github.com/aigovops-foundation/aigovops-beacon",
       principle:
         "Agents do the bureaucracy; humans hold moral legitimacy.",
     })

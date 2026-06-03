@@ -57,7 +57,7 @@ Same git repo, same beacons, same receipt format. Different envelopes.
 ### 2.1 One-liner
 
 ```bash
-git clone https://github.com/bobrapp/aigovops-beacon
+git clone https://github.com/aigovops-foundation/aigovops-beacon
 cd aigovops-beacon
 docker compose -f deploy/lab.yml up -d
 open http://localhost:8788
@@ -230,7 +230,7 @@ Beta means **honest minimum**. Add layers as trust accrues.
 
 ```bash
 # on the DMZ VM
-git clone https://github.com/bobrapp/aigovops-beacon
+git clone https://github.com/aigovops-foundation/aigovops-beacon
 cd aigovops-beacon
 cp deploy/.env.beta.example .env
 # edit .env: DNS_LOG_PATH, CASB_API_KEY, OIDC_*, BEACON_PUBLIC_URL

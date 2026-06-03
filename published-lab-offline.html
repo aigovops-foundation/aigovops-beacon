@@ -2211,7 +2211,7 @@ section.view.active { display: block; }
   </nav>
   <div class="spa-notice">
     Live preview while GitHub Pages catches up. The canonical pages will live at
-    <a href="https://bobrapp.github.io/aigovops-beacon/" target="_blank" rel="noopener">bobrapp.github.io/aigovops-beacon</a>
+    <a href="https://aigovops-foundation.github.io/aigovops-beacon/" target="_blank" rel="noopener">aigovops-foundation.github.io/aigovops-beacon</a>
     once the build lands on main. The 100-failure dataset is loaded live from the canonical Beacon site.
   </div>
 <section class="view" data-view="hub">
@@ -2296,7 +2296,7 @@ section.view.active { display: block; }
           <aside class="lab-aside">
             <h3>Running a 90-minute in-person workshop?</h3>
             <p>This lab is for individual auditors. If you're facilitating a 90-minute group session with sticky notes and field cards, use the facilitator playbook instead.</p>
-            <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/docs/AUDITOR_WORKSHOP.md" target="_blank" rel="noopener">AUDITOR_WORKSHOP.md ↗</a>
+            <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/docs/AUDITOR_WORKSHOP.md" target="_blank" rel="noopener">AUDITOR_WORKSHOP.md ↗</a>
           </aside>
           <aside class="lab-aside">
             <h3>How was this lab built?</h3>
@@ -2319,7 +2319,7 @@ section.view.active { display: block; }
           <li>Export and verify an auditor bundle without Beacon itself.</li>
           <li>Map one real-world AI failure to controls, frameworks, and missing evidence.</li>
         </ol>
-        <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">100-case dataset</a>.</p>
+        <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">100-case dataset</a>.</p>
       </div>
     </section>
 </section>
@@ -2680,8 +2680,8 @@ section.view.active { display: block; }
           this tab) or print the worksheet PDF and fill it in by hand.
         </p>
         <p>
-          <a href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
-          <a href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
         </p>
 
         <article class="fmap-card act-ship">
@@ -2899,7 +2899,7 @@ section.view.active { display: block; }
 
         <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto;">
 <span style="color:var(--ink-faint);"># 1. One-liner</span>
-git clone https://github.com/bobrapp/aigovops-beacon
+git clone https://github.com/aigovops-foundation/aigovops-beacon
 cd aigovops-beacon
 docker compose -f deploy/lab.yml up -d
 open http://localhost:8788
@@ -3190,7 +3190,7 @@ python -m src.audit_log verify</pre>
         </div>
 
         <p style="margin-top:var(--space-6); font-size:var(--text-sm); color:var(--ink-faint);">
-          Source: <a href="https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">docs/data/ai_failures_top100.json</a>.
+          Source: <a href="https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">docs/data/ai_failures_top100.json</a>.
           Methodology mirrors the home-page failures browser.
         </p>
       </div>
@@ -3211,8 +3211,8 @@ python -m src.audit_log verify</pre>
           analysis — bring it to your team's next AI governance review.
         </p>
         <p>
-          <a href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
-          <a href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
         </p>
 
         <h3>Suggested splits</h3>
@@ -3349,7 +3349,7 @@ python -m src.audit_log verify</pre>
           <code>audit/audit-log.jsonl</code>. Each line carries an Ed25519
           signature over canonical-JSON bytes and a SHA-256 hash chain back
           to <code>GENESIS</code>. The public key lives at
-          <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
+          <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
           You can verify the chain offline with
           <code>python -m src.audit_log verify</code>.
         </p>
@@ -3362,7 +3362,7 @@ python -m src.audit_log verify</pre>
 
         <p class="kicker hibt-howto">
           <strong>Verify yourself:</strong>
-          <code>git clone https://github.com/bobrapp/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
+          <code>git clone https://github.com/aigovops-foundation/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
         </p>
       </div>
     </section>
@@ -3400,7 +3400,7 @@ python -m src.audit_log verify</pre>
             <dt><code>key_fingerprint</code></dt><dd>First 16 bytes of SHA-256(public key DER), base64-URL no-pad.</dd>
           </dl>
         </div>
-        <p class="kicker">Source: <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
+        <p class="kicker">Source: <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
       </div>
     </section>
 </section>
@@ -3410,7 +3410,7 @@ python -m src.audit_log verify</pre>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
   <script>
-window.__BEACON_AUDIT_LOG__ = [{"seq": 1, "timestamp_utc": "2026-05-23T19:06:33Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "bootstrap_audit_log", "prompt": "Install AIGovOps cryptokey-receipted audit log on aigovops-beacon as part of the Framework Lab build (Level 100 + 200)", "result": "Created src/audit_log.py, generated Ed25519 keypair (fp TrUguILJje1UUyeQie1g6w), genesis entry written", "assets": ["src/audit_log.py", "audit/keys/public-key.pem", "audit/audit-log.jsonl"], "git_sha": null, "prev_entry_sha256": "GENESIS", "entry_sha256": "d8bb7e60d2a65f808f87b031ca7fb696e5f5c5daf76012b90c10b791e1f80259", "signature_ed25519": "KxThq6a5TT_Tt_AiPwUoyCSbeqVKiciufzQW3yZEEAoXjQBdQEQrqS8QNWnOYiyJvqu2tvuuCVLSygi3qXAKBQ", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 2, "timestamp_utc": "2026-05-23T19:08:33Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_a_audit_infrastructure", "prompt": "Group A: install AIGovOps cryptokey-receipted audit log infrastructure on bobrapp/aigovops-beacon (Framework Lab build, decision: full cryptokey pattern)", "result": "Added src/audit_log.py with init-keys/append/verify/fingerprint CLI, generated Ed25519 keypair, wrote genesis + group-A entries, committed public key, added private key to .gitignore, shipped self-contained docs/howibuilt.html that renders the chain client-side and links to python -m src.audit_log verify for cryptographic verification", "assets": ["src/audit_log.py", "audit/keys/public-key.pem", "audit/audit-log.jsonl", "docs/howibuilt.html", ".gitignore"], "git_sha": null, "prev_entry_sha256": "d8bb7e60d2a65f808f87b031ca7fb696e5f5c5daf76012b90c10b791e1f80259", "entry_sha256": "574a285cef96d3bfbb6aa5c20b54e47b03e99f00da9d477838788fe3c2982565", "signature_ed25519": "LKqtMNG4Yo5y0BIWl8hjzYUifLILuxUK2bmRRzvlVVv0dEYmTviUShRVWm-UG2RmgPqlkFZpayIP9C0VeLsVAw", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 3, "timestamp_utc": "2026-05-23T19:20:38Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_b_hub_and_level_100", "prompt": "Group B: build Framework Lab hub + Level 100 (30-minute Beacon flow) + shared assets and printable worksheets", "result": "Added docs/lab.html (hub with two tier cards and completion-percent readouts), docs/lab-100.html (7-section guided curriculum with sticky progress bar), docs/css/lab.css (component styles + print rules), docs/js/lab.js (progress tracking, quiz scoring, attestation reveal, localStorage), docs/js/lab-sandbox.js (client-side Ed25519 receipt sandbox reusing tweetnacl + jszip), docs/lab/worksheet-100.html (printable), docs/downloads/lab-worksheet-100.pdf + lab-worksheet-200.pdf (fpdf2-generated), scripts/build_worksheet_pdfs.py (reproducible builder)", "assets": ["docs/lab.html", "docs/lab-100.html", "docs/css/lab.css", "docs/js/lab.js", "docs/js/lab-sandbox.js", "docs/lab/worksheet-100.html", "docs/downloads/lab-worksheet-100.pdf", "docs/downloads/lab-worksheet-200.pdf", "scripts/build_worksheet_pdfs.py"], "git_sha": null, "prev_entry_sha256": "574a285cef96d3bfbb6aa5c20b54e47b03e99f00da9d477838788fe3c2982565", "entry_sha256": "cb08f54c734b86f05e95d630ad025da1653c4beadce7b30e8230a077649fb56f", "signature_ed25519": "dG1dF_CPZ3fwgNxYUvBbXirHceJHGLsBI7k0oWbkDXOPJMBjBPORKAHVKIYXBurt68nbLHyFXzKiKO3lE9rgAA", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 4, "timestamp_utc": "2026-05-23T19:24:37Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_c_level_200_and_deepdive", "prompt": "Group C: build Level 200 with Suitcase Lab, 9 lab variants, Policy-as-Code lab, Receipt API lab, full 100-failure deep-dive table with framework cross-links, advanced quiz, completion attestation, and printable worksheet", "result": "Added docs/lab-200.html (8-section advanced curriculum), docs/js/lab-failures.js (cleans malformed frameworks field, filters by act/framework/harm/sector, click-to-expand with Level 200 cross-links), docs/lab/worksheet-200.html (printable). PDF generated in Group B build script.", "assets": ["docs/lab-200.html", "docs/js/lab-failures.js", "docs/lab/worksheet-200.html"], "git_sha": null, "prev_entry_sha256": "cb08f54c734b86f05e95d630ad025da1653c4beadce7b30e8230a077649fb56f", "entry_sha256": "245d97dfd83d7c6422e1fc614bfd1cda51c2c0fd9ecccdae4807144dfb90742b", "signature_ed25519": "CjRq1C47orzXgPT4grsX7gLRQqwJqiIbsTEecVmV61eNQ7hpdHFw0mmyyGtlzlArgsNbHoeaOfasd2hLfcfTCg", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 5, "timestamp_utc": "2026-05-23T19:26:35Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_d_global_nav_wiring", "prompt": "Group D: wire Framework Lab into every existing Beacon page (per user-locked decision: global nav update across all 4 current pages)", "result": "Patched docs/index.html (added Framework Lab nav link + Framework Lab footer section with 6 links), docs/video/index.html (nav link), docs/quiz.html (header back-link area with matching button style), docs/walkthrough/index.html (meta line link). Patches applied via scripts/patch_existing_navs.py which is idempotent and committed for reproducibility.", "assets": ["docs/index.html", "docs/video/index.html", "docs/quiz.html", "docs/walkthrough/index.html", "scripts/patch_existing_navs.py"], "git_sha": null, "prev_entry_sha256": "245d97dfd83d7c6422e1fc614bfd1cda51c2c0fd9ecccdae4807144dfb90742b", "entry_sha256": "8b1bdab6814ea3e05eb925aa863f0f602510d60e01b7e309791685497213e9d5", "signature_ed25519": "74yT0h905SKEjw9w2gAtKFQ3OvKLemEO1adEAhkG0S-gH1TlMAEdKP1iOLTyw87JnYWwguq8aqELLk3u6IbADg", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}];
+window.__BEACON_AUDIT_LOG__ = [{"seq": 1, "timestamp_utc": "2026-05-23T19:06:33Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "bootstrap_audit_log", "prompt": "Install AIGovOps cryptokey-receipted audit log on aigovops-beacon as part of the Framework Lab build (Level 100 + 200)", "result": "Created src/audit_log.py, generated Ed25519 keypair (fp TrUguILJje1UUyeQie1g6w), genesis entry written", "assets": ["src/audit_log.py", "audit/keys/public-key.pem", "audit/audit-log.jsonl"], "git_sha": null, "prev_entry_sha256": "GENESIS", "entry_sha256": "d8bb7e60d2a65f808f87b031ca7fb696e5f5c5daf76012b90c10b791e1f80259", "signature_ed25519": "KxThq6a5TT_Tt_AiPwUoyCSbeqVKiciufzQW3yZEEAoXjQBdQEQrqS8QNWnOYiyJvqu2tvuuCVLSygi3qXAKBQ", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 2, "timestamp_utc": "2026-05-23T19:08:33Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_a_audit_infrastructure", "prompt": "Group A: install AIGovOps cryptokey-receipted audit log infrastructure on aigovops-foundation/aigovops-beacon (Framework Lab build, decision: full cryptokey pattern)", "result": "Added src/audit_log.py with init-keys/append/verify/fingerprint CLI, generated Ed25519 keypair, wrote genesis + group-A entries, committed public key, added private key to .gitignore, shipped self-contained docs/howibuilt.html that renders the chain client-side and links to python -m src.audit_log verify for cryptographic verification", "assets": ["src/audit_log.py", "audit/keys/public-key.pem", "audit/audit-log.jsonl", "docs/howibuilt.html", ".gitignore"], "git_sha": null, "prev_entry_sha256": "d8bb7e60d2a65f808f87b031ca7fb696e5f5c5daf76012b90c10b791e1f80259", "entry_sha256": "574a285cef96d3bfbb6aa5c20b54e47b03e99f00da9d477838788fe3c2982565", "signature_ed25519": "LKqtMNG4Yo5y0BIWl8hjzYUifLILuxUK2bmRRzvlVVv0dEYmTviUShRVWm-UG2RmgPqlkFZpayIP9C0VeLsVAw", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 3, "timestamp_utc": "2026-05-23T19:20:38Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_b_hub_and_level_100", "prompt": "Group B: build Framework Lab hub + Level 100 (30-minute Beacon flow) + shared assets and printable worksheets", "result": "Added docs/lab.html (hub with two tier cards and completion-percent readouts), docs/lab-100.html (7-section guided curriculum with sticky progress bar), docs/css/lab.css (component styles + print rules), docs/js/lab.js (progress tracking, quiz scoring, attestation reveal, localStorage), docs/js/lab-sandbox.js (client-side Ed25519 receipt sandbox reusing tweetnacl + jszip), docs/lab/worksheet-100.html (printable), docs/downloads/lab-worksheet-100.pdf + lab-worksheet-200.pdf (fpdf2-generated), scripts/build_worksheet_pdfs.py (reproducible builder)", "assets": ["docs/lab.html", "docs/lab-100.html", "docs/css/lab.css", "docs/js/lab.js", "docs/js/lab-sandbox.js", "docs/lab/worksheet-100.html", "docs/downloads/lab-worksheet-100.pdf", "docs/downloads/lab-worksheet-200.pdf", "scripts/build_worksheet_pdfs.py"], "git_sha": null, "prev_entry_sha256": "574a285cef96d3bfbb6aa5c20b54e47b03e99f00da9d477838788fe3c2982565", "entry_sha256": "cb08f54c734b86f05e95d630ad025da1653c4beadce7b30e8230a077649fb56f", "signature_ed25519": "dG1dF_CPZ3fwgNxYUvBbXirHceJHGLsBI7k0oWbkDXOPJMBjBPORKAHVKIYXBurt68nbLHyFXzKiKO3lE9rgAA", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 4, "timestamp_utc": "2026-05-23T19:24:37Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_c_level_200_and_deepdive", "prompt": "Group C: build Level 200 with Suitcase Lab, 9 lab variants, Policy-as-Code lab, Receipt API lab, full 100-failure deep-dive table with framework cross-links, advanced quiz, completion attestation, and printable worksheet", "result": "Added docs/lab-200.html (8-section advanced curriculum), docs/js/lab-failures.js (cleans malformed frameworks field, filters by act/framework/harm/sector, click-to-expand with Level 200 cross-links), docs/lab/worksheet-200.html (printable). PDF generated in Group B build script.", "assets": ["docs/lab-200.html", "docs/js/lab-failures.js", "docs/lab/worksheet-200.html"], "git_sha": null, "prev_entry_sha256": "cb08f54c734b86f05e95d630ad025da1653c4beadce7b30e8230a077649fb56f", "entry_sha256": "245d97dfd83d7c6422e1fc614bfd1cda51c2c0fd9ecccdae4807144dfb90742b", "signature_ed25519": "CjRq1C47orzXgPT4grsX7gLRQqwJqiIbsTEecVmV61eNQ7hpdHFw0mmyyGtlzlArgsNbHoeaOfasd2hLfcfTCg", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}, {"seq": 5, "timestamp_utc": "2026-05-23T19:26:35Z", "user": "bobrapp", "user_email": "bobrapp@hotmail.com", "model": "Opus 4.7", "platform": "Hyperagent", "thread_id": "cmpipkp68012307ad66vebn96", "action": "commit_group_d_global_nav_wiring", "prompt": "Group D: wire Framework Lab into every existing Beacon page (per user-locked decision: global nav update across all 4 current pages)", "result": "Patched docs/index.html (added Framework Lab nav link + Framework Lab footer section with 6 links), docs/video/index.html (nav link), docs/quiz.html (header back-link area with matching button style), docs/walkthrough/index.html (meta line link). Patches applied via scripts/patch_existing_navs.py which is idempotent and committed for reproducibility.", "assets": ["docs/index.html", "docs/video/index.html", "docs/quiz.html", "docs/walkthrough/index.html", "scripts/patch_existing_navs.py"], "git_sha": null, "prev_entry_sha256": "245d97dfd83d7c6422e1fc614bfd1cda51c2c0fd9ecccdae4807144dfb90742b", "entry_sha256": "8b1bdab6814ea3e05eb925aa863f0f602510d60e01b7e309791685497213e9d5", "signature_ed25519": "74yT0h905SKEjw9w2gAtKFQ3OvKLemEO1adEAhkG0S-gH1TlMAEdKP1iOLTyw87JnYWwguq8aqELLk3u6IbADg", "key_fingerprint": "TrUguILJje1UUyeQie1g6w"}];
 window.__BEACON_FAILURES__ = [
   {
     "incident": "Boeing 737 MAX MCAS software fatal crashes",
@@ -6213,7 +6213,7 @@ window.AIGovOpsBeaconLab.hubReadout = function () {
     render();
   });
 
-  (window.__BEACON_FAILURES__ ? Promise.resolve({ ok: true, json: function(){return Promise.resolve(window.__BEACON_FAILURES__);} }) : fetch('https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json', { cache: 'no-store' }))
+  (window.__BEACON_FAILURES__ ? Promise.resolve({ ok: true, json: function(){return Promise.resolve(window.__BEACON_FAILURES__);} }) : fetch('https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json', { cache: 'no-store' }))
     .then(function (r) {
       if (!r.ok) throw new Error('failures dataset HTTP ' + r.status);
       return r.json();
