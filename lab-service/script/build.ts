@@ -60,7 +60,7 @@ async function buildAll() {
 
   // Copy the v2 edge web-components into the static dist tree so the
   // existing Express static handler serves them at /components/*.js.
-  // This is what lets bobrapp.github.io load:
+  // This is what lets aigovops-foundation.github.io load:
   //   <script src="https://<lab>/components/beacon-lab-bridge.js">
   // without any extra route logic on the server.
   try {

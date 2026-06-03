@@ -134,7 +134,7 @@ fi
 
 # ── Check 6: CORS preflight shows Access-Control-Allow-Origin ─────────────────
 PREFLIGHT=$(curl -s -i -X OPTIONS "${BASE}/api/status" \
-  -H "Origin: https://bobrapp.github.io" \
+  -H "Origin: https://aigovops-foundation.github.io" \
   -H "Access-Control-Request-Method: GET")
 if echo "$PREFLIGHT" | grep -qi "access-control-allow-origin"; then
   check "CORS preflight returns Access-Control-Allow-Origin" "ok"

@@ -4,7 +4,7 @@ A Beacon receipt is the wire format for an **OVERT attestation envelope** as spe
 
 All required envelope fields below are **normative under OVERT**. Fields tagged `[profile]` are extensions of the `aigovops-beacon.v1` profile and are not required for OVERT conformance — see [`PROFILE_REGISTRATION.md`](PROFILE_REGISTRATION.md).
 
-This document is wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay).
+This document is wire-compatible with [`aigovops-Replay`](https://github.com/aigovops/aigovops-Replay).
 
 > **Authority of this document:** advisory under the Foundation; the [OVERT 1.0 specification](https://overt.is/) is normative. Where this document diverges from OVERT, OVERT wins and the divergence is a bug here. Steward review (Glacis Technologies) is pending; see [`../STEWARD.md`](../STEWARD.md).
 

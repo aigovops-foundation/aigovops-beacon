@@ -1,6 +1,6 @@
 # Framework Lab for AIGovOps Auditors — final build bundle
 
-This tarball contains the complete Framework Lab build for `bobrapp/aigovops-beacon` — three new lab pages (hub, Level 100, Level 200), a signed Ed25519 audit log, the HIBT page that renders it, printable worksheets in HTML and PDF, and surgical edits to all four existing Beacon pages adding a Framework Lab nav link.
+This tarball contains the complete Framework Lab build for `aigovops-foundation/aigovops-beacon` — three new lab pages (hub, Level 100, Level 200), a signed Ed25519 audit log, the HIBT page that renders it, printable worksheets in HTML and PDF, and surgical edits to all four existing Beacon pages adding a Framework Lab nav link.
 
 GitHub OAuth in the build session was blocked, so all work was staged locally and packaged here. Apply with the included `apply.sh` script for a clean 4-commit history matching the original atomic-group plan, or pick the parts you want.
 
@@ -69,12 +69,12 @@ git push
 
 GitHub Pages will rebuild from `/docs/`. New URLs once it lands:
 
-- https://bobrapp.github.io/aigovops-beacon/lab.html
-- https://bobrapp.github.io/aigovops-beacon/lab-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab-200.html
-- https://bobrapp.github.io/aigovops-beacon/howibuilt.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/howibuilt.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html
 
 ## About the signing key
 

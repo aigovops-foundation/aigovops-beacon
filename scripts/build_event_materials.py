@@ -7,7 +7,7 @@ Outputs (committed under docs/downloads/ and event-materials/):
   docs/downloads/framework-lab-attendee.pdf      — 1-page handout for students
 
 Brand match: Hydra Teal #01696f, Signal Green #2ecc71, Inter + DM Mono,
-matching site.css from bobrapp/aigovops-beacon.
+matching site.css from aigovops-foundation/aigovops-beacon.
 
 Run from repo root:
   python3 scripts/build_event_materials.py
@@ -34,8 +34,8 @@ PAPER = (251, 250, 246)
 PAPER_SOFT = (241, 239, 231)
 BORDER = (216, 212, 196)
 
-LAB_URL = "https://bobrapp.github.io/aigovops-beacon/lab.html"
-HUB_URL = "https://bobrapp.github.io/aigovops-beacon/"
+LAB_URL = "https://aigovops-foundation.github.io/aigovops-beacon/lab.html"
+HUB_URL = "https://aigovops-foundation.github.io/aigovops-beacon/"
 
 
 # ---------------------------------------------------------------------------
@@ -295,7 +295,7 @@ def build_instructor_playbook() -> Path:
     pdf.bullet("'Generate Ed25519 key does nothing.' tweetnacl CDN didn't load. Confirm corp firewall "
                "isn't blocking cdn.jsdelivr.net. Backup: students can use the offline-mode lab variant "
                "(URL ending in ?offline=1) which inlines all dependencies.")
-    pdf.bullet("'I get a CORS error in the failures dataset.' bobrapp.github.io/aigovops-beacon was "
+    pdf.bullet("'I get a CORS error in the failures dataset.' aigovops-foundation.github.io/aigovops-beacon was "
                "made private. Switch to the offline-mode URL.")
     pdf.bullet("If the lab is down entirely, fall back to the printable worksheet PDFs and walk the "
                "lab manually from the slide deck. Receipts and bundles can be discussed conceptually.")

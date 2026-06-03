@@ -42,7 +42,7 @@ The AIGovOps Foundation does **not** issue standards. We implement, adopt, teach
 
 The project's home page **is** a self-running demo: it generates an Ed25519 key, discovers a sample inventory, signs each receipt with canonical JCS (RFC 8785), and assembles a real downloadable evidence bundle — all client-side, no server.
 
-**Live site (GitHub Pages):** [https://bobrapp.github.io/aigovops-beacon/](https://bobrapp.github.io/aigovops-beacon/)
+**Live site (GitHub Pages):** [https://aigovops-foundation.github.io/aigovops-beacon/](https://aigovops-foundation.github.io/aigovops-beacon/)
 
 The page also hosts:
 
@@ -92,10 +92,10 @@ One engine. Two front doors. Zero PDF theater.
 docker run -p 8080:8080 \
   -v "$(pwd)/beacon-data:/data" \
   -e BEACON_ADMIN_EMAIL=you@yourorg.com \
-  ghcr.io/bobrapp/aigovops-beacon:latest
+  ghcr.io/aigovops-foundation/aigovops-beacon:latest
 
 # Option B — local dev
-git clone https://github.com/bobrapp/aigovops-beacon
+git clone https://github.com/aigovops-foundation/aigovops-beacon
 cd aigovops-beacon
 npm install && npm run dev
 ```
@@ -166,7 +166,7 @@ Beacon doesn't replace anything — it sits *upstream* of the other Foundation p
    └───────────────────────────┘    └─────────────────────────┘
 ```
 
-Receipt schema is wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay). Gate schema is wire-compatible with [`aigovops-foundation-os`](https://github.com/bobrapp/aigovops-foundation-os).
+Receipt schema is wire-compatible with [`aigovops-Replay`](https://github.com/aigovops/aigovops-Replay). Gate schema is wire-compatible with [`aigovops-foundation-os`](https://github.com/aigovops/aigovops-foundation-os).
 
 For the broader Foundation context — sister projects, the umbrella policy-as-code companion, and how Beacon relates to other compliance tooling — see [`RELATED.md`](RELATED.md). Beacon does not require any of those projects.
 

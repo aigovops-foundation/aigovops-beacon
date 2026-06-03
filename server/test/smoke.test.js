@@ -27,4 +27,8 @@ test("root endpoint reports name and version", async (t) => {
   assert.equal(res.status, 200);
   assert.equal(res.body.name, "AIGovOps Beacon");
   assert.match(res.body.version, /^\d+\.\d+\.\d+$/);
+  assert.equal(
+    res.body.docs,
+    "https://github.com/aigovops-foundation/aigovops-beacon"
+  );
 });

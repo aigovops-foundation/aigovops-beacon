@@ -2211,7 +2211,7 @@ section.view.active { display: block; }
   </nav>
   <div class="spa-notice">
     Live preview while GitHub Pages catches up. The canonical pages will live at
-    <a href="https://bobrapp.github.io/aigovops-beacon/" target="_blank" rel="noopener">bobrapp.github.io/aigovops-beacon</a>
+    <a href="https://aigovops-foundation.github.io/aigovops-beacon/" target="_blank" rel="noopener">aigovops-foundation.github.io/aigovops-beacon</a>
     once the build lands on main. The 100-failure dataset is loaded live from the canonical Beacon site.
   </div>
 <section class="view" data-view="hub">
@@ -2296,7 +2296,7 @@ section.view.active { display: block; }
           <aside class="lab-aside">
             <h3>Running a 90-minute in-person workshop?</h3>
             <p>This lab is for individual auditors. If you're facilitating a 90-minute group session with sticky notes and field cards, use the facilitator playbook instead.</p>
-            <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/docs/AUDITOR_WORKSHOP.md" target="_blank" rel="noopener">AUDITOR_WORKSHOP.md ↗</a>
+            <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/docs/AUDITOR_WORKSHOP.md" target="_blank" rel="noopener">AUDITOR_WORKSHOP.md ↗</a>
           </aside>
           <aside class="lab-aside">
             <h3>How was this lab built?</h3>
@@ -2319,7 +2319,7 @@ section.view.active { display: block; }
           <li>Export and verify an auditor bundle without Beacon itself.</li>
           <li>Map one real-world AI failure to controls, frameworks, and missing evidence.</li>
         </ol>
-        <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">100-case dataset</a>.</p>
+        <p class="kicker" style="margin-top: var(--space-6);">Source material — 30-slide source deck adapted from <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/LAB.md" target="_blank" rel="noopener">LAB.md</a>, the Beacon home page, and the <a href="https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">100-case dataset</a>.</p>
       </div>
     </section>
 </section>
@@ -2680,8 +2680,8 @@ section.view.active { display: block; }
           this tab) or print the worksheet PDF and fill it in by hand.
         </p>
         <p>
-          <a href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
-          <a href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
         </p>
 
         <article class="fmap-card act-ship">
@@ -2899,7 +2899,7 @@ section.view.active { display: block; }
 
         <pre style="background:var(--paper-soft); padding:var(--space-4); border-radius:8px; overflow-x:auto;">
 <span style="color:var(--ink-faint);"># 1. One-liner</span>
-git clone https://github.com/bobrapp/aigovops-beacon
+git clone https://github.com/aigovops-foundation/aigovops-beacon
 cd aigovops-beacon
 docker compose -f deploy/lab.yml up -d
 open http://localhost:8788
@@ -3190,7 +3190,7 @@ python -m src.audit_log verify</pre>
         </div>
 
         <p style="margin-top:var(--space-6); font-size:var(--text-sm); color:var(--ink-faint);">
-          Source: <a href="https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">docs/data/ai_failures_top100.json</a>.
+          Source: <a href="https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json" target="_blank" rel="noopener" target="_blank" rel="noopener">docs/data/ai_failures_top100.json</a>.
           Methodology mirrors the home-page failures browser.
         </p>
       </div>
@@ -3211,8 +3211,8 @@ python -m src.audit_log verify</pre>
           analysis — bring it to your team's next AI governance review.
         </p>
         <p>
-          <a href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
-          <a href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener" class="btn-ghost btn-sm">Open printable worksheet ↗</a>
+          <a href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener" class="btn-ghost btn-sm" download>Worksheet PDF ↓</a>
         </p>
 
         <h3>Suggested splits</h3>
@@ -3349,7 +3349,7 @@ python -m src.audit_log verify</pre>
           <code>audit/audit-log.jsonl</code>. Each line carries an Ed25519
           signature over canonical-JSON bytes and a SHA-256 hash chain back
           to <code>GENESIS</code>. The public key lives at
-          <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
+          <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
           You can verify the chain offline with
           <code>python -m src.audit_log verify</code>.
         </p>
@@ -3362,7 +3362,7 @@ python -m src.audit_log verify</pre>
 
         <p class="kicker hibt-howto">
           <strong>Verify yourself:</strong>
-          <code>git clone https://github.com/bobrapp/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
+          <code>git clone https://github.com/aigovops-foundation/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
         </p>
       </div>
     </section>
@@ -3400,7 +3400,7 @@ python -m src.audit_log verify</pre>
             <dt><code>key_fingerprint</code></dt><dd>First 16 bytes of SHA-256(public key DER), base64-URL no-pad.</dd>
           </dl>
         </div>
-        <p class="kicker">Source: <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
+        <p class="kicker">Source: <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
       </div>
     </section>
 </section>
@@ -6213,7 +6213,7 @@ window.AIGovOpsBeaconLab.hubReadout = function () {
     render();
   });
 
-  (window.__BEACON_FAILURES__ ? Promise.resolve({ ok: true, json: function(){return Promise.resolve(window.__BEACON_FAILURES__);} }) : fetch('https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json', { cache: 'no-store' }))
+  (window.__BEACON_FAILURES__ ? Promise.resolve({ ok: true, json: function(){return Promise.resolve(window.__BEACON_FAILURES__);} }) : fetch('https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json', { cache: 'no-store' }))
     .then(function (r) {
       if (!r.ok) throw new Error('failures dataset HTTP ' + r.status);
       return r.json();

@@ -8,11 +8,11 @@ This page exists so that operators, auditors, and contributors can find the broa
 
 | Project | Role | How it relates to Beacon |
 | --- | --- | --- |
-| [umbrella-govops](https://github.com/bobrapp/umbrella-govops) | Policy-as-code companion. Compiles AI laws (NIST AI RMF, EU AI Act, ISO 42001, sector regs) into versioned, citable controls and binds runtime evidence to them. | Umbrella **consumes** Beacon receipts as evidence. Beacon does **not** depend on Umbrella's vocabulary or schemas. Auditors who want a single bundle covering "what must be true" and "is it true right now" use both. |
-| [aigovops-Replay](https://github.com/bobrapp/aigovops-Replay) | Receipt-verification tooling. | Reads Beacon's NDJSON audit logs and replays them against captured fixtures. |
-| [aigovops-foundation-os](https://github.com/bobrapp/aigovops-foundation-os) | Policy + Gate-Decision-Record schemas. | Gate schema is wire-compatible with Beacon's `gate.evaluated` event. |
-| [aigovops-prompt-studio](https://github.com/bobrapp/aigovops-prompt-studio) | Prompt-level audit and curation. | Emits Beacon-compatible receipts for prompt evaluations. |
-| [webhook-sentinel](https://github.com/bobrapp/webhook-sentinel) | PR-review trust gating. | Consumes Beacon receipts to gate code-review approvals. |
+| [umbrella-govops](https://github.com/aigovops/umbrella-govops) | Policy-as-code companion. Compiles AI laws (NIST AI RMF, EU AI Act, ISO 42001, sector regs) into versioned, citable controls and binds runtime evidence to them. | Umbrella **consumes** Beacon receipts as evidence. Beacon does **not** depend on Umbrella's vocabulary or schemas. Auditors who want a single bundle covering "what must be true" and "is it true right now" use both. |
+| [aigovops-Replay](https://github.com/aigovops/aigovops-Replay) | Receipt-verification tooling. | Reads Beacon's NDJSON audit logs and replays them against captured fixtures. |
+| [aigovops-foundation-os](https://github.com/aigovops/aigovops-foundation-os) | Policy + Gate-Decision-Record schemas. | Gate schema is wire-compatible with Beacon's `gate.evaluated` event. |
+| [aigovops-prompt-studio](https://github.com/aigovops/aigovops-prompt-studio) | Prompt-level audit and curation. | Emits Beacon-compatible receipts for prompt evaluations. |
+| [webhook-sentinel](https://github.com/aigovops/webhook-sentinel) | PR-review trust gating. | Consumes Beacon receipts to gate code-review approvals. |
 
 ## External standards Beacon implements
 
@@ -35,7 +35,7 @@ These are frameworks Beacon is **not** trying to be — it just generates the ki
 - Colorado SB 205 (consumer AI)
 - HIPAA, GLBA, SOX (where AI touches regulated data)
 
-The framework mappings themselves are advisory and live in [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml). For canonical, versioned, citable framework mappings, see [umbrella-govops](https://github.com/bobrapp/umbrella-govops) — that project is the Foundation's policy-as-code registry.
+The framework mappings themselves are advisory and live in [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml). For canonical, versioned, citable framework mappings, see [umbrella-govops](https://github.com/aigovops/umbrella-govops) — that project is the Foundation's policy-as-code registry.
 
 ## What Beacon is not
 

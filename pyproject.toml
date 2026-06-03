@@ -42,9 +42,9 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/bobrapp/aigovops-beacon"
-Issues = "https://github.com/bobrapp/aigovops-beacon/issues"
-Documentation = "https://github.com/bobrapp/aigovops-beacon#readme"
+Homepage = "https://github.com/aigovops-foundation/aigovops-beacon"
+Issues = "https://github.com/aigovops-foundation/aigovops-beacon/issues"
+Documentation = "https://github.com/aigovops-foundation/aigovops-beacon#readme"
 "Standard (OVERT 1.0)" = "https://overt.is/"
 
 # beacon-verify is the auditor-facing CLI.

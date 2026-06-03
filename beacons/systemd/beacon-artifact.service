@@ -1,6 +1,6 @@
 [Unit]
 Description=AIGovOps Beacon — artifact provenance scanner
-Documentation=https://github.com/bobrapp/aigovops-beacon
+Documentation=https://github.com/aigovops-foundation/aigovops-beacon
 After=local-fs.target
 
 [Service]

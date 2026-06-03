@@ -170,7 +170,7 @@ const server = http.createServer(async (req, res) => {
       transport: "sse", beacon: "embedded",
       endpoints: { sse: "/sse", messages: "/messages?sid=...", rpc: "/rpc", health: "/healthz", ready: "/readyz", api: "/api/v1/*" },
       tools: Object.keys(tools),
-      docs: "https://github.com/bobrapp/aigovops-beacon/tree/main/mcp-public",
+      docs: "https://github.com/aigovops-foundation/aigovops-beacon/tree/main/mcp-public",
     });
   }
 

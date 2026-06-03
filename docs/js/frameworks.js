@@ -15,7 +15,7 @@
     proposed: 'fail',
   };
 
-  const REPO = 'https://github.com/bobrapp/aigovops-beacon';
+  const REPO = 'https://github.com/aigovops-foundation/aigovops-beacon';
   const grid = document.getElementById('frameworkGrid');
   if (!grid) return;
 

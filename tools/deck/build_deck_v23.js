@@ -51,7 +51,7 @@ const footer = (s, label) => {
 
   // URLs row
   s.addText([
-    { text: "github.com/bobrapp/aigovops-beacon", options: { hyperlink: { url: "https://github.com/bobrapp/aigovops-beacon" } } },
+    { text: "github.com/aigovops-foundation/aigovops-beacon", options: { hyperlink: { url: "https://github.com/aigovops-foundation/aigovops-beacon" } } },
     { text: "        " },
     { text: "aigovopsfoundation.org", options: { hyperlink: { url: "https://www.aigovopsfoundation.org/" } } },
   ], { x: 0.7, y: 6.15, w: 12, h: 0.4, fontFace: B_FONT, fontSize: 14, color: "C7E7EA" });
@@ -246,7 +246,7 @@ const footer = (s, label) => {
 
   s.addText([
     { text: "See it live: " },
-    { text: "bobrapp.github.io/aigovops-beacon/walkthrough/", options: { hyperlink: { url: "https://bobrapp.github.io/aigovops-beacon/walkthrough/" } } },
+    { text: "aigovops-foundation.github.io/aigovops-beacon/walkthrough/", options: { hyperlink: { url: "https://aigovops-foundation.github.io/aigovops-beacon/walkthrough/" } } },
   ], { x: 0.6, y: 6.55, w: 12.1, h: 0.3, fontFace: B_FONT, fontSize: 12, color: TEAL });
 
   footer(s, "Walkthrough");
@@ -348,7 +348,7 @@ const footer = (s, label) => {
   // Terminal-style block
   s.addShape("rect", { x: 0.6, y: 2.2, w: 12.13, h: 3.4, fill: { color: "0C2A2D" }, line: { color: TEAL_DARK, width: 0.75 } });
   const code = [
-    "$  git clone https://github.com/bobrapp/aigovops-beacon",
+    "$  git clone https://github.com/aigovops-foundation/aigovops-beacon",
     "$  cd aigovops-beacon",
     "$  ./demo.sh                              # local desktop, port 8801",
     "",
@@ -387,7 +387,7 @@ const footer = (s, label) => {
   s.addText("aigovops-beacon", { x: 0.85, y: 2.85, w: 5.5, h: 0.6, fontFace: H_FONT, fontSize: 26, bold: true, color: TEXT });
   s.addText("Apache 2.0. Six MCP tools. Three deployment shapes. Walkthrough included.", { x: 0.85, y: 3.6, w: 5.5, h: 1.0, fontFace: B_FONT, fontSize: 14, color: TEXT });
   s.addText([
-    { text: "github.com/bobrapp/aigovops-beacon", options: { hyperlink: { url: "https://github.com/bobrapp/aigovops-beacon" } } },
+    { text: "github.com/aigovops-foundation/aigovops-beacon", options: { hyperlink: { url: "https://github.com/aigovops-foundation/aigovops-beacon" } } },
   ], { x: 0.85, y: 5.9, w: 5.5, h: 0.4, fontFace: B_FONT, fontSize: 15, bold: true, color: TEAL });
   s.addText("Star · Fork · Run · Contribute", { x: 0.85, y: 6.25, w: 5.5, h: 0.35, fontFace: B_FONT, fontSize: 12, color: MUTED });
 
@@ -418,7 +418,7 @@ const footer = (s, label) => {
   // Two CTA rows
   s.addText([
     { text: "→  ", options: { color: TEAL } },
-    { text: "github.com/bobrapp/aigovops-beacon", options: { hyperlink: { url: "https://github.com/bobrapp/aigovops-beacon" }, color: "FFFFFF", bold: true } },
+    { text: "github.com/aigovops-foundation/aigovops-beacon", options: { hyperlink: { url: "https://github.com/aigovops-foundation/aigovops-beacon" }, color: "FFFFFF", bold: true } },
   ], { x: 0.6, y: 5.2, w: 12.1, h: 0.55, fontFace: B_FONT, fontSize: 22 });
   s.addText([
     { text: "→  ", options: { color: TEAL } },

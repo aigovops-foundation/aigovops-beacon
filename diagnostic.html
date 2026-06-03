@@ -149,7 +149,7 @@
           <li class="check-item pending" data-check="localstorage"><span class="check-icon">○</span><div class="check-body"><strong>localStorage available</strong><span>Saves your progress and quiz answers</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
-          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="signtest"><span class="check-icon">○</span><div class="check-body"><strong>Live Ed25519 sign+verify</strong><span>Generates a key, signs canonical bytes, verifies in-browser</span></div><span class="check-result">…</span></li>
         </ul>
 
@@ -170,7 +170,7 @@
           <li><strong>Web Crypto API</strong> — used to fingerprint your Ed25519 public key for the certificate diploma.</li>
           <li><strong>localStorage</strong> — saves your progress between sections and stores quiz answers. If disabled, the lab still works but progress resets on every reload.</li>
           <li><strong>tweetnacl + JSZip</strong> — the Ed25519 signing library and the bundle-zipper. Both load from <code>cdn.jsdelivr.net</code>. If your network blocks the CDN, the sandbox in Section 4 of Level 100 won't work.</li>
-          <li><strong>CORS to bobrapp.github.io</strong> — the 100-failure deep-dive table in Level 200 fetches the dataset from the canonical Beacon repo. If this fails, Level 200 still works for everything except the deep-dive.</li>
+          <li><strong>CORS to aigovops-foundation.github.io</strong> — the 100-failure deep-dive table in Level 200 fetches the dataset from the canonical Beacon repo. If this fails, Level 200 still works for everything except the deep-dive.</li>
           <li><strong>Live sign + verify</strong> — end-to-end smoke test. Generates an Ed25519 keypair, signs canonical bytes, verifies the signature. If this passes, the Level 100 sandbox will work.</li>
         </ul>
       </div>
@@ -180,7 +180,7 @@
       <div class="shell">
         <span class="kicker">Once you're green</span>
         <h2>You're set. See you at the lab.</h2>
-        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
+        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
         <p style="font-family: 'DM Mono', monospace; font-size: 0.9rem;">Email <strong>LAB</strong> to <a href="mailto:bob.rapp@aigovops.community,ken.johnston@aigovops.community?subject=LAB%20pre-event%20question">bob.rapp@aigovops.community and ken.johnston@aigovops.community</a>.</p>
       </div>
     </section>
@@ -202,7 +202,7 @@
   (function () {
     'use strict';
 
-    var DATA_URL = 'https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json';
+    var DATA_URL = 'https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json';
     var REMEDIATION = {
       browser:    'Update your browser to the latest Chrome, Edge, Safari, or Firefox.',
       js:         'Enable JavaScript in your browser settings (extremely rare to be off).',
@@ -210,7 +210,7 @@
       localstorage: 'Disable private/incognito mode, or enable storage access. The lab works without it but progress will not persist.',
       tweetnacl:  'Your network is blocking cdn.jsdelivr.net. Ask IT to allow it, or join from a personal device on home wifi.',
       jszip:      'Same as tweetnacl — cdn.jsdelivr.net is blocked. The sandbox will not be able to bundle receipts into a zip.',
-      dataset:    'CORS or DNS issue reaching bobrapp.github.io. Lab still works for Level 100; Level 200 deep-dive table will not populate.',
+      dataset:    'CORS or DNS issue reaching aigovops-foundation.github.io. Lab still works for Level 100; Level 200 deep-dive table will not populate.',
       signtest:   'Crypto round-trip failed — likely a tweetnacl loading issue. Re-run after fixing the tweetnacl check above.'
     };
 
@@ -247,7 +247,7 @@
         verdict.classList.add('pass');
         icon.textContent = '✓';
         title.textContent = "You're ready.";
-        detail.innerHTML = 'Every check passed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
+        detail.innerHTML = 'Every check passed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
       } else {
         verdict.classList.add('fail');
         icon.textContent = '!';
@@ -292,7 +292,7 @@
       var hasJsZip = !!window.JSZip;
       mark('jszip', hasJsZip, hasJsZip ? 'v3.10.1 loaded' : 'Blocked');
 
-      // CHECK 7 — CORS to bobrapp.github.io
+      // CHECK 7 — CORS to aigovops-foundation.github.io
       fetch(DATA_URL, { cache: 'no-store' })
         .then(function (r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);

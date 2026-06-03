@@ -85,7 +85,7 @@
         <a href="./" class="btn-ghost btn-sm desktop-only">Home</a>
         <a href="./lab.html" class="btn-ghost btn-sm desktop-only">Framework Lab</a>
         <a href="./quiz.html" class="btn-ghost btn-sm desktop-only">Practitioner Quiz</a>
-        <a href="https://github.com/bobrapp/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://github.com/aigovops-foundation/aigovops-beacon" class="btn-primary btn-sm" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
     </div>
   </header>
@@ -100,7 +100,7 @@
           <code>audit/audit-log.jsonl</code>. Each line carries an Ed25519
           signature over canonical-JSON bytes and a SHA-256 hash chain back
           to <code>GENESIS</code>. The public key lives at
-          <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
+          <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/audit/keys/public-key.pem" target="_blank" rel="noopener"><code>audit/keys/public-key.pem</code></a>.
           You can verify the chain offline with
           <code>python -m src.audit_log verify</code>.
         </p>
@@ -113,7 +113,7 @@
 
         <p class="kicker hibt-howto">
           <strong>Verify yourself:</strong>
-          <code>git clone https://github.com/bobrapp/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
+          <code>git clone https://github.com/aigovops-foundation/aigovops-beacon &amp;&amp; cd aigovops-beacon &amp;&amp; pip install cryptography &amp;&amp; python -m src.audit_log verify</code>
         </p>
       </div>
     </section>
@@ -151,7 +151,7 @@
             <dt><code>key_fingerprint</code></dt><dd>First 16 bytes of SHA-256(public key DER), base64-URL no-pad.</dd>
           </dl>
         </div>
-        <p class="kicker">Source: <a href="https://github.com/bobrapp/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
+        <p class="kicker">Source: <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/src/audit_log.py" target="_blank" rel="noopener">src/audit_log.py</a> · Pattern: AIGovOps Foundation cryptokey-receipted audit logger (May 2026).</p>
       </div>
     </section>
   </main>

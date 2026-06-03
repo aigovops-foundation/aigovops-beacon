@@ -1,6 +1,6 @@
 [Unit]
 Description=AIGovOps Beacon — model egress sniffer
-Documentation=https://github.com/bobrapp/aigovops-beacon
+Documentation=https://github.com/aigovops-foundation/aigovops-beacon
 After=network-online.target
 Wants=network-online.target
 

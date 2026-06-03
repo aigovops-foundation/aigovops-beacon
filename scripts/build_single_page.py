@@ -4,7 +4,7 @@ Hyperagent webpage. Merges hub + Level 100 + Level 200 + HIBT into a view-
 toggled SPA, inlines all CSS and JS, and embeds the audit log so the HIBT
 view works without fetching external files.
 
-The 100-failure dataset still loads from the live bobrapp.github.io URL
+The 100-failure dataset still loads from the live aigovops-foundation.github.io URL
 because it's already publicly served there with CORS headers.
 
 Output: published-lab.html
@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
-DATA_URL = "https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json"
+DATA_URL = "https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json"
 
 
 def extract_main(html: str) -> str:
@@ -59,10 +59,10 @@ def build(offline: bool = False) -> Path:
             ('href="./howibuilt.html"',    'href="#" data-view="hibt"'),
             ('href="./"',                  'href="#" data-view="hub"'),
             # Worksheet HTML files - link out to the live GitHub Pages copies once they're up
-            ('href="./lab/worksheet-100.html"',  'href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener"'),
-            ('href="./lab/worksheet-200.html"',  'href="https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener"'),
-            ('href="./downloads/lab-worksheet-100.pdf"',  'href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener"'),
-            ('href="./downloads/lab-worksheet-200.pdf"',  'href="https://bobrapp.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener"'),
+            ('href="./lab/worksheet-100.html"',  'href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html" target="_blank" rel="noopener"'),
+            ('href="./lab/worksheet-200.html"',  'href="https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html" target="_blank" rel="noopener"'),
+            ('href="./downloads/lab-worksheet-100.pdf"',  'href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-100.pdf" target="_blank" rel="noopener"'),
+            ('href="./downloads/lab-worksheet-200.pdf"',  'href="https://aigovops-foundation.github.io/aigovops-beacon/downloads/lab-worksheet-200.pdf" target="_blank" rel="noopener"'),
             ('href="./data/ai_failures_top100.json"',  'href="' + DATA_URL + '" target="_blank" rel="noopener"'),
             # Misc data refs
             ('"./data/ai_failures_top100.json"',  '"' + DATA_URL + '"'),
@@ -337,7 +337,7 @@ section.view.active { display: block; }
   </nav>
   <div class="spa-notice">
     Live preview while GitHub Pages catches up. The canonical pages will live at
-    <a href="https://bobrapp.github.io/aigovops-beacon/" target="_blank" rel="noopener">bobrapp.github.io/aigovops-beacon</a>
+    <a href="https://aigovops-foundation.github.io/aigovops-beacon/" target="_blank" rel="noopener">aigovops-foundation.github.io/aigovops-beacon</a>
     once the build lands on main. The 100-failure dataset is loaded live from the canonical Beacon site.
   </div>
 """
