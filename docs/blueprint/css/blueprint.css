@@ -1,36 +1,39 @@
 /* AIGovOps Beacon — Reference Architecture Blueprint
-   Inherits color palette from the main Beacon site:
-   teal #01696f, deep navy #01314c, signal green #2ecc71,
-   amber #b87b00, parchment #fef6e0, mist #e6f3f4
+   M9 garden-warm skin (aigovops-july-2026 estate design system).
+   Legacy variable NAMES kept, VALUES remapped to the garden tokens
+   (see ../../css/tokens.css; SOURCE header there points at the canon).
 */
 
 :root {
-  --teal: #01696f;
-  --teal-dark: #014a4f;
-  --navy: #01314c;
-  --green: #2ecc71;
-  --green-dark: #1f9c54;
-  --amber: #b87b00;
-  --amber-bg: #fef6e0;
-  --mist: #e6f3f4;
-  --leaf: #e8f5ea;
-  --rust: #c0392b;
-  --rust-bg: #fde2e0;
-  --ink: #0d1f2d;
-  --ink-soft: #3a4a5a;
-  --line: #d8dee5;
-  --bg: #fbfcfc;
-  --bg-band: #f3f6f7;
+  --teal: var(--garden-green-ink, #1F5E3A);
+  --teal-dark: var(--garden-green-deep, #0F4A2C);
+  --navy: var(--garden-charcoal, #2B2B28);
+  --green: var(--garden-green, #2E7D4F);
+  --green-dark: var(--garden-green-ink, #1F5E3A);
+  --amber: var(--garden-orange-ink, #9C4E12);
+  --amber-bg: var(--garden-deep-cream, #F1EAD8);
+  --mist: var(--garden-deep-cream, #F1EAD8);
+  --leaf: #EAF0E2;
+  --rust: #b53a2a;
+  --rust-bg: #F6E3DC;
+  --ink: var(--garden-charcoal, #2B2B28);
+  --ink-soft: var(--garden-ink-soft, #4C4A42);
+  --line: var(--garden-line, rgba(43,43,40,.14));
+  --bg: var(--garden-cream, #FAF7F0);
+  --bg-band: var(--garden-deep-cream, #F1EAD8);
   --max: 1140px;
   --radius: 10px;
-  --shadow: 0 1px 3px rgba(1,49,76,.08), 0 4px 14px rgba(1,49,76,.06);
+  --shadow: 0 1px 3px rgba(78,60,32,.1), 0 4px 14px rgba(78,60,32,.08);
 }
+
+/* On the one charcoal band, green must be the on-dark green (7.1:1 there) */
+.band-dark, .site-footer { --green: #5DCAA5; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--garden-sans, 'Source Sans 3'), 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   color: var(--ink);
   background: var(--bg);
   line-height: 1.6;
@@ -38,6 +41,8 @@ body {
 }
 
 code, pre { font-family: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+h1, h2, h3, h4 { font-family: var(--garden-serif, 'Fraunces'), Georgia, serif; }
 
 a { color: var(--teal); text-decoration: none; }
 a:hover { color: var(--teal-dark); text-decoration: underline; }
@@ -47,7 +52,7 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 /* ----- header ----- */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(255,255,255,.96);
+  background: rgba(250,247,240,.94);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
@@ -79,9 +84,9 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 /* ----- hero ----- */
 .hero {
   background:
-    radial-gradient(ellipse 80% 60% at 80% 0%, rgba(46,204,113,.10), transparent 60%),
-    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(1,105,111,.10), transparent 60%),
-    linear-gradient(180deg, #fff 0%, var(--mist) 100%);
+    radial-gradient(ellipse 80% 60% at 80% 0%, rgba(232,181,74,.24), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(46,125,79,.14), transparent 60%),
+    linear-gradient(180deg, var(--garden-cream, #FAF7F0) 0%, var(--mist) 100%);
   padding: 4.5rem 0 4rem;
   border-bottom: 1px solid var(--line);
 }
@@ -111,13 +116,13 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 /* ----- bands / sections ----- */
 .band { padding: 4rem 0; border-bottom: 1px solid var(--line); }
 .band-light { background: var(--bg-band); }
-.band-dark { background: var(--navy); color: #d9e3ec; border-bottom: 0; }
+.band-dark { background: var(--navy); color: var(--garden-on-dark, #EDE8DA); border-bottom: 0; }
 .band-dark h2, .band-dark h3, .band-dark h4 { color: #fff; }
 .band-dark a { color: var(--green); }
 
 .band h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 .6rem; letter-spacing: -0.01em; }
 .band-lede { font-size: 1.05rem; max-width: 70ch; color: var(--ink-soft); margin: 0 0 2rem; }
-.band-dark .band-lede { color: #a8b8c5; }
+.band-dark .band-lede { color: var(--garden-on-dark-dim, #B9B3A2); }
 
 /* ----- grids ----- */
 .grid { display: grid; gap: 1.5rem; }
@@ -163,15 +168,15 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 .stage-head h2 { margin: 0; font-size: 1.8rem; }
 .stage-head p { margin: .3rem 0 0; color: var(--ink-soft); }
 
-.stage-design { background: linear-gradient(180deg, #fff, #f8fbfb); }
+.stage-design { background: linear-gradient(180deg, var(--garden-cream, #FAF7F0), rgba(46,125,79,.05)); }
 .stage-design .stage-head { border-bottom-color: var(--teal); }
 .stage-design .stage-num { background: var(--teal); }
 
-.stage-deploy { background: linear-gradient(180deg, #fffdf6, #fff); }
+.stage-deploy { background: linear-gradient(180deg, var(--garden-deep-cream, #F1EAD8), var(--garden-cream, #FAF7F0)); }
 .stage-deploy .stage-head { border-bottom-color: var(--amber); }
 .stage-deploy .stage-num { background: var(--amber); }
 
-.stage-ops { background: linear-gradient(180deg, #f7fcf8, #fff); }
+.stage-ops { background: linear-gradient(180deg, rgba(46,125,79,.06), var(--garden-cream, #FAF7F0)); }
 .stage-ops .stage-head { border-bottom-color: var(--green); }
 .stage-ops .stage-num { background: var(--green-dark); }
 
@@ -219,17 +224,17 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 }
 .callout p, .callout li { color: var(--ink); font-size: .95rem; }
 .callout-dark {
-  background: rgba(46,204,113,.10);
+  background: rgba(93,202,165,.12);
   border-left-color: var(--green);
-  color: #d9e3ec;
+  color: var(--garden-on-dark, #EDE8DA);
 }
 .callout-dark h4 { color: var(--green); }
-.callout-dark p { color: #d9e3ec; }
+.callout-dark p { color: var(--garden-on-dark, #EDE8DA); }
 
 .control-list { list-style: none; padding: 0; margin: 0; }
 .control-list li {
   padding: .35rem 0;
-  border-bottom: 1px dashed rgba(1,49,76,.15);
+  border-bottom: 1px dashed rgba(43,43,40,.18);
   font-size: .92rem;
 }
 .control-list li:last-child { border-bottom: 0; }
@@ -258,14 +263,14 @@ a:hover { color: var(--teal-dark); text-decoration: underline; }
 
 /* ----- code blocks ----- */
 pre.code {
-  background: var(--navy); color: #c9d9e6;
+  background: var(--navy); color: var(--garden-on-dark, #EDE8DA);
   border-radius: var(--radius); padding: 1.2rem;
   overflow-x: auto; font-size: .85rem; line-height: 1.55;
   border: 1px solid rgba(255,255,255,.08);
 }
 pre.code code { color: inherit; background: none; padding: 0; }
 .band-dark pre.code {
-  background: #000c17; border-color: rgba(255,255,255,.12);
+  background: #21211E; border-color: rgba(255,255,255,.12);
 }
 p code, li code, td code {
   background: var(--mist); color: var(--teal-dark);
@@ -281,10 +286,10 @@ p code, li code, td code {
   display: block; background: rgba(255,255,255,.04);
   border: 1px solid rgba(255,255,255,.15);
   border-radius: var(--radius); padding: 1.3rem;
-  color: #d9e3ec; transition: all .15s ease;
+  color: var(--garden-on-dark, #EDE8DA); transition: all .15s ease;
 }
 .dl-card:hover {
-  background: rgba(46,204,113,.10);
+  background: rgba(93,202,165,.12);
   border-color: var(--green);
   text-decoration: none; transform: translateY(-2px);
 }
@@ -292,18 +297,24 @@ p code, li code, td code {
   margin: 0 0 .4rem; color: var(--green);
   font-family: 'DM Mono', monospace; font-size: 1rem;
 }
-.dl-card p { margin: 0; font-size: .88rem; color: #a8b8c5; }
+.dl-card p { margin: 0; font-size: .88rem; color: var(--garden-on-dark-dim, #B9B3A2); }
 
 /* ----- footer ----- */
 .site-footer {
-  background: var(--navy); color: #a8b8c5;
+  background: var(--navy); color: var(--garden-on-dark-dim, #B9B3A2);
   padding: 2.5rem 0; font-size: .9rem;
+}
+.site-footer .creed {
+  font-family: var(--garden-serif, 'Fraunces'), Georgia, serif;
+  font-style: italic; font-size: 1.05rem;
+  color: var(--garden-on-dark, #EDE8DA);
+  max-width: 58ch; margin: 0 0 1rem;
 }
 .site-footer p { margin: .3rem 0; }
 .site-footer strong { color: #fff; }
 .site-footer a { color: var(--green); }
 .site-footer .footnote {
-  color: #6c8095; font-size: .82rem; max-width: 70ch;
+  color: var(--garden-on-dark-dim, #B9B3A2); font-size: .82rem; max-width: 70ch;
   margin-top: .8rem; font-style: italic;
 }
 

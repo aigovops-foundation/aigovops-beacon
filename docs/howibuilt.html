@@ -15,6 +15,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+  <!-- M9 garden-warm skin (aigovops-july-2026 design system) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Sans+3:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/tokens.css" />
   <link rel="stylesheet" href="./css/site.css" />
   <style>
     /* HIBT page — self-contained inline styles. Will be promoted to lab.css later. */
@@ -26,8 +29,8 @@
     .hibt-pill { display: inline-flex; align-items: center; padding: 0.35em 0.9em; border-radius: 999px;
       font-family: "DM Mono", ui-monospace, monospace; font-size: var(--text-sm); background: var(--paper-card);
       border: 1px solid var(--border); color: var(--ink-soft); }
-    .hibt-pill.pass { background: var(--signal-green-soft); border-color: #b9e6c8; color: var(--pass); }
-    .hibt-pill.fail { background: #fbe5e0; border-color: #f0b9ad; color: var(--fail); }
+    .hibt-pill.pass { background: var(--signal-green-soft); border-color: rgba(46,125,79,.35); color: var(--pass); }
+    .hibt-pill.fail { background: #F6E3DC; border-color: rgba(181,58,42,.3); color: var(--fail); }
     .hibt-howto { margin-top: var(--space-4); }
     .hibt-howto code { background: var(--paper-soft); padding: 0.2em 0.5em; border-radius: 4px; font-size: var(--text-sm); }
     .hibt-log-wrap { padding: var(--space-12) 0; }
@@ -158,6 +161,7 @@
 
   <footer class="site-footer">
     <div class="shell">
+      <p class="creed">Ship safe AI — never unsafe AI: get to yes, stay at yes, recover to yes, and keep the garden of humanity growing.</p>
       <div class="footer-colophon" style="justify-content:center; text-align:center;">
         <span>© 2026 AIGovOps Foundation · Apache-2.0 · Built with the same evidence model Beacon teaches.</span>
       </div>
