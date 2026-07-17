@@ -30,6 +30,9 @@
 
 <body>
 
+  <!-- Thin scroll-progress indicator (garden green). Fixed: takes no flow space. -->
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+
   <!-- ============ 1. STICKY HEADER ============ -->
   <header class="site-header" id="siteHeader">
     <div class="shell">
@@ -59,6 +62,18 @@
       </nav>
     </div>
   </header>
+
+  <!-- Slim sticky section rail — wayfinding for the long scroll -->
+  <nav class="section-rail" id="sectionRail" aria-label="On this page">
+    <div class="shell">
+      <a href="#demo">Demo</a>
+      <a href="#beacons">Beacons</a>
+      <a href="#scoring">Scoring</a>
+      <a href="#failures">Failures</a>
+      <a href="#framework">Frameworks</a>
+      <a href="#run">Run it</a>
+    </div>
+  </nav>
 
   <main id="top">
 
@@ -538,6 +553,13 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
       </div>
     </div>
   </footer>
+
+  <!-- Back to top — appears after the first viewport -->
+  <a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/>
+    </svg>
+  </a>
 
   <!-- ============ JS ============ -->
   <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>

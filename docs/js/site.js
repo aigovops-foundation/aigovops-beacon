@@ -452,10 +452,74 @@ Mistral,mistral-large,chat-completions,eu-west`;
     }, { passive: true });
   }
 
+  // ---------- Wayfinding: progress bar, section rail, back-to-top ----------
+  function wireWayfinding() {
+    const progressFill = $("#scrollProgressFill");
+    const backToTop = $("#backToTop");
+    const rail = $("#sectionRail");
+    const links = rail ? $$('a[href^="#"]', rail) : [];
+    const linkById = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
+
+    // rAF-throttled scroll paint: progress fill + back-to-top visibility
+    let ticking = false;
+    function paint() {
+      ticking = false;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const y = window.scrollY;
+      if (progressFill) {
+        const ratio = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0;
+        progressFill.style.transform = `scaleX(${ratio})`;
+      }
+      if (backToTop) backToTop.classList.toggle("is-visible", y > window.innerHeight);
+    }
+    function requestPaint() {
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+    }
+    window.addEventListener("scroll", requestPaint, { passive: true });
+    window.addEventListener("resize", requestPaint, { passive: true });
+    paint();
+
+    // Current-section highlight via IntersectionObserver.
+    // Sections observed against a narrow band around the viewport middle,
+    // so exactly the section the reader is "in" carries the highlight.
+    if ("IntersectionObserver" in window && linkById.size > 0) {
+      const mapping = []; // [element, link] in document order
+      for (const [id, link] of linkById) {
+        const el = document.getElementById(id);
+        if (el) mapping.push([el, link]);
+      }
+      // Acts 2 & 3 of the demo story stay highlighted as "Demo"
+      const demoLink = linkById.get("demo");
+      if (demoLink) {
+        $$("section.steady, section.recover").forEach(el => mapping.push([el, demoLink]));
+      }
+      mapping.sort((a, b) =>
+        (a[0].compareDocumentPosition(b[0]) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+
+      const visible = new Set();
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target);
+        }
+        let current = null;
+        for (const [el, link] of mapping) {
+          if (visible.has(el)) { current = link; break; }
+        }
+        for (const link of links) {
+          if (link === current) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
+        }
+      }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
+      mapping.forEach(([el]) => io.observe(el));
+    }
+  }
+
   // ---------- Boot ----------
   function boot() {
     bindUI();
     wireEvents();
+    wireWayfinding();
     // Greet the telemetry strip so it's never empty
     setStatus("ready");
   }
