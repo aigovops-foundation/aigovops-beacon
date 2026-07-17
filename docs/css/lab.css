@@ -229,7 +229,7 @@
 .lesson-section .section-status.complete {
   background: var(--signal-green-soft);
   color: var(--pass);
-  border-color: #b9e6c8;
+  border-color: rgba(46,125,79,.35);
 }
 
 /* What ships table */
@@ -346,7 +346,7 @@
 .sandbox-head .sandbox-pill.live {
   background: var(--signal-green-soft);
   color: var(--pass);
-  border-color: #b9e6c8;
+  border-color: rgba(46,125,79,.35);
 }
 .sandbox-body { padding: var(--space-6); display: grid; gap: var(--space-4); }
 .sandbox-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
@@ -429,11 +429,11 @@
 .quiz-q label:hover { border-color: var(--hydra-teal); }
 .quiz-q label.correct {
   background: var(--signal-green-soft);
-  border-color: #b9e6c8;
+  border-color: rgba(46,125,79,.35);
 }
 .quiz-q label.incorrect {
-  background: #fbe5e0;
-  border-color: #f0b9ad;
+  background: #F6E3DC;
+  border-color: rgba(181,58,42,.3);
 }
 .quiz-q input[type="radio"] {
   margin: 0.25em 0 0 0;
@@ -701,7 +701,7 @@
 .hibt-pill { display: inline-flex; align-items: center; padding: 0.35em 0.9em; border-radius: 999px;
   font-family: "DM Mono", monospace; font-size: var(--text-sm); background: var(--paper-card);
   border: 1px solid var(--border); color: var(--ink-soft); }
-.hibt-pill.pass { background: var(--signal-green-soft); border-color: #b9e6c8; color: var(--pass); }
+.hibt-pill.pass { background: var(--signal-green-soft); border-color: rgba(46,125,79,.35); color: var(--pass); }
 .hibt-pill.fail { background: #fbe5e0; border-color: #f0b9ad; color: var(--fail); }
 .hibt-howto code { background: var(--paper-soft); padding: 0.2em 0.5em; border-radius: 4px; font-size: var(--text-sm); }
 .hibt-log-wrap { padding: var(--space-12) 0; }
@@ -759,6 +759,7 @@
 @media print {
   body { background: white; color: black; }
   .site-header, .site-footer, .lesson-progress { display: none !important; }
+  footer.aig-estate-footer { display: none !important; } /* M9: keep the injected estate footer off printed worksheets */
   .worksheet-page { padding: 1cm; }
   .worksheet-row { border: 1px solid #999; box-shadow: none; }
   a { color: black; text-decoration: none; }
@@ -769,7 +770,7 @@
 .lab-splash {
   position: fixed;
   inset: 0;
-  background: rgba(14, 27, 28, 0.66);
+  background: rgba(43, 43, 40, 0.66);
   z-index: 1000;
   display: flex; align-items: center; justify-content: center;
   padding: var(--space-6);
@@ -784,7 +785,7 @@
   max-width: 620px;
   width: 100%;
   position: relative;
-  box-shadow: 0 30px 80px -30px rgba(14, 27, 28, 0.4);
+  box-shadow: 0 30px 80px -30px rgba(78, 60, 32, 0.4);
   max-height: calc(100vh - 4rem);
   overflow-y: auto;
 }
