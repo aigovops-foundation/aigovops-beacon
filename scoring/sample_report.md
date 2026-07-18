@@ -1,4 +1,4 @@
-# AIGovOps Beacon — sample scoring report
+# AiGovOps Beacon — sample scoring report
 
 Generated from **46 synthetic receipts** covering the evidence types a maturing AI program typically has on hand at the end of its first quarter. The org touches **97 controls** across the 23 frameworks in the registry.
 

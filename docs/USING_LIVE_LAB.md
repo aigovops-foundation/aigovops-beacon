@@ -14,7 +14,7 @@ The live lab is the Express + React app under [`lab-service/`](../lab-service/) 
 
 | Path | Who | What it gives you |
 |---|---|---|
-| **Demo** | Anyone, no credentials | One-click trainee session pre-loaded with the **AIGovOps Foundation** tenant — 5 inventory items, 9 Level-200 rules, signing keys ready. Survives refresh. |
+| **Demo** | Anyone, no credentials | One-click trainee session pre-loaded with the **AiGovOps Foundation** tenant — 5 inventory items, 9 Level-200 rules, signing keys ready. Survives refresh. |
 | **Magic link** | Trainees in a workshop | A single-use, time-limited token URL the instructor issues from the admin console. Lands you in a real tenant scoped to your label. |
 | **Admin** | Instructor / lab owner | Lab control (pause / resume / reset), magic-link issuance, evidence dashboard, security log. |
 
@@ -27,7 +27,7 @@ All three use the same `__Host-beacon_session` HttpOnly cookie under the hood, s
 1. Open **[https://aigovops-beacon-lab.pplx.app](https://aigovops-beacon-lab.pplx.app)** in a fresh tab.
 2. Scroll past the *Sign in* card to the second card: **"No credentials? Try the demo."**
 3. Click **Launch demo lab**.
-4. You land at `/#/lab` with the header **"AIGovOps Beacon Lab — AIGovOps Foundation · Demo trainee"** and a session key fingerprint like `ed25519:4fbee7bb…`.
+4. You land at `/#/lab` with the header **"AiGovOps Beacon Lab — AiGovOps Foundation · Demo trainee"** and a session key fingerprint like `ed25519:4fbee7bb…`.
 
 What you should see:
 
@@ -87,7 +87,7 @@ Admin sessions also persist across refresh and follow the same retry/cold-start 
 1. Sign in as admin.
 2. Open the **Magic links** tab.
 3. For each trainee, fill in:
-   - **Tenant**: which seeded tenant they should work inside (e.g. *AIGovOps Foundation* or *Beacon Foundation Inc.*).
+   - **Tenant**: which seeded tenant they should work inside (e.g. *AiGovOps Foundation* or *Beacon Foundation Inc.*).
    - **Label**: free-text, shows up on their session header (e.g. "Dana – CWU capstone").
    - **TTL**: how long the *link itself* is valid before redemption. The *session* once redeemed always lasts 8 hours.
 4. Click **Issue link**. Copy the URL. Share it however your workshop runs — Slack DM, Teams, printed cards, projected QR code.

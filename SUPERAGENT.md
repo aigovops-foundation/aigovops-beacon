@@ -133,7 +133,7 @@ that flows through your existing change-control process.
                                            │ every decision
                                            ▼
         ┌────────────────────────────────────────────────────────────────────┐
-        │  AIGovOps Beacon  (Apache-2.0, runs at client site or in suitcase) │
+        │  AiGovOps Beacon  (Apache-2.0, runs at client site or in suitcase) │
         │                                                                    │
         │   inventory ◄── discovery (proxy · DNS · CASB · MV3 extension)     │
         │   receipts  ──► Ed25519 signed, append-only, framework-mapped      │

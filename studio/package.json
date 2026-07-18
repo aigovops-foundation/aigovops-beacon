@@ -1,7 +1,7 @@
 {
   "name": "@aigovops/beacon-studio",
   "version": "0.1.0",
-  "description": "The auditor-facing front door for AIGovOps Beacon. A five-step wizard, plus a Control Plane for power users.",
+  "description": "The auditor-facing front door for AiGovOps Beacon. A five-step wizard, plus a Control Plane for power users.",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {

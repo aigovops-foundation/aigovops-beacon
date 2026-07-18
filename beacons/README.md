@@ -2,7 +2,7 @@
 
 Three lightweight collectors that turn ordinary system signals into
 **signed, append-only governance receipts**. They are the optional,
-opt-in second stage of the AIGovOps Beacon journey:
+opt-in second stage of the AiGovOps Beacon journey:
 
 > **Manual mode** (the [checklist wizard](../checklist/README.md)) →
 > **Beacon-augmented mode** (this folder) →

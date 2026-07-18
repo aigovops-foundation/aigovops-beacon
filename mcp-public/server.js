@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// AIGovOps Beacon — public hosted MCP server.
+// AiGovOps Beacon — public hosted MCP server.
 // Apache-2.0.
 //
 // One Node process. Two HTTP servers:

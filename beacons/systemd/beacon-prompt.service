@@ -1,5 +1,5 @@
 [Unit]
-Description=AIGovOps Beacon — prompt/log tailer
+Description=AiGovOps Beacon — prompt/log tailer
 Documentation=https://github.com/bobrapp/aigovops-beacon
 After=network-online.target
 Wants=network-online.target

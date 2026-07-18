@@ -1,7 +1,7 @@
 {
   "name": "@aigovops/beacon-server",
   "version": "0.1.0",
-  "description": "AIGovOps Beacon — discovery, signed receipts, checklist→policy, and audit export. Run it where your AI runs.",
+  "description": "AiGovOps Beacon — discovery, signed receipts, checklist→policy, and audit export. Run it where your AI runs.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "src/index.js",

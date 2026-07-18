@@ -1,4 +1,4 @@
-/* AIGovOps Beacon — Framework Lab full 100-failure deep-dive.
+/* AiGovOps Beacon — Framework Lab full 100-failure deep-dive.
  *
  * Used by lab-200.html. Loads docs/data/ai_failures_top100.json (the same
  * dataset rendered on the Beacon home page) and offers:

@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="docs/assets/beacon-medallion.jpg" width="180" alt="AIGovOps Beacon medallion" style="border-radius:50%"/>
+  <img src="docs/assets/beacon-medallion.jpg" width="180" alt="AiGovOps Beacon medallion" style="border-radius:50%"/>
 </p>
 
-<h1 align="center">AIGovOps Beacon</h1>
+<h1 align="center">AiGovOps Beacon</h1>
 
 <p align="center">
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
-  An <a href="https://www.aigovopsfoundation.org/">AIGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
+  An <a href="https://www.aigovopsfoundation.org/">AiGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
   Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.<br/>
   <em>Beacon is an OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision. It runs alone.</em>
 </p>
@@ -34,7 +34,7 @@ Beacon implements the [**OVERT 1.0 open standard**](https://overt.is/) for obser
 | **Patent covenant** | Royalty-free under [overt.is/ipr-policy](https://overt.is/ipr-policy) |
 | **Crosswalk** | [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml) — Beacon controls → OVERT six domains |
 
-The AIGovOps Foundation does **not** issue standards. We implement, adopt, teach, and build community around them. See [`STANDARDS.md`](STANDARDS.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`STEWARD.md`](STEWARD.md).
+The AiGovOps Foundation does **not** issue standards. We implement, adopt, teach, and build community around them. See [`STANDARDS.md`](STANDARDS.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`STEWARD.md`](STEWARD.md).
 
 ---
 
@@ -143,13 +143,13 @@ Beacon will *draft* anything — the inventory, the checklist mapping, the polic
 
 ---
 
-## How it talks to the rest of the AIGovOps stack
+## How it talks to the rest of the AiGovOps stack
 
 Beacon doesn't replace anything — it sits *upstream* of the other Foundation projects and feeds them:
 
 ```
    ┌───────────────────────────┐
-   │   AIGovOps Beacon         │  ← you are here
+   │   AiGovOps Beacon         │  ← you are here
    │   (discovery + studio)    │
    └────────────┬──────────────┘
                 │ signed receipts + checklist bundle

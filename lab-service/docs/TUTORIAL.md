@@ -124,7 +124,7 @@ secret — fine for local testing, not for prod.
 ```bash
 npm run build                                           # bundles to dist/
 ADMIN_PASSWORD='changeme' \
-LAB_NAME='AIGovOps Beacon Lab' \
+LAB_NAME='AiGovOps Beacon Lab' \
 CORS_ALLOWED_ORIGINS='https://bobrapp.github.io' \
 NODE_ENV=production \
 node dist/index.cjs
@@ -142,7 +142,7 @@ In another terminal, sanity-check it's alive:
 
 ```bash
 curl -s http://localhost:5000/api/status | jq
-# {"status":"ok","name":"AIGovOps Beacon Lab","version":"2.0.0",...}
+# {"status":"ok","name":"AiGovOps Beacon Lab","version":"2.0.0",...}
 ```
 
 ---

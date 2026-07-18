@@ -1,4 +1,4 @@
-# AIGovOps Beacon — example gate (matched-pair with example.rego)
+# AiGovOps Beacon — example gate (matched-pair with example.rego)
 # Drop into policies/gates/example.yaml
 #
 # This is the declarative side. It says WHAT must hold; the Rego file

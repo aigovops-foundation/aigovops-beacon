@@ -194,7 +194,7 @@ export async function registerRoutes(httpServer: Server, app: Express): Promise<
       publicKey: t.signingPublicKey,
     }));
     res.json({
-      labName: process.env.LAB_NAME || "AIGovOps Beacon Lab",
+      labName: process.env.LAB_NAME || "AiGovOps Beacon Lab",
       paused: state?.paused ?? false,
       pauseMessage: state?.pauseMessage ?? "",
       bundleHash: BUNDLE_HASH,

@@ -1,5 +1,5 @@
 """
-AIGovOps Foundation cryptokey-receipted audit logger.
+AiGovOps Foundation cryptokey-receipted audit logger.
 
 Every meaningful action on this repo appends a signed JSON line to
 audit/audit-log.jsonl. Each entry includes:

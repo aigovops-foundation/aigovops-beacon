@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: AIGovOps Beacon API
+  title: AiGovOps Beacon API
   version: 0.1.0
   summary: Discovery, signed receipts, checklist-to-policy gating, and audit export.
   description: |
@@ -47,7 +47,7 @@ info:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
   contact:
-    name: AIGovOps Foundation
+    name: AiGovOps Foundation
     url: https://github.com/bobrapp/aigovops-beacon
 
 servers:

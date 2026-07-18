@@ -44,7 +44,7 @@ class WorksheetPDF(FPDF):
         self.set_text_color(255, 255, 255)
         self.set_font("Helvetica", "B", 10)
         self.set_xy(15, 3)
-        self.cell(0, 6, "AIGovOps Beacon  |  Framework Lab Worksheet", ln=False)
+        self.cell(0, 6, "AiGovOps Beacon  |  Framework Lab Worksheet", ln=False)
         self.set_xy(self.w - 60, 3)
         self.set_font("Helvetica", "", 9)
         self.cell(45, 6, "aigovopsfoundation.org", align="R")
@@ -57,7 +57,7 @@ class WorksheetPDF(FPDF):
         self.set_text_color(*INK_FAINT)
         self.cell(
             0, 5,
-            f"Page {self.page_no()}  |  AIGovOps Foundation - Apache-2.0  |  YES-Ship - YES-Steady - YES-Recover",
+            f"Page {self.page_no()}  |  AiGovOps Foundation - Apache-2.0  |  YES-Ship - YES-Steady - YES-Recover",
             align="C",
         )
 
@@ -158,7 +158,7 @@ def build_level_100() -> Path:
     pdf.cell(0, 10, "Level 100 Worksheet", ln=True)
     pdf.set_font("Helvetica", "", 11)
     pdf.set_text_color(*INK_SOFT)
-    pdf.cell(0, 6, "AIGovOps Beacon Framework Lab - the 30-minute auditor flow", ln=True)
+    pdf.cell(0, 6, "AiGovOps Beacon Framework Lab - the 30-minute auditor flow", ln=True)
     pdf.ln(2)
 
     pdf.set_text_color(*INK)
@@ -238,7 +238,7 @@ def build_level_200() -> Path:
     pdf.cell(0, 10, "Level 200 Worksheet", ln=True)
     pdf.set_font("Helvetica", "", 11)
     pdf.set_text_color(*INK_SOFT)
-    pdf.cell(0, 6, "AIGovOps Beacon Framework Lab - Suitcase + deep-dive", ln=True)
+    pdf.cell(0, 6, "AiGovOps Beacon Framework Lab - Suitcase + deep-dive", ln=True)
     pdf.ln(2)
 
     pdf.set_text_color(*INK)

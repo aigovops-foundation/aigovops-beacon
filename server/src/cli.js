@@ -110,7 +110,7 @@ async function runSeed(config) {
       environment: row.environment,
       event_type: "invocation",
       inventory_id: row.id,
-      prompt: "Summarize the AIGovOps Foundation operating thesis.",
+      prompt: "Summarize the AiGovOps Foundation operating thesis.",
       result:
         "Agents do the bureaucracy; humans hold moral legitimacy.",
       latency_ms: 412,

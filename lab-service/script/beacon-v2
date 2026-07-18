@@ -197,7 +197,7 @@ backend_on() {
   flyctl secrets set \
     "ADMIN_PASSWORD=$ADMIN_PASSWORD" \
     "CORS_ALLOWED_ORIGINS=$CORS_ALLOWED_ORIGINS" \
-    "LAB_NAME=AIGovOps Beacon Lab" \
+    "LAB_NAME=AiGovOps Beacon Lab" \
     -a "$FLY_APP_NAME" --stage >/dev/null
 
   step "Deploying to Fly..."
@@ -238,7 +238,7 @@ pplx_on() {
 {
   "user_description": "beacon-v2 CLI deploy",
   "project_path": "$PROJECT_ROOT/dist/public",
-  "site_name": "AIGovOps Beacon Lab",
+  "site_name": "AiGovOps Beacon Lab",
   "entry_point": "index.html"
 }
 JSON
@@ -259,10 +259,10 @@ JSON
   "user_description": "beacon-v2 CLI publish",
   "project_path": "$PROJECT_ROOT",
   "dist_path": "$PROJECT_ROOT/dist/public",
-  "run_command": "ADMIN_PASSWORD='$ADMIN_PASSWORD' LAB_NAME='AIGovOps Beacon Lab' CORS_ALLOWED_ORIGINS='$CORS_ALLOWED_ORIGINS' NODE_ENV=production node dist/index.cjs",
+  "run_command": "ADMIN_PASSWORD='$ADMIN_PASSWORD' LAB_NAME='AiGovOps Beacon Lab' CORS_ALLOWED_ORIGINS='$CORS_ALLOWED_ORIGINS' NODE_ENV=production node dist/index.cjs",
   "install_command": "npm ci --omit=dev",
   "port": 5000,
-  "app_name": "AIGovOps Beacon Lab",
+  "app_name": "AiGovOps Beacon Lab",
   "site_id": "$PPLX_SITE_ID"
 }
 JSON

@@ -1,4 +1,4 @@
-# Contributing to AIGovOps Beacon
+# Contributing to AiGovOps Beacon
 
 We welcome pull requests, framework additions, beacon adapters, and translations
 from auditors, regulators, engineers, and AI program owners.

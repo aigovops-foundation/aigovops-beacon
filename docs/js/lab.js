@@ -1,4 +1,4 @@
-/* AIGovOps Beacon — Framework Lab shared controller.
+/* AiGovOps Beacon — Framework Lab shared controller.
  *
  * Handles:
  *  - localStorage progress tracking (per-section completion + quiz scores)

@@ -10,7 +10,7 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 authors = [
-    { name = "AIGovOps Foundation" },
+    { name = "AiGovOps Foundation" },
 ]
 keywords = ["ai", "governance", "overt", "ed25519", "audit-log", "receipts"]
 classifiers = [

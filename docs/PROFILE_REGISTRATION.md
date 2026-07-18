@@ -9,7 +9,7 @@ This document tracks Beacon's registration as an OVERT Protocol Profile under th
 | **Profile name** | `aigovops-beacon.v1` |
 | **Implements** | OVERT 1.0 |
 | **Steward of OVERT** | [Glacis Technologies, Inc](https://www.glacis.io/) |
-| **Implementer** | AIGovOps Foundation (501(c)(6)) |
+| **Implementer** | AiGovOps Foundation (501(c)(6)) |
 | **Target conformance** | AAL-1 (self-declared) at registration; roadmap to AAL-2 with an Independent Attestation Provider |
 | **Scope designators** | Discovery · Inventory · Transaction tracking · Checklist evaluation · Policy-as-code emission · Auditor bundle |
 | **Patent covenant** | Royalty-free under overt.is/ipr-policy |
@@ -25,10 +25,10 @@ See [`crosswalks/overt-mapping.yaml`](../crosswalks/overt-mapping.yaml) for the 
 
 | Step | Status | Owner | Notes |
 |---|---|---|---|
-| 1. Public intent to register | ✅ Declared (this document) | AIGovOps Foundation | May 2026 |
+| 1. Public intent to register | ✅ Declared (this document) | AiGovOps Foundation | May 2026 |
 | 2. Steward Partner sign-off on profile metadata | ⏳ Pending | Glacis (Joe Braidwood) | To be confirmed on the call of 14 May 2026 |
 | 3. Self-declared AAL-1 conformance review | ⏳ Pending | TRC | Awaiting TRC formation |
-| 4. Submission to OVERT Protocol Profile registry | ⏳ Pending | AIGovOps Foundation | After step 3 |
+| 4. Submission to OVERT Protocol Profile registry | ⏳ Pending | AiGovOps Foundation | After step 3 |
 | 5. Public listing in registry | ⏳ Pending | OVERT registry maintainer (Glacis) | Co-announcement planned |
 | 6. AAL-2 roadmap with IAP | 📅 Planned | TRC + IAP TBD | 6–12 month horizon |
 
@@ -49,4 +49,4 @@ See [`crosswalks/overt-mapping.yaml`](../crosswalks/overt-mapping.yaml) for the 
 
 ## Disclosure
 
-This profile registration is being undertaken at the direct invitation of Glacis Technologies, Inc, following correspondence dated 13 May 2026. The AIGovOps Foundation is registering as a community implementer; Glacis remains the standard's steward. The Foundation makes no claim of authority over OVERT itself.
+This profile registration is being undertaken at the direct invitation of Glacis Technologies, Inc, following correspondence dated 13 May 2026. The AiGovOps Foundation is registering as a community implementer; Glacis remains the standard's steward. The Foundation makes no claim of authority over OVERT itself.
