@@ -83,7 +83,11 @@ jobs:
           node-version: 20
           cache: npm
           cache-dependency-path: studio/package-lock.json
-      - run: npm install --no-audit --no-fund
+      # `npm ci` needs the lockfile, and so did the cache line above — which is why this job
+      # failed at setup-node with "Some specified paths were not resolved": studio/package-lock.json
+      # had never been committed. `npm install` also resolved fresh versions on every run, so the
+      # thing CI built was not necessarily the thing anyone had tested.
+      - run: npm ci --no-audit --no-fund
       - run: npm run build
 
   docker:
