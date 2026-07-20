@@ -149,7 +149,7 @@
           <li class="check-item pending" data-check="localstorage"><span class="check-icon">○</span><div class="check-body"><strong>localStorage available</strong><span>Saves your progress and quiz answers</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
-          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="signtest"><span class="check-icon">○</span><div class="check-body"><strong>Live Ed25519 sign+verify</strong><span>Generates a key, signs canonical bytes, verifies in-browser</span></div><span class="check-result">…</span></li>
         </ul>
 
@@ -180,7 +180,7 @@
       <div class="shell">
         <span class="kicker">Once you're green</span>
         <h2>You're set. See you at the lab.</h2>
-        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
+        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
         <p style="font-family: 'DM Mono', monospace; font-size: 0.9rem;">Email <strong>LAB</strong> to <a href="mailto:bob.rapp@aigovops.community,ken.johnston@aigovops.community?subject=LAB%20pre-event%20question">bob.rapp@aigovops.community and ken.johnston@aigovops.community</a>.</p>
       </div>
     </section>
@@ -202,7 +202,7 @@
   (function () {
     'use strict';
 
-    var DATA_URL = 'https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json';
+    var DATA_URL = 'https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json';
     var REMEDIATION = {
       browser:    'Update your browser to the latest Chrome, Edge, Safari, or Firefox.',
       js:         'Enable JavaScript in your browser settings (extremely rare to be off).',
@@ -247,7 +247,7 @@
         verdict.classList.add('pass');
         icon.textContent = '✓';
         title.textContent = "You're ready.";
-        detail.innerHTML = 'Every check passed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
+        detail.innerHTML = 'Every check passed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
       } else {
         verdict.classList.add('fail');
         icon.textContent = '!';

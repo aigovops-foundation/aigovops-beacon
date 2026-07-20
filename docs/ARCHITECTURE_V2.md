@@ -12,7 +12,7 @@ We currently ship the auditor lab as two disconnected products:
 
 | Surface | URL | What it is | What it can't do |
 |---|---|---|---|
-| **Static lab** | `bobrapp.github.io/aigovops-beacon/lab.html` (+ `lab-100.html`, `lab-200.html`) | Vanilla HTML/JS, `tweetnacl` in-browser, localStorage progress | No shared receipts, no admin oversight, signing is play-money, no audit trail across users, no resume across devices |
+| **Static lab** | `aigovops-foundation.github.io/aigovops-beacon/lab.html` (+ `lab-100.html`, `lab-200.html`) | Vanilla HTML/JS, `tweetnacl` in-browser, localStorage progress | No shared receipts, no admin oversight, signing is play-money, no audit trail across users, no resume across devices |
 | **Live lab service** | `aigovops-beacon-lab.pplx.app` | Express + React + SQLite, real Ed25519 per tenant, real receipts, admin console, magic links | Hidden behind login + a `pplx.app` URL the public can't index; no SEO; one tab loses progress if the bundle hash rolls |
 
 The bridge between them is a markdown tutorial. That's not architecture, that's a hyperlink.
@@ -51,7 +51,7 @@ In priority order:
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                       LEARNER'S BROWSER                                    │
 │                                                                            │
-│  bobrapp.github.io/aigovops-beacon/lab.html                                │
+│  aigovops-foundation.github.io/aigovops-beacon/lab.html                                │
 │  ┌──────────────────────────────────────────────────────────────────────┐  │
 │  │  static HTML/CSS (Pages, hash-busted)                                │  │
 │  │  + <beacon-lab-step> web components (loaded from CDN)                │  │
@@ -95,7 +95,7 @@ In priority order:
 
 Three deployable units (down from the current effective two-and-a-half):
 
-1. **Pages site** (`bobrapp.github.io/aigovops-beacon`) — public, SEO, hash-busted, static.
+1. **Pages site** (`aigovops-foundation.github.io/aigovops-beacon`) — public, SEO, hash-busted, static.
 2. **Edge proxy** (`edge.beacon.aigovops`) — a single Cloudflare Worker (≤ 60 lines) that:
    - Adds proper CORS headers for the `bobrapp.github.io` origin
    - Normalizes auth: trades a JWT in `Authorization` for the backend's `__Host-beacon_session` cookie when needed
@@ -170,7 +170,7 @@ Total: ~5 dev-days end-to-end. Each step ships behind a feature flag (`docs/js/l
 
 ### Learner doing Lab 100 for the first time
 
-1. Lands on `bobrapp.github.io/aigovops-beacon/lab.html` from a Google search. SEO works because Pages is still static-first.
+1. Lands on `aigovops-foundation.github.io/aigovops-beacon/lab.html` from a Google search. SEO works because Pages is still static-first.
 2. Clicks "Start Lab 100" → static page; the first interactive step renders a `<beacon-lab-step>` component that auto-calls `POST /api/anon/session`. No password prompt. No "you have an unauthenticated browser" red flag.
 3. Discovers AI in the seeded inventory — a *real* call to `/api/lab/discover` against the demo tenant. Their finding is a real Ed25519-signed receipt.
 4. Finishes Lab 100. Modal pops: "Save your audit checklist? We'll email you a magic link." Optional. They can skip and the work is still verifiable for 24h via a shareable URL.
@@ -179,14 +179,14 @@ Total: ~5 dev-days end-to-end. Each step ships behind a feature flag (`docs/js/l
 ### Workshop facilitator running a 90-minute session
 
 1. From the live admin console (now at `admin.beacon-lab.aigovops.foundation`), issues 20 magic links bound to a fresh tenant.
-2. Pastes the links into Slack: `https://bobrapp.github.io/aigovops-beacon/lab.html#invite=<token>`.
+2. Pastes the links into Slack: `https://aigovops-foundation.github.io/aigovops-beacon/lab.html#invite=<token>`.
 3. Attendees click → land on Pages → are authenticated against the workshop tenant → Lab 100 is pre-personalized with the workshop's inventory.
 4. Facilitator's admin dashboard shows live progress across the cohort because every action is going to the same backend.
 
 ### Auditor verifying an old receipt
 
 1. Receives a `bundle.zip` containing receipts from 6 months ago.
-2. Opens `bobrapp.github.io/aigovops-beacon/verify.html`, drags the bundle.
+2. Opens `aigovops-foundation.github.io/aigovops-beacon/verify.html`, drags the bundle.
 3. Static JS reads receipts, looks up tenant public keys from baked `tenants.json`, verifies signatures, looks up the Merkle path in `receipt-root.json`, confirms the signed root.
 4. No backend call needed. Verification still works in 10 years if the backend is gone.
 

@@ -69,12 +69,12 @@ git push
 
 GitHub Pages will rebuild from `/docs/`. New URLs once it lands:
 
-- https://bobrapp.github.io/aigovops-beacon/lab.html
-- https://bobrapp.github.io/aigovops-beacon/lab-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab-200.html
-- https://bobrapp.github.io/aigovops-beacon/howibuilt.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/howibuilt.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html
 
 ## About the signing key
 

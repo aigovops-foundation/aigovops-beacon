@@ -234,7 +234,7 @@ Health check
 Open the public Pages site:
 
 ```
-https://bobrapp.github.io/aigovops-beacon/lab.html?v2=1
+https://aigovops-foundation.github.io/aigovops-beacon/lab.html?v2=1
 ```
 
 DevTools → Network. You should see:
