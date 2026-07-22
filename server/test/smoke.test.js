@@ -25,6 +25,6 @@ test("root endpoint reports name and version", async (t) => {
 
   const res = await request(app).get("/");
   assert.equal(res.status, 200);
-  assert.equal(res.body.name, "AIGovOps Beacon");
+  assert.equal(res.body.name, "AiGovOps Beacon");
   assert.match(res.body.version, /^\d+\.\d+\.\d+$/);
 });

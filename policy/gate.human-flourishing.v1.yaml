@@ -1,6 +1,6 @@
 # Human Flourishing Gate — Beacon Policy Pack
 #
-# The AIGovOps Foundation differentiator. NIST tells you what to measure.
+# The AiGovOps Foundation differentiator. NIST tells you what to measure.
 # ISO tells you how to manage. The EU tells you what to disclose.
 # Nobody tells you whether the thing you are about to ship is good for
 # the human on the other end.
@@ -11,7 +11,7 @@
 #   • Equity  — does it widen or narrow opportunity?
 #   • Delight — is it pleasant to live with, or just tolerable?
 #
-# Authored by Bob Rapp and Ken Johnston for the AIGovOps Foundation.
+# Authored by Bob Rapp and Ken Johnston for the AiGovOps Foundation.
 # License: Apache-2.0.
 #
 # This gate is intentionally not auto-check-able. It is a forcing
@@ -22,8 +22,8 @@ id: human-flourishing
 version: 1.0.0
 title: Human Flourishing Gate
 short_title: Human Flourishing
-authority: AIGovOps Foundation
-publication: AIGovOps Foundation Constitution, Article IV
+authority: AiGovOps Foundation
+publication: AiGovOps Foundation Constitution, Article IV
 url: https://www.aigovopsfoundation.org/
 applies_to:
   - all_models_at_T3

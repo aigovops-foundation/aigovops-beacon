@@ -1,4 +1,4 @@
-# AIGovOps Beacon — example Rego policy
+# AiGovOps Beacon — example Rego policy
 # Pairs with policies/gates/example.yaml.
 #
 # Purpose: enforce that any container deployed for a high-risk AI use case

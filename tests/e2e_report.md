@@ -1,4 +1,4 @@
-# AIGovOps Beacon — E2E Test Report
+# AiGovOps Beacon — E2E Test Report
 Run: 2026-05-13 15:52:47 UTC
 Root: /home/user/workspace/aigovops-beacon
 

@@ -1,4 +1,4 @@
-// AIGovOps Beacon — server entry point.
+// AiGovOps Beacon — server entry point.
 //
 // Boot order, on purpose:
 //   1) Resolve config (env > .beacon/config.yaml > defaults).
@@ -46,7 +46,7 @@ export async function bootstrap() {
 
   app.get("/", (_req, res) =>
     res.json({
-      name: "AIGovOps Beacon",
+      name: "AiGovOps Beacon",
       version: ctx.config.beaconVersion,
       docs: "https://github.com/bobrapp/aigovops-beacon",
       principle:

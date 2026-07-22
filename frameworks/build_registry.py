@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-build_registry.py — AIGovOps Beacon framework registry builder.
+build_registry.py — AiGovOps Beacon framework registry builder.
 
-Reads frameworks_data.csv (the research output produced by the AIGovOps
+Reads frameworks_data.csv (the research output produced by the AiGovOps
 research pipeline) and emits, for every valid row:
 
   • frameworks/<framework_id>.yaml   — canonical YAML representation

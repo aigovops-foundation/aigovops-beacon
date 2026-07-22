@@ -1,4 +1,4 @@
-// AIGovOps Beacon — MV3 service worker.
+// AiGovOps Beacon — MV3 service worker.
 // Hostname-only watcher. Signs and ships receipts. Apache-2.0.
 //
 // Privacy posture:

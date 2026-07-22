@@ -1,4 +1,4 @@
-/* AIGovOps Beacon — 100-case failures browser
+/* AiGovOps Beacon — 100-case failures browser
    Loads ./data/ai_failures_top100.json and renders a filterable, searchable list.
    Each row links the incident to its YES-act, mapped frameworks, and the receipt
    that would have produced the evidence.

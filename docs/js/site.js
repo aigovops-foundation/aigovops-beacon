@@ -1,5 +1,5 @@
 /* ============================================================
- * AIGovOps Beacon — site.js
+ * AiGovOps Beacon — site.js
  * In-browser demo: discovery → JCS canonicalize → Ed25519 sign → bundle
  * Dependencies (loaded via CDN in index.html): tweetnacl, tweetnacl-util, jszip
  * ============================================================ */
@@ -270,7 +270,7 @@ Mistral,mistral-large,chat-completions,eu-west`;
     const verifyMd = [
       "# Verify this bundle",
       "",
-      "This evidence bundle was produced by AIGovOps Beacon. To re-verify the receipts",
+      "This evidence bundle was produced by AiGovOps Beacon. To re-verify the receipts",
       "you do **not** need Beacon — just openssl and jq.",
       "",
       "```bash",
@@ -286,7 +286,7 @@ Mistral,mistral-large,chat-completions,eu-west`;
       `Bundle generated: ${nowIso()}`,
       `Signer fingerprint: ${fpr}`,
       "",
-      "Apache-2.0 · AIGovOps Foundation · https://www.aigovopsfoundation.org/",
+      "Apache-2.0 · AiGovOps Foundation · https://www.aigovopsfoundation.org/",
       "",
     ].join("\n");
 

@@ -10,5 +10,5 @@ build/
 dist/
 .pytest_cache/
 
-# AIGovOps Foundation audit logger — private key NEVER committed
+# AiGovOps Foundation audit logger — private key NEVER committed
 audit/keys/private-key.pem

@@ -1,6 +1,6 @@
 # Standards alignment
 
-The AIGovOps Foundation does **not** issue standards. We implement them, adopt them, teach them, and build community around them.
+The AiGovOps Foundation does **not** issue standards. We implement them, adopt them, teach them, and build community around them.
 
 ## The standard Beacon implements
 
@@ -18,7 +18,7 @@ Beacon is being registered as an OVERT Protocol Profile under that covenant. See
 
 There is not oxygen in this category for two adjacent standards. The category needs one common vocabulary, one common conformance bar, and many implementations.
 
-The AIGovOps Foundation's role is to be one of those implementations *and* the community on-ramp — not a parallel standards-issuing body.
+The AiGovOps Foundation's role is to be one of those implementations *and* the community on-ramp — not a parallel standards-issuing body.
 
 If you are looking for the normative source of truth on receipts, envelopes, attestation assurance levels, agentic governance controls, or auditor verification procedures, **read OVERT first**. Our crosswalks (NIST AI RMF / EU AI Act / ISO 42001 / HIPAA / Human Flourishing) are advisory. OVERT's crosswalks are normative.
 
@@ -27,16 +27,16 @@ If you are looking for the normative source of truth on receipts, envelopes, att
 | Layer | Owner | Authority |
 |---|---|---|
 | **Standard** | Glacis Technologies (steward of OVERT) | Normative |
-| **Profile** (`aigovops-beacon.v1`) | AIGovOps Foundation (this repo) | Conformant implementation under OVERT IPR policy |
-| **Sector packs / training / community materials** | AIGovOps Foundation | Advisory, non-normative |
-| **Foundation governance** | AIGovOps Foundation 501(c)(6) Board | Business governance only |
+| **Profile** (`aigovops-beacon.v1`) | AiGovOps Foundation (this repo) | Conformant implementation under OVERT IPR policy |
+| **Sector packs / training / community materials** | AiGovOps Foundation | Advisory, non-normative |
+| **Foundation governance** | AiGovOps Foundation 501(c)(6) Board | Business governance only |
 | **Technical quality bar for Foundation OSS projects** | OVERT-aligned, set by the Foundation Steward Partner | Technical governance |
 
 See [`GOVERNANCE.md`](GOVERNANCE.md) for the business-vs-technical split, and [`STEWARD.md`](STEWARD.md) for the Steward Partner role.
 
 ## How to register a new Foundation OSS project
 
-The AIGovOps Foundation will not accept a new open-source project into its program unless:
+The AiGovOps Foundation will not accept a new open-source project into its program unless:
 
 1. It implements a published version of OVERT (or another open standard the Foundation has explicitly adopted).
 2. It carries clear attribution to that standard in its README and homepage.

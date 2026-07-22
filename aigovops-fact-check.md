@@ -6,7 +6,7 @@
 **Auditor:** Computer (AI assistant, Perplexity)  
 **Scope:** 16 source files; 46 load-bearing claims evaluated
 
-> **Naming note:** This document was previously titled "AIGovOps Foundation Protocol." That name was retired on 2026-05-14 because the AIGovOps Foundation does not issue protocols or standards — it implements them. The review method below remains useful as an internal QA tool; it is not, and was never intended to be, a standard.
+> **Naming note:** This document was previously titled "AiGovOps Foundation Protocol." That name was retired on 2026-05-14 because the AiGovOps Foundation does not issue protocols or standards — it implements them. The review method below remains useful as an internal QA tool; it is not, and was never intended to be, a standard.
 
 **Post-audit corrections applied (2026-05-13):**
 - E-01 (Critical): Air Canada citation in `docs/data/ai_failures_top100.json` corrected from "BC Supreme Court (2024 BCSC 1490)" to "BC Civil Resolution Tribunal (2024 BCCRT 149)." Claim AR-01 now resolves to VERIFIED.

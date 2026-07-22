@@ -31,7 +31,7 @@ jobs:
       - name: Update .gitignore
         run: |
           grep -qxF "audit/keys/private-key.pem" .gitignore || \
-          printf "\n# AIGovOps Foundation audit logger — private key NEVER committed\naudit/keys/private-key.pem\n" >> .gitignore
+          printf "\n# AiGovOps Foundation audit logger — private key NEVER committed\naudit/keys/private-key.pem\n" >> .gitignore
       - name: Clean up files that should NOT be committed
         run: |
           rm -f audit/keys/private-key.pem
@@ -45,5 +45,5 @@ jobs:
           git config user.name "bobrapp"
           git config user.email "bobrapp@hotmail.com"
           git add -A
-          git commit -m "feat(lab): Framework Lab for AIGovOps Auditors"
+          git commit -m "feat(lab): Framework Lab for AiGovOps Auditors"
           git push origin main

@@ -1,5 +1,5 @@
 """
-Build event-day materials for the AIGovOps Foundation Framework Lab.
+Build event-day materials for the AiGovOps Foundation Framework Lab.
 
 Outputs (committed under docs/downloads/ and event-materials/):
   docs/downloads/framework-lab-qr.png            — QR code for the canonical lab URL
@@ -76,7 +76,7 @@ class EventPDF(FPDF):
         self.set_text_color(255, 255, 255)
         self.set_font("Helvetica", "B", 11)
         self.set_xy(15, 4)
-        self.cell(0, 6, "AIGovOps Foundation  |  Beacon Framework Lab")
+        self.cell(0, 6, "AiGovOps Foundation  |  Beacon Framework Lab")
         self.set_xy(self.w - 70, 4)
         self.set_font("Helvetica", "", 9)
         self.cell(55, 6, "aigovopsfoundation.org", align="R")
@@ -164,7 +164,7 @@ def build_instructor_playbook() -> Path:
 
     pdf.body(
         "This is the run-of-show for delivering the Framework Lab to a 100-person "
-        "AIGovOps Foundation virtual meeting. The lab itself is self-paced; this "
+        "AiGovOps Foundation virtual meeting. The lab itself is self-paced; this "
         "playbook adds the live structure: opening, checkpoints, common "
         "questions, and the closing call to action."
     )
@@ -329,7 +329,7 @@ def build_attendee_handout() -> Path:
     pdf.cell(0, 11, "What to expect at the lab.", ln=True)
     pdf.set_font("Helvetica", "", 11)
     pdf.set_text_color(*INK_SOFT)
-    pdf.cell(0, 6, "AIGovOps Foundation - Framework Lab for AIGovOps Auditors - virtual", ln=True)
+    pdf.cell(0, 6, "AiGovOps Foundation - Framework Lab for AiGovOps Auditors - virtual", ln=True)
     pdf.ln(3)
 
     # Two columns

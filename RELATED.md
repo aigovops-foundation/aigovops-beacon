@@ -4,7 +4,7 @@ Beacon is a standalone OVERT 1.0–conformant runtime. **It does not require any
 
 This page exists so that operators, auditors, and contributors can find the broader context if they want it. If you're here to deploy Beacon, the only document you need is the [main README](README.md).
 
-## Under the AIGovOps Foundation
+## Under the AiGovOps Foundation
 
 | Project | Role | How it relates to Beacon |
 | --- | --- | --- |

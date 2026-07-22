@@ -290,7 +290,7 @@ drwxr-xr-x 2 user user   60 May 13 15:36 receipts
 ## 3.1 · MV3 extension manifest validation
 
 ```
-name:             AIGovOps Beacon
+name:             AiGovOps Beacon
 manifest_version: 3
 permissions:      ['tabs', 'storage', 'alarms']
 host_permissions: []

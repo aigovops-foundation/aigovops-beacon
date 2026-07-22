@@ -2,9 +2,9 @@
 
 ## Glacis Technologies, Inc
 
-The AIGovOps Foundation names [**Glacis Technologies, Inc**](https://www.glacis.io/) as its **Founding Steward Partner**.
+The AiGovOps Foundation names [**Glacis Technologies, Inc**](https://www.glacis.io/) as its **Founding Steward Partner**.
 
-Glacis is the steward of the [OVERT 1.0 open standard](https://overt.is/), an inaugural sponsor of the AIGovOps Foundation, and the technical voice we want shaping the bar for every open-source project that carries the Foundation's name.
+Glacis is the steward of the [OVERT 1.0 open standard](https://overt.is/), an inaugural sponsor of the AiGovOps Foundation, and the technical voice we want shaping the bar for every open-source project that carries the Foundation's name.
 
 ## What "Steward Partner" means here
 
@@ -57,7 +57,7 @@ Three reasons.
 This document becomes canonical when:
 
 1. Glacis (via Joe Braidwood or designated successor) signs off in writing.
-2. The AIGovOps Foundation Governing Board ratifies the signed-off version.
+2. The AiGovOps Foundation Governing Board ratifies the signed-off version.
 3. The signed-off version is committed to this repo and announced jointly.
 
 Until then: **v0.1, proposed, awaiting Steward revision.**
@@ -69,4 +69,4 @@ The Steward Partner may resign at any time with 60 days' notice. The Governing B
 ## Contact
 
 - **Steward:** Glacis Technologies, Inc — [joe@glacis.io](mailto:joe@glacis.io)
-- **Foundation:** AIGovOps Foundation — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
+- **Foundation:** AiGovOps Foundation — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)

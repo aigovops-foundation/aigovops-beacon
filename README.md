@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="docs/assets/beacon-medallion.jpg" width="180" alt="AIGovOps Beacon medallion" style="border-radius:50%"/>
+  <img src="docs/assets/beacon-medallion.jpg" width="180" alt="AiGovOps Beacon medallion" style="border-radius:50%"/>
 </p>
 
-<h1 align="center">AIGovOps Beacon</h1>
+<h1 align="center">AiGovOps Beacon</h1>
 
 <p align="center">
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
-  An <a href="https://www.aigovopsfoundation.org/">AIGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
+  An <a href="https://www.aigovopsfoundation.org/">AiGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
   Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.<br/>
   <em>Beacon is an OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision. It runs alone.</em>
 </p>
@@ -34,7 +34,7 @@ Beacon implements the [**OVERT 1.0 open standard**](https://overt.is/) for obser
 | **Patent covenant** | Royalty-free under [overt.is/ipr-policy](https://overt.is/ipr-policy) |
 | **Crosswalk** | [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml) — Beacon controls → OVERT six domains |
 
-The AIGovOps Foundation does **not** issue standards. We implement, adopt, teach, and build community around them. See [`STANDARDS.md`](STANDARDS.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`STEWARD.md`](STEWARD.md).
+The AiGovOps Foundation does **not** issue standards. We implement, adopt, teach, and build community around them. See [`STANDARDS.md`](STANDARDS.md), [`GOVERNANCE.md`](GOVERNANCE.md), and [`STEWARD.md`](STEWARD.md).
 
 ---
 
@@ -42,7 +42,7 @@ The AIGovOps Foundation does **not** issue standards. We implement, adopt, teach
 
 The project's home page **is** a self-running demo: it generates an Ed25519 key, discovers a sample inventory, signs each receipt with canonical JCS (RFC 8785), and assembles a real downloadable evidence bundle — all client-side, no server.
 
-**Live site (GitHub Pages):** [https://bobrapp.github.io/aigovops-beacon/](https://bobrapp.github.io/aigovops-beacon/)
+**Live site (GitHub Pages):** [https://aigovops-foundation.github.io/aigovops-beacon/](https://aigovops-foundation.github.io/aigovops-beacon/)
 
 The page also hosts:
 
@@ -87,20 +87,28 @@ One engine. Two front doors. Zero PDF theater.
 
 ## Quickstart — five minutes, three commands
 
-```bash
-# Option A — Docker (recommended)
-docker run -p 8080:8080 \
-  -v "$(pwd)/beacon-data:/data" \
-  -e BEACON_ADMIN_EMAIL=you@yourorg.com \
-  ghcr.io/bobrapp/aigovops-beacon:latest
+> **Corrected 2026-07-20.** Both commands here were wrong. The Docker option pulled
+> `ghcr.io/bobrapp/aigovops-beacon:latest`, which is not pullable — the repo moved to the
+> `aigovops-foundation` org and no public image was ever pushed. The local option ran
+> `npm install` at the repo root, where there is no `package.json`; the Node project lives in
+> `server/`. A quickstart that fails on its first command is worse than no quickstart.
 
-# Option B — local dev
-git clone https://github.com/bobrapp/aigovops-beacon
-cd aigovops-beacon
-npm install && npm run dev
+```bash
+# Local — this is the path that works today
+git clone https://github.com/aigovops-foundation/aigovops-beacon
+cd aigovops-beacon/server
+npm install
+npm run init          # first run only: creates the local store
+npm run dev           # http://localhost:8787
 ```
 
-Open http://localhost:8080. Studio opens by default. Click the toggle in the top right for the Control Plane.
+(The old text said port 8080. The default in `server/src/lib/config.js` is **8787** — so even
+the port in the broken quickstart was wrong. Verified by reading the config, not by assuming.)
+
+A published container image is not available yet. When one is, it will be pushed to
+`ghcr.io/aigovops-foundation/aigovops-beacon` and documented here — not before.
+
+Open http://localhost:8787. Studio opens by default. Click the toggle in the top right for the Control Plane.
 
 Four more one-click deploys live in [`/deploy`](deploy/): Railway, Render, DigitalOcean App Platform, and Docker Compose.
 
@@ -126,7 +134,7 @@ Full spec, copy, and accessibility notes in [`docs/STUDIO_FLOW.md`](docs/STUDIO_
 
 This repo dogfoods the Foundation's operating thesis:
 
-> **Agents do the bureaucracy; humans hold moral legitimacy.**
+> **Agents do the bureaucracy; humans hold the meaning — and humans hold the keys.**
 
 Beacon will *draft* anything — the inventory, the checklist mapping, the policy YAML, the GDR, the PR description. But every human-decision gate stays a human-decision gate: scope ratification, exception grants, trust-tier promotion, and policy publication all require a named human approver. The receipt records who approved what, when, and with which key.
 
@@ -143,13 +151,13 @@ Beacon will *draft* anything — the inventory, the checklist mapping, the polic
 
 ---
 
-## How it talks to the rest of the AIGovOps stack
+## How it talks to the rest of the AiGovOps stack
 
 Beacon doesn't replace anything — it sits *upstream* of the other Foundation projects and feeds them:
 
 ```
    ┌───────────────────────────┐
-   │   AIGovOps Beacon         │  ← you are here
+   │   AiGovOps Beacon         │  ← you are here
    │   (discovery + studio)    │
    └────────────┬──────────────┘
                 │ signed receipts + checklist bundle

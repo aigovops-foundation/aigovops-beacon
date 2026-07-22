@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Framework Lab for AIGovOps Auditors — apply script.
+# Framework Lab for AiGovOps Auditors — apply script.
 #
 # Applies the build as 4 atomic commits matching the original plan, with a
 # growing signed audit log on each commit. Idempotent: re-runs skip cleanly
@@ -52,7 +52,7 @@ read -r -p "Proceed? (y/N) " ok
 # -------- .gitignore (idempotent) --------
 
 if ! grep -qxF "audit/keys/private-key.pem" .gitignore 2>/dev/null; then
-  printf "\n# AIGovOps Foundation audit logger — private key NEVER committed\naudit/keys/private-key.pem\n" >> .gitignore
+  printf "\n# AiGovOps Foundation audit logger — private key NEVER committed\naudit/keys/private-key.pem\n" >> .gitignore
   echo "  + extended .gitignore"
 fi
 
@@ -67,7 +67,7 @@ already_have() {
 # GROUP A — Audit infrastructure (seq 1-2)
 # ==========================================================================
 
-GROUP_A_SUBJECT="feat(audit): install AIGovOps cryptokey-receipted audit log + HIBT page"
+GROUP_A_SUBJECT="feat(audit): install AiGovOps cryptokey-receipted audit log + HIBT page"
 
 if already_have "$GROUP_A_SUBJECT"; then
   echo "  ~ Group A already committed — skipping"

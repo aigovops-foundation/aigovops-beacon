@@ -2,7 +2,7 @@
 
 This document is the question we are asking the Founding Steward Partner — Glacis — to answer:
 
-> **How does a company engage with the AIGovOps Foundation in a way that is helpful to commercial stewards (you, future stewards, and other vendor-members) and helpful to the community at the same time?**
+> **How does a company engage with the AiGovOps Foundation in a way that is helpful to commercial stewards (you, future stewards, and other vendor-members) and helpful to the community at the same time?**
 
 We have studied the engagement models used by the [FinOps Foundation](https://www.finops.org/about/governing-board/), [CNCF](https://github.com/cncf/foundation/blob/main/charter.md), and the [Linux Foundation](https://www.linuxfoundation.org/projects/hosting). All three converge on a small number of moves that, run together, generate a virtuous cycle between vendor investment and community trust. We do not assume any of them is correct for this space without the Steward's review.
 

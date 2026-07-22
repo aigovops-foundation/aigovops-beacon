@@ -1,7 +1,7 @@
 {
   "name": "aigovops-beacon-mcp",
   "version": "2.2.0",
-  "description": "MCP server for AIGovOps Beacon — exposes record_decision, verify_receipt, query_inventory, score_framework, bundle_for_auditor, replay_case to MCP-capable agents (Claude Desktop, Cursor, Continue, Goose, Zed).",
+  "description": "MCP server for AiGovOps Beacon — exposes record_decision, verify_receipt, query_inventory, score_framework, bundle_for_auditor, replay_case to MCP-capable agents (Claude Desktop, Cursor, Continue, Goose, Zed).",
   "license": "Apache-2.0",
   "type": "module",
   "bin": {

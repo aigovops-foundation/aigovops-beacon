@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aigovops.org/schemas/receipt.schema.json",
-  "title": "AIGovOps Beacon Receipt (OVERT 1.0 envelope, aigovops-beacon.v1 profile)",
+  "title": "AiGovOps Beacon Receipt (OVERT 1.0 envelope, aigovops-beacon.v1 profile)",
   "description": "The atomic unit of evidence. Every governance decision and every observed AI interaction produces exactly one of these. Wire-compatible with OVERT 1.0; profile fields extend the envelope.",
   "type": "object",
   "required": [

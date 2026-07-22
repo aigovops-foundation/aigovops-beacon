@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Framework Lab — pre-event diagnostic</title>
-  <meta name="description" content="30-second check that your browser is ready for the AIGovOps Foundation Framework Lab. Tests WebCrypto, CDN access, localStorage, and CORS." />
+  <meta name="description" content="30-second check that your browser is ready for the AiGovOps Foundation Framework Lab. Tests WebCrypto, CDN access, localStorage, and CORS." />
   <meta name="theme-color" content="#01696f" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -120,12 +120,12 @@
           <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
           <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
         </svg>
-        <span>AIGovOps Beacon &middot; pre-event diagnostic</span>
+        <span>AiGovOps Beacon &middot; pre-event diagnostic</span>
       </div>
       <span class="kicker">30-second check &middot; before the lab</span>
       <h1>Will your browser run the Framework Lab?</h1>
       <p style="color: var(--ink-soft); max-width: 60ch; font-size: 1.05rem;">
-        Run this once before the AIGovOps Foundation virtual meeting. The lab runs
+        Run this once before the AiGovOps Foundation virtual meeting. The lab runs
         entirely in your browser — no install, no account, no server uploads. This
         page confirms your browser has every capability the lab needs.
       </p>
@@ -149,7 +149,7 @@
           <li class="check-item pending" data-check="localstorage"><span class="check-icon">○</span><div class="check-body"><strong>localStorage available</strong><span>Saves your progress and quiz answers</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
-          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="signtest"><span class="check-icon">○</span><div class="check-body"><strong>Live Ed25519 sign+verify</strong><span>Generates a key, signs canonical bytes, verifies in-browser</span></div><span class="check-result">…</span></li>
         </ul>
 
@@ -180,7 +180,7 @@
       <div class="shell">
         <span class="kicker">Once you're green</span>
         <h2>You're set. See you at the lab.</h2>
-        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
+        <p style="color: var(--ink-soft);">No further setup needed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html">the lab</a> when the meeting starts. Questions before then?</p>
         <p style="font-family: 'DM Mono', monospace; font-size: 0.9rem;">Email <strong>LAB</strong> to <a href="mailto:bob.rapp@aigovops.community,ken.johnston@aigovops.community?subject=LAB%20pre-event%20question">bob.rapp@aigovops.community and ken.johnston@aigovops.community</a>.</p>
       </div>
     </section>
@@ -189,7 +189,7 @@
 
   <footer class="diag-foot">
     <div class="shell">
-      <p>© 2026 AIGovOps Foundation · Apache-2.0 · <code>aigovops-beacon.v1</code></p>
+      <p>© 2026 AiGovOps Foundation · Apache-2.0 · <code>aigovops-beacon.v1</code></p>
       <p>The same evidence model the lab teaches.</p>
     </div>
   </footer>
@@ -202,7 +202,7 @@
   (function () {
     'use strict';
 
-    var DATA_URL = 'https://bobrapp.github.io/aigovops-beacon/data/ai_failures_top100.json';
+    var DATA_URL = 'https://aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json';
     var REMEDIATION = {
       browser:    'Update your browser to the latest Chrome, Edge, Safari, or Firefox.',
       js:         'Enable JavaScript in your browser settings (extremely rare to be off).',
@@ -247,7 +247,7 @@
         verdict.classList.add('pass');
         icon.textContent = '✓';
         title.textContent = "You're ready.";
-        detail.innerHTML = 'Every check passed. Open <a href="https://bobrapp.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
+        detail.innerHTML = 'Every check passed. Open <a href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html" class="verdict-link">the Framework Lab →</a> when the meeting starts.';
       } else {
         verdict.classList.add('fail');
         icon.textContent = '!';

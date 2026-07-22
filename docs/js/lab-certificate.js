@@ -1,4 +1,4 @@
-/* AIGovOps Beacon — Framework Lab completion certificate generator.
+/* AiGovOps Beacon — Framework Lab completion certificate generator.
  *
  * When all 4 attestation checkboxes on a lesson page are checked, a "Get your
  * signed certificate" button reveals. The student enters their name, the page:
@@ -101,7 +101,7 @@
         +     '<button type="button" class="btn-primary btn-sm" data-cert-action="download-json">Download JSON receipt</button>'
         +     '<button type="button" class="btn-ghost btn-sm" data-cert-action="download-html">Download HTML diploma</button>'
         +     '<button type="button" class="btn-ghost btn-sm" data-cert-action="print">Print diploma</button>'
-        +     '<a class="btn-ghost btn-sm" data-cert-mailto href="#">Email to AIGovOps Foundation for counter-sign</a>'
+        +     '<a class="btn-ghost btn-sm" data-cert-mailto href="#">Email to AiGovOps Foundation for counter-sign</a>'
         +   '</div>'
         +   '<p class="cert-note">The JSON receipt is what an auditor would verify. The HTML diploma is the human-friendly one for screenshots and prints.</p>'
         + '</div>';
@@ -153,7 +153,7 @@
             ],
             student_public_key_b64: b64(kp.publicKey),
             student_key_fingerprint: studentFp,
-            issuing_authority: 'AIGovOps Foundation — Beacon project',
+            issuing_authority: 'AiGovOps Foundation — Beacon project',
             beacon_project_key_fingerprint: BEACON_PROJECT_FP,
             verify_hint: 'Verify offline: nacl.sign.detached.verify(canonical(receipt_minus_signature), base64Decode(signature), base64Decode(student_public_key))'
           };
@@ -171,7 +171,7 @@
 
           // Wire mailto
           var subject = 'LAB — Framework Lab Level ' + levelForCert + ' certificate counter-sign request';
-          var body = 'Hello AIGovOps Foundation,\n\n'
+          var body = 'Hello AiGovOps Foundation,\n\n'
             + 'I completed Framework Lab Level ' + levelForCert + ' on ' + signed.timestamp_utc + '.\n\n'
             + 'Attached below is my self-signed completion receipt for optional counter-signing with the Beacon project key.\n\n'
             + 'Best,\n' + name + (org ? '\n' + org : '')
@@ -231,7 +231,7 @@
         +   '<p class="diploma-name">' + escapeHtml(r.student_name) + '</p>'
         +   (r.organization ? '<p class="diploma-org">' + escapeHtml(r.organization) + '</p>' : '')
         +   '<p class="diploma-body">has completed</p>'
-        +   '<p class="diploma-level">AIGovOps Beacon Framework Lab — Level ' + escapeHtml(r.level.split(' ').pop()) + '</p>'
+        +   '<p class="diploma-level">AiGovOps Beacon Framework Lab — Level ' + escapeHtml(r.level.split(' ').pop()) + '</p>'
         +   '<p class="diploma-attest">attesting in their own words that they can show what AI is in scope, point to a signed receipt and explain it, hand an auditor a verifiable bundle, and map one real failure to missing governance evidence.</p>'
         +   '<dl class="diploma-fields">'
         +     '<dt>Issued</dt><dd>' + escapeHtml(r.timestamp_utc) + '</dd>'
@@ -240,12 +240,12 @@
         +     '<dt>Student key fingerprint</dt><dd><code>' + escapeHtml(r.student_key_fingerprint) + '</code></dd>'
         +     '<dt>Signature (Ed25519)</dt><dd><code>' + escapeHtml((r.signature_ed25519 || '').slice(0, 36)) + '…</code></dd>'
         +   '</dl>'
-        +   '<p class="diploma-footer">Verifiable offline against the receipt JSON. Counter-signing by the AIGovOps Foundation is available on request — email LAB to Bob &amp; Ken.</p>'
+        +   '<p class="diploma-footer">Verifiable offline against the receipt JSON. Counter-signing by the AiGovOps Foundation is available on request — email LAB to Bob &amp; Ken.</p>'
         + '</div>';
     }
 
     function standaloneDiploma(innerHtml) {
-      return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AIGovOps Beacon — Framework Lab Diploma</title>'
+      return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AiGovOps Beacon — Framework Lab Diploma</title>'
         + '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
         + '<style>'
         + 'body{margin:0;background:#fbfaf6;color:#0e1b1c;font-family:"Inter",system-ui,sans-serif;display:flex;justify-content:center;padding:3rem;}'

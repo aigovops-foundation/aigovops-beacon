@@ -1,6 +1,6 @@
 # Governance
 
-This document defines how decisions get made in the AIGovOps Foundation's open-source program. It is modeled on the patterns the [Linux Foundation](https://www.linuxfoundation.org/projects/hosting), [CNCF](https://github.com/cncf/foundation/blob/main/charter.md), and [FinOps Foundation](https://www.finops.org/about/governing-board/) use, adapted to the AI governance space.
+This document defines how decisions get made in the AiGovOps Foundation's open-source program. It is modeled on the patterns the [Linux Foundation](https://www.linuxfoundation.org/projects/hosting), [CNCF](https://github.com/cncf/foundation/blob/main/charter.md), and [FinOps Foundation](https://www.finops.org/about/governing-board/) use, adapted to the AI governance space.
 
 The single most important sentence in this document:
 
@@ -12,7 +12,7 @@ Open-source projects fail when business priorities override technical judgment, 
 
 | Track | Who | What they decide | What they do **not** decide |
 |---|---|---|---|
-| **Business governance** | AIGovOps Foundation Governing Board (501(c)(6)) | Budget, membership tiers, events, brand, legal, fundraising, partnerships | Technical roadmap, conformance bar, what gets merged, what gets released |
+| **Business governance** | AiGovOps Foundation Governing Board (501(c)(6)) | Budget, membership tiers, events, brand, legal, fundraising, partnerships | Technical roadmap, conformance bar, what gets merged, what gets released |
 | **Technical governance** | Foundation Steward Partner + Technical Review Committee (TRC) | Conformance bar, profile registration eligibility, release readiness, pre-release review, contribution standards | Pricing, membership, board composition, partnerships |
 
 Neither track can override the other. Conflicts are resolved by a published escalation procedure (see [`ENGAGEMENT.md`](ENGAGEMENT.md), to be finalized by the Steward Partner).

@@ -1,4 +1,4 @@
-# LAB.md — AIGovOps Beacon Workshop Playbook
+# LAB.md — AiGovOps Beacon Workshop Playbook
 
 > *Run Beacon on a laptop, on a corp network with no admin rights, or in production. Same code, three shapes. This file is the playbook.*
 

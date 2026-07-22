@@ -1,9 +1,9 @@
-# AIGovOps Beacon — Reference Architecture Blueprint v1.0
+# AiGovOps Beacon — Reference Architecture Blueprint v1.0
 
-> **Authority of this document:** advisory under the AIGovOps Foundation.
+> **Authority of this document:** advisory under the AiGovOps Foundation.
 > The [OVERT 1.0 specification](https://overt.is/) is normative for the
 > evidence envelope. Where this blueprint diverges, OVERT wins.
-> _Agents do the bureaucracy; humans hold moral legitimacy._
+> _Agents do the bureaucracy; humans hold the meaning — and humans hold the keys._
 
 ## Purpose
 

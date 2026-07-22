@@ -1,4 +1,4 @@
-# Framework Lab for AIGovOps Auditors — final build bundle
+# Framework Lab for AiGovOps Auditors — final build bundle
 
 This tarball contains the complete Framework Lab build for `bobrapp/aigovops-beacon` — three new lab pages (hub, Level 100, Level 200), a signed Ed25519 audit log, the HIBT page that renders it, printable worksheets in HTML and PDF, and surgical edits to all four existing Beacon pages adding a Framework Lab nav link.
 
@@ -8,7 +8,7 @@ GitHub OAuth in the build session was blocked, so all work was staged locally an
 
 ```
 src/__init__.py
-src/audit_log.py                       AIGovOps cryptokey-receipted audit logger (~13 KB)
+src/audit_log.py                       AiGovOps cryptokey-receipted audit logger (~13 KB)
 
 audit/keys/public-key.pem              Ed25519 public key (fp TrUguILJje1UUyeQie1g6w)
 audit/keys/private-key.pem             SESSION PRIVATE KEY — gitignored, kept per your decision
@@ -69,12 +69,12 @@ git push
 
 GitHub Pages will rebuild from `/docs/`. New URLs once it lands:
 
-- https://bobrapp.github.io/aigovops-beacon/lab.html
-- https://bobrapp.github.io/aigovops-beacon/lab-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab-200.html
-- https://bobrapp.github.io/aigovops-beacon/howibuilt.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-100.html
-- https://bobrapp.github.io/aigovops-beacon/lab/worksheet-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab-200.html
+- https://aigovops-foundation.github.io/aigovops-beacon/howibuilt.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-100.html
+- https://aigovops-foundation.github.io/aigovops-beacon/lab/worksheet-200.html
 
 ## About the signing key
 

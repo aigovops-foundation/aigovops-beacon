@@ -2,7 +2,7 @@
 
 Interactive blueprint that maps governance controls to a modern CI/CD
 pipeline, with signed receipts at every stage. Served from
-`/docs/blueprint/` on the AIGovOps Beacon GitHub Pages site.
+`/docs/blueprint/` on the AiGovOps Beacon GitHub Pages site.
 
 ## Local preview
 
@@ -23,6 +23,6 @@ python3 -m http.server -d docs/blueprint 8000
 
 ## Authority
 
-Advisory under the AIGovOps Foundation. The
+Advisory under the AiGovOps Foundation. The
 [OVERT 1.0 specification](https://overt.is/) is normative for the
 evidence envelope.

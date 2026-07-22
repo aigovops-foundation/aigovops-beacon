@@ -26,7 +26,7 @@ export default function Wizard() {
 
   return (
     <main className="shell">
-      <p className="kicker">AIGovOps Foundation · Beacon Studio v{version?.version ?? "—"}</p>
+      <p className="kicker">AiGovOps Foundation · Beacon Studio v{version?.version ?? "—"}</p>
       <h1>Let's find out what's running on your network.</h1>
       <p className="muted" style={{ maxWidth: "60ch" }}>
         Five steps. We'll show you every AI model your people are using,

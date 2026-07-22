@@ -1,4 +1,4 @@
-# ARCHITECTURE-BETA.md — AIGovOps Beacon
+# ARCHITECTURE-BETA.md — AiGovOps Beacon
 
 **Verifiable AI governance — Apache-2.0, no SaaS lock-in.**
 Tagline: *YES-Ship AI · YES-Steady AI · YES-Recover AI.*

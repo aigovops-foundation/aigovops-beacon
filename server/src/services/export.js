@@ -254,5 +254,5 @@ find in the NDJSON files above.
 bundle was generated. Read them. Disagree on paper if you disagree in
 person.
 
-— The AIGovOps Foundation
+— The AiGovOps Foundation
 `;

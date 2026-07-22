@@ -309,7 +309,7 @@ def test_contacts() -> None:
 
 # ---------------------------------------------------------------------------
 def main() -> int:
-    log("# AIGovOps Beacon — E2E Test Report")
+    log("# AiGovOps Beacon — E2E Test Report")
     log(f"Run: {time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime())}")
     log(f"Root: {ROOT}")
     test_frameworks()
