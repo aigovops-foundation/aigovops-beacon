@@ -1,0 +1,19 @@
+name: link-check
+
+# Adopting the estate's shared link checker (one `uses:` line — rationale lives in the Library).
+#
+# It fails only on INTERNAL broken links. External 403/429 are reported but do not fail the
+# build: a checker that reddens on third parties refusing a bot trains everyone to ignore it,
+# and then the real breaks stay published. In the July 2026 sweep a raw crawl of the estate
+# reported 20 broken links and only 7 were real.
+
+on:
+  schedule:
+    - cron: "15 16 * * 1"   # Mondays — link rot is a weekly-cadence problem
+  workflow_dispatch:
+
+jobs:
+  link-check:
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-link-check.yml@main
+    with:
+      site_url: "https://aigovops-foundation.github.io/aigovops-beacon/"
