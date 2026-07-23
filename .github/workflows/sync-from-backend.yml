@@ -14,15 +14,20 @@
 #   contents: write   — so the job can push to main.
 #
 # Triggered by:
-#   1. Cron: daily at 08:00 UTC (= 01:00 PT / 00:00 PDT)
-#   2. Manual: workflow_dispatch (run from Actions tab without a push)
+#   Manual only (workflow_dispatch) — the nightly cron is DISABLED.
+#
+# Why the cron is off: the backend host api.beacon-lab.aigovops.foundation stopped
+# resolving (curl exit 6 — could not resolve host) and the nightly run has failed
+# every day since ~2026-06, redding this repo for a month with nothing to act on.
+# The job still works on demand: re-enable the `schedule` block below once the
+# Beacon Lab backend is deployed and its DNS resolves again. (tracks issue #9)
 
 name: sync-from-backend
 
 on:
-  schedule:
-    - cron: '0 8 * * *'   # 08:00 UTC = 01:00 PT
-  workflow_dispatch:       # allow manual trigger from GitHub Actions UI
+  # schedule:
+  #   - cron: '0 8 * * *'   # 08:00 UTC — re-enable when the backend host resolves again
+  workflow_dispatch:       # manual trigger from the Actions tab
 
 permissions:
   contents: write          # needed for git push at end of workflow
