@@ -44,8 +44,26 @@ jobs:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # ── Step 1b: Is the backend even there? ───────────────────────────────
+      # The host api.beacon-lab.aigovops.foundation has not resolved for months (curl exit 6).
+      # A sync job whose source is gone should SKIP — not fail (which reds main daily and hides a
+      # real failure behind noise), and not silently commit stale data. If the host answers, the
+      # job runs exactly as before. If it does not, every step below is skipped and the job is
+      # GREEN, having honestly done nothing.
+      - name: Probe backend
+        id: probe
+        run: |
+          if curl -sfI --max-time 20 https://api.beacon-lab.aigovops.foundation/ >/dev/null 2>&1; then
+            echo "up=true" >> "$GITHUB_OUTPUT"
+            echo "backend reachable — syncing."
+          else
+            echo "up=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::backend api.beacon-lab.aigovops.foundation unreachable — skipping sync (nothing to fail over). Re-enable the schedule in this file once it resolves."
+          fi
+
       # ── Step 2: Fetch curriculum L100 ─────────────────────────────────────
       - name: Fetch curriculum L100
+        if: steps.probe.outputs.up == 'true'
         run: |
           mkdir -p docs/data
           curl -sf https://api.beacon-lab.aigovops.foundation/api/curriculum/100 \
@@ -54,6 +72,7 @@ jobs:
 
       # ── Step 3: Fetch curriculum L200 ─────────────────────────────────────
       - name: Fetch curriculum L200
+        if: steps.probe.outputs.up == 'true'
         run: |
           curl -sf https://api.beacon-lab.aigovops.foundation/api/curriculum/200 \
             -o docs/data/curriculum-200.json
@@ -61,6 +80,7 @@ jobs:
 
       # ── Step 4: Fetch public receipts ──────────────────────────────────────
       - name: Fetch public receipts
+        if: steps.probe.outputs.up == 'true'
         run: |
           curl -sf https://api.beacon-lab.aigovops.foundation/api/lab/public-receipts \
             -o docs/data/public-receipts.json
@@ -72,6 +92,7 @@ jobs:
       # BEACON_PROJECT_PRIVATE_KEY secret is set, signs the root file with
       # OpenSSL (Ed25519) and writes receipt-root.sig alongside.
       - name: Compute Merkle root
+        if: steps.probe.outputs.up == 'true'
         env:
           BEACON_PROJECT_PRIVATE_KEY: ${{ secrets.BEACON_PROJECT_PRIVATE_KEY }}
         run: |
@@ -116,6 +137,7 @@ jobs:
           NODESCRIPT
 
       - name: Sign Merkle root (if key present)
+        if: steps.probe.outputs.up == 'true'
         env:
           BEACON_PROJECT_PRIVATE_KEY: ${{ secrets.BEACON_PROJECT_PRIVATE_KEY }}
         run: |
@@ -134,6 +156,7 @@ jobs:
 
       # ── Step 6: Commit and push if anything changed ────────────────────────
       - name: Commit data files
+        if: steps.probe.outputs.up == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
