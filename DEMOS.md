@@ -386,7 +386,7 @@ POST receipt host=copilot.microsoft.com id=01KRGZPPGMCXKRRR185914R3K5
 ## Reproduction
 
 ```bash
-git clone https://github.com/bobrapp/aigovops-beacon.git
+git clone https://github.com/aigovops-foundation/aigovops-beacon.git
 cd aigovops-beacon/server && npm install && cd ..
 # spin up demo 1
 BEACON_DATA_DIR=/tmp/beacon-demo1 node server/src/cli.js init

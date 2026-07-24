@@ -16,7 +16,7 @@ export default function App() {
           <NavLink to="/" end>Studio</NavLink>
           <NavLink to="/control">Control Plane</NavLink>
           <a
-            href="https://github.com/bobrapp/aigovops-beacon"
+            href="https://github.com/aigovops-foundation/aigovops-beacon"
             target="_blank"
             rel="noreferrer"
           >

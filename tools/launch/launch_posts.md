@@ -26,7 +26,7 @@ This is the layer that lets a $1M super-agent actually ship. Because trust is no
 
 Hand the auditor a bundle they can verify themselves. Let the tokens flow.
 
-→ Code: https://github.com/bobrapp/aigovops-beacon
+→ Code: https://github.com/aigovops-foundation/aigovops-beacon
 → Community: https://www.aigovopsfoundation.org/
 
 #AIGovernance #ResponsibleAI #MCP #OpenSource #AIAgents
@@ -46,7 +46,7 @@ Two-minute walkthrough on the site. Ninety-second hero video on the landing page
 
 If you're building agents in regulated environments — or planning to — this is for you.
 
-→ https://github.com/bobrapp/aigovops-beacon
+→ https://github.com/aigovops-foundation/aigovops-beacon
 → https://www.aigovopsfoundation.org/
 
 
@@ -60,7 +60,7 @@ Three deployment shapes. One repo. Apache 2.0. No SaaS lock-in.
 
 YES-Ship AI. YES-Steady AI. YES-Recover AI.
 
-https://github.com/bobrapp/aigovops-beacon
+https://github.com/aigovops-foundation/aigovops-beacon
 https://www.aigovopsfoundation.org/
 
 
@@ -76,7 +76,7 @@ Verifiable AI governance for the agent era. Ed25519-signed receipts. 23 framewor
 
 Apache 2.0. No SaaS lock-in.
 
-→ https://github.com/bobrapp/aigovops-beacon
+→ https://github.com/aigovops-foundation/aigovops-beacon
 
 
 ### Option 2 — Thread Opener
@@ -98,7 +98,7 @@ Six MCP tools. Three deployment shapes. One repo.
 
 4/ 23 frameworks built in. NIST AI RMF, EU AI Act, ISO 42001, HIPAA. Plus your own via YAML. Hand the auditor a bundle they can verify themselves.
 
-→ https://github.com/bobrapp/aigovops-beacon
+→ https://github.com/aigovops-foundation/aigovops-beacon
 → https://www.aigovopsfoundation.org/
 
 
@@ -110,4 +110,4 @@ Beacon v2.3 — verifiable AI governance for the agent era. Ed25519 receipts. 23
 
 Hand the auditor a bundle they can verify themselves.
 
-https://github.com/bobrapp/aigovops-beacon
+https://github.com/aigovops-foundation/aigovops-beacon
