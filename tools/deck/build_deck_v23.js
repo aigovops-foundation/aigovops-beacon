@@ -429,6 +429,10 @@ const footer = (s, label) => {
   s.addText("YES-Ship AI  \u00b7  YES-Steady AI  \u00b7  YES-Recover AI", { x: 0.6, y: 6.97, w: 12.1, h: 0.5, fontFace: H_FONT, fontSize: 14, bold: true, color: "FFFFFF", align: "center", valign: "middle" });
 }
 
-pptx.writeFile({ fileName: "/home/user/workspace/AIGovOps_Beacon_Pitch.pptx" }).then(() => {
-  console.log("Deck written.");
+// Output into the repo (run from tools/deck/, per tools/README.md). Was a hardcoded
+// /home/user/workspace path from the original build sandbox — never wrote here.
+const path = require("path");
+const OUT = path.resolve(__dirname, "../../docs/downloads/AIGovOps_Beacon_Pitch.pptx");
+pptx.writeFile({ fileName: OUT }).then(() => {
+  console.log("Deck written -> " + OUT);
 });

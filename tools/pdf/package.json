@@ -1,0 +1,13 @@
+{
+  "name": "beacon-pdf-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible PDF generators for docs/downloads (see build_architecture_pdf.mjs).",
+  "scripts": {
+    "build:architecture": "node build_architecture_pdf.mjs"
+  },
+  "dependencies": {
+    "markdown-it": "^14.3.0"
+  }
+}

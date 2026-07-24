@@ -14,6 +14,13 @@ they're the inputs that produce the artifacts in `docs/`.
 - **`hero_narration_v23.txt`** — narration script for the 90-second hero video
   (`docs/assets/beacon-elevator-pitch.mp4`).
 
+### `pdf/`
+- **`build_architecture_pdf.mjs`** — regenerates `docs/downloads/ARCHITECTURE-BETA.pdf`
+  from the in-repo source `ARCHITECTURE-BETA.md` (markdown-it → styled HTML → headless
+  Chrome `--print-to-pdf`). Run with `cd pdf && npm install && node build_architecture_pdf.mjs`.
+  Chrome path is overridable via `$CHROME`. The original PDF was an external one-off with no
+  committed source; this makes it reproducible so a content or link change can be re-rendered.
+
 ### `teaser/`
 - **`compose_teaser.sh`** — ffmpeg pipeline that extracts five segments from
   the 90-second hero, splices them, and overlays the teaser narration to
