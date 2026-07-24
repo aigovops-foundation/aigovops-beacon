@@ -1,0 +1,25 @@
+name: dependency-triage
+
+# Adopting the estate's shared dependency triage lane (one `uses:` line per package dir).
+#
+# It only ever recommends a NON-FORCING, package.json-unchanged fix, and proves it with the
+# verify command below before saying so. A major bump that clears an advisory but breaks the
+# build is flagged for a human, never applied — in July 2026 two Dependabot PRs did exactly
+# that (linkinator 6->8 crashed on Node 20; vite 5->8 left plugin-react at 4 and broke install).
+
+on:
+  schedule:
+    - cron: "15 17 * * 2"   # Tuesdays
+  workflow_dispatch:
+
+jobs:
+  triage-server:
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@main
+    with:
+      working_directory: "server"
+      verify_command: "npm test"
+  triage-studio:
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@main
+    with:
+      working_directory: "studio"
+      verify_command: "npm run build"
