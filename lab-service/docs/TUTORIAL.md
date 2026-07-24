@@ -94,7 +94,7 @@ up piecemeal.
 ## 3. Clone + bootstrap
 
 ```bash
-git clone https://github.com/bobrapp/aigovops-beacon.git
+git clone https://github.com/aigovops-foundation/aigovops-beacon.git
 cd aigovops-beacon/lab-service
 npm ci
 cp .beacon-v2.env.example .beacon-v2.env
@@ -419,4 +419,4 @@ Fly + Cloudflare APIs.
   learners actually use this thing.
 
 Questions or bugs → open an issue on
-[bobrapp/aigovops-beacon](https://github.com/bobrapp/aigovops-beacon/issues).
+[bobrapp/aigovops-beacon](https://github.com/aigovops-foundation/aigovops-beacon/issues).

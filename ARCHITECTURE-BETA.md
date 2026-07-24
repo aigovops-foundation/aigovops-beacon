@@ -524,4 +524,4 @@ The classifier and the receipts are coupled — a regression in either is visibl
 
 ---
 
-*Document maintained at [github.com/bobrapp/aigovops-beacon](https://github.com/bobrapp/aigovops-beacon). Pull requests welcome. Apache-2.0.*
+*Document maintained at [github.com/aigovops-foundation/aigovops-beacon](https://github.com/aigovops-foundation/aigovops-beacon). Pull requests welcome. Apache-2.0.*
