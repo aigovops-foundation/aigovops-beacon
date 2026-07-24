@@ -21,6 +21,13 @@ they're the inputs that produce the artifacts in `docs/`.
   Chrome path is overridable via `$CHROME`. The original PDF was an external one-off with no
   committed source; this makes it reproducible so a content or link change can be re-rendered.
 
+### `starter/`
+- **`build_starter_zip.sh`** + **`manifest.txt`** — repacks `docs/downloads/aigovops-beacon-starter.zip`
+  from the current repo tree. The starter was a one-off snapshot with no build script, so it
+  silently went stale (kept pre-move `bobrapp/` links after the repo was corrected). The manifest
+  lists the curated file set; the script stages and zips it, so links stay correct by construction.
+  Run with `bash build_starter_zip.sh` from the repo root.
+
 ### `teaser/`
 - **`compose_teaser.sh`** — ffmpeg pipeline that extracts five segments from
   the 90-second hero, splices them, and overlays the teaser narration to
