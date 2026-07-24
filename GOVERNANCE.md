@@ -14,10 +14,10 @@ That sentence is borrowed from how the FinOps Foundation, CNCF, and the Linux Fo
 
 Open-source projects get into trouble when business pressure overrides technical judgment, and they get into trouble when technical purity ignores commercial reality. The fix is to keep those two kinds of decisions in different hands.
 
-| Kind of decision | Who makes it | Examples |
-|---|---|---|
-| **About the project** — what to build, what to merge, what to ship, what the bar is | The Project Steward and the maintainers, working in the open | Conformance bar, release readiness, what gets reviewed before release, contribution standards |
-| **About the Foundation** — money, the name, partnerships, events, anything off-repo | The Foundation, separately, off-repo | Sponsorships, brand, fundraising, legal arrangements |
+| Track | Who | What they decide | What they do **not** decide |
+|---|---|---|---|
+| **Technical governance** — about the project | The Project Steward + the Review Circle and maintainers, working in the open | Conformance bar, profile registration eligibility, release readiness, pre-release review, contribution standards | Pricing, membership, board composition, partnerships |
+| **Business governance** — about the Foundation | The AiGovOps Foundation Governing Board (501(c)(6)), separately, off-repo | Budget, membership tiers, events, brand, legal, fundraising, partnerships | Technical roadmap, conformance bar, what gets merged, what gets released |
 
 The two never decide for each other. If they disagree, we talk about it in the open until we don't.
 
