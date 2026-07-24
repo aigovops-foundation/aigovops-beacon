@@ -1,4 +1,4 @@
-# AIGovOps Beacon — hosted MCP server.
+# AiGovOps Beacon — hosted MCP server.
 # Single-stage. Builds embedded Beacon core + MCP tool registry into one image.
 FROM node:20-alpine
 

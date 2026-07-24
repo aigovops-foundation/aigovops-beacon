@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aigovops.org/schemas/framework.schema.json",
-  "title": "AIGovOps Beacon Framework",
+  "title": "AiGovOps Beacon Framework",
   "description": "Canonical shape for one AI governance framework in the global registry. YAML and XML representations are isomorphic — this schema describes both.",
   "type": "object",
   "required": [

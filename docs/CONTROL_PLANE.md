@@ -37,7 +37,7 @@ A persistent left rail with six surfaces. Everything is keyboard-driven; `?` ope
 The same table Studio shows in Step 3, but with:
 - Multi-column sort, faceted filters (vendor, env, trust tier, owner)
 - Bulk-edit trust tiers (each edit emits a receipt with the approver)
-- `inventory.csv` and `inventory.json` export — round-trips with the AIGovOps Foundation Inventory Workbook
+- `inventory.csv` and `inventory.json` export — round-trips with the AiGovOps Foundation Inventory Workbook
 - Saved views, shareable URLs
 
 ### Receipts

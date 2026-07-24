@@ -152,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--no-score", action="store_true", help="Skip the final scoring pass")
     args = p.parse_args(argv)
 
-    print("AIGovOps Beacon — manual checklist wizard")
+    print("AiGovOps Beacon — manual checklist wizard")
     print("Receipts will be appended to ~/.beacon/receipts/<date>.ndjson")
     print()
 

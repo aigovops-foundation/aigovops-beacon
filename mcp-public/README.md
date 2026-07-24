@@ -1,6 +1,6 @@
 # aigovops-beacon-mcp-public
 
-Public, internet-facing MCP server for AIGovOps Beacon.
+Public, internet-facing MCP server for AiGovOps Beacon.
 
 This is the **hosted variant** of [`../mcp`](../mcp). Same six tools, same wire
 protocol, but bundled with an embedded Beacon core so a single Render web

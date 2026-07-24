@@ -1,4 +1,4 @@
-# render.yaml — AIGovOps Beacon
+# render.yaml — AiGovOps Beacon
 # Deploy on Render (https://render.com). Persistent disk + free TLS at the edge.
 #
 # After connecting the repo in the Render dashboard, Render will read this

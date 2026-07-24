@@ -9,7 +9,7 @@ export default function App() {
       <header className="nav-top">
         <Link to="/" className="brand">
           <span className="mark" aria-hidden="true" />
-          <span>AIGovOps Beacon</span>
+          <span>AiGovOps Beacon</span>
           <span className="pill" style={{ marginLeft: "0.5rem" }}>Studio</span>
         </Link>
         <nav>

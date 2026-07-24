@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// AIGovOps Beacon — MCP server (stdio + SSE)
+// AiGovOps Beacon — MCP server (stdio + SSE)
 // Apache-2.0. Speaks the Model Context Protocol (JSON-RPC 2.0).
 //
 // Transports:

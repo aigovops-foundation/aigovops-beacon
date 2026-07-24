@@ -1,0 +1,27 @@
+# Cloudflare Wrangler configuration for the Beacon Lab edge worker.
+#
+# Deploy:
+#   npm install -g wrangler
+#   wrangler login
+#   wrangler secret put JWT_PUBLIC_KEY < jwt.pub   # RS256 public key
+#   wrangler deploy
+#
+# The JWT_PUBLIC_KEY is a secret (not a plain var) because exposing it in
+# source is fine (it's public-key material), but wrangler secret gives us
+# a clean audit trail in the Cloudflare dashboard.
+
+name = "beacon-lab-edge"
+main = "worker.js"
+compatibility_date = "2026-05-24"
+
+# Route pattern — all traffic under edge.beacon.aigovops.foundation.
+# Add DNS CNAME: edge.beacon.aigovops.foundation → <zone>.workers.dev
+routes = [
+  { pattern = "edge.beacon.aigovops.foundation/*", zone_name = "aigovops.foundation" }
+]
+
+[vars]
+# Replace with actual Fly.io app URL after deploy.
+BACKEND_URL = "https://aigovops-beacon-lab.fly.dev"
+# Comma-separated origins allowed to make cross-origin requests.
+CORS_ALLOWED_ORIGINS = "https://bobrapp.github.io,https://aigovops.foundation"

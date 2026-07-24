@@ -1,4 +1,4 @@
-// AIGovOps Beacon — server entry point.
+// AiGovOps Beacon — server entry point.
 //
 // Boot order, on purpose:
 //   1) Resolve config (env > .beacon/config.yaml > defaults).
@@ -46,7 +46,7 @@ export async function bootstrap() {
 
   app.get("/", (_req, res) =>
     res.json({
-      name: "AIGovOps Beacon",
+      name: "AiGovOps Beacon",
       version: ctx.config.beaconVersion,
       docs: "https://github.com/bobrapp/aigovops-beacon",
       principle:
@@ -65,18 +65,26 @@ export async function bootstrap() {
   });
 
   const { host, port } = config.server;
-  app.listen(port, host, () => {
-    // eslint-disable-next-line no-console
-    console.log(
-      `Beacon ${ctx.config.beaconVersion} listening on http://${host}:${port}`
-    );
-    // eslint-disable-next-line no-console
-    console.log(`  data root: ${ctx.config.dataDir}`);
-    // eslint-disable-next-line no-console
-    console.log(`  active key fingerprint: ${ctx.activeKey.fingerprint}`);
-  });
 
-  return { app, ctx };
+  // Tests drive the Express app directly through supertest and never need
+  // a live listener; BEACON_NO_LISTEN lets them skip it so Node exits
+  // cleanly without dangling handles.
+  let server = null;
+  if (process.env.BEACON_NO_LISTEN !== "1") {
+    server = app.listen(port, host, () => {
+      // eslint-disable-next-line no-console
+      console.log(
+        `Beacon ${ctx.config.beaconVersion} listening on http://${host}:${port}`
+      );
+      // eslint-disable-next-line no-console
+      console.log(`  data root: ${ctx.config.dataDir}`);
+      // eslint-disable-next-line no-console
+      console.log(`  active key fingerprint: ${ctx.activeKey.fingerprint}`);
+    });
+  }
+  ctx.server = server;
+
+  return { app, ctx, server };
 }
 
 // Only auto-boot when invoked directly, not when imported by tests.

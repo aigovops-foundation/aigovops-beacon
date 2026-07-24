@@ -1,0 +1,39 @@
+/* ============================================================================
+   aigovops-july-2026 — garden-warm design tokens (Beacon copy).
+   SOURCE: aigovops-foundation/aigovops-foundation-site-redesign-June2026-ken-and-bob
+             /design/aigovops-july-2026/tokens.css   ← single source of truth.
+   Change tokens THERE first, then propagate here. Consumers in this repo:
+   css/site.css, css/lab.css, blueprint/css/blueprint.css (M9 garden skin).
+   ========================================================================== */
+
+:root {
+  /* ── ground & ink ── */
+  --garden-cream:       #FAF7F0;   /* page ground */
+  --garden-deep-cream:  #F1EAD8;   /* alternating band / featured tint */
+  --garden-deeper:      #E9DFC6;   /* hover tint on deep-cream */
+  --garden-charcoal:    #2B2B28;   /* ink + dark bands (footer, toolkit) */
+  --garden-ink-soft:    #4C4A42;   /* body text on cream (7:1) */
+
+  /* ── the garden ── */
+  --garden-green:       #2E7D4F;   /* orchard green — fills, bands */
+  --garden-green-ink:   #1F5E3A;   /* green for TEXT on cream (7.1:1) */
+  --garden-green-deep:  #0F4A2C;   /* hover / emphasis green */
+  --garden-orange:      #E07A2A;   /* signal orange — fills only, never small text */
+  --garden-orange-ink:  #9C4E12;   /* orange for TEXT on cream (5.5:1) */
+  --garden-gold:        #E8B54A;   /* accent on charcoal (7.3:1 there) */
+
+  /* ── lines, depth, shape ── */
+  --garden-line:        rgba(43,43,40,.14);
+  --garden-card-line:   rgba(43,43,40,.08);
+  --garden-shadow:      0 18px 40px -18px rgba(78,60,32,.35);
+  --garden-shadow-sm:   0 10px 26px -14px rgba(78,60,32,.3);
+  --garden-r-2xl:       1.4rem;
+
+  /* ── voice ── */
+  --garden-serif:       "Fraunces", Georgia, serif;
+  --garden-sans:        "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+
+  /* ── text on charcoal ── */
+  --garden-on-dark:     #EDE8DA;
+  --garden-on-dark-dim: #B9B3A2;
+}

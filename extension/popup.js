@@ -1,4 +1,4 @@
-// Popup UI for AIGovOps Beacon. Apache-2.0.
+// Popup UI for AiGovOps Beacon. Apache-2.0.
 
 function fmtTs(iso) {
   try {

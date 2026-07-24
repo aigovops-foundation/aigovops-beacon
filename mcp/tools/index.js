@@ -1,4 +1,4 @@
-// AIGovOps Beacon MCP tools.
+// AiGovOps Beacon MCP tools.
 // Each tool: { name, description, inputSchema (JSON Schema), handler(args, ctx) -> any }.
 // Apache-2.0.
 

@@ -1,0 +1,74 @@
+name: Feature request
+description: Suggest a new beacon, checklist, framework adapter, agent capability, or workflow improvement
+title: "feat: <one-line summary>"
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to propose new functionality. For new framework
+        adapters or crosswalk rows, please link the authoritative source.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of feature?
+      options:
+        - New beacon (beacons/)
+        - New checklist or template (checklists/)
+        - New framework adapter or crosswalk row (crosswalks/)
+        - Agent capability (agent/)
+        - Audit log / signing improvement (audit/)
+        - OVERT profile change
+        - Deploy / systemd / packaging (deploy/)
+        - Docs / lab site (docs/)
+        - CI / release workflow
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What governance or operations problem does this solve?
+      description: Describe the audit finding, regulator question, or operator pain you're trying to close.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Sketch the API, schema change, or content. Pseudocode and YAML drafts welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Authoritative sources
+      placeholder: |
+        - OVERT 1.0 §X
+        - NIST AI RMF MEASURE-2.7
+        - EU AI Act Article 15(4)
+
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Would you be willing to contribute?
+      options:
+        - label: I'd like to open the PR myself.
+        - label: I can review or test someone else's PR.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/bobrapp/aigovops-beacon/blob/main/CODE_OF_CONDUCT.md).
+          required: true

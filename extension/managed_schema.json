@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "AIGovOps Beacon — managed policy",
+  "title": "AiGovOps Beacon — managed policy",
   "description": "Set these via Chrome ExtensionInstallForcelist + ExtensionSettings, Edge mirror, Intune ADMX, or JAMF MCX. The extension auto-configures from these values.",
   "properties": {
     "beaconUrl": {

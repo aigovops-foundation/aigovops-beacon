@@ -2,7 +2,7 @@
 
 This is the question we are asking the founding Project Steward — Glacis — to answer for us:
 
-> **How does a company get involved with the AIGovOps Foundation in a way that is helpful to the steward, helpful to other companies in the space, and helpful to the community at the same time?**
+> **How does a company engage with the AiGovOps Foundation in a way that is helpful to commercial stewards (you, future stewards, and other vendor-members) and helpful to the community at the same time?**
 
 Open-source projects with commercial gravity have figured this out before. The [FinOps Foundation](https://www.finops.org/), [CNCF](https://www.cncf.io/), and [Linux Foundation](https://www.linuxfoundation.org/projects/hosting) playbooks all converge on a few moves that, run together, create a virtuous loop between vendor investment and community trust. We have read those playbooks; we have not earned the right to recite them.
 

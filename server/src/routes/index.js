@@ -78,7 +78,7 @@ export function createRouter(ctx) {
 
   router.post("/inventory", (req, res) => {
     const { vendor, model, version, environment } = req.body || {};
-    if (!vendor || !model || !version || !environment) {
+    if (!allStrings(vendor, model, version, environment)) {
       return res.status(400).json({ error: "missing_fields" });
     }
     const row = inventoryService.upsert({
@@ -111,7 +111,7 @@ export function createRouter(ctx) {
   // ─── Receipts ─────────────────────────────────────────────────────────
   router.post("/receipts", (req, res) => {
     const b = req.body || {};
-    if (!b.vendor || !b.model || !b.version || !b.event_type) {
+    if (!allStrings(b.vendor, b.model, b.version, b.event_type)) {
       return res.status(400).json({ error: "missing_fields" });
     }
     const r = receiptService.write({ ...b, user: req.user });
@@ -208,4 +208,11 @@ export function createRouter(ctx) {
 
 function asyncH(fn) {
   return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+}
+
+// Required string fields must be present and actually be non-empty
+// strings. Arrays and objects are truthy and would otherwise slip past a
+// bare presence check and crash the SQLite index bind downstream.
+function allStrings(...vals) {
+  return vals.every((v) => typeof v === "string" && v.length > 0);
 }

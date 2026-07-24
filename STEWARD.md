@@ -2,7 +2,7 @@
 
 ## Glacis Technologies, Inc — Founding Open-Source Curator
 
-The AIGovOps Foundation invites [**Glacis Technologies, Inc**](https://www.glacis.io/) to be the **Founding Open-Source Curator** of this repo — the company title for the structural role of **Project Steward** of Beacon, and of the wider AIGovOps Foundation open-source program.
+The AiGovOps Foundation invites [**Glacis Technologies, Inc**](https://www.glacis.io/) to be the **Founding Open-Source Curator** of this repo — the company title for the structural role of **Project Steward** of Beacon, and of the wider AiGovOps Foundation open-source program.
 
 *Two names, one seat.* "Founding Open-Source Curator" is how we name the company doing the work. "Project Steward" is the structural role they fill. Anywhere this repo says *Project Steward*, read *the Founding Open-Source Curator — Glacis Technologies*.
 
@@ -22,7 +22,7 @@ In plain language:
 
 ## What we commit to in return
 
-1. **Attribution where it belongs.** Glacis and OVERT on the homepage, the README, the receipt schema, and at every event we run. Already done as of commit [`1913613`](https://github.com/bobrapp/aigovops-beacon/commit/1913613).
+1. **Attribution where it belongs.** Glacis and OVERT on the homepage, the README, the receipt schema, and at every event we run. Already done as of commit [`1913613`](https://github.com/aigovops-foundation/aigovops-beacon/commit/1913613).
 2. **No surprises.** No Foundation-affiliated project ships publicly without the steward and the review circle seeing it first. This is a habit, kept by the people involved, not a clause anyone enforces.
 3. **The first registered profile.** Beacon is the first OVERT Protocol Profile under the Foundation's program. We aim to make it a good example.
 4. **The right voice in the room.** If the steward thinks the Foundation is about to do something that hurts the project, we pause and listen. There is no formal veto because there is no formal contest — we are building this together or we are not building it at all.
@@ -77,4 +77,4 @@ This is a personal, time-scoped seat that sits next to the structural one.
 
 - Founding Open-Source Curator / Project Steward: Glacis Technologies — [joe@glacis.io](mailto:joe@glacis.io)
 - Launch Advisor: Joe Braidwood — [joe@glacis.io](mailto:joe@glacis.io) · [LinkedIn](https://www.linkedin.com/in/joebraidwood/)
-- Foundation: AIGovOps Foundation — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
+- Foundation: AiGovOps Foundation — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)

@@ -1,0 +1,11 @@
+# Files excluded from Docker build context.
+# node_modules is reinstalled inside the builder stage via npm ci.
+node_modules
+.git
+# Database file — runtime creates a fresh one on /data (the Fly volume).
+data.db*
+# Environment secrets — injected at runtime via flyctl secrets.
+.env
+.env.*
+# dist is rebuilt inside the container — don't risk shipping a stale build.
+dist

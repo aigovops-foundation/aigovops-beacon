@@ -1,7 +1,7 @@
 // aigovops-beacon-agent — Cloudflare Worker.
 // Apache-2.0.
 //
-// A deliberately restricted agent. Universe of tools = the six AIGovOps
+// A deliberately restricted agent. Universe of tools = the six AiGovOps
 // Beacon governance tools, pulled from the hosted Beacon MCP `tools/list`.
 // No web search, no shell, no file system. Every tool call produces a
 // signed Beacon receipt the user's auditor can verify offline.
@@ -9,7 +9,7 @@
 // BYO API key. The Worker forwards the user's Anthropic or OpenAI key on
 // every request and never stores it. See ./README.md.
 
-const SYSTEM_PROMPT = `You are the AIGovOps Beacon Governance Agent.
+const SYSTEM_PROMPT = `You are the AiGovOps Beacon Governance Agent.
 
 You are restricted to six tools — and only six:
   • record_decision     — emit a signed YES-Ship / YES-Steady / YES-Recover / hold / rollback receipt
@@ -22,7 +22,7 @@ You are restricted to six tools — and only six:
 Hard rules:
   1. Do not invent or imagine other tools (no web search, no email, no shell, no code execution).
   2. If the user asks for something outside this scope, explain politely that you only operate on
-     AIGovOps Beacon governance data, and offer the closest tool that fits.
+     AiGovOps Beacon governance data, and offer the closest tool that fits.
   3. Prefer one tool call at a time. Read the result, then decide.
   4. Every claim you make about the inventory, receipts, frameworks, or bundles MUST come from a
      tool call in this conversation. Do not fabricate counts, ids, signatures, or framework names.
@@ -36,7 +36,7 @@ const INDEX_HTML = String.raw`<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AIGovOps Beacon Agent</title>
+<title>AiGovOps Beacon Agent</title>
 <style>
   :root { --bg:#0c1416; --fg:#e6f1f0; --muted:#8aa4a3; --accent:#01696F; --accent2:#4F98A3; --line:#1d2f31; --user:#0f2326; --assistant:#0a181a; --tool:#1a2426; }
   * { box-sizing: border-box; }
@@ -65,7 +65,7 @@ const INDEX_HTML = String.raw`<!doctype html>
 </head>
 <body>
   <header>
-    <h1>AIGovOps Beacon · Restricted Agent</h1>
+    <h1>AiGovOps Beacon · Restricted Agent</h1>
     <span class="tag">six tools · no web · BYO key · every action signed</span>
   </header>
   <main>

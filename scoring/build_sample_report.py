@@ -30,7 +30,7 @@ def render(report: dict) -> str:
     controls_present = report["controls_present"]
 
     lines: list[str] = []
-    lines.append("# AIGovOps Beacon — sample scoring report\n")
+    lines.append("# AiGovOps Beacon — sample scoring report\n")
     lines.append(
         f"Generated from **{receipt_count} synthetic receipts** covering the evidence types a maturing AI program "
         f"typically has on hand at the end of its first quarter. The org touches **{controls_present} controls** "

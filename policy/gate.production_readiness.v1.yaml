@@ -12,7 +12,7 @@ id: production-readiness
 version: 1.0.0
 title: Beacon Production Readiness Gate
 short_title: Production Readiness
-authority: AIGovOps Foundation (Beacon defaults)
+authority: AiGovOps Foundation (Beacon defaults)
 url: https://github.com/bobrapp/aigovops-beacon
 applies_to:
   - trust_tier_promotion

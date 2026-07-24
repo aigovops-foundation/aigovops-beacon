@@ -1,4 +1,4 @@
-# AIGovOps Beacon — Browser Extension (MV3)
+# AiGovOps Beacon — Browser Extension (MV3)
 
 Hostname-only watcher. Signs and ships receipts to Beacon over HTTPS. **No URLs, no page content, no user identifiers** leave the browser beyond an opaque per-install ID.
 

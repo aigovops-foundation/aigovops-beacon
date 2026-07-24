@@ -1,6 +1,6 @@
 # Standards alignment
 
-The AIGovOps Foundation does **not** issue standards. We implement them, adopt them, teach them, and build community around them.
+The AiGovOps Foundation does **not** issue standards. We implement them, adopt them, teach them, and build community around them.
 
 ## The standard Beacon implements
 
@@ -18,7 +18,7 @@ Beacon is being registered as an OVERT Protocol Profile under that covenant. See
 
 There is not oxygen in this category for two adjacent standards. The category needs one common vocabulary, one common conformance bar, and many implementations.
 
-The AIGovOps Foundation's role is to be one of those implementations *and* the community on-ramp — not a parallel standards-issuing body.
+The AiGovOps Foundation's role is to be one of those implementations *and* the community on-ramp — not a parallel standards-issuing body.
 
 If you are looking for the normative source of truth on receipts, envelopes, attestation assurance levels, agentic governance controls, or auditor verification procedures, **read OVERT first**. Our crosswalks (NIST AI RMF / EU AI Act / ISO 42001 / HIPAA / Human Flourishing) are advisory. OVERT's crosswalks are normative.
 
@@ -27,15 +27,15 @@ If you are looking for the normative source of truth on receipts, envelopes, att
 | Layer | Who | What it is |
 |---|---|---|
 | **The standard** | Glacis Technologies (steward of OVERT) | The source of truth |
-| **The profile** (`aigovops-beacon.v1`) | AIGovOps Foundation (this repo) | One conformant implementation under OVERT's published IPR policy |
-| **Sector packs, training, community materials** | AIGovOps Foundation | Helpful, but advisory — not the standard |
+| **The profile** (`aigovops-beacon.v1`) | AiGovOps Foundation (this repo) | One conformant implementation under OVERT's published IPR policy |
+| **Sector packs, training, community materials** | AiGovOps Foundation | Helpful, but advisory — not the standard |
 | **The technical bar for Foundation projects** | The Project Steward (Glacis, founding) | Set in the open, reviewed in the open |
 
 See [`GOVERNANCE.md`](GOVERNANCE.md) for how we make decisions, and [`STEWARD.md`](STEWARD.md) for the Project Steward role.
 
 ## How to register a new Foundation OSS project
 
-The AIGovOps Foundation will not accept a new open-source project into its program unless:
+The AiGovOps Foundation will not accept a new open-source project into its program unless:
 
 1. It implements a published version of OVERT (or another open standard the Foundation has explicitly adopted).
 2. It carries clear attribution to that standard in its README and homepage.

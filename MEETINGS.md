@@ -29,7 +29,7 @@ We meet in the open. Here is where, when, and how to join.
 
 ## Quarterly retrospective
 
-**When:** once a quarter, joined to the broader [AIGovOps Foundation](https://www.aigovopsfoundation.org/) community.
+**When:** once a quarter, joined to the broader [AiGovOps Foundation](https://www.aigovopsfoundation.org/) community.
 **Where:** see Foundation site.
 **Who:** anyone.
 **Format:** "shipping safe / staying safe / getting back to safe" — what landed, what we learned, what to change.

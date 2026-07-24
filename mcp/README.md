@@ -1,4 +1,4 @@
-# MCP server — AIGovOps Beacon
+# MCP server — AiGovOps Beacon
 
 Speaks the [Model Context Protocol](https://modelcontextprotocol.io) so MCP-capable agents (Claude Desktop, Cursor, Continue, Goose, Zed) can read and write Beacon receipts.
 

@@ -37,7 +37,7 @@ src/
   lib/
     api.js            typed wrapper around /api/v1
   styles/
-    theme.css         AIGovOps Nexus palette + base type
+    theme.css         AiGovOps Nexus palette + base type
 ```
 
 ## Design choices we will defend

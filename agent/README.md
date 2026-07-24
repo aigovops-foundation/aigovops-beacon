@@ -1,6 +1,6 @@
 # aigovops-beacon-agent
 
-A **restricted** AI agent that can call exactly six tools — the six AIGovOps
+A **restricted** AI agent that can call exactly six tools — the six AiGovOps
 Beacon governance tools — and nothing else. Deployable to Cloudflare Workers
 free tier.
 

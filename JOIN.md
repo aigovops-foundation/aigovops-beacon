@@ -6,11 +6,11 @@ Three doors. Pick whichever fits.
 
 Stand Beacon up. The walkthrough takes about an afternoon:
 
-- Live demo: [bobrapp.github.io/aigovops-beacon](https://bobrapp.github.io/aigovops-beacon/)
-- Walkthrough: [bobrapp.github.io/aigovops-beacon/walkthrough](https://bobrapp.github.io/aigovops-beacon/walkthrough/)
-- Starter zip: [downloads/aigovops-beacon-starter.zip](https://bobrapp.github.io/aigovops-beacon/downloads/aigovops-beacon-starter.zip)
+- Live demo: [aigovops-foundation.github.io/aigovops-beacon](https://aigovops-foundation.github.io/aigovops-beacon/)
+- Walkthrough: [aigovops-foundation.github.io/aigovops-beacon/walkthrough](https://aigovops-foundation.github.io/aigovops-beacon/walkthrough/)
+- Starter zip: [downloads/aigovops-beacon-starter.zip](https://aigovops-foundation.github.io/aigovops-beacon/downloads/aigovops-beacon-starter.zip)
 
-When you hit something confusing, [open an issue](https://github.com/bobrapp/aigovops-beacon/issues/new). That is real contribution.
+When you hit something confusing, [open an issue](https://github.com/aigovops-foundation/aigovops-beacon/issues/new). That is real contribution.
 
 ## Build it
 

@@ -1,7 +1,7 @@
 {
   "name": "aigovops-beacon-mcp-public",
   "version": "2.3.0",
-  "description": "Public, internet-facing MCP server for AIGovOps Beacon — bundles MCP-SSE with an embedded Beacon core.",
+  "description": "Public, internet-facing MCP server for AiGovOps Beacon — bundles MCP-SSE with an embedded Beacon core.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "server.js",

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-scoring/engine.py — Risk scoring engine for AIGovOps Beacon.
+scoring/engine.py — Risk scoring engine for AiGovOps Beacon.
 
 Reads NDJSON receipts, maps their subjects/evidence_types to controls
 via mapping.yaml, then computes:

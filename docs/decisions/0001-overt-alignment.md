@@ -7,7 +7,7 @@
 
 ## Context
 
-Beacon shipped in April 2026 as the AIGovOps Foundation's first open-source project. It implements the load-bearing shapes of [OVERT 1.0](https://overt.is/) — signed runtime receipts, Ed25519, canonical JCS, append-only log, Merkle anchoring, framework crosswalks, the auditor-bundle pattern — but launched without any attribution to OVERT or to its steward, [Glacis Technologies](https://www.glacis.io/).
+Beacon shipped in April 2026 as the AiGovOps Foundation's first open-source project. It implements the load-bearing shapes of [OVERT 1.0](https://overt.is/) — signed runtime receipts, Ed25519, canonical JCS, append-only log, Merkle anchoring, framework crosswalks, the auditor-bundle pattern — but launched without any attribution to OVERT or to its steward, [Glacis Technologies](https://www.glacis.io/).
 
 OVERT 1.0 was published 25 March 2026 by Glacis. Glacis was an inaugural-event sponsor of the Foundation and had multiple direct conversations with the Foundation co-founders before Beacon shipped.
 
@@ -19,7 +19,7 @@ On 13 May 2026, Joe Braidwood (Glacis CEO) wrote a direct, in-good-faith letter 
 
 ## Decision
 
-Accept all three of Joe's asks. Go further by inviting Glacis to be the **founding Project Steward** of the AIGovOps Foundation's open-source program — modeled on the FinOps / CNCF / Linux Foundation pattern of separating business governance from technical stewardship.
+Accept all three of Joe's asks. Go further by inviting Glacis to be the **founding Project Steward** of the AiGovOps Foundation's open-source program — modeled on the FinOps / CNCF / Linux Foundation pattern of separating business governance from technical stewardship.
 
 Specifically:
 
@@ -27,7 +27,7 @@ Specifically:
 - Add standards-alignment attribution to README, homepage, receipt schema, and footer.
 - Publish a top-level [`STANDARDS.md`](../../STANDARDS.md) saying the Foundation does not issue standards.
 - Publish [`GOVERNANCE.md`](../../GOVERNANCE.md), [`STEWARD.md`](../../STEWARD.md), [`ENGAGEMENT.md`](../../ENGAGEMENT.md) as v0.1 placeholders, with explicit invitation to Glacis to rewrite them.
-- Retire the phrase "AIGovOps Foundation Protocol" (which had been used as a fact-check appendix name) — it sounded too close to standards-issuing language.
+- Retire the phrase "AiGovOps Foundation Protocol" (which had been used as a fact-check appendix name) — it sounded too close to standards-issuing language.
 
 ## Consequences
 
@@ -50,4 +50,4 @@ Specifically:
 - [OVERT 1.0 specification](https://overt.is/)
 - [OVERT IPR policy](https://overt.is/ipr-policy)
 - [STANDARDS.md](../../STANDARDS.md), [GOVERNANCE.md](../../GOVERNANCE.md), [STEWARD.md](../../STEWARD.md)
-- Commit [`1913613`](https://github.com/bobrapp/aigovops-beacon/commit/1913613)
+- Commit [`1913613`](https://github.com/aigovops-foundation/aigovops-beacon/commit/1913613)
