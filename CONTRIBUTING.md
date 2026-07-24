@@ -1,14 +1,19 @@
 # Contributing to AiGovOps Beacon
 
-We welcome pull requests, framework additions, beacon adapters, and translations
-from auditors, regulators, engineers, and AI program owners.
+Thanks for being here. This project is built by people who care about shipping AI safely, and we'd love to build it with you.
 
-> **Tagline:** YES-Ship AI · YES-Steady AI · YES-Recover AI
+## The shortest version
 
-## How the repository is protected
+- Use it. Break it. Tell us what you found.
+- Open an issue first if you're not sure.
+- Send a small PR. Small PRs get merged.
+- Be kind. See [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
 
-This is a **public open-source project** under Apache-2.0. To keep it useful
-and trustworthy for everyone:
+## What "use it" means
+
+Stand Beacon up against your environment. The walkthrough at [aigovops-foundation.github.io/aigovops-beacon/walkthrough](https://aigovops-foundation.github.io/aigovops-beacon/walkthrough/) takes about an afternoon. When you hit something confusing, open an issue. When something works that surprised you, tell us in the discussions tab — that helps everyone.
+
+## How changes land
 
 - **`main` is protected** — direct pushes are disabled. Every change goes
   through a pull request that requires:
@@ -22,7 +27,7 @@ and trustworthy for everyone:
   propose changes. Collaborators with write access can be added on request
   for sustained contributors.
 
-## How to contribute
+## Sending a PR
 
 1. **Fork** the repository (or request collaborator access for sustained work).
 2. **Create a topic branch** off `main`: `git checkout -b add-jp-aiba`.
@@ -66,28 +71,46 @@ keep it in sync when you change a route.
 
 ## What we love receiving
 
-- New national / sectoral framework YAMLs (use `frameworks/schema/framework.schema.json`).
-- Beacon adapters for additional CASB / SIEM / cloud sources.
-- Translations of control text (see `frameworks/translations/`).
-- New entries for the AI failures dataset with primary-source URLs.
-- Bug fixes, doc improvements, accessibility tweaks.
+- Bug fixes with a clear reproduction.
+- Doc fixes — typos, broken links, anything that made you confused.
+- New checklist packs for frameworks not yet covered.
+- New crosswalk entries that map Beacon controls to standards we haven't yet listed.
+- Test coverage anywhere.
 
-## What needs maintainer approval
+## What's likely to get a "let's talk first"
 
-- Changes to the receipt schema (`docs/RECEIPT_SCHEMA.md`).
-- Changes to the scoring weights (`scoring/mapping.yaml`).
-- Removing or renaming a framework.
+- Big architectural changes.
+- Anything that changes the receipt schema. Receipts are wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay) and must stay aligned with [OVERT](https://overt.is/) — talk to the steward and the review circle first.
+- New top-level documents.
+- Anything that touches the profile registration (see [`docs/PROFILE_REGISTRATION.md`](docs/PROFILE_REGISTRATION.md)) — the steward signs off on these.
 
-## Reporting security issues
+## Becoming a maintainer
 
-Email **[security@aigovopsfoundation.org](mailto:security@aigovopsfoundation.org)**
-or message the maintainers directly. Please do **not** open a public issue
-for vulnerabilities.
+You don't apply. You earn it. The path looks like this:
 
-## Maintainers
+1. **Contributor.** You've sent a PR. Welcome.
+2. **Trusted contributor.** You've sent several. You review other people's PRs. You answer questions in issues. Maintainers start asking your opinion before merging.
+3. **Maintainer.** A maintainer nominates you. The other maintainers say yes. You're added to `MAINTAINERS.md` (per project).
+4. **Review circle.** Self-nominate or get nominated. The steward picks two maintainers and one or two rotating community seats for the review circle. See [`STEWARD.md`](STEWARD.md).
 
-- **Bob Rapp** — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
-- **Ken Johnston** — [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
-- Foundation — [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+No interviews. No quotas. The work is the resume.
 
-Apache-2.0 · fork it · sign with your own keys · run it your way.
+## Good first issues
+
+We tag them `good first issue` in the issue queue. They are real problems with bounded scope. If you pick one up, drop a comment so we don't duplicate effort.
+
+## Style
+
+- Code: whatever the existing file uses. We're not religious. If you change the style, do it in a separate PR.
+- Docs: plain language, short sentences, kindness. If a sentence reads like it would survive in a contract, rewrite it.
+- Commit messages: imperative mood ("Add", "Fix", "Refactor"). One line summary, blank line, paragraph if needed.
+
+## How we say no
+
+Kindly, with reasons, in the PR. If we say "let's not merge this," we'll tell you why and what we'd merge instead. If we never reply, that's a bug — please ping the PR.
+
+## Questions
+
+- Issues: [github.com/aigovops-foundation/aigovops-beacon/issues](https://github.com/aigovops-foundation/aigovops-beacon/issues)
+- Community: [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+- Email: [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
