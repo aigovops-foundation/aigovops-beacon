@@ -10,8 +10,8 @@
  * Requires beacon-lab-bridge.js loaded first (for getToken()).
  *
  * Brand palette:
- *   teal       #01696f
- *   signal-green #2ecc71
+ *   teal       #1F5E3A
+ *   signal-green #2E7D4F
  *   ink        #0c2226
  *   paper      #fbfaf6
  */
@@ -75,7 +75,7 @@ const BASE_CSS = `
     margin-bottom: 0.75rem;
     box-sizing: border-box;
   }
-  .loading { color: #01696f; font-size: 0.9rem; }
+  .loading { color: #1F5E3A; font-size: 0.9rem; }
   .error   { color: #c0392b; font-size: 0.9rem; }
   .badge {
     display: inline-block;
@@ -85,7 +85,7 @@ const BASE_CSS = `
     font-weight: 600;
     font-family: 'DM Mono', monospace;
     background: rgba(1,105,111,0.1);
-    color: #01696f;
+    color: #1F5E3A;
     margin-left: 0.4em;
   }
   .badge.pass { background: rgba(46,204,113,0.15); color: #1a7a3a; }
@@ -136,8 +136,8 @@ class BeaconLabStep extends HTMLElement {
         <style>
           ${BASE_CSS}
           label { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
-          input[type=checkbox] { width: 18px; height: 18px; accent-color: #01696f; flex-shrink: 0; margin-top: 2px; }
-          .rule-id { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: #01696f; margin-bottom: 0.25rem; }
+          input[type=checkbox] { width: 18px; height: 18px; accent-color: #1F5E3A; flex-shrink: 0; margin-top: 2px; }
+          .rule-id { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: #1F5E3A; margin-bottom: 0.25rem; }
           .desc { font-size: 0.95rem; line-height: 1.5; }
           .ctrl { font-size: 0.75rem; color: #5a7a7e; margin-top: 0.3rem; }
         </style>
@@ -222,10 +222,10 @@ class BeaconLabInventory extends HTMLElement {
           ${BASE_CSS}
           table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
           th { text-align: left; padding: 0.4rem 0.6rem; background: rgba(1,105,111,0.07);
-               font-weight: 600; color: #01696f; border-bottom: 1px solid rgba(1,105,111,0.18); }
+               font-weight: 600; color: #1F5E3A; border-bottom: 1px solid rgba(1,105,111,0.18); }
           td { padding: 0.35rem 0.6rem; border-bottom: 1px solid rgba(1,105,111,0.08); }
           tr:last-child td { border-bottom: none; }
-          h4 { margin: 0 0 0.6rem; font-size: 0.9rem; color: #01696f; }
+          h4 { margin: 0 0 0.6rem; font-size: 0.9rem; color: #1F5E3A; }
         </style>
         <h4>AI Inventory (${items.length} items)</h4>
         <table>

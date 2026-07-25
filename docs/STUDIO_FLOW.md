@@ -10,7 +10,7 @@ Every step has three things and only three things: **a question, a thing to look
 
 - **Voice:** clear, warm, declarative. No corporate-speak. No "leverage." No "synergy."
 - **Type:** Inter for UI, DM Mono for evidence. 16px body floor. 18px button labels.
-- **Color:** Nexus palette. `#01696F` Hydra Teal as the single accent. Status colors only when status is the message.
+- **Color:** Nexus palette. `#1F5E3A` Hydra Teal as the single accent. Status colors only when status is the message.
 - **Motion:** under 200ms. `prefers-reduced-motion` respected.
 - **Accessibility:** WCAG AA. Every primary button reachable in two tab presses. Live regions announce discoveries as they arrive.
 - **No modals** in the happy path. Modals are a smell — auditors lose context.

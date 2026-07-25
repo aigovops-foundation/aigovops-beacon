@@ -6,7 +6,7 @@ Outputs (committed under docs/downloads/ and event-materials/):
   docs/downloads/framework-lab-instructor.pdf    — 90-minute virtual delivery playbook
   docs/downloads/framework-lab-attendee.pdf      — 1-page handout for students
 
-Brand match: Hydra Teal #01696f, Signal Green #2ecc71, Inter + DM Mono,
+Brand match: Hydra Teal #1F5E3A, Signal Green #2E7D4F, Inter + DM Mono,
 matching site.css from bobrapp/aigovops-beacon.
 
 Run from repo root:

@@ -311,7 +311,7 @@ section.view.active { display: block; }
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Framework Lab for AiGovOps Auditors</title>
   <meta name="description" content="A two-tier interactive lab for AI auditors built on AiGovOps Beacon. Level 100 walks the 30-minute Beacon flow; Level 200 covers the Suitcase Lab, the 9 lab variants, Policy-as-Code, the receipt API, and the 100-failure deep-dive." />
-  <meta name="theme-color" content="#01696f" />
+  <meta name="theme-color" content="#1F5E3A" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -324,9 +324,9 @@ section.view.active { display: block; }
   <nav class="spa-nav" id="viewNav" aria-label="View toggle">
     <span class="spa-brand">
       <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
-        <circle cx="16" cy="16" r="15" fill="#01696f"/>
-        <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
-        <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+        <circle cx="16" cy="16" r="15" fill="#1F5E3A"/>
+        <circle cx="16" cy="16" r="9" fill="none" stroke="#2E7D4F" stroke-width="1.2" opacity="0.5"/>
+        <text x="16" y="20.5" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#2E7D4F" text-anchor="middle">Y</text>
       </svg>
       AiGovOps Beacon &middot; Framework Lab
     </span>

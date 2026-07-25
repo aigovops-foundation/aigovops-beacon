@@ -38,7 +38,7 @@ const INDEX_HTML = String.raw`<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AiGovOps Beacon Agent</title>
 <style>
-  :root { --bg:#0c1416; --fg:#e6f1f0; --muted:#8aa4a3; --accent:#01696F; --accent2:#4F98A3; --line:#1d2f31; --user:#0f2326; --assistant:#0a181a; --tool:#1a2426; }
+  :root { --bg:#0c1416; --fg:#e6f1f0; --muted:#8aa4a3; --accent:#1F5E3A; --accent2:#4F98A3; --line:#1d2f31; --user:#0f2326; --assistant:#0a181a; --tool:#1a2426; }
   * { box-sizing: border-box; }
   html, body { margin:0; padding:0; height:100%; background:var(--bg); color:var(--fg); font:14px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
   a { color: var(--accent2); }

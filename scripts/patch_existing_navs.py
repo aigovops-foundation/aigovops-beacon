@@ -80,7 +80,7 @@ PATCHES = [
         "edits": [
             (
                 '  <div class="hdr-right"><a href="./index.html" style="font-size:12px;color:#64748b;text-decoration:none;font-weight:600;letter-spacing:.02em;padding:4px 10px;border:1px solid #1f2d45;border-radius:6px;display:inline-flex;align-items:center;gap:5px">← Beacon</a>',
-                '  <div class="hdr-right"><a href="./index.html" style="font-size:12px;color:#64748b;text-decoration:none;font-weight:600;letter-spacing:.02em;padding:4px 10px;border:1px solid #1f2d45;border-radius:6px;display:inline-flex;align-items:center;gap:5px">← Beacon</a><a href="./lab.html" style="font-size:12px;color:#01696f;text-decoration:none;font-weight:600;letter-spacing:.02em;padding:4px 10px;border:1px solid #01696f;border-radius:6px;display:inline-flex;align-items:center;gap:5px;margin-left:8px">Framework Lab</a>',
+                '  <div class="hdr-right"><a href="./index.html" style="font-size:12px;color:#64748b;text-decoration:none;font-weight:600;letter-spacing:.02em;padding:4px 10px;border:1px solid #1f2d45;border-radius:6px;display:inline-flex;align-items:center;gap:5px">← Beacon</a><a href="./lab.html" style="font-size:12px;color:#1F5E3A;text-decoration:none;font-weight:600;letter-spacing:.02em;padding:4px 10px;border:1px solid #1F5E3A;border-radius:6px;display:inline-flex;align-items:center;gap:5px;margin-left:8px">Framework Lab</a>',
             ),
         ],
     },

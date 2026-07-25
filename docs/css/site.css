@@ -514,7 +514,7 @@ button[disabled] { opacity: 0.4; cursor: not-allowed; }
   position: relative;
 }
 .telemetry-row .check::after {
-  content: "✓"; color: white; font-family: Inter, sans-serif; font-size: 10px;
+  content: "✓"; color: white; font-family: system-ui, sans-serif; font-size: 10px;
   position: absolute; inset: 0; display: grid; place-items: center; font-weight: 700;
 }
 
