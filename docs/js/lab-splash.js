@@ -36,7 +36,7 @@
     el.innerHTML = ''
       + '<div class="lab-splash-card">'
       +   '<button type="button" class="lab-splash-close" data-lab-splash-dismiss aria-label="Dismiss welcome">×</button>'
-      +   '<span class="kicker" style="color:#2ecc71;">AiGovOps Foundation · Live virtual lab</span>'
+      +   '<span class="kicker" style="color:#2E7D4F;">AiGovOps Foundation · Live virtual lab</span>'
       +   '<h2>Welcome — we\'re running this together.</h2>'
       +   '<p>About 100 of us are about to discover AI, sign receipts, and hand auditor bundles. The lab is self-paced — Bob and Ken will walk the room virtually and call out checkpoints. Everything you do runs in your browser; nothing leaves your tab.</p>'
       +   '<ul class="lab-splash-points">'

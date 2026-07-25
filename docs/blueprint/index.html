@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Beacon Reference Architecture Blueprint — AiGovOps</title>
   <meta name="description" content="A reference architecture blueprint mapping AI governance controls to a modern CI/CD pipeline — automated evidence collection, cryptographic audit logging, data lineage, and Policy-as-Code guardrails across Design, Deployment, and Operations." />
-  <meta name="theme-color" content="#01696f" />
+  <meta name="theme-color" content="#1F5E3A" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="Beacon Reference Architecture Blueprint" />
@@ -14,13 +14,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <!-- M9 garden-warm skin (aigovops-july-2026 design system) -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Source+Sans+3:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="./css/blueprint.css" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%2301696f'/%3E%3Ctext x='32' y='40' font-family='Inter,sans-serif' font-size='22' font-weight='700' fill='%232ecc71' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%231F5E3A'/%3E%3Ctext x='32' y='40' font-family='system-ui,sans-serif' font-size='22' font-weight='700' fill='%232E7D4F' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
 
   <link rel="canonical" href="https://aigovops-foundation.github.io/aigovops-beacon/blueprint/index.html">
   <meta property="og:site_name" content="AiGovOps Foundation">
@@ -45,9 +45,9 @@
     <a href="../" class="brand" aria-label="AiGovOps Beacon home">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" width="32" height="32">
-          <circle cx="16" cy="16" r="15" fill="#01696f"/>
-          <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
-          <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+          <circle cx="16" cy="16" r="15" fill="#1F5E3A"/>
+          <circle cx="16" cy="16" r="9" fill="none" stroke="#2E7D4F" stroke-width="1.2" opacity="0.5"/>
+          <text x="16" y="20.5" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#2E7D4F" text-anchor="middle">Y</text>
         </svg>
       </span>
       <span class="brand-name">
@@ -134,10 +134,10 @@
     <div class="diagram-wrap">
       <pre class="mermaid">
 flowchart TB
-    classDef design fill:#e6f3f4,stroke:#01696f,color:#01314c,stroke-width:1.5px
+    classDef design fill:#e6f3f4,stroke:#1F5E3A,color:#01314c,stroke-width:1.5px
     classDef deploy fill:#fef6e0,stroke:#b87b00,color:#4a3000,stroke-width:1.5px
-    classDef ops fill:#e8f5ea,stroke:#2ecc71,color:#0d3d1a,stroke-width:1.5px
-    classDef plane fill:#01314c,stroke:#01696f,color:#fff,stroke-width:1.5px
+    classDef ops fill:#e8f5ea,stroke:#2E7D4F,color:#0d3d1a,stroke-width:1.5px
+    classDef plane fill:#01314c,stroke:#1F5E3A,color:#fff,stroke-width:1.5px
 
     subgraph DESIGN["DESIGN STAGE"]
       direction TB
@@ -254,7 +254,7 @@ flowchart TB
       <pre class="mermaid">
 flowchart LR
     classDef step fill:#fef6e0,stroke:#b87b00,color:#4a3000,stroke-width:1.5px
-    classDef evidence fill:#01314c,stroke:#01696f,color:#fff
+    classDef evidence fill:#01314c,stroke:#1F5E3A,color:#fff
     classDef gate fill:#fde2e0,stroke:#c0392b,color:#5a1410,stroke-width:1.5px
 
     DEV[Developer<br/>signed commit<br/>gitsign] --> BUILD[GitHub Actions<br/>OIDC to cloud<br/>hermetic build]
@@ -748,8 +748,8 @@ jobs:
       fontFamily: 'Inter, system-ui, sans-serif',
       primaryColor: '#e6f3f4',
       primaryTextColor: '#01314c',
-      primaryBorderColor: '#01696f',
-      lineColor: '#01696f',
+      primaryBorderColor: '#1F5E3A',
+      lineColor: '#1F5E3A',
       secondaryColor: '#fef6e0',
       tertiaryColor: '#e8f5ea'
     },

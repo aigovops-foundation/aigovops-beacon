@@ -32,7 +32,7 @@ const body = md.render(readFileSync(SRC, 'utf8'));
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <style>
   @page { size: A4; margin: 18mm 16mm; }
-  :root { --teal:#01696f; --teal-dark:#0c4e54; --ink:#28251d; --muted:#5f5d57; --border:#d4d1ca; --code-bg:#f4f3ef; }
+  :root { --teal:#1F5E3A; --teal-dark:#0F4A2C; --ink:#28251d; --muted:#5f5d57; --border:#d4d1ca; --code-bg:#f4f3ef; }
   * { box-sizing: border-box; }
   body { font: 10.5pt/1.5 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color: var(--ink); margin: 0; }
   h1,h2,h3,h4 { font-weight: 700; line-height: 1.2; color: var(--teal-dark); margin: 1.3em 0 .5em; }

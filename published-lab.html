@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Framework Lab for AiGovOps Auditors</title>
   <meta name="description" content="A two-tier interactive lab for AI auditors built on AiGovOps Beacon. Level 100 walks the 30-minute Beacon flow; Level 200 covers the Suitcase Lab, the 9 lab variants, Policy-as-Code, the receipt API, and the 100-failure deep-dive." />
-  <meta name="theme-color" content="#01696f" />
+  <meta name="theme-color" content="#1F5E3A" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
 /* ─────────────────────────────────────────────────────────────────────
    AiGovOps Beacon — home page styles
-   Brand: Nexus palette, Hydra Teal accent, Inter + DM Mono.
+   Brand: AiGovOps garden palette, Source Sans + DM Mono.
    Cinematic but disciplined. Every motion respects prefers-reduced-motion.
    ───────────────────────────────────────────────────────────────────── */
 
 :root {
   /* Palette */
-  --hydra-teal: #01696f;
+  --hydra-teal: #1F5E3A;
   --hydra-teal-hover: #014c50;
   --hydra-teal-soft: #d8ecee;
-  --signal-green: #2ecc71;
+  --signal-green: #2E7D4F;
   --signal-green-soft: #d8f3df;
   --ink: #0e1b1c;
   --ink-soft: #3a4a4b;
@@ -424,7 +424,7 @@ button[disabled] { opacity: 0.4; cursor: not-allowed; }
   position: relative;
 }
 .telemetry-row .check::after {
-  content: "✓"; color: white; font-family: Inter, sans-serif; font-size: 10px;
+  content: "✓"; color: white; font-family: system-ui, sans-serif; font-size: 10px;
   position: absolute; inset: 0; display: grid; place-items: center; font-weight: 700;
 }
 
@@ -2198,9 +2198,9 @@ section.view.active { display: block; }
   <nav class="spa-nav" id="viewNav" aria-label="View toggle">
     <span class="spa-brand">
       <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
-        <circle cx="16" cy="16" r="15" fill="#01696f"/>
-        <circle cx="16" cy="16" r="9" fill="none" stroke="#2ecc71" stroke-width="1.2" opacity="0.5"/>
-        <text x="16" y="20.5" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>
+        <circle cx="16" cy="16" r="15" fill="#1F5E3A"/>
+        <circle cx="16" cy="16" r="9" fill="none" stroke="#2E7D4F" stroke-width="1.2" opacity="0.5"/>
+        <text x="16" y="20.5" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#2E7D4F" text-anchor="middle">Y</text>
       </svg>
       AiGovOps Beacon &middot; Framework Lab
     </span>
@@ -4461,9 +4461,9 @@ window.AIGovOpsBeaconLab.hubReadout = function () {
         + '<div class="diploma-inner">'
         +   '<div class="diploma-medallion" aria-hidden="true">'
         +     '<svg viewBox="0 0 64 64" width="64" height="64">'
-        +       '<circle cx="32" cy="32" r="30" fill="#01696f"/>'
-        +       '<circle cx="32" cy="32" r="22" fill="none" stroke="#2ecc71" stroke-width="1.5" opacity="0.7"/>'
-        +       '<text x="32" y="40" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#2ecc71" text-anchor="middle">Y</text>'
+        +       '<circle cx="32" cy="32" r="30" fill="#1F5E3A"/>'
+        +       '<circle cx="32" cy="32" r="22" fill="none" stroke="#2E7D4F" stroke-width="1.5" opacity="0.7"/>'
+        +       '<text x="32" y="40" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#2E7D4F" text-anchor="middle">Y</text>'
         +     '</svg>'
         +   '</div>'
         +   '<p class="diploma-kicker">Certificate of completion</p>'
@@ -4486,24 +4486,24 @@ window.AIGovOpsBeaconLab.hubReadout = function () {
 
     function standaloneDiploma(innerHtml) {
       return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AiGovOps Beacon — Framework Lab Diploma</title>'
-        + '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
+        + '<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
         + '<style>'
         + 'body{margin:0;background:#fbfaf6;color:#0e1b1c;font-family:"Inter",system-ui,sans-serif;display:flex;justify-content:center;padding:3rem;}'
-        + '.diploma-inner{background:#fff;border:3px solid #01696f;border-radius:14px;padding:3rem 4rem;max-width:780px;box-shadow:0 14px 40px -20px rgba(14,27,28,0.18);}'
+        + '.diploma-inner{background:#fff;border:3px solid #1F5E3A;border-radius:14px;padding:3rem 4rem;max-width:780px;box-shadow:0 14px 40px -20px rgba(14,27,28,0.18);}'
         + '.diploma-medallion{display:flex;justify-content:center;margin-bottom:1rem;}'
-        + '.diploma-kicker{font-family:"DM Mono",monospace;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.18em;color:#01696f;text-align:center;margin:0 0 0.5rem;}'
+        + '.diploma-kicker{font-family:"DM Mono",monospace;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.18em;color:#1F5E3A;text-align:center;margin:0 0 0.5rem;}'
         + '.diploma-h{text-align:center;font-size:1.2rem;font-weight:500;color:#3a4a4b;margin:0 0 0.5rem;letter-spacing:-0.01em;}'
         + '.diploma-name{font-size:2.6rem;font-weight:700;text-align:center;margin:0.5rem 0 0.2rem;letter-spacing:-0.03em;color:#0e1b1c;}'
         + '.diploma-org{text-align:center;color:#3a4a4b;margin:0 0 1.2rem;font-style:italic;}'
         + '.diploma-body{text-align:center;color:#3a4a4b;margin:0 0 0.3rem;}'
-        + '.diploma-level{text-align:center;font-size:1.4rem;font-weight:600;color:#01696f;margin:0 0 1.5rem;}'
+        + '.diploma-level{text-align:center;font-size:1.4rem;font-weight:600;color:#1F5E3A;margin:0 0 1.5rem;}'
         + '.diploma-attest{text-align:center;font-size:0.95rem;color:#3a4a4b;font-style:italic;border-top:1px solid #d8d4c4;border-bottom:1px solid #d8d4c4;padding:1rem 0;margin:1rem 0 1.5rem;}'
         + '.diploma-fields{display:grid;grid-template-columns:max-content 1fr;gap:0.4rem 1.5rem;font-size:0.85rem;color:#3a4a4b;margin:0 0 1.5rem;}'
         + '.diploma-fields dt{font-family:"DM Mono",monospace;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:#7a8889;}'
         + '.diploma-fields dd{margin:0;}'
         + '.diploma-fields code{font-family:"DM Mono",monospace;font-size:0.78rem;}'
         + '.diploma-footer{font-size:0.78rem;color:#7a8889;text-align:center;margin:0;font-style:italic;}'
-        + '@media print{body{padding:0;}.diploma-inner{border:2px solid #01696f;box-shadow:none;page-break-inside:avoid;}}'
+        + '@media print{body{padding:0;}.diploma-inner{border:2px solid #1F5E3A;box-shadow:none;page-break-inside:avoid;}}'
         + '</style></head><body>' + innerHtml + '</body></html>';
     }
 
@@ -4562,7 +4562,7 @@ window.AIGovOpsBeaconLab.hubReadout = function () {
     el.innerHTML = ''
       + '<div class="lab-splash-card">'
       +   '<button type="button" class="lab-splash-close" data-lab-splash-dismiss aria-label="Dismiss welcome">×</button>'
-      +   '<span class="kicker" style="color:#2ecc71;">AiGovOps Foundation · Live virtual lab</span>'
+      +   '<span class="kicker" style="color:#2E7D4F;">AiGovOps Foundation · Live virtual lab</span>'
       +   '<h2>Welcome — we\'re running this together.</h2>'
       +   '<p>About 100 of us are about to discover AI, sign receipts, and hand auditor bundles. The lab is self-paced — Bob and Ken will walk the room virtually and call out checkpoints. Everything you do runs in your browser; nothing leaves your tab.</p>'
       +   '<ul class="lab-splash-points">'
