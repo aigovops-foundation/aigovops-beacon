@@ -68,6 +68,23 @@ This document is wire-compatible with [`aigovops-Replay`](https://github.com/bob
 
 The signature covers every field of the receipt *except* the `signature` object itself.
 
+### Known divergence — the Node server's spelling
+
+`beacons/_common.py` emits the block exactly as specified above. The Node
+server in `server/` does not: it writes `canonical_form: "RFC8785"` for the
+identical canonicalization, and a `key_fpr` that is the first 16 hex
+characters of the same SHA-256 digest rather than the SSH-style string.
+
+Per the authority note at the top of this document, that is a bug here and not
+a second valid dialect. Normalizing it changes the wire format of receipts that
+already exist, so it is tracked as its own change with a `schema_version` bump
+rather than done quietly.
+
+Until then, [`src/beacon_verify.py`](../src/beacon_verify.py) accepts both
+spellings — and only these, both of which name RFC 8785 — so no auditor is ever
+handed a verification failure that is really a spelling difference. The
+signature check itself is not relaxed.
+
 ---
 
 ## Example — inference observed

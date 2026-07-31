@@ -72,6 +72,27 @@ function listKeyFiles(dir) {
     .map((f) => path.join(dir, f));
 }
 
+// Every key we have ever signed with, newest first — public halves only.
+//
+// An audit bundle has to carry all of them, not just the active one. A bundle
+// whose range spans a rotation contains receipts signed by a key that is no
+// longer active; ship only the active public key and those receipts cannot be
+// verified by anyone, including us.
+export function listPublicKeys(config) {
+  const keyDir = path.join(config.dataDir, "keys");
+  return listKeyFiles(keyDir)
+    .map((p) => {
+      const raw = JSON.parse(fs.readFileSync(p, "utf8"));
+      return {
+        fingerprint: raw.fingerprint,
+        algorithm: raw.algorithm,
+        createdAt: raw.createdAt,
+        publicKey: Buffer.from(raw.publicKeyHex, "hex"),
+      };
+    })
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
 function readKeyFile(p) {
   const raw = JSON.parse(fs.readFileSync(p, "utf8"));
   return materialize(raw);

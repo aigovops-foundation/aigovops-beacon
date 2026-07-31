@@ -114,6 +114,44 @@ Four more one-click deploys live in [`/deploy`](deploy/): Railway, Render, Digit
 
 ---
 
+## What your auditor runs
+
+The point of all of this is the last step: someone who has never heard of
+Beacon confirms your evidence is what you say it is. Every exported bundle
+carries its own verifier, so that is one command with nothing installed:
+
+```bash
+python3 verify_bundle.py .
+```
+
+```
+beacon-verify: OK — 47 receipts verified (bundle format)
+  manifest: intact (sha256 df9708e7aa774938…, over file)
+  keys:     2 (ab12cd34ef561234, 9f81be22c7a40d55)
+  receipts: 2026-07-29.ndjson (12)
+  receipts: 2026-07-30.ndjson (35)
+```
+
+It checks that the manifest is intact, that every receipt's Ed25519 signature
+verifies over its RFC 8785 canonical bytes against the key that signed *that*
+receipt — bundles spanning a key rotation included — and that no receipt was
+dropped. Exit 0 means clean; non-zero names the failures.
+
+Requirements: Python 3.10 or newer. Nothing else. `cryptography` is used when
+it happens to be installed; when it is not, a pure-Python Ed25519 verifier in
+the same file takes over, so an air-gapped review machine works too. No
+network calls, ever — and the file is short enough to read before running it.
+
+`verify_bundle.py` is a copy of [`src/beacon_verify.py`](src/beacon_verify.py).
+The same tool verifies a single receipt log or the chained audit log:
+
+```bash
+python3 src/beacon_verify.py --public-key ~/.beacon/keys/ed25519.pub \
+  ~/.beacon/receipts/2026-07-30.ndjson
+```
+
+---
+
 ## The five-step Studio (workshop mode)
 
 This is what a non-technical auditor sees. No terminal. No YAML. No jargon.

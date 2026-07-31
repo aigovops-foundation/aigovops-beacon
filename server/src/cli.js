@@ -127,16 +127,17 @@ async function runVerify(bundlePath) {
   console.log(`Bundle generated at: ${manifest.generated_at_utc}`);
   console.log(`Active key fpr:      ${manifest.active_key_fingerprint}`);
 
-  const pubPath = path.join(
-    bundlePath,
-    "public_keys",
-    `${manifest.active_key_fingerprint}.pem`
-  );
   const crypto = await import("node:crypto");
-  const pubKey = crypto.createPublicKey(fs.readFileSync(pubPath, "utf8"));
-  const raw = pubKey.export({ format: "der", type: "spki" });
-  // Strip 12-byte SPKI prefix for Ed25519 to get the 32 raw bytes.
-  const publicKey = raw.subarray(raw.length - 32);
+  const keys = loadBundleKeys(bundlePath, crypto);
+  if (keys.size === 0) {
+    console.error(`No public keys found in ${bundlePath}/public_keys`);
+    process.exit(1);
+  }
+  console.log(`Public keys:         ${[...keys.keys()].join(", ")}`);
+
+  // Resolve per receipt via its own key_fpr — a bundle spanning a rotation
+  // carries more than one key, and every receipt names the one that signed it.
+  const onlyKey = keys.size === 1 ? [...keys.values()][0] : null;
 
   let ok = 0;
   let bad = 0;
@@ -148,13 +149,41 @@ async function runVerify(bundlePath) {
       .filter(Boolean)) {
       const r = JSON.parse(line);
       const { signature, ...rest } = r;
+      const publicKey = keys.get(signature?.key_fpr) || onlyKey;
       const bytes = Buffer.from(canonicalize(rest), "utf8");
-      if (verify(publicKey, bytes, signature.sig_b64)) ok++;
+      if (publicKey && verify(publicKey, bytes, signature.sig_b64)) ok++;
       else bad++;
     }
   }
   console.log(`Receipts verified: ${ok}, failed: ${bad}`);
   if (bad > 0) process.exit(1);
+}
+
+// Index every public key in the bundle by both fingerprint spellings Beacon
+// producers emit: the 16-hex short form the server writes, and the SSH-style
+// `SHA256:<b64>` form docs/RECEIPT_SCHEMA.md specifies. The filename is
+// indexed too, but the fingerprints are recomputed from the key bytes rather
+// than trusted from the filename.
+function loadBundleKeys(bundlePath, crypto) {
+  const dir = path.join(bundlePath, "public_keys");
+  const out = new Map();
+  if (!fs.existsSync(dir)) return out;
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith(".pem"))) {
+    const pubKey = crypto.createPublicKey(
+      fs.readFileSync(path.join(dir, f), "utf8")
+    );
+    const der = pubKey.export({ format: "der", type: "spki" });
+    // Strip the 12-byte SPKI prefix for Ed25519 to get the 32 raw bytes.
+    const raw = der.subarray(der.length - 32);
+    const digest = crypto.createHash("sha256").update(raw).digest();
+    out.set(digest.toString("hex").slice(0, 16), raw);
+    out.set(
+      "SHA256:" + digest.toString("base64").replace(/=+$/, ""),
+      raw
+    );
+    out.set(path.basename(f, ".pem"), raw);
+  }
+  return out;
 }
 
 main().catch((e) => {

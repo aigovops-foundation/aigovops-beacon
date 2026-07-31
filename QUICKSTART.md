@@ -39,12 +39,52 @@ npm run dev            # http://localhost:5173
 Open `~/.beacon/bundles/bundle-<timestamp>/` and read `VERIFY.md`.
 That's what your auditor gets. They verify it without Beacon.
 
-## Verify a bundle on the command line
+## What your auditor does — one command, nothing installed
+
+The bundle carries its own verifier. Send them the directory (or a zip of it);
+from inside it they run:
+
+```bash
+python3 verify_bundle.py .
+```
+
+```
+beacon-verify: OK — 47 receipts verified (bundle format)
+  manifest: intact (sha256 df9708e7aa774938…, over file)
+  keys:     2 (ab12cd34ef561234, 9f81be22c7a40d55)
+  receipts: 2026-07-29.ndjson (12)
+  receipts: 2026-07-30.ndjson (35)
+```
+
+Exit code 0 means every signature verified against the key that signed it,
+the manifest is intact, and no receipt went missing. Non-zero names what
+failed. Python 3.10+ is the only requirement — `cryptography` is used when
+present, and a pure-Python Ed25519 fallback in the same file covers the
+air-gapped case.
+
+Same check, run from a checkout instead of from inside a bundle:
+
+```bash
+python3 src/beacon_verify.py ~/.beacon/bundles/bundle-2026-05-13T12-30-00-000Z
+```
+
+A single receipt log, rather than a whole bundle, works the same way:
+
+```bash
+python3 src/beacon_verify.py --public-key ~/.beacon/keys/ed25519.pub \
+  ~/.beacon/receipts/2026-05-13.ndjson
+```
+
+## Verify a bundle from the Node CLI
 
 ```bash
 cd server
 node src/cli.js verify ~/.beacon/bundles/bundle-2026-05-13T12-30-00-000Z
 ```
+
+This is the same check from the server side. It is for operators — an auditor
+should use `verify_bundle.py`, which needs no Node, no npm install, and no
+native modules.
 
 ## Wire a real model into receipts
 
