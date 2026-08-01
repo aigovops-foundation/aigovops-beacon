@@ -11,6 +11,21 @@ on:
     - cron: "15 15 * * *"   # daily, staggered across the estate
   workflow_dispatch:
 
+# The CALLER has to grant what the called workflow asks for: a reusable workflow's `permissions`
+# can only ever be a SUBSET of its caller's, never a superset. This repo's default token is the
+# stock "read repository contents" set — which covers `contents` and `metadata` and grants
+# `actions: none`. The watchdog reads Actions history, so it needs `actions: read`, and with no
+# block here every run died before it started:
+#
+#   The workflow is requesting 'actions: read', but is only allowed 'actions: none'.
+#
+# That is a startup_failure, which produces no job, no log and no notification — so this alarm
+# was silently dead from 2026-07-25 while appearing to be configured and "active". The same
+# mistake had already killed this lane in the Library and Omni; fixed there 2026-07-31.
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   red-main:
     uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-red-main-watchdog.yml@main
