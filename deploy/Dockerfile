@@ -24,6 +24,11 @@ COPY server/ ./server/
 COPY checklists/ ./checklists/
 COPY policy/ ./policy/
 
+# The auditor-facing verifier. The exporter copies this into every bundle so
+# the evidence arrives with the tool that checks it; without it, bundles built
+# in a container would tell the auditor to go fetch it themselves.
+COPY src/beacon_verify.py ./src/beacon_verify.py
+
 COPY --from=studio /studio/dist ./server/public
 
 ENV BEACON_DATA_DIR=/data

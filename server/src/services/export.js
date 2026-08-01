@@ -3,17 +3,22 @@
 //
 // Contents:
 //   manifest.json                 inventory, packs, range, key fingerprints
+//   manifest.sha256               sha256sum-format digest of manifest.json
 //   receipts/YYYY-MM-DD.ndjson    raw receipts (copies)
-//   public_keys/<fpr>.pem         PEM-encoded public keys
+//   public_keys/<fpr>.pem         PEM-encoded public keys — all of them, not
+//                                 just the active one, so a bundle spanning a
+//                                 key rotation stays verifiable
 //   policies/                     copies of policy + rego
 //   checklists/                   copies of pack YAMLs
+//   verify_bundle.py              the verifier itself, so the auditor needs
+//                                 nothing but a Python 3 interpreter
 //   VERIFY.md                     human-readable verification steps
 
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { canonicalize } from "../lib/canonical.js";
-import { verify } from "./keys.js";
+import { verify, listPublicKeys } from "./keys.js";
 
 export function createExportService(ctx) {
   const { config, db, activeKey } = ctx;
@@ -45,12 +50,20 @@ export function createExportService(ctx) {
         receiptCounts[path.basename(f)] = countLines(dest);
       }
 
-      // Public key.
-      const pem = toPem(activeKey.publicKey);
-      fs.writeFileSync(
-        path.join(bundleDir, "public_keys", `${activeKey.fingerprint}.pem`),
-        pem
-      );
+      // Public keys — every key on disk, not only the active one.
+      const keys = dedupeKeys([
+        {
+          fingerprint: activeKey.fingerprint,
+          publicKey: activeKey.publicKey,
+        },
+        ...listPublicKeys(config),
+      ]);
+      for (const k of keys) {
+        fs.writeFileSync(
+          path.join(bundleDir, "public_keys", `${k.fingerprint}.pem`),
+          toPem(k.publicKey)
+        );
+      }
 
       // Policies + checklists.
       copyDir(
@@ -99,7 +112,7 @@ export function createExportService(ctx) {
       );
 
       // Verify pass — confirm every receipt in the bundle still verifies.
-      const verifyReport = verifyBundle(bundleDir, activeKey);
+      const verifyReport = verifyBundle(bundleDir, keys);
 
       // Manifest.
       const manifest = {
@@ -112,6 +125,7 @@ export function createExportService(ctx) {
           to_date: toDate || null,
         },
         active_key_fingerprint: activeKey.fingerprint,
+        public_key_fingerprints: keys.map((k) => k.fingerprint),
         signing_algorithm: activeKey.algorithm,
         canonical_form: config.signing.canonicalForm,
         receipt_files: receiptCounts,
@@ -120,28 +134,45 @@ export function createExportService(ctx) {
           "Verify independently with the steps in VERIFY.md. " +
           "Beacon's self-verification is convenience, not proof.",
       };
-      const manifestBytes = Buffer.from(canonicalize(manifest), "utf8");
-      const manifestSha = sha256Hex(manifestBytes);
-      fs.writeFileSync(
-        path.join(bundleDir, "manifest.json"),
-        JSON.stringify(manifest, null, 2)
-      );
+
+      // The digest goes over the bytes we actually write. It is recorded in
+      // `sha256sum -c` format, so it has to be the digest of the file — an
+      // earlier version hashed the manifest's canonical form instead, which
+      // made `sha256sum -c manifest.sha256` fail on every bundle.
+      const manifestJson = JSON.stringify(manifest, null, 2);
+      const manifestSha = sha256Hex(Buffer.from(manifestJson, "utf8"));
+      fs.writeFileSync(path.join(bundleDir, "manifest.json"), manifestJson);
       fs.writeFileSync(
         path.join(bundleDir, "manifest.sha256"),
         `${manifestSha}  manifest.json\n`
       );
-      fs.writeFileSync(path.join(bundleDir, "VERIFY.md"), VERIFY_MD);
+
+      // Ship the verifier with the evidence. `src/beacon_verify.py` is a
+      // single self-contained file by design: stdlib only, with `cryptography`
+      // used when present and a pure-Python Ed25519 fallback when it is not.
+      const verifierBundled = copyVerifier(config, bundleDir);
+      fs.writeFileSync(
+        path.join(bundleDir, "VERIFY.md"),
+        verifierBundled ? VERIFY_MD : VERIFY_MD_NO_VERIFIER
+      );
 
       return {
         bundle_path: bundleDir,
         manifest_sha256: manifestSha,
+        verifier_included: verifierBundled,
+        public_key_fingerprints: keys.map((k) => k.fingerprint),
         verification: verifyReport,
       };
     },
   };
 }
 
-function verifyBundle(bundleDir, activeKey) {
+// Each receipt is checked against the key named by its own
+// `signature.key_fpr`, not against whichever key happens to be active. A
+// bundle whose range spans a rotation is the normal case, not an edge case.
+function verifyBundle(bundleDir, keys) {
+  const byFingerprint = new Map(keys.map((k) => [k.fingerprint, k.publicKey]));
+  const onlyKey = keys.length === 1 ? keys[0].publicKey : null;
   const receiptDir = path.join(bundleDir, "receipts");
   let ok = 0;
   let bad = 0;
@@ -154,8 +185,12 @@ function verifyBundle(bundleDir, activeKey) {
     for (const line of lines) {
       const r = JSON.parse(line);
       const { signature, ...rest } = r;
+      const publicKey =
+        byFingerprint.get(signature?.key_fpr) || onlyKey || null;
       const canonicalBytes = Buffer.from(canonicalize(rest), "utf8");
-      const v = verify(activeKey.publicKey, canonicalBytes, signature.sig_b64);
+      const v =
+        publicKey != null &&
+        verify(publicKey, canonicalBytes, signature.sig_b64);
       if (v) ok++;
       else {
         bad++;
@@ -164,6 +199,24 @@ function verifyBundle(bundleDir, activeKey) {
     }
   }
   return { receipts_verified: ok, receipts_failed: bad, failures };
+}
+
+function dedupeKeys(keys) {
+  const seen = new Map();
+  for (const k of keys) {
+    if (k?.fingerprint && !seen.has(k.fingerprint)) seen.set(k.fingerprint, k);
+  }
+  return [...seen.values()];
+}
+
+// Returns true when the verifier was copied in. It lives in the repo, and an
+// export can legitimately run from an install that does not carry it — in that
+// case the bundle is still valid, VERIFY.md just points elsewhere for the tool.
+function copyVerifier(config, bundleDir) {
+  const src = path.join(config.repoRoot, "src", "beacon_verify.py");
+  if (!fs.existsSync(src)) return false;
+  fs.copyFileSync(src, path.join(bundleDir, "verify_bundle.py"));
+  return true;
 }
 
 function listReceiptFiles(dir, fromDate, toDate) {
@@ -217,42 +270,86 @@ function toPem(publicKey) {
   return k.export({ format: "pem", type: "spki" });
 }
 
-const VERIFY_MD = `# Verifying a Beacon Audit Bundle
+const VERIFY_STEPS_TAIL = `## What the verifier checked
 
-You do not need Beacon to verify this bundle. Any tool that can do
-Ed25519 verification and RFC 8785 JSON Canonicalization will work.
-The steps below use \`openssl\` and a small Node script.
+1. **The manifest is intact** — \`manifest.sha256\` matches \`manifest.json\`.
+2. **Every receipt signature is valid** — for each line of every
+   \`receipts/*.ndjson\`: the \`signature\` block is removed, the remainder is
+   canonicalized per RFC 8785 (JCS), and the Ed25519 signature in
+   \`signature.sig_b64\` is checked against the public key named by that
+   receipt's own \`signature.key_fpr\` in \`public_keys/\`.
+3. **Nothing was dropped** — the receipt counts declared in the manifest match
+   the files actually present.
+4. **No duplicate receipt IDs.**
 
-## 1. Confirm the manifest
+Anything it could not check, it says out loud rather than passing quietly.
 
-\`\`\`bash
-sha256sum -c manifest.sha256
-\`\`\`
+## If it fails
 
-## 2. Confirm every receipt signature
+A non-zero exit means at least one of those checks failed, and the specific
+failures are printed. Stop and contact the system owner. Do not accept the
+bundle on the strength of the manifest's own \`verification\` block — that was
+written by the system that produced the bundle, and is convenience, not proof.
 
-For each line in \`receipts/YYYY-MM-DD.ndjson\`:
+## Spot-check the rest by hand
 
-  1. Parse the JSON.
-  2. Remove the \`signature\` field.
-  3. Canonicalize the remainder per RFC 8785 (JCS).
-  4. Verify the Ed25519 signature in \`signature.sig_b64\` against the
-     public key in \`public_keys/<signature.key_fpr>.pem\`.
+\`inventory.json\`, \`attestations.json\`, and \`gate_decisions.json\` are the
+indexed views. Every row references a \`receipt_id\` you can find in the NDJSON
+files above.
 
-If any signature fails, the bundle is suspect. Stop and contact the
-system owner.
+\`policies/\` and \`checklists/\` contain the rules in force when this bundle was
+generated. Read them. Disagree on paper if you disagree in person.
 
-## 3. Spot-check inventory and attestations
+## Verifying without our tool at all
 
-\`inventory.json\`, \`attestations.json\`, and \`gate_decisions.json\`
-are the indexed views. Every row references a \`receipt_id\` you can
-find in the NDJSON files above.
-
-## 4. Read the human parts
-
-\`policies/\` and \`checklists/\` contain the rules in force when this
-bundle was generated. Read them. Disagree on paper if you disagree in
-person.
+Nothing here is proprietary. The receipts are NDJSON, the canonical form is
+RFC 8785, the signatures are Ed25519, and the public keys are PEM
+SubjectPublicKeyInfo. Any library in any language that does those three things
+will reproduce the same answer, and \`verify_bundle.py\` is short enough to read
+in full before you run it.
 
 — The AiGovOps Foundation
 `;
+
+const VERIFY_MD = `# Verifying a Beacon Audit Bundle
+
+You do not need Beacon, an account, or a network connection to verify this
+bundle. The verifier is in the bundle. From this directory:
+
+\`\`\`bash
+python3 verify_bundle.py .
+\`\`\`
+
+A clean bundle prints \`beacon-verify: OK — <n> receipts verified\` and exits 0.
+Any failure exits non-zero and names what failed.
+
+Python 3.10 or newer is the only requirement. If the \`cryptography\` package
+happens to be installed it is used; if not, the verifier falls back to a
+pure-Python Ed25519 implementation included in the same file, so an air-gapped
+machine with a bare Python still works. It is slower, and that is all.
+
+For a machine-readable report:
+
+\`\`\`bash
+python3 verify_bundle.py . --json
+\`\`\`
+
+${VERIFY_STEPS_TAIL}`;
+
+// Used when the export ran from an install that does not carry the verifier
+// source. The bundle is unaffected; only the "run this" line changes.
+const VERIFY_MD_NO_VERIFIER = `# Verifying a Beacon Audit Bundle
+
+You do not need Beacon or an account to verify this bundle, but this copy did
+not ship with the verifier itself. Get it — a single self-contained file, no
+dependencies beyond Python 3 — and point it at this directory:
+
+\`\`\`bash
+curl -O https://raw.githubusercontent.com/aigovops-foundation/aigovops-beacon/main/src/beacon_verify.py
+python3 beacon_verify.py .
+\`\`\`
+
+A clean bundle prints \`beacon-verify: OK — <n> receipts verified\` and exits 0.
+Any failure exits non-zero and names what failed.
+
+${VERIFY_STEPS_TAIL}`;
