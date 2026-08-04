@@ -28,10 +28,14 @@ primary_region = "sjc"
   min_machines_running = 0
 
   # Health check — Express serves /api/status with no auth required.
-  [http_service.checks]
-    [http_service.checks.alive]
-      grace_period = "10s"
-      interval = "30s"
-      method = "GET"
-      path = "/api/status"
-      timeout = "5s"
+  #
+  # This MUST be an array-of-tables ([[...]]). Written as a named sub-table
+  # ([http_service.checks.alive]) flyctl rejects the whole file with "cannot unmarshal object into
+  # Go struct field HTTPService.http_service.checks of type []*appconfig.ServiceHTTPCheck" — which
+  # only ever appears at deploy time, so the config sat committed and invalid.
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/status"
+    timeout = "5s"
