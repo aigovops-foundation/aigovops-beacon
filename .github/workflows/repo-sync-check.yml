@@ -1,0 +1,26 @@
+name: repo-sync-check
+
+# Adopting the estate's shared repo-sync lane (one `uses:` line — rationale lives in the Library).
+#
+# It asks the question no other lane asks: is anything that matters living ONLY on somebody's
+# laptop? On 2026-08-04 an estate audit found stranded work three times in a single day and every
+# control was green, because every control only ever looked at what had already been pushed.
+#
+# Weekly, not daily: work strands on a scale of days-to-weeks, and a lane that reports the same
+# tidy-up every morning is one people learn to scroll past.
+
+on:
+  schedule:
+    - cron: "0 13 * * 1"   # Mondays 13:00 UTC — before the week's work piles up
+  workflow_dispatch:
+
+# The CALLER must grant what the called workflow asks for: a reusable workflow's permissions can
+# only ever be a SUBSET of its caller's, and the stock default token is `contents`/`metadata` only.
+# Omitting this block is what left the red-main watchdog dead at startup — no job, no log, no
+# notification — across all six estate repos for a week in July 2026.
+permissions:
+  contents: read
+
+jobs:
+  repo-sync:
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-repo-sync-check.yml@main
