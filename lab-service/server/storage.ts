@@ -99,8 +99,7 @@ export function ensureSchema(): void {
 
     CREATE TABLE IF NOT EXISTS checklist_runs (
       id TEXT PRIMARY KEY, tenant_id TEXT NOT NULL, session_id TEXT NOT NULL, lab TEXT NOT NULL,
-      variant TEXT NOT NULL DEFAULT 'default', rules_evaluated INTEGER NOT NULL DEFAULT 0,
-      rules_failed INTEGER NOT NULL DEFAULT 0, result TEXT NOT NULL, receipt_id TEXT,
+      variant TEXT NOT NULL DEFAULT 'default', rules_evaluated TEXT NOT NULL DEFAULT '[]', rules_failed TEXT NOT NULL DEFAULT '[]', result TEXT NOT NULL, receipt_id TEXT,
       created_at INTEGER NOT NULL);
 
     CREATE TABLE IF NOT EXISTS admin_state (
@@ -303,4 +302,4 @@ export const storage = {
 export type Storage = typeof storage;
 
 /** Exported for tests and for `seed.ts`, which needs bulk inserts this interface does not expose. */
-export const _internal = { sqlite, tables: { tenants, sessions, magicLinks, inventory, receipts, bundles, checklistRuns, adminState }, helpers: { and, inArray } };
+export const _internal = { sqlite, tables: { tenants, sessions, magicLinks, inventory, receipts, bundles, checklistRuns, adminState }, helpers: { and, eq, inArray } };

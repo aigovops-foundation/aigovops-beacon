@@ -204,14 +204,19 @@ test("listBundles is tenant-scoped", () => {
 
 /* ----------------------------------------------------------- checklist runs */
 
-test("createChecklistRun accepts the literal routes.ts builds", () => {
+test("createChecklistRun stores RULE IDS, not counts", () => {
+  // Phase 1 declared these as integers; phase 3 proved that wrong. routes.ts passes the same
+  // string[] into both the receipt decision and this row, and a count would destroy the one thing
+  // a trainee needs to see: WHICH rules failed.
   storage.createChecklistRun({
     id: "run-1", tenantId: TENANT, sessionId: "sess-1", lab: "100", variant: "default",
-    rulesEvaluated: 5, rulesFailed: 2, result: "fail", receiptId: "r1", createdAt: now(),
+    rulesEvaluated: ["L100.R1", "L100.R2", "L100.R3"], rulesFailed: ["L100.R2"],
+    result: "fail", receiptId: "r1", createdAt: now(),
   });
   const rows = _internal.sqlite.prepare("select * from checklist_runs").all() as any[];
   assert.equal(rows.length, 1);
-  assert.equal(rows[0].rules_failed, 2);
+  assert.deepEqual(JSON.parse(rows[0].rules_failed), ["L100.R2"], "the failing rule id must survive");
+  assert.deepEqual(JSON.parse(rows[0].rules_evaluated).length, 3);
 });
 
 /* -------------------------------------------------------------- admin state */

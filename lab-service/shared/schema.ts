@@ -171,8 +171,13 @@ export const checklistRuns = sqliteTable("checklist_runs", {
   sessionId: text("session_id").notNull(),
   lab: text("lab").notNull(),
   variant: text("variant").notNull().default("default"),
-  rulesEvaluated: integer("rules_evaluated").notNull().default(0),
-  rulesFailed: integer("rules_failed").notNull().default(0),
+  // RULE IDS, NOT COUNTS. Phase 1 declared these as integers; phase 3 proved that wrong. The
+  // discovery route passes the literal `rulesEvaluated: ["discovery.completeness"], rulesFailed: []`
+  // into the receipt decision, and the checklist route passes the SAME values from evaluateChecklist
+  // into both the decision and createChecklistRun. Storing a count would have silently destroyed
+  // which rules failed — the one thing a trainee needs to see, and the reason the run is recorded.
+  rulesEvaluated: text("rules_evaluated", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+  rulesFailed: text("rules_failed", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
   result: text("result").notNull(),
   receiptId: text("receipt_id"),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),

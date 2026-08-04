@@ -33,6 +33,14 @@ VENDORED_DIR = REPO / "docs" / "js"
 # The modules docs/lab.html and docs/lab-100.html load from our own origin.
 COMPONENTS = ["beacon-lab-bridge.js", "beacon-lab.js"]
 
+# The Lab's signer canonicalizes with a byte-identical copy of the engine's RFC 8785
+# implementation. It is copied rather than imported because the Docker build context is
+# lab-service/, so server/src/ is unreachable at build time. If these two drift, receipts the Lab
+# issues stop verifying for the auditor while still looking valid inside the Lab — silently.
+VENDORED_FILES = [
+    (REPO / "server" / "src" / "lib" / "canonical.js", REPO / "lab-service" / "shared" / "canonical.js"),
+]
+
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -66,4 +74,17 @@ def test_lab_pages_do_not_load_scripts_from_pplx(page: str) -> None:
     ]
     assert not offenders, (
         f"{page} loads executable code from pplx.app:\n  " + "\n  ".join(offenders)
+    )
+
+
+@pytest.mark.parametrize("source,vendored", VENDORED_FILES, ids=lambda p: getattr(p, "name", str(p)))
+def test_vendored_engine_file_matches_source(source, vendored) -> None:
+    """lab-service/shared/canonical.js is byte-identical to the engine's copy."""
+    assert source.exists(), f"source of truth missing: {source}"
+    assert vendored.exists(), f"vendored copy missing: {vendored}"
+    assert _sha256(vendored) == _sha256(source), (
+        f"{vendored.name} has drifted from {source.relative_to(REPO)}.\n"
+        f"Two RFC 8785 implementations that disagree make every Lab receipt unverifiable to the "
+        f"auditor while still looking valid inside the Lab.\n"
+        f"Fix with:  cp {source.relative_to(REPO)} {vendored.relative_to(REPO)}"
     )
