@@ -24,24 +24,26 @@
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%231F5E3A'/%3E%3Ctext x='32' y='40' font-family='system-ui,sans-serif' font-size='22' font-weight='700' fill='%232E7D4F' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E" />
 
-  <!-- v2: API base override — set before bridge loads so bridge reads it. -->
-  <!-- Default points to the current pplx.app host. Override via ?api=...    -->
-  <!-- (e.g. ?api=http://localhost:5050 for local dev, or the future custom  -->
-  <!-- domain https://api.beacon-lab.aigovops.foundation once DNS is live.). -->
+  <!-- v2: API base override — set before bridge loads so bridge reads it.        -->
+  <!-- Default is the Fly-hosted lab on our own domain (cut over 2026-08-04 from   -->
+  <!-- aigovops-beacon-lab.pplx.app). Override via ?api=... for local dev, e.g.    -->
+  <!-- ?api=http://localhost:5050.                                                 -->
+  <!-- NOTE: no "/port/5000" suffix any more — that was a pplx routing quirk where  -->
+  <!-- backend ports were not auto-routed. This host serves the API at the root.    -->
   <script>
     window.__BEACON_API_BASE__ = (
       new URLSearchParams(location.search).get("api") ||
-      "https://aigovops-beacon-lab.pplx.app/port/5000"
+      "https://beacon-lab.aigovops-foundation.com"
     );
   </script>
   <!-- v2: Bridge JS manages anon JWT + invite-token capture. Now served from THIS origin
        (vendored from lab-service/edge/components/, guarded against drift in tests/unit/) rather
        than fetched from aigovops-beacon-lab.pplx.app, which sends no Access-Control-Allow-Origin
        on any path and so was CORS-blocked and never executed.
-       Still behind the v2 flag, but for a different reason now: the bridge opens an anonymous
-       session on import, and only the flag-gated CTA below needs it — there is no point firing
-       that request for every ordinary visitor while the API still lives on pplx.app. When the
-       backend moves (see __BEACON_API_BASE__ above) this can load unconditionally.
+       Still behind the v2 flag. The backend has now moved off pplx.app to our own domain, so the
+       CORS reason is gone — but the OTHER reason stands and is why this stays gated: the bridge
+       opens an anonymous session on import, and only the flag-gated CTA below needs one. Loading
+       it unconditionally would mint a session for every ordinary visitor to this page.
        Note lab-100.html loads the same modules UNGATED, correctly: its <beacon-lab-step>
        elements are the page's actual content, not an experiment. -->
   <script>
@@ -179,7 +181,7 @@
             <h3>Want a hands-on, server-backed lab?</h3>
             <p>The two levels above run entirely in your browser — great for self-study. For a multi-tenant lab with real server-signed receipts, admin pause/resume, evidence history, and magic-link trainee onboarding, launch the live AiGovOps Beacon Lab. One-click demo, no password required.</p>
             <p style="margin-top: var(--space-3);">
-              <a href="https://aigovops-beacon-lab.pplx.app" class="btn-primary btn-sm" target="_blank" rel="noopener">Launch live lab ↗</a>
+              <a href="https://beacon-lab.aigovops-foundation.com" class="btn-primary btn-sm" target="_blank" rel="noopener">Launch live lab ↗</a>
               &nbsp;
               <a href="https://github.com/aigovops-foundation/aigovops-beacon/blob/main/docs/USING_LIVE_LAB.md" target="_blank" rel="noopener">Tutorial ↗</a>
             </p>
@@ -267,7 +269,7 @@
             status.textContent = 'Session ready! Redirecting…';
             // Redirect to the live lab; fall back to the demo login page.
             var dest = data.redirectUrl ||
-              'https://aigovops-beacon-lab.pplx.app';
+              'https://beacon-lab.aigovops-foundation.com';
             window.location.href = dest;
           } catch(e) {
             status.textContent = 'Error: ' + (e.message || 'Unknown error');

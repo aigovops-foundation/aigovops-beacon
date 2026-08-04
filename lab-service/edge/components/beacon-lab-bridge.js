@@ -14,9 +14,12 @@
 
 (function initBridge() {
   // Read API base before the module fires (set in page <script> before this).
+  // NOTE: no "/port/5000" any more. That suffix was a pplx.app routing quirk — backend ports
+  // were not auto-routed there, so /api/* had to be reached through it. The Fly host serves
+  // the API at the root, and keeping the suffix would 404 every call.
   const API_BASE =
     (typeof window !== "undefined" && window.__BEACON_API_BASE__) ||
-    "https://aigovops-beacon-lab.pplx.app/port/5000";
+    "https://beacon-lab.aigovops-foundation.com";
 
   const STORAGE_KEY = "beacon.jwt";
 

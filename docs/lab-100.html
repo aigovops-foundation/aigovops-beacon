@@ -24,11 +24,12 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%231F5E3A'/%3E%3Ctext x='32' y='40' font-family='system-ui,sans-serif' font-size='22' font-weight='700' fill='%232E7D4F' text-anchor='middle'%3E100%3C/text%3E%3C/svg%3E" />
 
   <!-- v2: API base — set before bridge so bridge reads window.__BEACON_API_BASE__. -->
-  <!-- Default points to the current pplx.app host; override via ?api=...    -->
+  <!-- Default is the Fly-hosted lab on our own domain (cut over 2026-08-04);   -->
+  <!-- override via ?api=... . No "/port/5000": that was a pplx routing quirk. -->
   <script>
     window.__BEACON_API_BASE__ = (
       new URLSearchParams(location.search).get("api") ||
-      "https://aigovops-beacon-lab.pplx.app/port/5000"
+      "https://beacon-lab.aigovops-foundation.com"
     );
   </script>
   <!-- v2: Bridge + web component bundle — served from THIS origin, not pplx.app.
@@ -36,7 +37,7 @@
        that host sends no Access-Control-Allow-Origin, so both modules were CORS-blocked and
        `<beacon-lab-step>` below stayed an undefined element — the whole Lab 100 curriculum
        rendered as nothing. Vendored from lab-service/edge/components/ (see the sync guard in
-       tests/unit/). The copy in this repo is also the CURRENT one: the pplx-hosted build still
+       tests/unit/). The copy in this repo is the source of truth: the old pplx-hosted build still
        ships Beacon's retired teal, from before the garden-warm rebrand in #27. -->
   <script type="module" src="./js/beacon-lab-bridge.js"></script>
   <script type="module" src="./js/beacon-lab.js"></script>
