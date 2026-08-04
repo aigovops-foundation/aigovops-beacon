@@ -1,7 +1,10 @@
 # Fly.io app configuration for Beacon Lab backend.
 # Deploy: see docs/deploy-fly.md
 app = "aigovops-beacon-lab"
-primary_region = "sea"
+# sjc, not sea: Fly no longer offers a Seattle region ("region sea not found" on volume create,
+# 2026-08-04). San Jose is the nearest available to the Pacific Northwest and is where
+# aigovops-automation already runs, so the estate stays on one west-coast region.
+primary_region = "sjc"
 
 [build]
   # Use the multi-stage Dockerfile in this directory.
@@ -12,7 +15,7 @@ primary_region = "sea"
   PORT = "5000"
 
 # Persistent SQLite volume — mounted at /data so the DB survives deploys.
-# Create with: flyctl volumes create beacon_data --size 1 --region sea
+# Create with: flyctl volumes create beacon_data --size 1 --region sjc
 [[mounts]]
   source = "beacon_data"
   destination = "/data"

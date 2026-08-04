@@ -33,8 +33,10 @@ RUN mkdir -p /data
 EXPOSE 5000
 
 # Liveness probe used by both Docker and Fly.io.
+# wget, not curl: node:22-alpine ships busybox wget and has NO curl, so the previous CMD could
+# never succeed — the container would report unhealthy forever while serving perfectly.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-  CMD curl -f http://localhost:5000/api/status || exit 1
+  CMD wget -qO- http://localhost:5000/api/status >/dev/null 2>&1 || exit 1
 
 # Entry point — runs the CommonJS bundle emitted by esbuild.
 CMD ["node", "dist/index.cjs"]
