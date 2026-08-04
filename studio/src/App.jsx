@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, NavLink, Link } from "react-router-dom";
+import { Routes, Route, NavLink, Link } from "react-router";
 import Wizard from "./pages/Wizard.jsx";
 import ControlPlane from "./pages/ControlPlane.jsx";
 
