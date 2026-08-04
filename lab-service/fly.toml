@@ -22,6 +22,15 @@ primary_region = "sjc"
 
 [http_service]
   internal_port = 5000
+  # force_https BREAKS THE FIRST CERTIFICATE ISSUANCE. Fly's edge 301s everything on port 80,
+  # including /.well-known/acme-challenge, so the HTTP-01 challenge can never be answered and the
+  # cert sits at "Awaiting certificates" indefinitely — while `flyctl certs show` reports
+  # dns/alpn/http/ownership all configured, which makes it look like DNS is the problem. It is not.
+  # The certificate here issued within seconds of setting this to false, and re-enabling it
+  # afterwards is safe because renewals are handled without the HTTP-01 path.
+  #
+  # If a NEW hostname ever stalls at "Awaiting certificates": set this false, deploy, wait for
+  # `certs show` to report Ready, then set it back and deploy again. Do not go hunting through DNS.
   force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
