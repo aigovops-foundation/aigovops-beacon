@@ -27,10 +27,31 @@ primary_region = "sjc"
   # cert sits at "Awaiting certificates" indefinitely — while `flyctl certs show` reports
   # dns/alpn/http/ownership all configured, which makes it look like DNS is the problem. It is not.
   # The certificate here issued within seconds of setting this to false, and re-enabling it
-  # afterwards is safe because renewals are handled without the HTTP-01 path.
+  # afterwards is safe because RENEWAL goes through DNS-01, not HTTP-01 — see the DNS note below.
   #
   # If a NEW hostname ever stalls at "Awaiting certificates": set this false, deploy, wait for
   # `certs show` to report Ready, then set it back and deploy again. Do not go hunting through DNS.
+  #
+  # DNS THIS HOSTNAME DEPENDS ON (Cloudflare, zone aigovops-foundation.com, all grey-clouded).
+  # None of it lives in this repo, so it is recorded here — deleting any of it breaks the site or
+  # its certificate, and nothing in the codebase would tell you why:
+  #
+  #   CNAME beacon-lab                  -> le39ylr.aigovops-beacon-lab.fly.dev
+  #   TXT   _fly-ownership.beacon-lab   -> app-le39ylr
+  #   CNAME _acme-challenge.beacon-lab  -> beacon-lab.aigovops-foundation.com.le39ylr.flydns.net
+  #
+  # THE _acme-challenge DELEGATION IS LOAD-BEARING. DO NOT TIDY IT AWAY. It looks like leftover
+  # scaffolding — Fly describes it as "only needed if you want to generate the certificate before
+  # directing traffic" — and it served NO TXT while the first order was in flight, which is exactly
+  # what makes it look dead. Fly provisions the TXT afterwards: verified 2026-08-04 16:47Z answering
+  # "RRdQJ_5LHxewtiFl8rAyMCBGz4-S6o_CMPcLNGY65tQ". It is the live DNS-01 path, and with force_https
+  # on it is the ONLY validation path Fly can use unattended, so removing it would break renewal
+  # silently and you would find out when the cert expired.
+  #
+  # CORRECTION TO THE HISTORY: commit 9c5bab1 ("document why force_https blocks the FIRST
+  # certificate", PR #44) states in its message that this delegation "serves NO TXT" and that DNS-01
+  # is "a dead end". That was measured mid-order and is WRONG. `git blame` on these lines lands on
+  # that commit, so the correction is here rather than only in the PR thread.
   force_https = true
   auto_stop_machines = "stop"
   auto_start_machines = true
