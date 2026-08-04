@@ -31,9 +31,15 @@
       "https://aigovops-beacon-lab.pplx.app/port/5000"
     );
   </script>
-  <!-- v2: Bridge + web component bundle. -->
-  <script type="module" src="https://aigovops-beacon-lab.pplx.app/port/5000/components/beacon-lab-bridge.js"></script>
-  <script type="module" src="https://aigovops-beacon-lab.pplx.app/port/5000/components/beacon-lab.js"></script>
+  <!-- v2: Bridge + web component bundle — served from THIS origin, not pplx.app.
+       Loading them cross-origin from aigovops-beacon-lab.pplx.app never worked from Pages:
+       that host sends no Access-Control-Allow-Origin, so both modules were CORS-blocked and
+       `<beacon-lab-step>` below stayed an undefined element — the whole Lab 100 curriculum
+       rendered as nothing. Vendored from lab-service/edge/components/ (see the sync guard in
+       tests/unit/). The copy in this repo is also the CURRENT one: the pplx-hosted build still
+       ships Beacon's retired teal, from before the garden-warm rebrand in #27. -->
+  <script type="module" src="./js/beacon-lab-bridge.js"></script>
+  <script type="module" src="./js/beacon-lab.js"></script>
 
   <link rel="canonical" href="https://aigovops-foundation.github.io/aigovops-beacon/lab-100.html">
   <meta property="og:site_name" content="AiGovOps Foundation">
