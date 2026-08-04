@@ -175,8 +175,24 @@ function checkNotPaused(req: Request, res: Response, next: NextFunction) {
 // ---------------------------------------------------------------------------
 
 export async function registerRoutes(httpServer: Server, app: Express): Promise<Server> {
-  // Bootstrap with ADMIN_PASSWORD from env (default "beacon" for local dev)
-  const adminPassword = process.env.ADMIN_PASSWORD || "beacon";
+  // ADMIN_PASSWORD has NO fallback in production. The convenience default below is genuinely
+  // useful on a laptop, but this service is reachable from the public internet the moment it is
+  // deployed, and "beacon" is written in this file — shipping it would put a known password on an
+  // admin console that can pause the lab, mint magic links and reset every cohort's work.
+  //
+  // Unset in production is a SAFE state, not a broken one: bootstrap() then stores no password
+  // hash at all, and verifyPassword() returns false for an empty hash, so admin login is simply
+  // disabled. Setting the secret later works exactly as expected — the next boot finds no hash and
+  // adopts it. That ordering is why bootstrap must skip rather than hash an empty string: a stored
+  // hash of "" would look like "already configured" and silently ignore the real password forever.
+  const isProd = process.env.NODE_ENV === "production";
+  const adminPassword = process.env.ADMIN_PASSWORD ?? (isProd ? "" : "beacon");
+  if (isProd && !adminPassword) {
+    console.warn(
+      "[admin] ADMIN_PASSWORD is not set — the admin console is DISABLED. " +
+      "Set it (e.g. `flyctl secrets set ADMIN_PASSWORD=...`) and restart; the next boot will adopt it.",
+    );
+  }
   bootstrap(adminPassword);
 
   // -------------------------------------------------------------------------

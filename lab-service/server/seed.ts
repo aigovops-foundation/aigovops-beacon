@@ -287,8 +287,11 @@ export function bootstrap(adminPassword: string): void {
       .run();
   }
 
+  // An EMPTY adminPassword means "not configured" and must store nothing. Hashing "" would leave a
+  // password hash that no input can ever satisfy, while looking configured to the check below — so
+  // a real ADMIN_PASSWORD set afterwards would be ignored on every future boot.
   const state = storage.getAdminState();
-  if (!state.passwordHash) {
+  if (!state.passwordHash && adminPassword) {
     const { hash, salt } = hashPassword(adminPassword);
     storage.updateAdminPassword(hash, salt);
   }

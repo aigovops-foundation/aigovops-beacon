@@ -74,6 +74,23 @@ test("bootstrap does NOT undo an admin password rotation", () => {
   assert.ok(!verifyPassword("beacon", st.passwordSalt, st.passwordHash), "the seed password must NOT work again");
 });
 
+test("an EMPTY admin password stores NO hash, and a real one set later is adopted", () => {
+  // The production path: deployed with ADMIN_PASSWORD unset, so the admin console is disabled
+  // rather than guarding a password written in the source. Hashing "" instead would look
+  // configured and make every later ADMIN_PASSWORD a no-op — locking the console permanently.
+  bootstrap("");
+  const st = storage.getAdminState();
+  assert.equal(st.passwordHash, "", "no hash may be stored for an unset password");
+  assert.equal(verifyPassword("", st.passwordSalt, st.passwordHash), false, "admin login is disabled");
+  assert.equal(verifyPassword("beacon", st.passwordSalt, st.passwordHash), false);
+
+  // Operator sets the secret and the machine restarts.
+  bootstrap("set-after-the-fact");
+  const after = storage.getAdminState();
+  assert.ok(verifyPassword("set-after-the-fact", after.passwordSalt, after.passwordHash),
+    "the password set after an unconfigured boot must be adopted");
+});
+
 test("bootstrap is idempotent — inventory is not duplicated across boots", () => {
   bootstrap("beacon");
   const n = storage.listInventory("aigovops-foundation").length;
