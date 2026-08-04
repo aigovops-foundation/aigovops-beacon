@@ -21,10 +21,20 @@
 > `aigovops-beacon-lab.pplx.app` instance. If that preview app is torn down, the lab backend
 > is gone. Recovering the source from there is the prerequisite for everything below.
 >
-> Also note `api.beacon-lab.aigovops.foundation` (and `beacon.aigovops.foundation`) are
-> currently **NXDOMAIN**. The `aigovops.foundation` zone is registered at **Name.com**, not
-> Cloudflare — so the estate's headless `cloudflare-token` cannot create these records. That
-> step needs Name.com access.
+> **DNS is no longer a blocker** (decided 2026-08-04). The target moved off
+> `aigovops.foundation` — that zone is registered at **Name.com**, so the estate's headless
+> `cloudflare-token` could not touch it — onto **`aigovops-foundation.com`**, which is active
+> in Cloudflare and manageable by that token with no human in the loop. The record does not
+> exist yet on purpose: pointing it at a Fly app that has not been deployed would just create
+> a dangling CNAME. Create it as part of the deploy, per "Custom domain" below.
+>
+> **Why a single-label host** (`beacon-lab.…` and not `api.beacon-lab.…`): every record in
+> this zone is proxied through Cloudflare, and Cloudflare's Universal SSL covers only
+> `aigovops-foundation.com` and `*.aigovops-foundation.com` — one level. A two-label host like
+> `api.beacon-lab.aigovops-foundation.com` is NOT covered and would need paid Advanced
+> Certificate Manager. It also matches the zone's existing convention (`www`, `community`).
+>
+> So the remaining prerequisite is exactly one thing: **recover the missing source.**
 
 One-page operator runbook. Assumes `flyctl` is installed (`brew install flyctl`
 or https://fly.io/docs/hands-on/install-flyctl/).
@@ -71,20 +81,42 @@ That's it — Fly builds the Docker image, runs the health check
 
 ---
 
-## Custom domain: api.beacon-lab.aigovops.foundation
+## Custom domain: beacon-lab.aigovops-foundation.com
 
-1. In your DNS provider, add a CNAME:
-   ```
-   api.beacon-lab.aigovops.foundation  →  <app-name>.fly.dev
+The zone is on Cloudflare and the estate's `cloudflare-token` can create this record headlessly
+(`core.secrets.BROKER.resolve("cloudflare-token")` → Cloudflare API). No registrar login needed.
+
+**Order matters here.** Create the record *grey-clouded* (`proxied: false`) first. While a record
+is proxied, Cloudflare terminates TLS itself and Fly's ACME validation cannot see the origin, so
+`flyctl certs add` will sit unvalidated. Issue the Fly cert first, then turn the proxy on if you
+want it — which the rest of this zone does.
+
+1. Create the CNAME, DNS-only to start:
+   ```bash
+   # proxied=false  ← important; flip to true only after step 3 reports Ready
+   curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+     -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" \
+     -d '{"type":"CNAME","name":"beacon-lab","content":"aigovops-beacon-lab.fly.dev",
+          "ttl":300,"proxied":false}'
    ```
 2. Add the certificate in Fly:
    ```bash
-   flyctl certs add api.beacon-lab.aigovops.foundation
+   flyctl certs add beacon-lab.aigovops-foundation.com
    ```
-3. Follow the DNS challenge instructions Fly prints to validate.
-4. Update `CORS_ALLOWED_ORIGINS` if you add more allowed origins:
+3. Wait for validation, then confirm:
    ```bash
-   flyctl secrets set CORS_ALLOWED_ORIGINS="https://aigovops-foundation.github.io,https://aigovops.foundation"
+   flyctl certs show beacon-lab.aigovops-foundation.com   # want: Status = Ready
+   ```
+4. Optionally set `proxied: true` (PATCH the record) so it matches `www` and `community`. Use
+   Cloudflare SSL mode **Full (strict)** — Fly now has a real cert, so there is no reason to
+   accept anything weaker.
+5. Point the page at it — `docs/lab.html` sets `window.__BEACON_API_BASE__`, which still defaults
+   to the pplx.app host. Switch it only once step 3 is Ready, or the v2 experiment breaks for
+   testers with nothing gained.
+6. `CORS_ALLOWED_ORIGINS` must list the *callers*, not this host — i.e. where `lab.html` is
+   served from:
+   ```bash
+   flyctl secrets set CORS_ALLOWED_ORIGINS="https://aigovops-foundation.github.io"
    ```
 
 ---

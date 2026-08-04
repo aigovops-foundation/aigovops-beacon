@@ -13,9 +13,9 @@ A single bash CLI that brings the entire v2 stack up or down with one command.
 
 | Layer        | Tech                       | Default host                                        |
 |--------------|----------------------------|------------------------------------------------------|
-| `backend`    | Fly.io app                 | `api.beacon-lab.aigovops.foundation`                 |
+| `backend`    | Fly.io app                 | `beacon-lab.aigovops-foundation.com`                 |
 | `pplx`       | pplx.app published site    | `aigovops-beacon-lab.pplx.app` (current host)        |
-| `edge`       | Cloudflare Worker          | `edge.beacon.aigovops.foundation`                    |
+| `edge`       | Cloudflare Worker          | `beacon-lab-edge.aigovops-foundation.com`                    |
 | `pages-v2`   | GitHub Pages flag flip     | `docs/lab.html` (sets `window.__BEACON_V2_DEFAULT__`)|
 | `cron`       | GitHub Action              | `.github/workflows/sync-from-backend.yml`            |
 
