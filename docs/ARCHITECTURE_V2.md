@@ -13,7 +13,7 @@ We currently ship the auditor lab as two disconnected products:
 | Surface | URL | What it is | What it can't do |
 |---|---|---|---|
 | **Static lab** | `aigovops-foundation.github.io/aigovops-beacon/lab.html` (+ `lab-100.html`, `lab-200.html`) | Vanilla HTML/JS, `tweetnacl` in-browser, localStorage progress | No shared receipts, no admin oversight, signing is play-money, no audit trail across users, no resume across devices |
-| **Live lab service** | `aigovops-beacon-lab.pplx.app` | Express + React + SQLite, real Ed25519 per tenant, real receipts, admin console, magic links | Hidden behind login + a `pplx.app` URL the public can't index; no SEO; one tab loses progress if the bundle hash rolls |
+| **Live lab service** | `beacon-lab.aigovops-foundation.com` (was `aigovops-beacon-lab.pplx.app` until 2026-08-04) | Express + React + SQLite, real Ed25519 per tenant, real receipts, admin console, magic links | Hidden behind login + a `pplx.app` URL the public can't index; no SEO; one tab loses progress if the bundle hash rolls |
 
 The bridge between them is a markdown tutorial. That's not architecture, that's a hyperlink.
 
@@ -155,7 +155,7 @@ Six steps, each shippable independently and reversible:
 
 | # | Step | Effort | Reversible? | Why now |
 |---|---|---|---|---|
-| 1 | Move backend from `pplx.app` to **Fly.io** (custom domain `api.beacon-lab.aigovops.foundation`) | half-day | yes — `pplx.app` stays up | Solves the cookie-stripping + cold-start + bundle-hash problems we patched tonight. The pplx.app sandbox is great for prototyping, not the long-term home. |
+| 1 | ~~Move backend from `pplx.app` to **Fly.io**~~ — **DONE 2026-08-04**, live at `https://beacon-lab.aigovops-foundation.com` (single-label host, not `api.beacon-lab.…` — Universal SSL covers only one level; see `lab-service/docs/deploy-fly.md`). The public lab was cut over the same day (PR #46). | — | shipped | The pplx sandbox turned out to hold the ONLY copy of the backend source; it had to be rebuilt. That is why this stopped being an optimisation and became urgent. |
 | 2 | Add **CORS + JWT** mode to the backend (in addition to cookie sessions) | half-day | yes — additive | Required for Pages to call the API directly without the same-origin gymnastics. |
 | 3 | Build the **edge worker** (Cloudflare) for CORS + caching | half-day | yes — Pages can fall back to direct API calls | Cuts latency for `/api/status` from ~1s cold to ~30ms cached; lets us throttle abuse without bloating the Express app. |
 | 4 | Carve out **`<beacon-lab-step>` web components** from the React app | 1-2 days | yes — old Pages HTML stays as fallback | The hardest step but the highest leverage; everything downstream depends on it. |

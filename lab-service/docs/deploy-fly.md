@@ -1,40 +1,35 @@
 # Deploying Beacon Lab to Fly.io
 
-> ## ⛔ STATUS 2026-08-04 — this cannot be deployed from this repo yet
+> ## ✅ STATUS 2026-08-04 — DEPLOYED AND LIVE
 >
-> **The service source is incomplete here.** `flyctl deploy` fails on the Dockerfile's very
-> first build step, `COPY package.json package-lock.json ./`, because neither file exists.
-> `lab-service/package.json` has **never been committed on any branch** in this repo's history
-> (checked all six branches and the full log) — it is not a `.gitignore` accident, it was
-> simply never pushed.
+> **https://beacon-lab.aigovops-foundation.com** — Fly app `aigovops-beacon-lab`, region `sjc`,
+> 1 GB encrypted volume `beacon_data`, ~80 MB image. The public lab (`docs/lab.html`,
+> `docs/lab-100.html`) was cut over to it the same day.
 >
-> Even with a manifest, the build would still fail: `server/index.ts` and `server/routes.ts`
-> import six sibling modules that are not here —
-> `./storage`, `./seed`, `./beacon`, `./crypto`, `./static`, `./loginRateLimit` — plus the
-> `@shared/schema` alias. Only `index.ts`, `jwt.ts` and `routes.ts` are tracked. Third-party
-> deps (`express`, `drizzle-orm`, `vite`, `esbuild`) are undeclared.
+> This page previously opened with a ⛔ saying the service could not be deployed from this repo:
+> `package.json` and six server modules had never been committed anywhere, and the only complete
+> copy was the running `aigovops-beacon-lab.pplx.app` sandbox. That is history now — the service
+> was **rebuilt** from what was committed (`routes.ts`/`index.ts`/`jwt.ts` define the API surface;
+> the 22 `storage.*` call sites constrain the schema) and the recovery hunt is CLOSED. Don't re-run
+> it.
 >
-> What IS committed is the deployment scaffolding: this runbook, `Dockerfile`, `fly.toml`,
-> the Cloudflare worker + `wrangler.toml`, the edge components, and the smoke script.
+> **Two consequences that never go away:** the signing private keys were lost with the sandbox, so
+> receipts issued by the OLD deployment can never verify against this one; and the
+> `beacon-foundation-inc` inventory was unrecoverable, so those rows are authored for the rebuild
+> and labelled as such in `seed.ts`.
 >
-> **Risk worth naming:** the only known complete copy of this backend is the running
-> `aigovops-beacon-lab.pplx.app` instance. If that preview app is torn down, the lab backend
-> is gone. Recovering the source from there is the prerequisite for everything below.
+> **`ADMIN_PASSWORD` is deliberately UNSET**, so the admin console is disabled (login 401s) rather
+> than shipping the literal `"beacon"` that used to be the fallback in `routes.ts`. Set it and
+> restart; bootstrap adopts it because no hash exists yet.
 >
-> **DNS is no longer a blocker** (decided 2026-08-04). The target moved off
-> `aigovops.foundation` — that zone is registered at **Name.com**, so the estate's headless
-> `cloudflare-token` could not touch it — onto **`aigovops-foundation.com`**, which is active
-> in Cloudflare and manageable by that token with no human in the loop. The record does not
-> exist yet on purpose: pointing it at a Fly app that has not been deployed would just create
-> a dangling CNAME. Create it as part of the deploy, per "Custom domain" below.
+> **Why a single-label host** (`beacon-lab.…`, not `api.beacon-lab.…`): every record in this zone is
+> proxied, and Cloudflare Universal SSL covers only `aigovops-foundation.com` and
+> `*.aigovops-foundation.com` — one level. A two-label host would need paid Advanced Certificate
+> Manager. It also matches the zone's convention (`www`, `community`).
 >
-> **Why a single-label host** (`beacon-lab.…` and not `api.beacon-lab.…`): every record in
-> this zone is proxied through Cloudflare, and Cloudflare's Universal SSL covers only
-> `aigovops-foundation.com` and `*.aigovops-foundation.com` — one level. A two-label host like
-> `api.beacon-lab.aigovops-foundation.com` is NOT covered and would need paid Advanced
-> Certificate Manager. It also matches the zone's existing convention (`www`, `community`).
->
-> So the remaining prerequisite is exactly one thing: **recover the missing source.**
+> **Read "Traps" below before deploying anything new here.** Four things in this stack fail only at
+> deploy time, and one of them makes a perfectly healthy setup look like a DNS problem for half an
+> hour.
 
 One-page operator runbook. Assumes `flyctl` is installed (`brew install flyctl`
 or https://fly.io/docs/hands-on/install-flyctl/).
@@ -154,3 +149,36 @@ next step if you need durability guarantees beyond Fly volume snapshots.
 ```bash
 flyctl logs
 ```
+
+---
+
+## Traps — every one of these cost real time on 2026-08-04
+
+**1. `force_https` blocks the FIRST certificate.** Fly's edge 301s everything on port 80 including
+`/.well-known/acme-challenge`, so the HTTP-01 challenge can never be answered. The cert sits at
+`Awaiting certificates` while `flyctl certs show` reports `dns_configured`, `alpn_configured`,
+`http_configured` and `ownership_txt_configured` **all true**, and `flyctl certs list` says
+**"Issued"** while `certs show --json` has `certificates: []`. Every signal points at DNS. DNS is
+fine. Set `force_https = false`, deploy, wait for `Ready`, set it back, deploy again. **Do not go
+hunting through DNS.**
+
+**2. The `_acme-challenge` CNAME is load-bearing — never tidy it away.** Fly documents it as "only
+needed if you want to generate the certificate before directing traffic", and it serves NO TXT while
+an order is in flight, so it looks like dead scaffolding. Fly provisions the TXT afterwards. With
+`force_https` on it is the only validation path Fly can use unattended, so deleting it breaks
+**renewal** silently — you find out when the certificate expires. All three records are listed in
+`fly.toml`.
+
+**3. better-sqlite3 will compile from source, and the base image has no toolchain.** There is no musl
+prebuild (so alpine fails), and 13.0.2 had none matching `node:22-slim` either — `prebuild-install`
+falls back to `node-gyp` *silently*, ending in `find Python … could not be run`. The Dockerfile
+installs `python3/make/g++` in the BUILDER only, compiles once, prunes to production, and the runtime
+stage copies `node_modules`. Don't add a second `npm ci` to the runtime stage; that compiles twice and
+puts a compiler in the shipped image.
+
+**4. `[http_service.checks.alive]` is invalid.** It must be `[[http_service.checks]]`. Written as a
+named sub-table, flyctl rejects the entire file with *"cannot unmarshal object into Go struct field
+HTTPService.http_service.checks"* — which only ever appears at deploy time.
+
+**Also:** the region is `sjc`. `sea` no longer exists (`region sea not found`), and the API is served
+at the ROOT — there is no `/port/5000` prefix here; that was a pplx routing quirk.
