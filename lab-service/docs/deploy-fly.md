@@ -51,7 +51,7 @@ flyctl auth login
 flyctl launch --no-deploy
 
 # 3. Create the persistent SQLite volume (1 GB is plenty for lab use)
-flyctl volumes create beacon_data --size 1 --region sea
+flyctl volumes create beacon_data --size 1 --region sjc
 
 # 4. Generate RS256 key pair for JWT signing
 openssl genrsa -out jwt.key 2048
