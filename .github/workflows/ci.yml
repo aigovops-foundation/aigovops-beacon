@@ -80,7 +80,11 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          node-version: 20
+          # 22, not 20, because react-router 8 declares `engines: node >=22.22.0`. Clearing the
+          # react-router advisories required 8.x (see studio/package.json), and 8.x is the first
+          # line that carries that floor. This bump is scoped to the Studio build only — the
+          # server matrix and the runtime image stay on 20.
+          node-version: 22
           cache: npm
           cache-dependency-path: studio/package-lock.json
       # `npm ci` needs the lockfile, and so did the cache line above — which is why this job

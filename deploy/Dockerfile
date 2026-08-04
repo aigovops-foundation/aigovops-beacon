@@ -4,7 +4,9 @@
 # and copies the bundle into /app/server/public so one process serves
 # both API and UI.
 
-FROM node:20-alpine AS studio
+# 22, not 20, because react-router 8 declares `engines: node >=22.22.0`. Scoped to this build
+# stage on purpose: the runtime stage below still builds better-sqlite3 and stays on node:20.
+FROM node:22-alpine AS studio
 WORKDIR /studio
 COPY studio/package.json studio/package-lock.json* ./
 RUN npm install --no-audit --no-fund

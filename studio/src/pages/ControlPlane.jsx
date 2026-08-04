@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router";
 import { api } from "../lib/api.js";
 
 // The Control Plane is for power users. Everything the wizard does,
