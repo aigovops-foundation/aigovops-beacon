@@ -18,3 +18,9 @@ data.db-journal
 # beacon-v2 CLI — local state + secrets, never commit
 .beacon-v2-state.json
 .beacon-v2.env
+
+# local sqlite used by tests + `npm run dev` (the Fly volume is /data)
+.data/
+*.db
+*.db-shm
+*.db-wal
