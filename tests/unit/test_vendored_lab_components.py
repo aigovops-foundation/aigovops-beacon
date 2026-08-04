@@ -58,14 +58,61 @@ def test_vendored_copy_matches_source(name: str) -> None:
     )
 
 
+PPLX_URL = "https://aigovops-beacon-lab.pplx.app"
+
+# Files that must not point a browser at the retired vendor sandbox. The web components are the
+# source of truth; docs/js/ holds their vendored copies (guarded above).
+CUTOVER_FILES = [
+    "docs/lab.html",
+    "docs/lab-100.html",
+    "docs/js/beacon-lab.js",
+    "docs/js/beacon-lab-bridge.js",
+    "lab-service/edge/components/beacon-lab.js",
+    "lab-service/edge/components/beacon-lab-bridge.js",
+]
+
+
+def _uncommented(path: Path) -> list[str]:
+    """Lines with comment-only content stripped out.
+
+    The cutover deliberately KEPT the pplx history in comments — why the /port/5000 suffix
+    existed, why the components are vendored, why Web Storage has a fallback. Deleting that
+    context to satisfy a substring search would trade real explanation for a green test, so the
+    check is on what a browser executes, not on what a reader sees.
+    """
+    out = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        t = line.strip()
+        if t.startswith(("//", "*", "/*", "<!--", "#")):
+            continue
+        out.append(line)
+    return out
+
+
+@pytest.mark.parametrize("rel", CUTOVER_FILES)
+def test_no_live_url_points_at_the_retired_pplx_host(rel: str) -> None:
+    """Cut over 2026-08-04 to https://beacon-lab.aigovops-foundation.com (Fly).
+
+    The lab backend used to live at aigovops-beacon-lab.pplx.app — a vendor sandbox that was the
+    ONLY copy of its source until it had to be rebuilt. Nothing we ship may send a browser back
+    there: the host is not ours, sends no Access-Control-Allow-Origin, and is not guaranteed to
+    exist tomorrow.
+
+    Note the new base has NO "/port/5000" suffix. That was a pplx routing quirk (backend ports
+    were not auto-routed); keeping it would 404 every API call.
+    """
+    path = REPO / rel
+    assert path.exists(), f"missing: {rel}"
+    offenders = [ln.strip() for ln in _uncommented(path) if PPLX_URL in ln]
+    assert not offenders, (
+        f"{rel} still points at the retired pplx host:\n  " + "\n  ".join(offenders)
+    )
+
+
 @pytest.mark.parametrize("page", ["lab.html", "lab-100.html"])
 def test_lab_pages_do_not_load_scripts_from_pplx(page: str) -> None:
-    """No lab page may fetch executable code from pplx.app.
-
-    The API base is deliberately NOT covered here — the backend still lives on pplx.app until
-    lab-service can be deployed (see lab-service/docs/deploy-fly.md). This guards the narrower
-    and already-fixed thing: code delivery must come from an origin we control.
-    """
+    """No lab page may fetch executable CODE from pplx.app — narrower than the check above,
+    and kept because code delivery from an origin we do not control is its own class of bug."""
     html = (REPO / "docs" / page).read_text(encoding="utf-8")
     offenders = [
         line.strip()

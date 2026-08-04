@@ -4,7 +4,7 @@ The Framework Lab pages on this site (`lab.html`, `lab-100.html`, `lab-200.html`
 
 If you want the *same* curriculum backed by a **real multi-tenant service** with admin controls, server-side signing keys, magic-link trainee invites, and a database of receipts and bundles, use the live lab:
 
-> **[https://aigovops-beacon-lab.pplx.app](https://aigovops-beacon-lab.pplx.app)**
+> **[https://beacon-lab.aigovops-foundation.com](https://beacon-lab.aigovops-foundation.com)**
 
 The live lab is the Express + React app under [`lab-service/`](../lab-service/) deployed on Perplexity Computer. Source for everything below: [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) and [`lab-service/client/src/pages/`](../lab-service/client/src/pages/).
 
@@ -24,7 +24,7 @@ All three use the same `__Host-beacon_session` HttpOnly cookie under the hood, s
 
 ## Step 1 — Launch the demo (60 seconds)
 
-1. Open **[https://aigovops-beacon-lab.pplx.app](https://aigovops-beacon-lab.pplx.app)** in a fresh tab.
+1. Open **[https://beacon-lab.aigovops-foundation.com](https://beacon-lab.aigovops-foundation.com)** in a fresh tab.
 2. Scroll past the *Sign in* card to the second card: **"No credentials? Try the demo."**
 3. Click **Launch demo lab**.
 4. You land at `/#/lab` with the header **"AiGovOps Beacon Lab — AiGovOps Foundation · Demo trainee"** and a session key fingerprint like `ed25519:4fbee7bb…`.
@@ -125,10 +125,10 @@ You're likely on a stale browser tab from before a recent client deploy. Hard re
 The sandbox cold-started. The client retries automatically (3 attempts, 600ms then 1500ms backoff). If it still fails after a few seconds, wait 10 seconds and click again.
 
 ### Login looks like it worked but bounces back to `/`
-You're in an embedded preview iframe (e.g. inside a chat window) that blocks third-party cookies. Open `https://aigovops-beacon-lab.pplx.app` in a full browser tab and try again.
+You're in an embedded preview iframe (e.g. inside a chat window) that blocks third-party cookies. Open `https://beacon-lab.aigovops-foundation.com` in a full browser tab and try again.
 
 ### Admin password rejected
-The global anti-brute-force counter caps at 30 failed admin login attempts per 15-minute window across all clients (the pplx.app proxy collapses many real clients into one upstream IP, so per-IP limits aren't safe). A successful login from anyone resets the counter immediately.
+The global anti-brute-force counter caps at 30 failed admin login attempts per 15-minute window across all clients (the limit is global rather than per-IP: proxies and shared networks collapse many real clients into one upstream IP, so a per-IP cap is not safe). A successful login from anyone resets the counter immediately.
 
 ---
 
