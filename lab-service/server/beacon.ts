@@ -55,7 +55,34 @@ export interface Rule {
 
 const meta = (i: InventoryItem): Record<string, unknown> =>
   (i.metadata ?? {}) as Record<string, unknown>;
-const str = (i: InventoryItem, k: string): string => String(meta(i)[k] ?? "").trim();
+
+/**
+ * Read a field from an item, COLUMN FIRST, then `metadata`.
+ *
+ * The order is load-bearing. The live service's `GET /api/inventory` returns `version`,
+ * `ownerEmail`, `useCase` and `model` as top-level columns, with `metadata` holding only the
+ * extras (`dataset`, `piiHandling`, …). An earlier version of this file read metadata ONLY, so
+ * every real inventory row failed L100.R2 (version pinned) and L100.R4 (owner email) — Lab 100
+ * would have marked a perfectly governed inventory as non-compliant, which is worse than failing
+ * loudly because the trainee would believe it.
+ *
+ * Caught by evaluating the LIVE Lab 100 checklist against the LIVE inventory: it returns
+ * `overall: "pass"` with zero findings, over items whose metadata contains neither field. The
+ * regression test in beacon.test.ts uses that same live-shaped row.
+ *
+ * Both sources are still consulted, because the L200 rules genuinely live in metadata
+ * (`biasAssessment`, `dpiaCompleted`, `piiHandling`) and custom policy-eval rules may use either.
+ */
+const str = (i: InventoryItem, k: string): string => {
+  // An EMPTY column falls back to metadata, not just a null one. The four columns were added to an
+  // existing table with `DEFAULT ''`, so every pre-migration row now has empty strings where its
+  // real values are still sitting in metadata. `??` alone would stop at the empty string and
+  // report the field as missing — a migrated database would fail Lab 100 on rows that had always
+  // passed. Caught by storage.migrate.test.ts.
+  const col = String((i as unknown as Record<string, unknown>)[k] ?? "").trim();
+  if (col) return col;
+  return String(meta(i)[k] ?? "").trim();
+};
 
 /**
  * Level 100 — id, description and controlRef captured VERBATIM from the live service's
@@ -74,7 +101,10 @@ export const RULES_LEVEL_100: Rule[] = [
     description: "Model version is pinned (never 'latest').",
     controlRef: "NIST-AI-RMF:MANAGE-1.3",
     evaluate: (i) => {
-      const v = str(i, "modelVersion") || str(i, "version");
+      // `version` first: it is the column the live service returns. `modelVersion` is only a
+      // fallback for metadata-carried rows (custom imports, and the older seed shape) — checking
+      // it first would let a stale metadata copy overrule the column that actually holds the pin.
+      const v = str(i, "version") || str(i, "modelVersion");
       return v.length > 0 && v.toLowerCase() !== "latest";
     },
   },

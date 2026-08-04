@@ -134,6 +134,45 @@ test("a clean item passes Lab 100; each rule fails for its own documented reason
   }
 });
 
+test("a LIVE-SHAPED inventory row passes Lab 100 (fields are columns, not metadata)", () => {
+  // THE REGRESSION. Captured verbatim from the live GET /api/inventory on 2026-08-04: version,
+  // ownerEmail and useCase are top-level columns, and metadata holds only the extras. The live
+  // Lab 100 checklist returns overall:"pass" with zero findings over exactly this row.
+  //
+  // The first rebuild's field resolver read metadata ONLY, so this row failed L100.R2 and
+  // L100.R4 — the lab would have told a trainee that a properly governed inventory was
+  // non-compliant, and been confident about it.
+  const live = item({
+    name: "Grant Application Triage",
+    vendor: "OpenAI",
+    model: "gpt-4o",
+    version: "2024-08-06",
+    useCase: "Pre-screens incoming community grant applications against eligibility checklist.",
+    riskTier: "medium",
+    status: "approved",
+    ownerEmail: "grants@aigovops.org",
+    controlRefs: ["NIST-AI-RMF:GOVERN-1.1", "NIST-AI-RMF:MAP-2.3", "EU-AI-Act:Art.10"],
+    metadata: {
+      dataset: "anonymized-grant-apps-2024",
+      piiHandling: "redacted-before-prompt",
+      humanReviewRequired: true,
+    },
+  });
+  const res = evaluateChecklist([live], RULES_LEVEL_100);
+  assert.equal(res.overall, "pass", `live-shaped row must pass; failed: ${res.rulesFailed.join(", ")}`);
+  assert.deepEqual(res.rulesFailed, []);
+});
+
+test("a COLUMN beats a stale metadata copy of the same field", () => {
+  // If both carry the field, the column is the record of truth — metadata is where the old
+  // rebuild wrongly put it, and a leftover copy must not be able to fail a compliant row.
+  const res = evaluateChecklist(
+    [item({ version: "2024-08-06", metadata: { modelVersion: "latest" } })],
+    RULES_LEVEL_100,
+  );
+  assert.ok(!res.rulesFailed.includes("L100.R2"), "the column, not the stale metadata copy, decides");
+});
+
 test("evaluateChecklist returns RULE IDS and per-item findings, not counts", () => {
   const res = evaluateChecklist([item({ riskTier: null })], RULES_LEVEL_100);
   assert.ok(Array.isArray(res.rulesEvaluated) && typeof res.rulesEvaluated[0] === "string");

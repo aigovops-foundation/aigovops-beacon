@@ -170,15 +170,14 @@ app.use((req, res, next) => {
     return res.status(status).json({ message });
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
-  } else {
-    const { setupVite } = await import("./vite");
-    await setupVite(httpServer, app);
-  }
+  // Static assets last, so the catch-all cannot shadow an API route.
+  //
+  // There is no client build in this repo and no vite dev server: the Lab's UI is the set of web
+  // components in edge/components/, loaded by the GitHub Pages site from this origin. The
+  // scaffold this service grew out of branched to `setupVite()` in development; that module never
+  // existed here, so `npm run dev` could not start at all. serveStatic() degrades to an API-only
+  // server when there is no web root, which is the correct behaviour for both modes.
+  serveStatic(app);
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Other ports are firewalled. Default to 5000 if not specified.
@@ -189,7 +188,11 @@ app.use((req, res, next) => {
     {
       port,
       host: "0.0.0.0",
-      reusePort: true,
+      // SO_REUSEPORT is a Linux thing. On macOS the same flag makes listen() fail outright with
+      // ENOTSUP, so the service could not be started or smoke-tested on a developer's laptop at
+      // all — it only ever ran in its container. Keeping it on Linux preserves the zero-downtime
+      // restart behaviour in production; dropping it elsewhere costs nothing.
+      reusePort: process.platform === "linux",
     },
     () => {
       log(`serving on port ${port}`);
