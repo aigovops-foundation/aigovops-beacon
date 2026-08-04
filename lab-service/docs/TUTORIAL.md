@@ -37,7 +37,7 @@ of hands-on time if you go straight through.
                                  ▼
                   ┌──────────────────────────────────┐
                   │  edge (Cloudflare Worker)        │
-                  │  edge.beacon.aigovops.foundation │
+                  │  beacon-lab-edge.aigovops-foundation.com │
                   │  CDN + CORS + rate-limit         │
                   └─────────┬────────────────────────┘
                             │  reverse-proxies /api/* + /components/*
@@ -383,7 +383,7 @@ Make sure `CORS_ALLOWED_ORIGINS` is set (comma-separated, no spaces):
 
 ```bash
 flyctl secrets set \
-  CORS_ALLOWED_ORIGINS='https://aigovops-foundation.github.io,https://edge.beacon.aigovops.foundation' \
+  CORS_ALLOWED_ORIGINS='https://aigovops-foundation.github.io,https://beacon-lab-edge.aigovops-foundation.com' \
   --app aigovops-beacon-lab
 ```
 

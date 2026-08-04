@@ -9,9 +9,9 @@
 #   beacon-v2 off <layer>     # turn one layer off
 #
 # Layers (in dependency order):
-#   backend     Fly.io app  (api.beacon-lab.aigovops.foundation)
+#   backend     Fly.io app  (beacon-lab.aigovops-foundation.com)
 #   pplx        pplx.app published site (current host, fallback)
-#   edge        Cloudflare Worker (edge.beacon.aigovops.foundation)
+#   edge        Cloudflare Worker (beacon-lab-edge.aigovops-foundation.com)
 #   pages-v2    GitHub Pages ?v2=1 flag — points lab.html at the v2 stack
 #   cron        Nightly receipt-sync GitHub Action
 #
@@ -531,9 +531,9 @@ Usage:
   beacon-v2 help              Show this.
 
 Layers (dependency order):
-  backend      Fly.io app  (api.beacon-lab.aigovops.foundation)
+  backend      Fly.io app  (beacon-lab.aigovops-foundation.com)
   pplx         pplx.app published site (fallback host)
-  edge         Cloudflare Worker (edge.beacon.aigovops.foundation)
+  edge         Cloudflare Worker (beacon-lab-edge.aigovops-foundation.com)
   pages-v2     GitHub Pages v2 default flag
   cron         Nightly receipt-sync GitHub Action
 

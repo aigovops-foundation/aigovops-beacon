@@ -50,19 +50,19 @@ wrangler deploy
 
 ---
 
-## Custom domain: edge.beacon.aigovops.foundation
+## Custom domain: beacon-lab-edge.aigovops-foundation.com
 
 1. In your DNS provider, add a CNAME pointing the custom domain to your
    Cloudflare Workers zone:
    ```
-   edge.beacon.aigovops.foundation  →  beacon-lab-edge.<your-subdomain>.workers.dev
+   beacon-lab-edge.aigovops-foundation.com  →  beacon-lab-edge.<your-subdomain>.workers.dev
    ```
 2. In the Cloudflare dashboard → Workers & Pages → beacon-lab-edge → Settings
    → Triggers, add the custom domain.
 3. Or update `routes` in `wrangler.toml` and re-deploy:
    ```toml
    routes = [
-     { pattern = "edge.beacon.aigovops.foundation/*", zone_name = "aigovops.foundation" }
+     { pattern = "beacon-lab-edge.aigovops-foundation.com/*", zone_name = "aigovops-foundation.com" }
    ]
    ```
 
