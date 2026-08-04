@@ -24,4 +24,4 @@ routes = [
 # Replace with actual Fly.io app URL after deploy.
 BACKEND_URL = "https://aigovops-beacon-lab.fly.dev"
 # Comma-separated origins allowed to make cross-origin requests.
-CORS_ALLOWED_ORIGINS = "https://bobrapp.github.io,https://aigovops.foundation"
+CORS_ALLOWED_ORIGINS = "https://aigovops-foundation.github.io,https://aigovops.foundation"
