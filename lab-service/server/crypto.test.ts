@@ -35,9 +35,18 @@ test("ulid matches the format the live service issued", () => {
   // Live sample: anon_01KZ6HCWECB2JCFC6RK4B2JCFC → 26 chars, Crockford base32 (no I, L, O, U).
   assert.equal(id.length, 26, "ULID is 26 characters");
   assert.match(id, /^[0-9A-HJKMNP-TV-Z]{26}$/, "Crockford base32 alphabet — excludes I, L, O, U");
-  // Lexicographic sortability is why receipts and checklist runs use it as a primary key.
-  const later = ulid();
-  assert.ok(later >= id, "ULIDs must sort in issue order");
+});
+
+test("ULIDs minted in the SAME millisecond still sort in issue order", () => {
+  // Lexicographic sortability is why receipts, bundles and checklist runs use this as a primary
+  // key. A tight loop is the case that matters and the case that used to break: a lab signs a
+  // receipt in the same tick it creates the checklist run, and the non-monotonic factory redraws
+  // its random component each call, so the pair sorted arbitrarily. Two calls caught that only
+  // about half the time; a thousand in one burst catch it every time.
+  const ids = Array.from({ length: 1000 }, () => ulid());
+  const sorted = [...ids].sort();
+  assert.deepEqual(ids, sorted, "ids must already be in sorted order when issued in a burst");
+  assert.equal(new Set(ids).size, ids.length, "and must be unique");
 });
 
 test("hashPassword / verifyPassword round-trip, with a fresh salt each time", () => {

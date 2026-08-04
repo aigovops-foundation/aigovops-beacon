@@ -81,7 +81,10 @@ export function ensureSchema(): void {
 
     CREATE TABLE IF NOT EXISTS inventory (
       id TEXT PRIMARY KEY, tenant_id TEXT NOT NULL, name TEXT NOT NULL,
-      vendor TEXT NOT NULL DEFAULT '', risk_tier TEXT, status TEXT NOT NULL DEFAULT 'proposed',
+      vendor TEXT NOT NULL DEFAULT '', model TEXT NOT NULL DEFAULT '',
+      version TEXT NOT NULL DEFAULT '', use_case TEXT NOT NULL DEFAULT '',
+      owner_email TEXT NOT NULL DEFAULT '',
+      risk_tier TEXT, status TEXT NOT NULL DEFAULT 'proposed',
       control_refs TEXT NOT NULL DEFAULT '[]', metadata TEXT NOT NULL DEFAULT '{}',
       created_at INTEGER NOT NULL);
 
@@ -114,6 +117,25 @@ export function ensureSchema(): void {
     CREATE INDEX IF NOT EXISTS idx_bundles_tenant   ON bundles(tenant_id);
     CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
   `);
+
+  // `CREATE TABLE IF NOT EXISTS` does nothing to a table that already exists, so a database
+  // provisioned before these four columns were added would come back up missing them and every
+  // inventory read would fail with "no such column: model". A lab volume that survives a redeploy
+  // is exactly the case here, so widen in place. ADD COLUMN is O(1) in SQLite and the DEFAULT
+  // backfills existing rows; the try/catch makes it idempotent, since SQLite has no
+  // ADD COLUMN IF NOT EXISTS and re-running must be harmless.
+  for (const [col, ddl] of [
+    ["model", "model TEXT NOT NULL DEFAULT ''"],
+    ["version", "version TEXT NOT NULL DEFAULT ''"],
+    ["use_case", "use_case TEXT NOT NULL DEFAULT ''"],
+    ["owner_email", "owner_email TEXT NOT NULL DEFAULT ''"],
+  ] as const) {
+    const present = sqlite
+      .prepare("SELECT 1 FROM pragma_table_info('inventory') WHERE name = ?")
+      .get(col);
+    if (!present) sqlite.exec(`ALTER TABLE inventory ADD COLUMN ${ddl};`);
+  }
+
   // The single admin_state row must exist before getAdminState() is ever read.
   sqlite.prepare("INSERT OR IGNORE INTO admin_state (id) VALUES (1)").run();
 }

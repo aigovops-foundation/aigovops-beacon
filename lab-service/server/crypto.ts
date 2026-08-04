@@ -12,10 +12,22 @@
  */
 
 import crypto from "node:crypto";
-import { ulid as ulidImpl } from "ulid";
+import { monotonicFactory } from "ulid";
 
-/** Monotonic-ish, lexicographically sortable id. See the note above on why this is re-exported. */
-export const ulid = ulidImpl;
+/**
+ * Lexicographically sortable id. See the note above on why this comes from the `ulid` package.
+ *
+ * MONOTONIC, not the bare `ulid()`. The plain factory draws a fresh random component on every
+ * call, so two ids minted in the SAME MILLISECOND sort in an arbitrary order — and a lab issues
+ * receipts in bursts (a checklist run signs its receipt in the same tick it is created). Receipts,
+ * bundles and checklist runs all use this as a primary key and are read back in issue order, so
+ * "sorts by when it was issued" has to be true rather than usually true. `monotonicFactory`
+ * increments the random component within a millisecond instead of redrawing it.
+ *
+ * The bare factory was in fact non-deterministically failing crypto.test.ts's sortability
+ * assertion — roughly whenever two calls landed in the same millisecond.
+ */
+export const ulid = monotonicFactory();
 
 /**
  * URL-safe opaque token. `routes.ts` calls both `randomToken()` (session ids) and

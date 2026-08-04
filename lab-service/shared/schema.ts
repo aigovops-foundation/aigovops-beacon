@@ -114,6 +114,14 @@ export const inventory = sqliteTable("inventory", {
   tenantId: text("tenant_id").notNull(),
   name: text("name").notNull(),
   vendor: text("vendor").notNull().default(""),
+  // These four are COLUMNS, not metadata keys. `GET /api/inventory` on the live service returns
+  // them at the top level of every row, and the Lab 100 rules read them (see `str()` in
+  // server/beacon.ts). The first rebuild of this table omitted them and pushed them into
+  // `metadata`, which made every real inventory row fail L100.R2 and L100.R4.
+  model: text("model").notNull().default(""),
+  version: text("version").notNull().default(""),
+  useCase: text("use_case").notNull().default(""),
+  ownerEmail: text("owner_email").notNull().default(""),
   riskTier: text("risk_tier"),
   status: text("status").notNull().default("proposed"),
   controlRefs: text("control_refs", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),

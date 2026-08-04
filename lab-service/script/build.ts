@@ -1,5 +1,4 @@
 import { build as esbuild } from "esbuild";
-import { build as viteBuild } from "vite";
 import { rm, readFile, mkdir, cp, access } from "node:fs/promises";
 
 // server deps to bundle to reduce openat(2) syscalls
@@ -33,8 +32,9 @@ const allowlist = [
 async function buildAll() {
   await rm("dist", { recursive: true, force: true });
 
-  console.log("building client...");
-  await viteBuild();
+  // No client build: the UI is edge/components/, copied into dist/public below. The scaffold's
+  // `viteBuild()` call was removed because `vite` is not a dependency of this service and never
+  // was — `npm run build` failed on the import before it reached esbuild.
 
   console.log("building server...");
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));
