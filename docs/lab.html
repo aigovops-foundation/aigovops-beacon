@@ -34,8 +34,30 @@
       "https://aigovops-beacon-lab.pplx.app/port/5000"
     );
   </script>
-  <!-- v2: Bridge JS manages anon JWT + invite-token capture. -->
-  <script type="module" src="https://aigovops-beacon-lab.pplx.app/port/5000/components/beacon-lab-bridge.js"></script>
+  <!-- v2: Bridge JS manages anon JWT + invite-token capture. Loaded ONLY behind the v2 flag.
+       aigovops-beacon-lab.pplx.app sends no Access-Control-Allow-Origin on ANY path (module,
+       API or root), so from this Pages origin the module is CORS-blocked and never executes.
+       Loading it unconditionally therefore bought nothing and cost EVERY ordinary visitor a
+       console error on a page that otherwise works fine — which is how the estate walk found it.
+       Behind the flag the v2 experiment is unchanged for anyone testing it. Note the same CORS
+       wall means the embedded lab cannot work from Pages at all until that host sends CORS
+       headers or the API moves to our own domain (see the __BEACON_API_BASE__ override above).
+       The path that DOES work today is the "Launch live lab ↗" link: a top-level navigation,
+       which CORS does not touch. -->
+  <script>
+    (function () {
+      var v2 = false;
+      try {
+        v2 = new URLSearchParams(location.search).get('v2') === '1' ||
+             localStorage.getItem('beacon.v2') === '1';
+      } catch (e) { /* privacy mode can throw on localStorage; treat as flag-off */ }
+      if (!v2) return;
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.src = window.__BEACON_API_BASE__ + '/components/beacon-lab-bridge.js';
+      document.head.appendChild(s);
+    })();
+  </script>
 
   <link rel="canonical" href="https://aigovops-foundation.github.io/aigovops-beacon/lab.html">
   <meta property="og:site_name" content="AiGovOps Foundation">
