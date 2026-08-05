@@ -22,7 +22,6 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "^11.5.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
@@ -30,6 +29,9 @@
     "tweetnacl": "^1.0.3",
     "ulid": "^2.3.0",
     "yaml": "^2.6.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.5.0"
   },
   "devDependencies": {
     "fast-check": "^4.8.0",
