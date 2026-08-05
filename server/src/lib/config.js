@@ -21,12 +21,19 @@ const DEFAULTS = {
   },
   signing: {
     algorithm: "Ed25519",
-    canonicalForm: "RFC8785",
+    // The spelling docs/RECEIPT_SCHEMA.md specifies and every other Beacon
+    // producer already used. This server wrote "RFC8785" for the identical
+    // canonicalization until schema_version 1.1.0 — same bytes signed, only the
+    // label differed, which is why it was safe to correct.
+    canonicalForm: "json/c14n-rfc8785",
     rotationDays: 90,
   },
   receipts: {
     defaultCaptureMode: "redacted", // hash_only | redacted | full
-    schemaVersion: "1.0.0",
+    // 1.1.0 — `canonical_form` and `key_fpr` now match docs/RECEIPT_SCHEMA.md.
+    // Receipts already on disk are 1.0.0 and stay verifiable; nothing rewrites
+    // them, and every verifier indexes both spellings.
+    schemaVersion: "1.1.0",
     anchorIntervalMinutes: 60,
   },
   policy: {
