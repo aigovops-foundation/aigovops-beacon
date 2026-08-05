@@ -93,6 +93,12 @@ One engine. Two front doors. Zero PDF theater.
 > `npm install` at the repo root, where there is no `package.json`; the Node project lives in
 > `server/`. A quickstart that fails on its first command is worse than no quickstart.
 
+> **Corrected again 2026-08-05.** `npm install` failed on Node 24 and 26 — `better-sqlite3`
+> has no prebuilt binary for those ABIs and will not compile against their V8, so the first
+> command died on anyone running current Node while CI (pinned to Node 20/22) stayed green.
+> The server now prefers Node's built-in `node:sqlite` and keeps `better-sqlite3` as an
+> optional dependency for Node 20. Nothing to compile on Node 22.13+.
+
 ```bash
 # Local — this is the path that works today
 git clone https://github.com/aigovops-foundation/aigovops-beacon

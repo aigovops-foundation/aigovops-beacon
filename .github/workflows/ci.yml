@@ -18,7 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [20, 22]
+        # 24 is here because its ABSENCE is what let the quickstart break. Node 20 and 22
+        # both install better-sqlite3 from a prebuilt binary, so this matrix stayed green
+        # for months while `cd server && npm install` — the first command in README.md —
+        # died compiling it on Node 24 and 26. The lane that reproduces the user's
+        # environment is the one that has to exist.
+        #
+        # Each version also exercises a different driver: 20 has no node:sqlite so it runs
+        # better-sqlite3, 22 has both, 24 runs the built-in.
+        node: [20, 22, 24]
     defaults:
       run:
         working-directory: server
