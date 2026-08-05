@@ -1,0 +1,25 @@
+{
+  "beacon_version": "0.1.0",
+  "generated_at_utc": "2026-05-13T15:10:00.000Z",
+  "generated_by": "frozen-fixture",
+  "scope": {
+    "inventory_ids": [],
+    "from_date": null,
+    "to_date": null
+  },
+  "active_key_fingerprint": "fe812c12f3ab4ce6",
+  "public_key_fingerprints": [
+    "fe812c12f3ab4ce6"
+  ],
+  "signing_algorithm": "Ed25519",
+  "canonical_form": "RFC8785",
+  "receipt_files": {
+    "2026-05-13.ndjson": 2
+  },
+  "verification": {
+    "receipts_verified": 2,
+    "receipts_failed": 0,
+    "failures": []
+  },
+  "note": "Frozen schema_version 1.0.0 bundle. Do not regenerate."
+}
