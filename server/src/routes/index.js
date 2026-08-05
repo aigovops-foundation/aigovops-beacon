@@ -51,7 +51,11 @@ export function createRouter(ctx) {
     res.json({
       version: ctx.config.beaconVersion,
       schema_version: ctx.config.receipts.schemaVersion,
+      // Both spellings of the same digest: `key_fingerprint` names the PEM in a
+      // bundle, `key_fpr` is what receipts actually carry. A client that has one
+      // and needs the other should not have to know how to derive it.
       key_fingerprint: ctx.activeKey.fingerprint,
+      key_fpr: ctx.activeKey.keyFpr,
     })
   );
 

@@ -18,7 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { canonicalize } from "../lib/canonical.js";
-import { verify, listPublicKeys } from "./keys.js";
+import { verify, listPublicKeys, fingerprintSpellings } from "./keys.js";
 
 export function createExportService(ctx) {
   const { config, db, activeKey } = ctx;
@@ -171,7 +171,18 @@ export function createExportService(ctx) {
 // `signature.key_fpr`, not against whichever key happens to be active. A
 // bundle whose range spans a rotation is the normal case, not an edge case.
 function verifyBundle(bundleDir, keys) {
-  const byFingerprint = new Map(keys.map((k) => [k.fingerprint, k.publicKey]));
+  // Index under EVERY spelling. Receipts written before schema_version 1.1.0
+  // name the key by its 16-hex fingerprint; receipts written after name it by
+  // the SSH-style one. A bundle whose range spans that upgrade contains both,
+  // and indexing only one silently falls through to the single-key path — or,
+  // in a bundle that also spans a key rotation, to a verification failure that
+  // has nothing to do with its signatures.
+  const byFingerprint = new Map();
+  for (const k of keys) {
+    for (const spelling of fingerprintSpellings(k.publicKey)) {
+      byFingerprint.set(spelling, k.publicKey);
+    }
+  }
   const onlyKey = keys.length === 1 ? keys[0].publicKey : null;
   const receiptDir = path.join(bundleDir, "receipts");
   let ok = 0;

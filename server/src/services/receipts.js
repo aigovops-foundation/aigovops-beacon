@@ -66,7 +66,9 @@ export function createReceiptService(ctx) {
       const canonicalBytes = Buffer.from(canonicalize(base), "utf8");
       const signature = {
         alg: config.signing.algorithm,
-        key_fpr: activeKey.fingerprint,
+        // The SSH-style wire form (schema_version 1.1.0+). `fingerprint` is the
+        // storage id and stays hex — see server/src/services/keys.js.
+        key_fpr: activeKey.keyFpr,
         canonical_form: config.signing.canonicalForm,
         sig_b64: sign(activeKey.secretKey, canonicalBytes),
       };
@@ -123,7 +125,10 @@ export function createReceiptService(ctx) {
         found: true,
         receipt_id: r.id,
         key_fpr: signature.key_fpr,
-        active_key_fpr: activeKey.fingerprint,
+        // Both are the WIRE spelling, so a caller comparing them gets a real
+        // answer. Reporting the storage id here made them differ for every
+        // 1.1.0 receipt even when the same key signed it.
+        active_key_fpr: activeKey.keyFpr,
         canonical_form: signature.canonical_form,
         signature_verifies: ok,
       };
