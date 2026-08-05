@@ -2,6 +2,21 @@
 
 Three terminals, ten minutes, one signed audit bundle on disk.
 
+## The short path first
+
+If you do not need the wizard, you do not need any of what follows. One command
+produces the same bundle, with no server, no database and nothing to compile:
+
+```bash
+pip install cryptography
+python3 -m src.beacon_scan          # or `beacon-scan` after `pip install -e .`
+```
+
+It prints the auditor's verify command when it finishes. See
+[`src/beacon_scan.py`](src/beacon_scan.py) for the flags. The rest of this page
+is the workshop path — the wizard, for a governance lead rather than an
+engineer.
+
 ## 1. Run the server
 
 ```bash

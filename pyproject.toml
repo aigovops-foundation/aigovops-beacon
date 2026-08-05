@@ -54,6 +54,12 @@ Documentation = "https://github.com/aigovops-foundation/aigovops-beacon#readme"
 [project.scripts]
 beacon-verify = "src.beacon_verify:main"
 
+# beacon-scan is the ENGINEER-facing entrypoint: scan → signed receipts →
+# audit bundle → the command the auditor runs, in one command. It is Python on
+# purpose — the Node quickstart's SQLite driver is a native addon that does not
+# build on current Node, so that path could fail before producing anything.
+beacon-scan = "src.beacon_scan:main"
+
 [tool.setuptools]
 # Tell setuptools we only care about `src/`, `beacons/`, and `scoring/` as
 # Python packages.
