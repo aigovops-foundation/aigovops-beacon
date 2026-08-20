@@ -562,16 +562,22 @@
   gap: var(--space-4);
   margin-top: var(--space-6);
 }
+/* These cards DESCRIBE the lab variants — they are not links and nothing is wired to
+   them. They used to carry cursor:pointer and lift on hover, which is the vocabulary of a
+   button: a reader moved the mouse over "Lab 1 · First receipt", saw a hand cursor and the
+   card rise, clicked, and nothing happened. Because `cursor` inherits, the promise was made
+   by every child too — the interaction crawl counted 27 dead controls here on 2026-08-19,
+   all of them this one rule. The border still warms on hover so the card stays alive under
+   the mouse; it just no longer claims to be a button. If these should navigate somewhere,
+   the fix is the opposite one: wrap each card in a link and put the affordance back. */
 .variant-card {
   padding: var(--space-5);
   background: var(--paper-card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  transition: transform var(--transition-interactive), border-color var(--transition-interactive);
-  cursor: pointer;
+  transition: border-color var(--transition-interactive);
 }
 .variant-card:hover {
-  transform: translateY(-2px);
   border-color: var(--hydra-teal);
 }
 .variant-card .variant-num {
