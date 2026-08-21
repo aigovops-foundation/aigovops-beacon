@@ -1,9 +1,21 @@
 // Signing-key lifecycle.
 //
 // One active key at a time. Older keys are kept on disk so that
-// historical receipts remain verifiable. Each key has a fingerprint
-// (first 16 hex chars of SHA-256 over the raw public key), which is
-// what gets embedded in receipts.
+// historical receipts remain verifiable.
+//
+// A key has TWO names for the same SHA-256 digest of its raw public key, and
+// the split is deliberate:
+//
+//   fingerprint  first 16 hex chars — the STORAGE id. It names the key file on
+//                disk (ed25519-<fingerprint>.json) and the PEM in a bundle
+//                (public_keys/<fingerprint>.pem).
+//   keyFpr       SSH-style "SHA256:<base64>" — the WIRE id, embedded in
+//                receipts as signature.key_fpr, per docs/RECEIPT_SCHEMA.md.
+//
+// They cannot be the same string: the SSH-style form is base64 and can contain
+// `/`, which is not a filename. Before schema_version 1.1.0 the wire form was
+// the hex one, which is what docs/RECEIPT_SCHEMA.md recorded as a known
+// divergence from the spec.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -99,18 +111,41 @@ function readKeyFile(p) {
 }
 
 function materialize(record) {
+  const publicKey = Buffer.from(record.publicKeyHex, "hex");
   return {
     fingerprint: record.fingerprint,
+    keyFpr: sshFingerprint(publicKey),
     algorithm: record.algorithm,
     createdAt: record.createdAt,
     publicKeyHex: record.publicKeyHex,
-    publicKey: Buffer.from(record.publicKeyHex, "hex"),
+    publicKey,
     secretKey: Buffer.from(record.secretKeyHex, "hex"),
   };
 }
 
 function sha256Hex(buf) {
   return crypto.createHash("sha256").update(buf).digest("hex");
+}
+
+// The wire form: `ssh-keygen -lf` compatible, as docs/RECEIPT_SCHEMA.md
+// specifies. Derived from the public key, never stored — so existing key files
+// written before schema_version 1.1.0 gain it with no migration.
+export function sshFingerprint(publicKey) {
+  const digest = crypto.createHash("sha256").update(publicKey).digest();
+  return "SHA256:" + digest.toString("base64").replace(/=+$/, "");
+}
+
+// Every spelling of a key's fingerprint that some Beacon receipt might name.
+//
+// A verifier has to index all of them at once. Receipts written before
+// schema_version 1.1.0 carry the hex form; receipts written after carry the
+// SSH-style form; both must resolve to the same key, or a bundle spanning the
+// upgrade fails to verify for a reason that has nothing to do with its
+// signatures.
+export function fingerprintSpellings(publicKey) {
+  const digest = crypto.createHash("sha256").update(publicKey).digest();
+  const hex = digest.toString("hex");
+  return [sshFingerprint(publicKey), hex.slice(0, 16), hex];
 }
 
 export function sign(secretKey, messageBytes) {
