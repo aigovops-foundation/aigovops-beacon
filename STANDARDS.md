@@ -2,6 +2,8 @@
 
 The AiGovOps Foundation does **not** issue standards. We implement them, adopt them, teach them, and build community around them.
 
+The Foundation **credentials practitioners; it does not certify systems.** A practitioner level (100–400, see [aigovops-foundation/practice](https://github.com/aigovops-foundation/practice)) describes a person's demonstrated practice on reference scenarios and is marked by the community as a receipt on a public chain, free and never sold. A system's assurance is its OVERT attestation assurance level and its gate-coverage number, claimed by that system's own evidence and assessed as OVERT specifies. The two claims never merge. (Decision 10, 11 September 2026; ADR-0001's line — no standards-issuing path, no certification program for implementations, no commercial product — stands.)
+
 ## The standard Beacon implements
 
 Beacon implements [**OVERT 1.0**](https://overt.is/) — the Open Standard for Observable Verification Evidence at the AI runtime boundary, published 25 March 2026 by [Glacis Technologies, Inc](https://www.glacis.io/) and made available under a royalty-free patent covenant at [overt.is/ipr-policy](https://overt.is/ipr-policy).
