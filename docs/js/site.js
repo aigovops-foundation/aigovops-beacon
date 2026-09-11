@@ -135,6 +135,8 @@ Mistral,mistral-large,chat-completions,eu-west`;
       bundleResult: $("#bundleResult"),
       bundleSha: $("#bundleSha"),
       btnDownloadBundle: $("#btnDownloadBundle"),
+      worksheetReceipt: $("#worksheetReceipt"),
+      wsFpr: $("#wsFpr"), wsSha: $("#wsSha"), wsCount: $("#wsCount"), btnCopyReceipt: $("#btnCopyReceipt"),
       siteHeader: $("#siteHeader"),
     });
   }
@@ -391,6 +393,12 @@ Mistral,mistral-large,chat-completions,eu-west`;
     pulse();
 
     setStatus("complete — bundle ready");
+    if (ui.worksheetReceipt) {
+      ui.wsFpr.textContent = fingerprint;
+      ui.wsSha.textContent = demoBundle.sha;
+      ui.wsCount.textContent = String(allReceipts.length);
+      ui.worksheetReceipt.hidden = false;
+    }
     demoRunning = false;
     ui.btnAutoplay.disabled = false;
     ui.btnAutoplay.textContent = "▶ Replay";
@@ -429,6 +437,13 @@ Mistral,mistral-large,chat-completions,eu-west`;
       pushTelemetry({ ev: "idle", body: "Reset — press play to run again", sig: "—" });
       setStatus("idle");
       ui.btnAutoplay.textContent = "▶ Play the demo";
+    });
+
+    if (ui.btnCopyReceipt) ui.btnCopyReceipt.addEventListener("click", () => {
+      const txt = `Key fingerprint: ${fingerprint}\nBundle hash: ${demoBundle ? demoBundle.sha : ""}\nNumber of receipts: ${allReceipts.length}`;
+      const done = () => { ui.btnCopyReceipt.textContent = "Copied — paste it into step 5"; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, () => prompt("Your receipt:", txt));
+      else prompt("Your receipt:", txt);
     });
 
     ui.btnDownloadBundle.addEventListener("click", () => {
@@ -519,6 +534,17 @@ Mistral,mistral-large,chat-completions,eu-west`;
   function boot() {
     bindUI();
     wireEvents();
+    // Worksheet mode: the practice's step 5 — one button to a receipt. ?worksheet=100
+    const wsLevel = new URLSearchParams(location.search).get("worksheet");
+    if (wsLevel) {
+      document.body.classList.add("worksheet");
+      const banner = document.createElement("div");
+      banner.className = "worksheet-banner";
+      banner.innerHTML = `<b>Worksheet mode · level ${String(wsLevel).replace(/[^0-9]/g, "") || "100"}</b> — making your receipt now: a key generated here, receipts signed, a bundle you can download. Nothing is sent anywhere.`;
+      document.body.insertBefore(banner, document.body.firstChild);
+      if (ui.btnAutoplay) ui.btnAutoplay.textContent = "▶ Make my receipt";
+      setTimeout(() => { $("#demo").scrollIntoView({ behavior: "auto", block: "start" }); runDemo(parseCsv(SAMPLE_CSV)); }, 300);
+    }
     wireWayfinding();
     // Greet the telemetry strip so it's never empty
     setStatus("ready");
