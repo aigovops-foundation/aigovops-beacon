@@ -304,6 +304,16 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
             <div class="sha"><span class="kicker">sha-256</span><code id="bundleSha"></code></div>
             <p style="color:var(--paper-faint); font-size:var(--text-sm); margin:0">A real, downloadable .zip — built in your browser from the receipts you just signed.</p>
             <button id="btnDownloadBundle" class="btn-primary btn-sm" type="button">Download bundle.zip</button>
+            <div id="worksheetReceipt" class="worksheet-receipt" hidden>
+              <h4>Your receipt — copy these three onto the worksheet</h4>
+              <dl>
+                <dt>Key fingerprint</dt><dd><code id="wsFpr"></code></dd>
+                <dt>Bundle hash</dt><dd><code id="wsSha"></code></dd>
+                <dt>Receipts</dt><dd><code id="wsCount"></code></dd>
+              </dl>
+              <button id="btnCopyReceipt" class="btn-primary btn-sm" type="button">Copy the three lines</button>
+              <a id="wsBack" class="btn-sm" href="https://aigovops-foundation.github.io/practice/levels/100-begin/WORKSHEET.html#5--prove--get-a-real-signed-receipt-10-min--live">← back to the worksheet</a>
+            </div>
           </aside>
         </div>
       </div>
