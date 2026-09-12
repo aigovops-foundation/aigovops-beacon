@@ -288,7 +288,7 @@ Mistral,mistral-large,chat-completions,eu-west`;
       `Bundle generated: ${nowIso()}`,
       `Signer fingerprint: ${fpr}`,
       "",
-      "Apache-2.0 · AiGovOps Foundation · https://www.aigovopsfoundation.org/",
+      "Apache-2.0 · AiGovOps Foundation · https://www.aigovops-foundation.com/",
       "",
     ].join("\n");
 
