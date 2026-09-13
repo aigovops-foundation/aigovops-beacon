@@ -46,5 +46,8 @@
     "hipaa",
     "ed25519",
     "policy-as-code"
-  ]
+  ],
+  "overrides": {
+    "qs": "^6.16.0"
+  }
 }
