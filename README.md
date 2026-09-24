@@ -85,6 +85,48 @@ One engine. Two front doors. Zero PDF theater.
 
 ---
 
+## Signed inventory in one command
+
+If you are an engineer and want evidence before you want a wizard, this is the
+short path. No server, no database, no Node, nothing to compile:
+
+```bash
+git clone https://github.com/aigovops-foundation/aigovops-beacon
+cd aigovops-beacon
+pip install cryptography          # a wheel on every supported platform
+python3 -m src.beacon_scan        # or `beacon-scan` after `pip install -e .`
+```
+
+It scans for AI-provenance markers and outbound AI-API traffic, signs a receipt
+for every observation, derives an inventory from those receipts, assembles an
+audit bundle, and finishes by printing the exact command your auditor runs:
+
+```
+beacon-scan: scanning…
+  412 files scanned, 7 provenance marker(s)
+  egress scan: 3 receipt(s)
+  10 receipt(s) in the bundle, 4 inventory row(s)
+
+bundle: ~/.beacon/bundles/bundle-2026-08-05T15-26-46+00-00
+
+What your auditor runs — nothing installed, no network, no account:
+
+  cd ~/.beacon/bundles/bundle-2026-08-05T15-26-46+00-00
+  python3 verify_bundle.py .
+```
+
+`inventory.json` is **derived** from the signed receipts, so no row exists that
+evidence does not support. The bundle is byte-compatible with the one the
+server's `POST /api/v1/export` produces — same manifest, same layout, same
+verifier — so starting here does not put you on a side track.
+
+Add `pip install psutil` for the network-egress layer. Without it the scan says
+`egress scan: SKIPPED` rather than reporting zero findings: *never looked* and
+*looked and found nothing* are different claims, and an evidence tool must not
+blur them.
+
+---
+
 ## Quickstart — five minutes, three commands
 
 > **Corrected 2026-07-20.** Both commands here were wrong. The Docker option pulled

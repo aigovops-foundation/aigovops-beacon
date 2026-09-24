@@ -27,7 +27,15 @@ import sys
 import time
 from pathlib import Path
 
-from _common import append_receipt, make_receipt, sign_receipt
+# Importable as `beacons.<name>` AND runnable as `python beacons/<name>.py`, which
+# beacons/README.md documents. A plain `from _common import ...` only ever worked
+# for the second: as a package member it raised ModuleNotFoundError, so nothing
+# could build on these scanners programmatically.
+try:  # package import — `from beacons import model_beacon`
+    from ._common import append_receipt, make_receipt, sign_receipt
+except ImportError:  # direct script run — `python beacons/model_beacon.py`
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from _common import append_receipt, make_receipt, sign_receipt
 
 # Reasonable defaults: parse a common reverse-proxy / SIEM log line shape.
 #   <ts> <host> <method> <path> <status> tokens_in=N tokens_out=N model=foo
