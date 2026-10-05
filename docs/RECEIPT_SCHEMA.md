@@ -68,22 +68,61 @@ This document is wire-compatible with [`aigovops-Replay`](https://github.com/bob
 
 The signature covers every field of the receipt *except* the `signature` object itself.
 
-### Known divergence — the Node server's spelling
+### RESOLVED in schema_version 1.1.0 — the Node server's spelling
 
-`beacons/_common.py` emits the block exactly as specified above. The Node
-server in `server/` does not: it writes `canonical_form: "RFC8785"` for the
-identical canonicalization, and a `key_fpr` that is the first 16 hex
-characters of the same SHA-256 digest rather than the SSH-style string.
+The Node server in `server/` used to write `canonical_form: "RFC8785"` for the
+identical canonicalization, and a `key_fpr` that was the first 16 hex characters
+of the same SHA-256 digest rather than the SSH-style string. `beacons/_common.py`
+always emitted the block exactly as specified above.
 
-Per the authority note at the top of this document, that is a bug here and not
-a second valid dialect. Normalizing it changes the wire format of receipts that
-already exist, so it is tracked as its own change with a `schema_version` bump
-rather than done quietly.
+**As of `schema_version` 1.1.0 the Node server emits the specified spellings.**
+The bytes being *signed* never changed — only the labels around the signature —
+which is why correcting it could not invalidate anything.
 
-Until then, [`src/beacon_verify.py`](../src/beacon_verify.py) accepts both
-spellings — and only these, both of which name RFC 8785 — so no auditor is ever
-handed a verification failure that is really a spelling difference. The
-signature check itself is not relaxed.
+A key now carries two names for the same digest, and the split is deliberate:
+
+| | Form | Used for |
+|---|---|---|
+| `fingerprint` | first 16 hex chars | **storage** — `keys/ed25519-<fpr>.json`, `public_keys/<fpr>.pem` |
+| `key_fpr` | `SHA256:<base64>` | **wire** — what receipts carry, per this document |
+
+They cannot be one string: the SSH-style form is base64 and can contain `/`,
+which is not a filename.
+
+**Receipts written before 1.1.0 remain verifiable, permanently.** Nothing
+rewrites them. Every verifier in the project indexes a key under *every*
+spelling — [`src/beacon_verify.py`](../src/beacon_verify.py) (`fingerprints()`),
+`server/src/services/export.js` and `server/src/cli.js`
+(`fingerprintSpellings()`) — so a bundle whose range spans the upgrade, and
+which therefore names one key two different ways, verifies as a whole.
+
+That promise is held by a frozen fixture rather than by intent:
+`tests/fixtures/bundle-schema-1.0.0/` is a checked-in 1.0.0 bundle signed by a
+fixed key, asserted by `tests/unit/test_schema_version_compat.py`. If that test
+ever goes red, evidence real organisations already hold has stopped verifying,
+and the change that did it should be reverted rather than the fixture updated.
+
+Only these two canonical-form spellings are accepted, and both name RFC 8785.
+The signature check itself is not relaxed.
+
+### One canonical form, measured across implementations
+
+Beacon has more than one canonicalizer and cannot collapse to a single file:
+`server/src/lib/canonical.js` is the reference, `beacons/_common.py` is the
+Python producer, and [`src/beacon_verify.py`](../src/beacon_verify.py) carries
+its own copy *on purpose* — it ships into every audit bundle as one
+self-contained file an auditor can read in full before running it.
+
+So agreement is measured. [`tests/vectors/canonicalization.json`](../tests/vectors/canonicalization.json)
+is the published set of RFC 8785 test vectors, asserted byte-for-byte by every
+implementation:
+
+- `tests/unit/test_canonicalization_vectors.py` → `beacons/_common.py`, `src/beacon_verify.py`
+- `server/test/unit/canonical-vectors.test.js` → `server/src/lib/canonical.js`, `lab-service/shared/canonical.js`
+
+A new implementation in any language is expected to pass that file before it
+signs anything. Editing it is a signing-format change and needs its own
+`schema_version` bump: any edit invalidates existing signatures.
 
 ---
 

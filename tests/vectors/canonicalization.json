@@ -1,0 +1,226 @@
+{
+  "$comment": [
+    "Published RFC 8785 (JCS) canonicalization test vectors for AiGovOps Beacon.",
+    "",
+    "Beacon signs the CANONICAL BYTES of a receipt, so every implementation that",
+    "signs or verifies must agree on those bytes exactly. Beacon has more than one",
+    "canonicalizer and cannot collapse to a single file: server/src/lib/canonical.js",
+    "is the reference; beacons/_common.py is the Python producer; and",
+    "src/beacon_verify.py carries its own copy ON PURPOSE, because it is shipped",
+    "into every audit bundle as one self-contained file an auditor can read in full.",
+    "",
+    "So agreement is MEASURED here instead of assumed. Each `canonical` value was",
+    "produced by the JS reference and is asserted byte-for-byte by every other",
+    "implementation's test suite. A new implementation in any language is expected",
+    "to pass this file before it signs anything.",
+    "",
+    "Consumers:",
+    "  tests/unit/test_canonicalization_vectors.py   (beacons/_common.py, src/beacon_verify.py)",
+    "  server/test/unit/canonical-vectors.test.js    (server/src/lib/canonical.js, lab-service/shared/canonical.js)",
+    "",
+    "Regenerate ONLY if the canonical form itself changes, which is a signing-format",
+    "change and needs a schema_version bump: any edit here invalidates existing",
+    "signatures."
+  ],
+  "canonical_form": "json/c14n-rfc8785",
+  "vectors": [
+    {
+      "name": "empty object",
+      "input": {},
+      "canonical": "{}"
+    },
+    {
+      "name": "empty array",
+      "input": [],
+      "canonical": "[]"
+    },
+    {
+      "name": "null",
+      "input": null,
+      "canonical": "null"
+    },
+    {
+      "name": "booleans",
+      "input": {
+        "t": true,
+        "f": false
+      },
+      "canonical": "{\"f\":false,\"t\":true}"
+    },
+    {
+      "name": "nested null",
+      "input": {
+        "a": null
+      },
+      "canonical": "{\"a\":null}"
+    },
+    {
+      "name": "key sorting — plain",
+      "input": {
+        "b": 1,
+        "a": 2,
+        "c": 3
+      },
+      "canonical": "{\"a\":2,\"b\":1,\"c\":3}"
+    },
+    {
+      "name": "key sorting — case matters (uppercase sorts first)",
+      "input": {
+        "a": 1,
+        "A": 2,
+        "b": 3,
+        "B": 4
+      },
+      "canonical": "{\"A\":2,\"B\":4,\"a\":1,\"b\":3}"
+    },
+    {
+      "name": "key sorting — digits before letters",
+      "input": {
+        "0": 3,
+        "1": 2,
+        "z": 1,
+        "a": 4
+      },
+      "canonical": "{\"0\":3,\"1\":2,\"a\":4,\"z\":1}"
+    },
+    {
+      "name": "key sorting — recursive",
+      "input": {
+        "b": {
+          "d": 1,
+          "c": 2
+        },
+        "a": {
+          "f": 3,
+          "e": 4
+        }
+      },
+      "canonical": "{\"a\":{\"e\":4,\"f\":3},\"b\":{\"c\":2,\"d\":1}}"
+    },
+    {
+      "name": "arrays preserve order",
+      "input": {
+        "a": [
+          3,
+          1,
+          2
+        ]
+      },
+      "canonical": "{\"a\":[3,1,2]}"
+    },
+    {
+      "name": "array of objects",
+      "input": [
+        {
+          "b": 1,
+          "a": 2
+        },
+        {
+          "d": 3,
+          "c": 4
+        }
+      ],
+      "canonical": "[{\"a\":2,\"b\":1},{\"c\":4,\"d\":3}]"
+    },
+    {
+      "name": "integers",
+      "input": {
+        "a": 0,
+        "b": -1,
+        "c": 1,
+        "d": 1000000
+      },
+      "canonical": "{\"a\":0,\"b\":-1,\"c\":1,\"d\":1000000}"
+    },
+    {
+      "name": "negative zero collapses",
+      "input": {
+        "a": 0
+      },
+      "canonical": "{\"a\":0}"
+    },
+    {
+      "name": "string escapes",
+      "input": {
+        "s": "quote \" backslash \\ tab \t newline \n"
+      },
+      "canonical": "{\"s\":\"quote \\\" backslash \\\\ tab \\t newline \\n\"}"
+    },
+    {
+      "name": "control characters",
+      "input": {
+        "s": "\u0000\u0001\u001f"
+      },
+      "canonical": "{\"s\":\"\\u0000\\u0001\\u001f\"}"
+    },
+    {
+      "name": "backspace and formfeed",
+      "input": {
+        "s": "\b\f\r"
+      },
+      "canonical": "{\"s\":\"\\b\\f\\r\"}"
+    },
+    {
+      "name": "unicode is literal, not escaped",
+      "input": {
+        "s": "héllo wörld ✓ 日本語"
+      },
+      "canonical": "{\"s\":\"héllo wörld ✓ 日本語\"}"
+    },
+    {
+      "name": "emoji (surrogate pair)",
+      "input": {
+        "s": "🔐"
+      },
+      "canonical": "{\"s\":\"🔐\"}"
+    },
+    {
+      "name": "forward slash is not escaped",
+      "input": {
+        "s": "a/b"
+      },
+      "canonical": "{\"s\":\"a/b\"}"
+    },
+    {
+      "name": "deeply nested",
+      "input": {
+        "a": {
+          "b": {
+            "c": {
+              "d": [
+                1,
+                {
+                  "e": "f"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "canonical": "{\"a\":{\"b\":{\"c\":{\"d\":[1,{\"e\":\"f\"}]}}}}"
+    },
+    {
+      "name": "a receipt-shaped object with the signature block removed",
+      "input": {
+        "id": "01HXYZ8K3F2N5Q1R7S9V3W4Y6B",
+        "ts_utc": "2026-05-13T15:04:22.318Z",
+        "user": {
+          "sub": "bob@example.org",
+          "email": "bob@example.org",
+          "oidc_issuer": "https://issuer/v2.0"
+        },
+        "vendor": "openai",
+        "model": "gpt-4o",
+        "version": "2024-08-06",
+        "prompt": null,
+        "prompt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result": null,
+        "result_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "event_type": "invocation",
+        "environment": "prod",
+        "schema_version": "1.1.0"
+      },
+      "canonical": "{\"environment\":\"prod\",\"event_type\":\"invocation\",\"id\":\"01HXYZ8K3F2N5Q1R7S9V3W4Y6B\",\"model\":\"gpt-4o\",\"prompt\":null,\"prompt_hash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"result\":null,\"result_hash\":\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"schema_version\":\"1.1.0\",\"ts_utc\":\"2026-05-13T15:04:22.318Z\",\"user\":{\"email\":\"bob@example.org\",\"oidc_issuer\":\"https://issuer/v2.0\",\"sub\":\"bob@example.org\"},\"vendor\":\"openai\",\"version\":\"2024-08-06\"}"
+    }
+  ]
+}
