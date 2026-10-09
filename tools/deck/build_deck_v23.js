@@ -53,7 +53,7 @@ const footer = (s, label) => {
   s.addText([
     { text: "github.com/aigovops-foundation/aigovops-beacon", options: { hyperlink: { url: "https://github.com/aigovops-foundation/aigovops-beacon" } } },
     { text: "        " },
-    { text: "aigovopsfoundation.org", options: { hyperlink: { url: "https://www.aigovopsfoundation.org/" } } },
+    { text: "www.aigovops-foundation.com", options: { hyperlink: { url: "https://www.aigovops-foundation.com/" } } },
   ], { x: 0.7, y: 6.15, w: 12, h: 0.4, fontFace: B_FONT, fontSize: 14, color: "C7E7EA" });
 }
 
@@ -396,7 +396,7 @@ const footer = (s, label) => {
   s.addText("AI GovOps Foundation", { x: 6.983, y: 2.85, w: 5.5, h: 0.6, fontFace: H_FONT, fontSize: 26, bold: true, color: TEXT });
   s.addText("Where practitioners share frameworks, case studies, and reference implementations — open governance, open practice.", { x: 6.983, y: 3.6, w: 5.5, h: 1.5, fontFace: B_FONT, fontSize: 14, color: TEXT });
   s.addText([
-    { text: "aigovopsfoundation.org", options: { hyperlink: { url: "https://www.aigovopsfoundation.org/" } } },
+    { text: "www.aigovops-foundation.com", options: { hyperlink: { url: "https://www.aigovops-foundation.com/" } } },
   ], { x: 6.983, y: 5.9, w: 5.5, h: 0.4, fontFace: B_FONT, fontSize: 15, bold: true, color: TEAL });
   s.addText("Join · Contribute · Lead a working group", { x: 6.983, y: 6.25, w: 5.5, h: 0.35, fontFace: B_FONT, fontSize: 12, color: MUTED });
 
@@ -422,7 +422,7 @@ const footer = (s, label) => {
   ], { x: 0.6, y: 5.2, w: 12.1, h: 0.55, fontFace: B_FONT, fontSize: 22 });
   s.addText([
     { text: "→  ", options: { color: TEAL } },
-    { text: "aigovopsfoundation.org", options: { hyperlink: { url: "https://www.aigovopsfoundation.org/" }, color: "FFFFFF", bold: true } },
+    { text: "www.aigovops-foundation.com", options: { hyperlink: { url: "https://www.aigovops-foundation.com/" }, color: "FFFFFF", bold: true } },
   ], { x: 0.6, y: 5.85, w: 12.1, h: 0.55, fontFace: B_FONT, fontSize: 22 });
 
   s.addShape("rect", { x: 0, y: 6.95, w: 13.333, h: 0.55, fill: { color: TEAL } });

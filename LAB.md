@@ -6,7 +6,7 @@
 
 **License:** Apache-2.0. Datasets and receipts are yours.
 **Contact:** [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
-**Foundation:** [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+**Foundation:** [www.aigovops-foundation.com](https://www.aigovops-foundation.com/)
 
 ---
 

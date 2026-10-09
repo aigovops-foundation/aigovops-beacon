@@ -78,6 +78,6 @@ fed with evidence whether or not a human is at the keyboard.
 
 - Bob Rapp — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
 - Ken Johnston — [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
-- Foundation — [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+- Foundation — [www.aigovops-foundation.com](https://www.aigovops-foundation.com/)
 
 *Verifiable AI governance — Apache-2.0, no SaaS lock-in.*

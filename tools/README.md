@@ -42,4 +42,4 @@ they're the inputs that produce the artifacts in `docs/`.
 
 - Tagline: **YES-Ship AI · YES-Steady AI · YES-Recover AI**
 - Contacts: bob.rapp@aigovops.community · ken.johnston@aigovops.community
-- Foundation: https://www.aigovopsfoundation.org/
+- Foundation: https://www.aigovops-foundation.com/

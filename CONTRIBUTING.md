@@ -112,5 +112,5 @@ Kindly, with reasons, in the PR. If we say "let's not merge this," we'll tell yo
 ## Questions
 
 - Issues: [github.com/aigovops-foundation/aigovops-beacon/issues](https://github.com/aigovops-foundation/aigovops-beacon/issues)
-- Community: [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+- Community: [www.aigovops-foundation.com](https://www.aigovops-foundation.com/)
 - Email: [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community), [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)

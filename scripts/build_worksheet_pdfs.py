@@ -47,7 +47,7 @@ class WorksheetPDF(FPDF):
         self.cell(0, 6, "AiGovOps Beacon  |  Framework Lab Worksheet", ln=False)
         self.set_xy(self.w - 60, 3)
         self.set_font("Helvetica", "", 9)
-        self.cell(45, 6, "aigovopsfoundation.org", align="R")
+        self.cell(45, 6, "www.aigovops-foundation.com", align="R")
         self.set_text_color(*INK)
         self.set_y(18)
 

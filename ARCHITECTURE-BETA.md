@@ -11,7 +11,7 @@ Tagline: *YES-Ship AI · YES-Steady AI · YES-Recover AI.*
 | **License** | Apache-2.0 |
 | **Status** | Beta — production patterns documented, suitcase lab proven |
 | **Owners** | bob.rapp@aigovops.community · ken.johnston@aigovops.community |
-| **Foundation** | https://www.aigovopsfoundation.org/ |
+| **Foundation** | https://www.aigovops-foundation.com/ |
 
 ---
 

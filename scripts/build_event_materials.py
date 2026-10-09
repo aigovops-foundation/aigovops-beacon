@@ -79,7 +79,7 @@ class EventPDF(FPDF):
         self.cell(0, 6, "AiGovOps Foundation  |  Beacon Framework Lab")
         self.set_xy(self.w - 70, 4)
         self.set_font("Helvetica", "", 9)
-        self.cell(55, 6, "aigovopsfoundation.org", align="R")
+        self.cell(55, 6, "www.aigovops-foundation.com", align="R")
         self.set_text_color(*INK)
         self.set_y(20)
 

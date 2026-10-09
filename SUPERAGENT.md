@@ -211,4 +211,4 @@ and the procurement answer. Together, the deal closes.
 
 Maintainers: [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community) ·
 [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community) ·
-[aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+[www.aigovops-foundation.com](https://www.aigovops-foundation.com/)

@@ -281,7 +281,7 @@ CONTACTS = [
     "bob.rapp@aigovops.community",
     "ken.johnston@aigovops.community",
 ]
-FOUNDATION = "aigovopsfoundation.org"
+FOUNDATION = "aigovops-foundation.com"
 TAGLINE = "YES-Ship"  # signature phrase guarantees presence
 
 

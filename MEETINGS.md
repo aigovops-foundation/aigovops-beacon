@@ -5,7 +5,7 @@ We meet in the open. Here is where, when, and how to join.
 ## Community call — monthly
 
 **When:** first Wednesday of the month, 10:00 AM PT (US/Pacific).
-**Where:** Google Meet link posted to the GitHub Discussions tab the day before, and to [aigovopsfoundation.org](https://www.aigovopsfoundation.org/) the week before.
+**Where:** Google Meet link posted to the GitHub Discussions tab the day before, and to [www.aigovops-foundation.com](https://www.aigovops-foundation.com/) the week before.
 **Who:** anyone.
 **Format:** 30 min agenda, 15 min open Q&A, optional 15 min show-and-tell at the end.
 **Notes:** captured in [`docs/meetings/`](docs/meetings/) within 48 hours.
@@ -29,7 +29,7 @@ We meet in the open. Here is where, when, and how to join.
 
 ## Quarterly retrospective
 
-**When:** once a quarter, joined to the broader [AiGovOps Foundation](https://www.aigovopsfoundation.org/) community.
+**When:** once a quarter, joined to the broader [AiGovOps Foundation](https://www.aigovops-foundation.com/) community.
 **Where:** see Foundation site.
 **Who:** anyone.
 **Format:** "shipping safe / staying safe / getting back to safe" — what landed, what we learned, what to change.

@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
-  An <a href="https://www.aigovopsfoundation.org/">AiGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
+  An <a href="https://www.aigovops-foundation.com/">AiGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
   Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.<br/>
   <em>Beacon is an OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision. It runs alone.</em>
 </p>
@@ -339,7 +339,7 @@ aigovops-beacon/
 
 - **License:** Apache-2.0 — same as `aigovops-foundation-os`.
 - **Code of Conduct:** Contributor Covenant v2.1.
-- **Community:** [AiGovOps Foundation](https://www.aigovopsfoundation.org/). Founders: [Ken Johnston](https://www.linkedin.com/in/rkjohnston) and [Bob Rapp](https://www.linkedin.com/in/bobrapp).
+- **Community:** [AiGovOps Foundation](https://www.aigovops-foundation.com/). Founders: [Ken Johnston](https://www.linkedin.com/in/rkjohnston) and [Bob Rapp](https://www.linkedin.com/in/bobrapp).
 
 > *"Governance that ships with the code, not after."*  — Bob Rapp
 
@@ -352,7 +352,7 @@ aigovops-beacon/
 
 - Bob Rapp — [bob.rapp@aigovops.community](mailto:bob.rapp@aigovops.community)
 - Ken Johnston — [ken.johnston@aigovops.community](mailto:ken.johnston@aigovops.community)
-- Foundation — [aigovopsfoundation.org](https://www.aigovopsfoundation.org/)
+- Foundation — [www.aigovops-foundation.com](https://www.aigovops-foundation.com/)
 
 *Verifiable AI governance — Apache-2.0, no SaaS lock-in.*
 
