@@ -11,8 +11,8 @@ metadata:
   name: high-risk-ai-baseline
   version: 1.0
   owners:
-    policy: policy-team@aigovops.org
-    engineering: platform-eng@aigovops.org
+    policy: policy-team@aigovops-foundation.com
+    engineering: platform-eng@aigovops-foundation.com
 
 spec:
   description: >
@@ -77,7 +77,7 @@ spec:
     block_deployment: true
     notify:
       - slack: "#ai-governance"
-      - email: policy-team@aigovops.org
+      - email: policy-team@aigovops-foundation.com
 
   exceptions:
     allowed: true
