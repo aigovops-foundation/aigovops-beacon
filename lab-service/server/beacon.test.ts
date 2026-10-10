@@ -150,7 +150,7 @@ test("a LIVE-SHAPED inventory row passes Lab 100 (fields are columns, not metada
     useCase: "Pre-screens incoming community grant applications against eligibility checklist.",
     riskTier: "medium",
     status: "approved",
-    ownerEmail: "grants@aigovops.org",
+    ownerEmail: "grants@aigovops-foundation.com",
     controlRefs: ["NIST-AI-RMF:GOVERN-1.1", "NIST-AI-RMF:MAP-2.3", "EU-AI-Act:Art.10"],
     metadata: {
       dataset: "anonymized-grant-apps-2024",

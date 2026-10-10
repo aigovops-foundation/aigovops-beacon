@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Email **security@aigovopsfoundation.org** (or, for now, open a private
+Email **security@aigovops-foundation.com** (or, for now, open a private
 security advisory on GitHub). Please do not file public issues for
 unpatched vulnerabilities.
 
