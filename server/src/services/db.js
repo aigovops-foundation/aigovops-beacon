@@ -100,10 +100,9 @@ CREATE TABLE IF NOT EXISTS anchors (
 // outright while CI (pinned to Node 20/22) stayed green.
 //
 // better-sqlite3 is kept as an OPTIONAL dependency, not deleted: Node 20 has no
-// node:sqlite, and both the Node 20 CI lane and the runtime stage of
-// deploy/Dockerfile still run on it. Optional means a failed native build is a
-// warning instead of a fatal install error, so the quickstart survives on new
-// Node and keeps working on old Node.
+// node:sqlite, and the Node 20 CI lane still uses it. Optional means a failed
+// native build is a warning instead of a fatal install error, so the quickstart
+// survives on new Node and keeps working on old Node.
 //
 // Set BEACON_SQLITE_DRIVER=node|better-sqlite3 to pin one explicitly. The test
 // suite uses it to run the same assertions against both, which is the only way

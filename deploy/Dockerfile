@@ -4,8 +4,7 @@
 # and copies the bundle into /app/server/public so one process serves
 # both API and UI.
 
-# 22, not 20, because react-router 8 declares `engines: node >=22.22.0`. Scoped to this build
-# stage on purpose: the runtime stage below still builds better-sqlite3 and stays on node:20.
+# Node 22 is used for both stages: Studio requires it, and the runtime stage needs node:sqlite.
 FROM node:22-alpine AS studio
 WORKDIR /studio
 COPY studio/package.json studio/package-lock.json* ./
@@ -13,7 +12,7 @@ RUN npm install --no-audit --no-fund
 COPY studio/ ./
 RUN npm run build
 
-FROM node:20-alpine AS runtime
+FROM node:22-alpine AS runtime
 RUN apk add --no-cache python3 make g++ \
     && addgroup -S beacon && adduser -S beacon -G beacon
 WORKDIR /app
@@ -23,6 +22,7 @@ COPY server/package.json server/package-lock.json* ./server/
 RUN cd server && npm install --omit=dev --no-audit --no-fund
 
 COPY server/ ./server/
+RUN cd server && node --input-type=module -e 'import("./src/services/db.js").then(({ selectDriver }) => selectDriver())'
 COPY checklists/ ./checklists/
 COPY policy/ ./policy/
 

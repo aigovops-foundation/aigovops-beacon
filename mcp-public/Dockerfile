@@ -1,6 +1,6 @@
 # AiGovOps Beacon — hosted MCP server.
 # Single-stage. Builds embedded Beacon core + MCP tool registry into one image.
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -8,9 +8,10 @@ WORKDIR /app
 COPY .. /app/
 
 # Install Beacon core + MCP shared deps + the wrapper itself.
-RUN cd /app/server && npm install --omit=dev --no-audit --no-fund \
- && cd /app/mcp    && npm install --omit=dev --no-audit --no-fund \
- && cd /app/mcp-public && npm install --no-audit --no-fund
+RUN cd /app/server && npm install --omit=dev --no-audit --no-fund
+RUN cd /app/server && node --input-type=module -e 'import("./src/services/db.js").then(({ selectDriver }) => selectDriver())'
+RUN cd /app/mcp && npm install --omit=dev --no-audit --no-fund
+RUN cd /app/mcp-public && npm install --no-audit --no-fund
 
 WORKDIR /app/mcp-public
 
