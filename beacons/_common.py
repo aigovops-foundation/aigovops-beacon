@@ -224,8 +224,16 @@ def append_receipt(receipt: dict[str, Any]) -> Path:
     _ensure_dirs()
     day = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d")
     path = RECEIPTS_DIR / f"{day}.ndjson"
-    with path.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(receipt, ensure_ascii=False, sort_keys=False) + "\n")
+    line = (json.dumps(receipt, ensure_ascii=False, sort_keys=False) + "\n").encode(
+        "utf-8"
+    )
+    with path.open("a+b") as fh:
+        fh.seek(0, 2)
+        needs_newline = fh.tell() > 0
+        if needs_newline:
+            fh.seek(-1, 2)
+            needs_newline = fh.read(1) != b"\n"
+        fh.write((b"\n" if needs_newline else b"") + line)
     return path
 
 
