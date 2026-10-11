@@ -326,6 +326,7 @@ button[disabled] { opacity: 0.4; cursor: not-allowed; }
 
 /* Anchor targets land below header + rail (scoped to pages with the rail) */
 .section-rail ~ main section[id] { scroll-margin-top: 118px; }
+.site-header + main section[id] { scroll-margin-top: 76px; }
 
 .back-to-top {
   position: fixed;
@@ -420,6 +421,14 @@ button[disabled] { opacity: 0.4; cursor: not-allowed; }
   border-radius: 50%;
   /* Hardware accelerated steady-glow */
   filter: drop-shadow(0 14px 40px rgba(46, 125, 79, 0.25));
+}
+@media (min-width: 900px) {
+  .medallion-image {
+    left: 50%;
+    right: auto;
+    max-width: 300px;
+    transform: translateX(-50%);
+  }
 }
 
 /* Pulse ring tied to receipt heartbeat */

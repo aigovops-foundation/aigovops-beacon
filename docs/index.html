@@ -46,12 +46,34 @@
 
 <body>
 
-  <!-- ============ 0. DRAFT v0.2 BANNER ============ -->
+<!-- AiGovOps Foundation bar v1 — identical on every Foundation subdomain. Self-contained; no external assets. -->
+<nav class="agf-bar" aria-label="AiGovOps Foundation">
+  <a class="agf-bar__home" href="https://www.aigovops-foundation.com/">AiGovOps Foundation</a>
+  <ul class="agf-bar__links">
+    <li><a href="https://practice.aigovops-foundation.com/">Learn <span class="agf-bar__hint">· free course</span></a></li>
+    <li><a href="https://community.aigovops-foundation.com/library/">Library</a></li>
+    <li><a href="https://www.aigovops-foundation.com/open-source.html">Tools <span class="agf-bar__hint">· open source</span></a></li>
+    <li><a href="https://practice.aigovops-foundation.com/docs/THURSDAY.html">Meetings</a></li>
+    <li><a class="agf-bar__join" href="https://community.aigovops-foundation.com/signin.html">Become a member</a></li>
+  </ul>
+</nav>
+<style>
+.agf-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem 1rem;padding:.35rem 1rem;background:#1f2a24;color:#e9efe9;font:500 13px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;position:relative;z-index:50}
+.agf-bar a{color:inherit;text-decoration:none}
+.agf-bar a:hover,.agf-bar a:focus-visible{text-decoration:underline}
+.agf-bar a:focus-visible{outline:2px solid #9fd8b4;outline-offset:2px;border-radius:2px}
+.agf-bar__home{font-weight:700;letter-spacing:.01em}
+.agf-bar__links{display:flex;flex-wrap:wrap;gap:.15rem .9rem;list-style:none;margin:0;padding:0}
+.agf-bar__hint{opacity:.7;font-weight:400}
+.agf-bar__join{font-weight:700;color:#9fd8b4!important}
+@media (max-width:560px){.agf-bar__hint{display:none}.agf-bar{font-size:12px}}
+@media print{.agf-bar{display:none}}
+</style>
+
+  <!-- ============ 0. WELCOME BANNER ============ -->
   <div class="draft-banner" role="status" aria-live="polite" style="background:#2B2B28;color:#f7f6f2;font:500 0.9rem/1.4 system-ui,sans-serif;padding:0.6rem 1rem;text-align:center;border-bottom:1px solid #1F5E3A;">
-    <strong style="letter-spacing:0.04em;text-transform:uppercase;color:#C9DCC2;">draft-v0.2-glacis</strong>
-    &nbsp;·&nbsp; Welcoming <strong>Joe Braidwood</strong> as Launch Advisor and <strong>Glacis Technologies</strong> as our Founding Open-Source Curator.
+    Welcoming <strong>Joe Braidwood</strong> as Launch Advisor and <strong>Glacis Technologies</strong> as our Founding Open-Source Curator.
     &nbsp;<a href="./draft-v0.2-glacis.html" style="color:#fff;text-decoration:underline;">Read the announcement →</a>
-    &nbsp;|&nbsp;<a href="https://github.com/aigovops-foundation/aigovops-beacon/pull/2" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">PR #2 ↗</a>
   </div>
   <!-- Thin scroll-progress indicator (garden green). Fixed: takes no flow space. -->
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
@@ -74,6 +96,7 @@
         </span>
       </a>
       <nav class="nav-actions" aria-label="Primary">
+        <a href="#demo" class="btn-ghost btn-sm desktop-only">Demo</a>
         <a href="#failures" class="btn-ghost btn-sm desktop-only">Failures</a>
         <a href="#framework" class="btn-ghost btn-sm desktop-only">Frameworks</a>
         <a href="#run" class="btn-ghost btn-sm desktop-only">Run it</a>
@@ -85,18 +108,6 @@
       </nav>
     </div>
   </header>
-
-  <!-- Slim sticky section rail — wayfinding for the long scroll -->
-  <nav class="section-rail" id="sectionRail" aria-label="On this page">
-    <div class="shell">
-      <a href="#demo">Demo</a>
-      <a href="#beacons">Beacons</a>
-      <a href="#scoring">Scoring</a>
-      <a href="#failures">Failures</a>
-      <a href="#framework">Frameworks</a>
-      <a href="#run">Run it</a>
-    </div>
-  </nav>
 
   <main id="top">
 
@@ -135,12 +146,11 @@
             <span class="kicker"><span class="dot" aria-hidden="true"></span> Verifiable AI governance — Apache-2.0, no SaaS lock-in</span>
             <h1>Find every AI on your network. Sign what matters. Hand the auditor a bundle they can verify themselves.</h1>
             <p class="lede">Shadow AI to signed evidence — in one afternoon. Beacon discovers the models running in your environment, attests them against <strong>23 global audit frameworks</strong> — NIST AI RMF, EU AI Act, ISO/IEC 42001, HIPAA, GDPR, Colorado AI Act, Korea AI Basic Act, and more — then produces a cryptographically signed bundle anyone can re-verify with one command.</p>
-            <p class="lede" style="margin-top:0.75rem;font-size:0.95rem;opacity:0.85;"><strong>An <a href="https://overt.is/" target="_blank" rel="noopener">OVERT 1.0</a> Protocol Profile.</strong> Standard authored by <a href="https://www.glacis.io/" target="_blank" rel="noopener">Glacis Technologies</a> — our <strong>Founding Open-Source Curator</strong>, with <a href="https://www.linkedin.com/in/joebraidwood/" target="_blank" rel="noopener">Joe Braidwood</a> joining as <strong>Launch Advisor</strong>. Profile <code>aigovops-beacon.v1</code> — registration in progress under the <a href="https://overt.is/ipr-policy" target="_blank" rel="noopener">royalty-free OVERT IPR policy</a>. <a href="./draft-v0.2-glacis.html" style="color:#1F5E3A;">draft-v0.2-glacis →</a></p>
             <div class="cta-row">
-              <a href="#demo" class="btn-primary">See it sign — live ↓</a>
-              <a href="./downloads/aigovops-beacon-starter.zip" class="btn-ghost" download>Download starter (.zip)</a>
-              <a href="https://github.com/aigovops-foundation/aigovops-beacon" class="btn-ghost" target="_blank" rel="noopener">View on GitHub ↗</a>
+              <a href="#demo" class="btn-primary">Verify a sample receipt in your browser →</a>
+              <a href="#run" class="btn-ghost">Run it — one command →</a>
             </div>
+            <p class="lede" style="margin-top:0.75rem;font-size:0.95rem;opacity:0.85;"><strong>An <a href="https://overt.is/" target="_blank" rel="noopener">OVERT 1.0</a> Protocol Profile.</strong> Standard authored by <a href="https://www.glacis.io/" target="_blank" rel="noopener">Glacis Technologies</a> — our <strong>Founding Open-Source Curator</strong>, with <a href="https://www.linkedin.com/in/joebraidwood/" target="_blank" rel="noopener">Joe Braidwood</a> joining as <strong>Launch Advisor</strong>. Profile <code>aigovops-beacon.v1</code> — registration in progress under the <a href="https://overt.is/ipr-policy" target="_blank" rel="noopener">royalty-free OVERT IPR policy</a>. <a href="./draft-v0.2-glacis.html" style="color:#1F5E3A;">draft-v0.2-glacis →</a></p>
           </div>
         </div>
 
