@@ -148,6 +148,12 @@ export function fingerprintSpellings(publicKey) {
   return [sshFingerprint(publicKey), hex.slice(0, 16), hex];
 }
 
+export function activeFprFor(activeKey, receiptKeyFpr) {
+  return typeof receiptKeyFpr === "string" && receiptKeyFpr.startsWith("SHA256:")
+    ? activeKey.keyFpr
+    : activeKey.fingerprint;
+}
+
 export function sign(secretKey, messageBytes) {
   return Buffer.from(
     nacl.sign.detached(messageBytes, secretKey)

@@ -69,7 +69,8 @@ test("a fresh receipt carries the spellings docs/RECEIPT_SCHEMA.md specifies", a
   const ctx = await bootTestServer();
   try {
     // Services are constructed by the router, not hung on ctx.
-    const receipt = createReceiptService(ctx.ctx).write({
+    const service = createReceiptService(ctx.ctx);
+    const receipt = service.write({
       event_type: "invocation",
       vendor: "openai",
       model: "gpt-4o",
@@ -84,6 +85,53 @@ test("a fresh receipt carries the spellings docs/RECEIPT_SCHEMA.md specifies", a
     // The storage id is unchanged and still hex — the key file on disk did not
     // have to be renamed for any of this.
     assert.match(ctx.ctx.activeKey.fingerprint, /^[0-9a-f]{16}$/);
+    const verification = service.verifyById(receipt.id);
+    assert.equal(verification.signature_verifies, true);
+    assert.equal(verification.key_fpr, verification.active_key_fpr);
+    assert.equal(verification.active_key_fpr, ctx.ctx.activeKey.keyFpr);
+  } finally {
+    ctx.cleanup();
+  }
+});
+
+test("verifyById matches the hex key fingerprint on a 1.0.0 receipt", async () => {
+  const ctx = await bootTestServer();
+  try {
+    const service = createReceiptService(ctx.ctx);
+    const written = service.write({
+      event_type: "invocation",
+      vendor: "anthropic",
+      model: "claude",
+      version: "1",
+      environment: "prod",
+    });
+    const legacyBase = { ...written, schema_version: "1.0.0" };
+    delete legacyBase.signature;
+    const activeKey = ctx.ctx.activeKey;
+    const legacy = {
+      ...legacyBase,
+      signature: {
+        alg: "Ed25519",
+        key_fpr: fingerprintSpellings(activeKey.publicKey)[1],
+        canonical_form: "RFC8785",
+        sig_b64: sign(
+          activeKey.secretKey,
+          Buffer.from(canonicalize(legacyBase), "utf8")
+        ),
+      },
+    };
+    const day = written.ts_utc.slice(0, 10);
+    fs.writeFileSync(
+      path.join(ctx.dataDir, "receipts", `${day}.ndjson`),
+      JSON.stringify(legacy) + "\n"
+    );
+
+    const verification = service.verifyById(legacy.id);
+    assert.equal(verification.found, true);
+    assert.equal(verification.signature_verifies, true);
+    assert.equal(verification.key_fpr, activeKey.fingerprint);
+    assert.equal(verification.key_fpr, verification.active_key_fpr);
+    assert.equal(verification.active_key_fpr, activeKey.fingerprint);
   } finally {
     ctx.cleanup();
   }
