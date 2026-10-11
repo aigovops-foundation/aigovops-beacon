@@ -287,6 +287,16 @@ def _validate_out_dir(out_dir: Path | None) -> None:
         raise SystemExit(2)
 
 
+def _default_bundle_path() -> Path:
+    stamp = (
+        _dt.datetime.now(_dt.timezone.utc)
+        .isoformat()
+        .replace(":", "-")
+        .replace(".", "-")
+    )
+    return _common.BEACON_HOME / "bundles" / f"bundle-{stamp}"
+
+
 def build_bundle(
     out_dir: Path | None = None,
     *,
@@ -301,8 +311,7 @@ def build_bundle(
     """
     from cryptography.hazmat.primitives import serialization
 
-    stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
-    bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
+    bundle = out_dir if out_dir is not None else _default_bundle_path()
     _validate_out_dir(bundle)
     bundle.mkdir(parents=True, exist_ok=True)
     os.chmod(bundle, 0o700)
@@ -446,7 +455,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, help="Where to write the bundle (default ~/.beacon/bundles/)")
     p.add_argument("--json", action="store_true", dest="as_json", help="Machine-readable summary")
     args = p.parse_args(argv)
-    _validate_out_dir(args.out)
+    bundle_path = args.out if args.out is not None else _default_bundle_path()
+    _validate_out_dir(bundle_path)
 
     paths = args.path or [Path(".")]
     for path in paths:
@@ -469,7 +479,7 @@ def main(argv: list[str] | None = None) -> int:
     if not args.no_egress:
         egress_receipts, egress_skipped = scan_egress()
 
-    result = build_bundle(args.out, exclude_ids=existing_receipt_ids)
+    result = build_bundle(bundle_path, exclude_ids=existing_receipt_ids)
     result["files_scanned"] = scanned
     result["artifact_receipts"] = artifact_receipts
     result["egress_receipts"] = egress_receipts

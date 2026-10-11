@@ -497,6 +497,49 @@ def test_default_bundle_path_inside_policy_is_rejected(tmp_path, monkeypatch, ca
     assert not root.exists()
 
 
+def test_default_bundle_path_is_rejected_before_scanning_or_receipts(
+    tmp_path, monkeypatch, capsys
+):
+    import src.beacon_scan as beacon_scan
+    from beacons import _common
+
+    repo_root = tmp_path / "repo"
+    receipt_dir = tmp_path / "receipts"
+    receipt_dir.mkdir()
+    day = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    receipt_log = receipt_dir / f"{day}.ndjson"
+    original = b'{"id":"existing"}\n'
+    receipt_log.write_bytes(original)
+
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", repo_root)
+    monkeypatch.setattr(_common, "BEACON_HOME", repo_root / "policy" / "x")
+    monkeypatch.setattr(_common, "RECEIPTS_DIR", receipt_dir)
+    monkeypatch.setattr(_common, "load_or_create_keypair", lambda: None)
+    scan_calls = []
+    monkeypatch.setattr(
+        beacon_scan,
+        "scan_artifacts",
+        lambda *args: scan_calls.append("artifacts") or (0, 0),
+    )
+    monkeypatch.setattr(
+        beacon_scan,
+        "scan_egress",
+        lambda: scan_calls.append("egress") or (0, None),
+    )
+
+    with pytest.raises(SystemExit) as exc:
+        beacon_scan.main([])
+
+    assert exc.value.code == 2
+    assert scan_calls == []
+    assert receipt_log.read_bytes() == original
+    assert (
+        "beacon-scan: error: --out must not be the repository or contain "
+        "policy/ or checklists/"
+        in capsys.readouterr().err
+    )
+
+
 @pytest.mark.skipif(
     os.name == "nt" or (hasattr(os, "geteuid") and os.geteuid() == 0),
     reason="write-only permission behavior requires a non-root POSIX user",
