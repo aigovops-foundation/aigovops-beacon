@@ -52,6 +52,7 @@ import base64
 import datetime as _dt
 import hashlib
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
@@ -124,6 +125,8 @@ def scan_egress() -> tuple[int, str | None]:
     try:
         hosts = model_beacon.load_hosts(None)
         ip_to_host = model_beacon.resolve_hosts(hosts)
+        if not ip_to_host:
+            return 0, "no AI hostnames resolved (is DNS reachable?)"
         observations = model_beacon.scan(ip_to_host, strict=True)
         return model_beacon.emit_receipts(observations), None
     except PermissionError:
@@ -194,16 +197,35 @@ def _read_ndjson(path: Path) -> list[dict[str, Any]]:
     return out
 
 
+def _parse_receipt_line(
+    line: bytes, path: Path, line_number: int
+) -> dict[str, Any] | None:
+    try:
+        receipt = json.loads(line)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        receipt = None
+    if not isinstance(receipt, dict):
+        print(
+            f"beacon-scan: warning: skipping malformed line {line_number} in {path.name}",
+            file=sys.stderr,
+        )
+        return None
+    return receipt
+
+
 def _stored_receipt_ids() -> set[str]:
     ids: set[str] = set()
     src_dir = _common.RECEIPTS_DIR
     if src_dir.is_dir():
         for path in src_dir.glob("*.ndjson"):
-            ids.update(
-                receipt["id"]
-                for receipt in _read_ndjson(path)
-                if isinstance(receipt.get("id"), str)
-            )
+            for line_number, line in enumerate(
+                path.read_bytes().splitlines(keepends=True), start=1
+            ):
+                if not line.strip():
+                    continue
+                receipt = _parse_receipt_line(line, path, line_number)
+                if receipt is not None and isinstance(receipt.get("id"), str):
+                    ids.add(receipt["id"])
     return ids
 
 
@@ -264,6 +286,7 @@ def build_bundle(
     stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
     bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
     bundle.mkdir(parents=True, exist_ok=True)
+    os.chmod(bundle, 0o700)
     (bundle / "receipts").mkdir(exist_ok=True)
     (bundle / "public_keys").mkdir(exist_ok=True)
     for old_receipt_file in (bundle / "receipts").glob("*.ndjson"):
@@ -278,10 +301,14 @@ def build_bundle(
         for f in sorted(src_dir.glob("*.ndjson")):
             lines: list[bytes] = []
             entries: list[dict[str, Any]] = []
-            for line in f.read_bytes().splitlines(keepends=True):
+            for line_number, line in enumerate(
+                f.read_bytes().splitlines(keepends=True), start=1
+            ):
                 if not line.strip():
                     continue
-                receipt = json.loads(line)
+                receipt = _parse_receipt_line(line, f, line_number)
+                if receipt is None:
+                    continue
                 if exclude_ids is not None and receipt.get("id") in exclude_ids:
                     continue
                 lines.append(line)
@@ -308,8 +335,11 @@ def build_bundle(
     rules_omitted: list[str] = []
     for name, dest in (("policy", "policies"), ("checklists", "checklists")):
         src = REPO_ROOT / name
+        dest_path = bundle / dest
+        if dest_path.exists():
+            shutil.rmtree(dest_path)
         if src.is_dir():
-            shutil.copytree(src, bundle / dest, dirs_exist_ok=True)
+            shutil.copytree(src, dest_path)
         else:
             print(
                 f"beacon-scan: warning: {src} is missing; omitting {dest}",

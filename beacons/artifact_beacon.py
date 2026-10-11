@@ -59,6 +59,9 @@ def iter_files(roots: list[Path], max_depth: int) -> Iterable[Path]:
         root = root.resolve()
         if not root.exists():
             continue
+        if root.is_file():
+            yield root
+            continue
         base_depth = len(root.parts)
         for p in root.rglob("*"):
             if not p.is_file():

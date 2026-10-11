@@ -88,6 +88,11 @@ def test_bundle_has_the_documented_layout(scanned):
     assert list((b / "public_keys").glob("*.pem")), "no public key shipped"
 
 
+@pytest.mark.skipif(os.name != "posix", reason="POSIX permissions")
+def test_bundle_directory_has_private_permissions(scanned):
+    assert scanned["bundle"].stat().st_mode & 0o777 == 0o700
+
+
 def test_the_auditors_verifier_accepts_the_bundle(scanned):
     """The whole point: a different tool, run the documented way, says OK."""
     r = run_verifier(scanned["bundle"])
@@ -208,6 +213,28 @@ def test_a_missing_path_is_a_usage_error_not_a_crash(tmp_path, monkeypatch):
     assert beacon_scan.main(["--path", str(tmp_path / "nope"), "--no-egress"]) == 2
 
 
+def test_single_file_path_produces_an_artifact_receipt(scanned, tmp_path, capsys):
+    import src.beacon_scan as beacon_scan
+
+    bundle = tmp_path / "single-file-bundle"
+    capsys.readouterr()
+    rc = beacon_scan.main(
+        [
+            "--path",
+            str(scanned["project"] / "generated.py"),
+            "--out",
+            str(bundle),
+            "--no-egress",
+            "--json",
+        ]
+    )
+
+    result = json.loads(capsys.readouterr().out)
+    assert rc == 0
+    assert result["files_scanned"] == 1
+    assert result["artifact_receipts"] == 1
+
+
 def test_egress_skip_is_reported_not_silently_counted_as_zero(scanned, monkeypatch):
     """"Never looked" must never render as "looked and found nothing"."""
     import src.beacon_scan as beacon_scan
@@ -217,6 +244,27 @@ def test_egress_skip_is_reported_not_silently_counted_as_zero(scanned, monkeypat
     count, reason = beacon_scan.scan_egress()
     assert count == 0
     assert reason and "psutil" in reason
+
+
+def test_empty_resolved_host_map_is_reported_as_an_egress_skip(monkeypatch):
+    from types import SimpleNamespace
+
+    import src.beacon_scan as beacon_scan
+    from beacons import model_beacon
+
+    monkeypatch.setattr(model_beacon, "psutil", SimpleNamespace(), raising=False)
+    monkeypatch.setattr(model_beacon, "load_hosts", lambda _path: ["api.openai.com"])
+    monkeypatch.setattr(model_beacon, "resolve_hosts", lambda _hosts: {})
+
+    def unexpected_scan(*_args, **_kwargs):
+        pytest.fail("egress scan must not run when no hosts resolve")
+
+    monkeypatch.setattr(model_beacon, "scan", unexpected_scan)
+
+    assert beacon_scan.scan_egress() == (
+        0,
+        "no AI hostnames resolved (is DNS reachable?)",
+    )
 
 
 def test_prior_receipt_from_another_key_is_excluded_from_the_new_bundle(scanned, tmp_path):
@@ -336,6 +384,36 @@ def test_new_scan_bundles_only_new_receipts_and_preserves_source_bytes(
     assert run_verifier(bundle).returncode == 0
 
 
+def test_malformed_receipt_history_is_skipped_in_snapshot_and_bundle(
+    scanned, tmp_path, capsys
+):
+    import src.beacon_scan as beacon_scan
+    from beacons import _common
+
+    source = next(_common.RECEIPTS_DIR.glob("*.ndjson"))
+    original = source.read_bytes()
+    line_number = len(original.splitlines()) + 1
+    source.write_bytes(original + b'{"malformed":\n')
+    expected_ids = {
+        json.loads(line)["id"] for line in original.splitlines() if line.strip()
+    }
+    expected_warning = (
+        f"beacon-scan: warning: skipping malformed line {line_number} in {source.name}"
+    )
+
+    assert beacon_scan._stored_receipt_ids() == expected_ids
+    assert expected_warning in capsys.readouterr().err
+
+    bundle = tmp_path / "bundle-with-malformed-history"
+    result = beacon_scan.build_bundle(bundle, exclude_ids=set())
+    captured = capsys.readouterr()
+    bundled_source = bundle / "receipts" / source.name
+
+    assert result["receipt_count"] == len(expected_ids)
+    assert bundled_source.read_bytes() == original
+    assert expected_warning in captured.err
+
+
 def test_access_denied_egress_is_a_skip_not_a_zero_observation_success(
     monkeypatch, capsys
 ):
@@ -420,3 +498,43 @@ def test_missing_rules_are_reported_and_the_bundle_still_verifies(
     assert not (bundle / "checklists").exists()
     result = run_verifier(bundle)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_reused_bundle_replaces_and_removes_stale_rules(
+    tmp_path, monkeypatch, capsys
+):
+    import importlib
+    import shutil
+
+    monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
+    from beacons import _common
+
+    importlib.reload(_common)
+    import src.beacon_scan as beacon_scan
+
+    importlib.reload(beacon_scan)
+
+    repo_root = tmp_path / "repository"
+    policy = repo_root / "policy"
+    checklists = repo_root / "checklists"
+    policy.mkdir(parents=True)
+    checklists.mkdir()
+    (policy / "stale.rego").write_text("package stale\n", encoding="utf-8")
+    (checklists / "stale.yaml").write_text("stale: true\n", encoding="utf-8")
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", repo_root)
+
+    bundle = tmp_path / "reused-bundle"
+    beacon_scan.build_bundle(bundle)
+    assert (bundle / "policies" / "stale.rego").is_file()
+    assert (bundle / "checklists" / "stale.yaml").is_file()
+
+    (policy / "stale.rego").unlink()
+    (policy / "current.rego").write_text("package current\n", encoding="utf-8")
+    shutil.rmtree(checklists)
+    result = beacon_scan.build_bundle(bundle)
+
+    assert not (bundle / "policies" / "stale.rego").exists()
+    assert (bundle / "policies" / "current.rego").is_file()
+    assert not (bundle / "checklists").exists()
+    assert result["rules_omitted"] == ["checklists"]
+    assert "warning" in capsys.readouterr().err
