@@ -449,6 +449,59 @@ def test_append_receipt_separates_a_truncated_history_line(
     assert source.read_bytes().startswith(b'{"id": "x", "trunc\n')
 
 
+def test_invalid_out_is_rejected_before_scanning_or_writing_receipts(
+    tmp_path, monkeypatch
+):
+    import src.beacon_scan as beacon_scan
+    from beacons import _common
+
+    root = tmp_path / "repo"
+    (root / "policy").mkdir(parents=True)
+    (root / "checklists").mkdir()
+    receipt_dir = tmp_path / "receipts"
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", root)
+    monkeypatch.setattr(_common, "RECEIPTS_DIR", receipt_dir)
+    monkeypatch.setattr(_common, "load_or_create_keypair", lambda: None)
+    calls = []
+    monkeypatch.setattr(
+        beacon_scan, "scan_artifacts", lambda *args: calls.append("artifacts") or (0, 0)
+    )
+    monkeypatch.setattr(
+        beacon_scan, "scan_egress", lambda: calls.append("egress") or (0, None)
+    )
+
+    with pytest.raises(SystemExit) as exc:
+        beacon_scan.main(["--path", str(root), "--out", str(root)])
+
+    assert exc.value.code == 2
+    assert calls == []
+    assert not receipt_dir.exists()
+
+
+@pytest.mark.skipif(
+    os.name == "nt" or (hasattr(os, "geteuid") and os.geteuid() == 0),
+    reason="write-only permission behavior requires a non-root POSIX user",
+)
+def test_append_receipt_falls_back_for_write_only_logs(tmp_path, monkeypatch):
+    import importlib
+
+    monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
+    from beacons import _common
+
+    importlib.reload(_common)
+    _common.RECEIPTS_DIR.mkdir(parents=True, exist_ok=True)
+    day = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    source = _common.RECEIPTS_DIR / f"{day}.ndjson"
+    source.write_bytes(b'{"id":"existing"}\n')
+    source.chmod(0o200)
+    try:
+        _common.append_receipt({"id": "write-only"})
+    finally:
+        source.chmod(0o600)
+
+    assert json.loads(source.read_text().splitlines()[-1]) == {"id": "write-only"}
+
+
 def test_access_denied_egress_is_a_skip_not_a_zero_observation_success(
     monkeypatch, capsys
 ):

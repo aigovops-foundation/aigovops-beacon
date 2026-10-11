@@ -227,12 +227,29 @@ def append_receipt(receipt: dict[str, Any]) -> Path:
     line = (json.dumps(receipt, ensure_ascii=False, sort_keys=False) + "\n").encode(
         "utf-8"
     )
-    with path.open("a+b") as fh:
+    try:
+        fh = path.open("a+b")
+    except OSError:
+        with path.open("ab") as append_fh:
+            append_fh.write(line)
+        return path
+
+    try:
         fh.seek(0, 2)
         needs_newline = fh.tell() > 0
         if needs_newline:
             fh.seek(-1, 2)
             needs_newline = fh.read(1) != b"\n"
+    except OSError:
+        try:
+            fh.close()
+        except OSError:
+            pass
+        with path.open("ab") as append_fh:
+            append_fh.write(line)
+        return path
+
+    with fh:
         fh.write((b"\n" if needs_newline else b"") + line)
     return path
 
