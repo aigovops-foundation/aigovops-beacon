@@ -228,13 +228,29 @@ const INVENTORY_BY_TENANT: Record<string, SeedItem[]> = {
   "beacon-foundation-inc": INVENTORY_BEACON_INC,
 };
 
-const LEGACY_SEED_OWNER_EMAILS: Record<string, string> = {
-  "grants@aigovops.org": "grants@aigovops-foundation.com",
-  "community@aigovops.org": "community@aigovops-foundation.com",
-  "education@aigovops.org": "education@aigovops-foundation.com",
-  "development@aigovops.org": "development@aigovops-foundation.com",
-  "boardops@aigovops.org": "boardops@aigovops-foundation.com",
-};
+const FOUNDATION_EMAIL_SUFFIX = "@aigovops-foundation.com";
+const LEGACY_EMAIL_SUFFIX = "@aigovops.org";
+const LEGACY_SEED_OWNER_EMAILS = INVENTORY_AIGOVOPS.flatMap((seed) => {
+  if (!seed.ownerEmail.endsWith(FOUNDATION_EMAIL_SUFFIX)) return [];
+  const localPart = seed.ownerEmail.slice(0, -FOUNDATION_EMAIL_SUFFIX.length);
+  return [{
+    name: seed.name,
+    oldEmail: `${localPart}${LEGACY_EMAIL_SUFFIX}`,
+    newEmail: seed.ownerEmail,
+  }];
+});
+
+const EXPECTED_LEGACY_SEED_OWNER_EMAILS = [
+  { name: "Grant Application Triage", oldEmail: "grants@aigovops.org", newEmail: "grants@aigovops-foundation.com" },
+  { name: "Volunteer Match Recommender", oldEmail: "community@aigovops.org", newEmail: "community@aigovops-foundation.com" },
+  { name: "Educational Content Summarizer", oldEmail: "education@aigovops.org", newEmail: "education@aigovops-foundation.com" },
+  { name: "Donor Sentiment Scorer (DRAFT)", oldEmail: "development@aigovops.org", newEmail: "development@aigovops-foundation.com" },
+  { name: "Board Meeting Minute Drafting", oldEmail: "boardops@aigovops.org", newEmail: "boardops@aigovops-foundation.com" },
+] as const;
+
+if (JSON.stringify(LEGACY_SEED_OWNER_EMAILS) !== JSON.stringify(EXPECTED_LEGACY_SEED_OWNER_EMAILS)) {
+  throw new Error("Unexpected legacy seed owner email migrations");
+}
 
 /** A fresh Ed25519 keypair in the encodings the live service stored: SPKI / PKCS8, base64. */
 function generateTenantKeys(): { pub: string; priv: string; fpr: string } {
@@ -272,10 +288,14 @@ export function migrateSeedOwnerEmails(): number {
 
   return _internal.sqlite.transaction(() => {
     let changed = 0;
-    for (const [oldEmail, newEmail] of Object.entries(LEGACY_SEED_OWNER_EMAILS)) {
+    for (const { name, oldEmail, newEmail } of LEGACY_SEED_OWNER_EMAILS) {
       changed += db.update(inventory)
         .set({ ownerEmail: newEmail })
-        .where(and(eq(inventory.tenantId, tenantId), eq(inventory.ownerEmail, oldEmail)))
+        .where(and(
+          eq(inventory.tenantId, tenantId),
+          eq(inventory.ownerEmail, oldEmail),
+          eq(inventory.name, name),
+        ))
         .run().changes;
     }
     return changed;
