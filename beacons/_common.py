@@ -231,7 +231,7 @@ def append_receipt(receipt: dict[str, Any]) -> Path:
         fh = path.open("a+b")
     except OSError:
         with path.open("ab") as append_fh:
-            append_fh.write(line)
+            append_fh.write(b"\n" + line)
         return path
 
     try:
@@ -246,7 +246,7 @@ def append_receipt(receipt: dict[str, Any]) -> Path:
         except OSError:
             pass
         with path.open("ab") as append_fh:
-            append_fh.write(line)
+            append_fh.write(b"\n" + line)
         return path
 
     with fh:

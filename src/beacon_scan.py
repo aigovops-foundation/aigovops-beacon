@@ -299,12 +299,11 @@ def build_bundle(
     inventory.json, verify_bundle.py, VERIFY.md — so an auditor cannot tell
     which producer wrote it, and does not have to care.
     """
-    _validate_out_dir(out_dir)
-
     from cryptography.hazmat.primitives import serialization
 
     stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
     bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
+    _validate_out_dir(bundle)
     bundle.mkdir(parents=True, exist_ok=True)
     os.chmod(bundle, 0o700)
     (bundle / "receipts").mkdir(exist_ok=True)
