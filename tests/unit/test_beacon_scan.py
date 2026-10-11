@@ -217,3 +217,206 @@ def test_egress_skip_is_reported_not_silently_counted_as_zero(scanned, monkeypat
     count, reason = beacon_scan.scan_egress()
     assert count == 0
     assert reason and "psutil" in reason
+
+
+def test_prior_receipt_from_another_key_is_excluded_from_the_new_bundle(scanned, tmp_path):
+    import base64
+
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+
+    from beacons import _common
+    import src.beacon_scan as beacon_scan
+
+    old_key = Ed25519PrivateKey.generate()
+    old_receipt = _common.make_receipt(
+        event_type="discovery.model.found",
+        subject="artifact://prior-scan",
+        action="prior-scan",
+        evidence={"source": "old-key"},
+        vendor="legacy",
+        model="old-model",
+        version="1",
+    )
+    old_receipt["signature"] = {
+        "alg": "Ed25519",
+        "key_fpr": _common.key_fingerprint(old_key.public_key()),
+        "sig_b64": base64.b64encode(
+            old_key.sign(_common.canonicalize(old_receipt).encode("utf-8"))
+        ).decode("ascii"),
+        "canonical_form": "json/c14n-rfc8785",
+    }
+    source = next(_common.RECEIPTS_DIR.glob("*.ndjson"))
+    with source.open("ab") as f:
+        f.write(json.dumps(old_receipt, ensure_ascii=False).encode("utf-8") + b"\n")
+
+    existing_ids = beacon_scan._stored_receipt_ids()
+    bundle = tmp_path / "bundle-new-key"
+    rc = beacon_scan.main(
+        ["--path", str(scanned["project"]), "--out", str(bundle), "--no-egress"]
+    )
+
+    receipts = [
+        json.loads(line)
+        for path in (bundle / "receipts").glob("*.ndjson")
+        for line in path.read_bytes().splitlines()
+        if line.strip()
+    ]
+    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+    assert rc == 0
+    assert existing_ids.isdisjoint({receipt["id"] for receipt in receipts})
+    assert old_receipt["id"] not in {receipt["id"] for receipt in receipts}
+    assert len(receipts) == 2
+    assert manifest["verification"]["receipts_failed"] == 0
+    assert run_verifier(bundle).returncode == 0
+
+
+def test_new_scan_bundles_only_new_receipts_and_preserves_source_bytes(
+    scanned, tmp_path, monkeypatch
+):
+    from beacons import _common
+    import src.beacon_scan as beacon_scan
+
+    prior_source = next(_common.RECEIPTS_DIR.glob("*.ndjson"))
+    prior_ids = {
+        json.loads(line)["id"]
+        for line in prior_source.read_bytes().splitlines()
+        if line.strip()
+    }
+    empty_source_name = "prior-scan.ndjson"
+    prior_source.rename(_common.RECEIPTS_DIR / empty_source_name)
+    source = _common.RECEIPTS_DIR / "second-scan.ndjson"
+    new_receipt = _common.make_receipt(
+        event_type="discovery.model.found",
+        subject="artifact://new-scan",
+        action="new-scan",
+        evidence={"source": "second-scan"},
+        vendor="test-vendor",
+        model="new-model",
+        version="2",
+    )
+    _common.sign_receipt(new_receipt)
+    source_line = (
+        json.dumps(new_receipt, ensure_ascii=False, separators=(",  ", ": "))
+        .encode("utf-8")
+        + b"\n"
+    )
+
+    def emit_after_snapshot(_paths, _max_depth):
+        with source.open("ab") as f:
+            f.write(source_line)
+        return 1, 1
+
+    monkeypatch.setattr(beacon_scan, "scan_artifacts", emit_after_snapshot)
+    bundle = tmp_path / "bundle-second-scan"
+    rc = beacon_scan.main(
+        ["--path", str(scanned["project"]), "--out", str(bundle), "--no-egress"]
+    )
+
+    bundled_files = list((bundle / "receipts").glob("*.ndjson"))
+    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+    inventory = json.loads((bundle / "inventory.json").read_text(encoding="utf-8"))
+    bundled_receipts = [
+        json.loads(line)
+        for path in bundled_files
+        for line in path.read_bytes().splitlines()
+        if line.strip()
+    ]
+    assert rc == 0
+    assert len(bundled_files) == 1
+    assert bundled_files[0].name == source.name
+    assert not (bundle / "receipts" / empty_source_name).exists()
+    assert bundled_files[0].read_bytes() == source_line
+    assert {receipt["id"] for receipt in bundled_receipts}.isdisjoint(prior_ids)
+    assert [receipt["id"] for receipt in bundled_receipts] == [new_receipt["id"]]
+    assert manifest["receipt_files"] == {source.name: 1}
+    assert manifest["verification"]["receipts_verified"] == 1
+    assert manifest["verification"]["receipts_failed"] == 0
+    assert len(inventory) == 1
+    assert inventory[0]["receipt_count"] == 1
+    assert run_verifier(bundle).returncode == 0
+
+
+def test_access_denied_egress_is_a_skip_not_a_zero_observation_success(
+    monkeypatch, capsys
+):
+    from types import SimpleNamespace
+
+    import src.beacon_scan as beacon_scan
+    from beacons import model_beacon
+
+    class AccessDenied(Exception):
+        pass
+
+    class NoSuchProcess(Exception):
+        pass
+
+    def denied_connections(*, kind):
+        assert kind == "inet"
+        raise AccessDenied("permission denied")
+
+    monkeypatch.setattr(
+        model_beacon,
+        "psutil",
+        SimpleNamespace(
+            AccessDenied=AccessDenied,
+            NoSuchProcess=NoSuchProcess,
+            net_connections=denied_connections,
+        ),
+    )
+    assert model_beacon.scan({"192.0.2.1": "api.openai.com"}) == []
+    assert "permission denied" in capsys.readouterr().err
+
+    monkeypatch.setattr(model_beacon, "load_hosts", lambda _path: ["api.openai.com"])
+    monkeypatch.setattr(
+        model_beacon, "resolve_hosts", lambda _hosts: {"192.0.2.1": "api.openai.com"}
+    )
+    count, reason = beacon_scan.scan_egress()
+    assert count == 0
+    assert reason and "elevated privileges" in reason
+
+
+def test_missing_rules_are_reported_and_the_bundle_still_verifies(
+    tmp_path, monkeypatch, capsys
+):
+    import importlib
+    import shutil
+
+    monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
+    from beacons import _common
+
+    importlib.reload(_common)
+    import src.beacon_scan as beacon_scan
+
+    importlib.reload(beacon_scan)
+
+    installed_root = tmp_path / "installed-wheel"
+    verifier_dir = installed_root / "src"
+    verifier_dir.mkdir(parents=True)
+    shutil.copyfile(
+        REPO_ROOT / "src" / "beacon_verify.py",
+        verifier_dir / "beacon_verify.py",
+    )
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", installed_root)
+
+    project = tmp_path / "project"
+    project.mkdir()
+    (project / "generated.py").write_text(
+        "# Generated by claude-opus-5\n", encoding="utf-8"
+    )
+    bundle = tmp_path / "bundle-missing-rules"
+    rc = beacon_scan.main(
+        ["--path", str(project), "--out", str(bundle), "--no-egress"]
+    )
+
+    captured = capsys.readouterr()
+    manifest = json.loads((bundle / "manifest.json").read_text(encoding="utf-8"))
+    assert rc == 0
+    assert "warning" in captured.err.lower()
+    assert "policy" in captured.err and "checklists" in captured.err
+    assert "rules: SKIPPED" in captured.out
+    assert "policies" in captured.out and "checklists" in captured.out
+    assert manifest["rules_omitted"] == ["policies", "checklists"]
+    assert not (bundle / "policies").exists()
+    assert not (bundle / "checklists").exists()
+    result = run_verifier(bundle)
+    assert result.returncode == 0, result.stdout + result.stderr
