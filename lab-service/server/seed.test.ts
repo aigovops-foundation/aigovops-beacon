@@ -18,9 +18,18 @@ process.env.BEACON_DATA_DIR = TMP;
 process.env.BEACON_DB_PATH = path.join(TMP, "seed.db");
 
 const { storage, db, _internal } = await import("./storage.js");
-const { bootstrap, TENANT_SEEDS, reseedTenantInventory } = await import("./seed.js");
+const { bootstrap, TENANT_SEEDS, reseedTenantInventory, migrateSeedOwnerEmails } = await import("./seed.js");
 const { evaluateChecklist, RULES_LEVEL_100, RULES_LEVEL_200 } = await import("./beacon.js");
 const { hashPassword, verifyPassword } = await import("./crypto.js");
+
+const AIGOVOPS_TENANT_ID = "aigovops-foundation";
+const LEGACY_OWNER_EMAILS: [string, string][] = [
+  ["grants@aigovops.org", "grants@aigovops-foundation.com"],
+  ["community@aigovops.org", "community@aigovops-foundation.com"],
+  ["education@aigovops.org", "education@aigovops-foundation.com"],
+  ["development@aigovops.org", "development@aigovops-foundation.com"],
+  ["boardops@aigovops.org", "boardops@aigovops-foundation.com"],
+];
 
 /** A truly empty database — resetLabData deliberately preserves tenants and the admin password. */
 function wipeEverything(): void {
@@ -33,6 +42,19 @@ function wipeEverything(): void {
 }
 
 beforeEach(() => wipeEverything());
+
+function setLegacySeedOwners(): Map<string, string> {
+  const table = _internal.tables.inventory;
+  const seedRows = storage.listInventory(AIGOVOPS_TENANT_ID);
+  const ids = new Map<string, string>();
+  for (const [oldEmail, newEmail] of LEGACY_OWNER_EMAILS) {
+    const row = seedRows.find((item) => item.ownerEmail === newEmail);
+    assert.ok(row, `missing seed row for ${newEmail}`);
+    db.update(table).set({ ownerEmail: oldEmail }).where(_internal.helpers.eq(table.id, row.id)).run();
+    ids.set(oldEmail, row.id);
+  }
+  return ids;
+}
 
 test("bootstrap seeds both tenants, with distinct keys and matching fingerprints", () => {
   bootstrap("beacon");
@@ -150,4 +172,75 @@ test("reseed is scoped to one tenant and ignores an unknown id", () => {
   reseedTenantInventory("aigovops-foundation");
   assert.equal(storage.listInventory("beacon-foundation-inc").length, other, "the other tenant is untouched");
   reseedTenantInventory("no-such-tenant"); // must not throw
+});
+
+test("bootstrap migrates only unchanged legacy seed owners in an existing lab", () => {
+  bootstrap("beacon");
+  const seedIds = setLegacySeedOwners();
+  const traineeEditedId = seedIds.get("development@aigovops.org")!;
+  const table = _internal.tables.inventory;
+  db.update(table).set({ ownerEmail: "trainee@example.com" })
+    .where(_internal.helpers.eq(table.id, traineeEditedId)).run();
+
+  const seedRows = storage.listInventory(AIGOVOPS_TENANT_ID);
+  const customRow = {
+    ...seedRows[0],
+    id: "trainee-custom-owner",
+    name: "Trainee-owned inventory",
+    ownerEmail: "me@example.com",
+  };
+  db.insert(table).values(customRow).run();
+
+  const before = storage.listInventory(AIGOVOPS_TENANT_ID);
+  const beforeIds = before.map((item) => item.id).sort();
+  bootstrap("beacon");
+  const after = storage.listInventory(AIGOVOPS_TENANT_ID);
+  assert.equal(after.length, before.length);
+  assert.deepEqual(after.map((item) => item.id).sort(), beforeIds);
+
+  const newByOld = new Map(LEGACY_OWNER_EMAILS);
+  for (const item of before) {
+    const expectedOwnerEmail = item.id === traineeEditedId
+      ? "trainee@example.com"
+      : newByOld.get(item.ownerEmail) ?? item.ownerEmail;
+    assert.deepEqual(
+      after.find((updated) => updated.id === item.id),
+      { ...item, ownerEmail: expectedOwnerEmail },
+    );
+  }
+  assert.equal(after.find((item) => item.id === customRow.id)?.ownerEmail, "me@example.com");
+});
+
+test("migrateSeedOwnerEmails is idempotent and reports changed rows", () => {
+  bootstrap("beacon");
+  setLegacySeedOwners();
+
+  assert.equal(migrateSeedOwnerEmails(), 5);
+  const afterFirstMigration = storage.listInventory(AIGOVOPS_TENANT_ID).sort((a, b) => a.id.localeCompare(b.id));
+  assert.equal(migrateSeedOwnerEmails(), 0);
+  assert.deepEqual(
+    storage.listInventory(AIGOVOPS_TENANT_ID).sort((a, b) => a.id.localeCompare(b.id)),
+    afterFirstMigration,
+  );
+});
+
+test("migrateSeedOwnerEmails leaves another tenant's matching address alone", () => {
+  bootstrap("beacon");
+  const table = _internal.tables.inventory;
+  const otherTenantRow = storage.listInventory("beacon-foundation-inc")[0];
+  db.update(table).set({ ownerEmail: "grants@aigovops.org" })
+    .where(_internal.helpers.eq(table.id, otherTenantRow.id)).run();
+
+  migrateSeedOwnerEmails();
+
+  assert.equal(storage.getInventoryItem(otherTenantRow.id)?.ownerEmail, "grants@aigovops.org");
+});
+
+test("a fresh database seeds the new owner addresses and needs no migration", () => {
+  bootstrap("beacon");
+  assert.deepEqual(
+    storage.listInventory(AIGOVOPS_TENANT_ID).map((item) => item.ownerEmail).sort(),
+    LEGACY_OWNER_EMAILS.map(([, newEmail]) => newEmail).sort(),
+  );
+  assert.equal(migrateSeedOwnerEmails(), 0);
 });

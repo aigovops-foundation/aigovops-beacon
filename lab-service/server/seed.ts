@@ -34,7 +34,7 @@ import { hashPassword, ulid } from "./crypto.js";
 import type { InventoryItem } from "@shared/schema";
 
 const { tenants, inventory, adminState } = _internal.tables;
-const { eq } = _internal.helpers;
+const { and, eq } = _internal.helpers;
 
 /**
  * Captured from the live `GET /api/status`, 2026-08-04.
@@ -228,6 +228,14 @@ const INVENTORY_BY_TENANT: Record<string, SeedItem[]> = {
   "beacon-foundation-inc": INVENTORY_BEACON_INC,
 };
 
+const LEGACY_SEED_OWNER_EMAILS: Record<string, string> = {
+  "grants@aigovops.org": "grants@aigovops-foundation.com",
+  "community@aigovops.org": "community@aigovops-foundation.com",
+  "education@aigovops.org": "education@aigovops-foundation.com",
+  "development@aigovops.org": "development@aigovops-foundation.com",
+  "boardops@aigovops.org": "boardops@aigovops-foundation.com",
+};
+
 /** A fresh Ed25519 keypair in the encodings the live service stored: SPKI / PKCS8, base64. */
 function generateTenantKeys(): { pub: string; priv: string; fpr: string } {
   const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519");
@@ -254,6 +262,23 @@ export function reseedTenantInventory(tenantId: string): void {
     for (const s of seeds) {
       db.insert(inventory).values({ ...s, id: ulid(), tenantId, createdAt: now }).run();
     }
+  })();
+}
+
+export function migrateSeedOwnerEmails(): number {
+  const tenantId = Object.entries(INVENTORY_BY_TENANT)
+    .find(([, seeds]) => seeds === INVENTORY_AIGOVOPS)?.[0];
+  if (!tenantId) return 0;
+
+  return _internal.sqlite.transaction(() => {
+    let changed = 0;
+    for (const [oldEmail, newEmail] of Object.entries(LEGACY_SEED_OWNER_EMAILS)) {
+      changed += db.update(inventory)
+        .set({ ownerEmail: newEmail })
+        .where(and(eq(inventory.tenantId, tenantId), eq(inventory.ownerEmail, oldEmail)))
+        .run().changes;
+    }
+    return changed;
   })();
 }
 
@@ -299,6 +324,10 @@ export function bootstrap(adminPassword: string): void {
   for (const t of TENANT_SEEDS) {
     if (storage.listInventory(t.id).length === 0) reseedTenantInventory(t.id);
   }
+
+  // Existing labs predate #72; an admin reset would wipe trainee work. Exact matches leave any
+  // trainee-edited address alone.
+  migrateSeedOwnerEmails();
 
   db.update(adminState).set({ paused: false }).where(eq(adminState.id, 1)).run();
 }
