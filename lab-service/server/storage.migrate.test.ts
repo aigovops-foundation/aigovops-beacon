@@ -38,7 +38,7 @@ legacy
   .run(
     "legacy-1", "aigovops-foundation", "Pre-existing row", "OpenAI", "medium", "approved",
     JSON.stringify(["NIST-AI-RMF:MAP-1.1"]),
-    JSON.stringify({ modelVersion: "2024-08-06", ownerEmail: "legacy@aigovops.org" }),
+    JSON.stringify({ modelVersion: "2024-08-06", ownerEmail: "legacy@aigovops-foundation.com" }),
     Date.now(),
   );
 legacy.close();
