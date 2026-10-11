@@ -269,23 +269,10 @@ def _self_verify(receipts: list[dict[str, Any]], raw_public_key: bytes) -> dict[
     }
 
 
-def build_bundle(
-    out_dir: Path | None = None,
-    *,
-    exclude_ids: set[str] | None = None,
-) -> dict[str, Any]:
-    """Assemble an audit bundle, optionally excluding previously stored receipts.
-
-    Layout matches server/src/services/export.js exactly — manifest.json,
-    manifest.sha256, receipts/, public_keys/, policies/, checklists/,
-    inventory.json, verify_bundle.py, VERIFY.md — so an auditor cannot tell
-    which producer wrote it, and does not have to care.
-    """
-    from cryptography.hazmat.primitives import serialization
-
-    stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
-    bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
-    resolved_bundle = bundle.resolve()
+def _validate_out_dir(out_dir: Path | None) -> None:
+    if out_dir is None:
+        return
+    resolved_bundle = out_dir.resolve()
     resolved_root = REPO_ROOT.resolve()
     source_dirs = [(resolved_root / name).resolve() for name in ("policy", "checklists")]
     if resolved_bundle == resolved_root or any(
@@ -298,6 +285,26 @@ def build_bundle(
             file=sys.stderr,
         )
         raise SystemExit(2)
+
+
+def build_bundle(
+    out_dir: Path | None = None,
+    *,
+    exclude_ids: set[str] | None = None,
+) -> dict[str, Any]:
+    """Assemble an audit bundle, optionally excluding previously stored receipts.
+
+    Layout matches server/src/services/export.js exactly — manifest.json,
+    manifest.sha256, receipts/, public_keys/, policies/, checklists/,
+    inventory.json, verify_bundle.py, VERIFY.md — so an auditor cannot tell
+    which producer wrote it, and does not have to care.
+    """
+    _validate_out_dir(out_dir)
+
+    from cryptography.hazmat.primitives import serialization
+
+    stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
+    bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
     bundle.mkdir(parents=True, exist_ok=True)
     os.chmod(bundle, 0o700)
     (bundle / "receipts").mkdir(exist_ok=True)
@@ -440,6 +447,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, help="Where to write the bundle (default ~/.beacon/bundles/)")
     p.add_argument("--json", action="store_true", dest="as_json", help="Machine-readable summary")
     args = p.parse_args(argv)
+    _validate_out_dir(args.out)
 
     paths = args.path or [Path(".")]
     for path in paths:
