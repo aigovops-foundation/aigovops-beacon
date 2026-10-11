@@ -723,6 +723,7 @@ a.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border
   gap: var(--space-4);
   align-items: stretch;
 }
+.bundle-board > * { min-width: 0; }
 @media (min-width: 720px) { .bundle-board { grid-template-columns: 1.4fr 1fr; } }
 .file-yard {
   background: var(--paper-soft);
@@ -749,6 +750,8 @@ a.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border
   transform: translateY(6px);
   transition: opacity 350ms var(--ease-out), transform 350ms var(--ease-out), border-color var(--transition-interactive);
 }
+.file-yard .file-chip { min-width: 0; max-width: 100%; }
+.file-chip > span:last-child { min-width: 0; overflow-wrap: anywhere; }
 .file-chip.in { opacity: 1; transform: translateY(0); }
 .file-chip .ico {
   width: 14px; height: 14px; border-radius: 3px;
@@ -761,13 +764,16 @@ a.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border
   border-radius: 14px;
   padding: var(--space-4);
   display: flex; flex-direction: column; justify-content: space-between;
+  min-width: 0;
 }
+.bundle-result > * { min-width: 0; }
 .bundle-result h4 { margin: 0 0 var(--space-2); color: var(--paper); }
 .bundle-result .sha {
   font-family: "DM Mono", monospace; font-size: 11px;
-  color: #B9B3A2; word-break: break-all; margin-bottom: var(--space-4);
+  color: #B9B3A2; word-break: break-all; overflow-wrap: anywhere; margin-bottom: var(--space-4);
   min-height: 2em;
 }
+.worksheet-receipt dd { min-width: 0; overflow-wrap: anywhere; word-break: break-all; }
 .bundle-result button { align-self: flex-start; }
 
 /* CSV input area */

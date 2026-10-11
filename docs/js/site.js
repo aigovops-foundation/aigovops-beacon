@@ -229,12 +229,21 @@ Mistral,mistral-large,chat-completions,eu-west`;
   }
 
   // ---------- File chips for bundle assembly ----------
+  const BUNDLE_ASSETS = [
+    { name: "policy/rego/transaction_signing.rego", source: "./demo-bundle/policy/rego/transaction_signing.rego", ico: "⚖️" },
+    { name: "policy/rego/production_readiness.rego", source: "./demo-bundle/policy/rego/production_readiness.rego", ico: "⚖️" },
+    { name: "policy/gate.human-flourishing.v1.yaml", source: "./demo-bundle/policy/gate.human-flourishing.v1.yaml", ico: "📜" },
+    { name: "policy/gate.production_readiness.v1.yaml", source: "./demo-bundle/policy/gate.production_readiness.v1.yaml", ico: "📜" },
+    { name: "checklists/eu-ai-act-art13.v1.yaml", source: "./demo-bundle/checklists/eu-ai-act-art13.v1.yaml", ico: "✅" },
+    { name: "checklists/hipaa-for-ai.v1.yaml", source: "./demo-bundle/checklists/hipaa-for-ai.v1.yaml", ico: "✅" },
+    { name: "checklists/iso-iec-42001.v1.yaml", source: "./demo-bundle/checklists/iso-iec-42001.v1.yaml", ico: "✅" },
+    { name: "checklists/nist-ai-rmf.v1.yaml", source: "./demo-bundle/checklists/nist-ai-rmf.v1.yaml", ico: "✅" },
+  ];
   const BUNDLE_FILES = [
     { name: "manifest.json",          ico: "📋" },
     { name: "receipts/2026-05-13.ndjson", ico: "🧾" },
     { name: "public_keys/<fpr>.pem",  ico: "🔑" },
-    { name: "policies/policy.yaml",   ico: "📜" },
-    { name: "checklists/nist-ai-rmf.yaml", ico: "✅" },
+    ...BUNDLE_ASSETS,
     { name: "VERIFY.md",              ico: "🧭" },
   ];
   function spawnFileChip(spec) {
@@ -255,19 +264,6 @@ Mistral,mistral-large,chat-completions,eu-west`;
       signature: r.signature,
       canonical_sha256: r.canonicalSha,
     })).join("\n") + "\n";
-
-    const manifest = {
-      schema: "aigovops.bundle.manifest/v1",
-      generated: nowIso(),
-      generator: "aigovops-beacon (browser demo)",
-      receipt_count: allReceipts.length,
-      signer_fingerprint: fpr,
-      files: [
-        "receipts/2026-05-13.ndjson",
-        `public_keys/${fpr}.pem`,
-        "VERIFY.md",
-      ],
-    };
 
     const verifyMd = [
       "# Verify this bundle",
@@ -292,10 +288,30 @@ Mistral,mistral-large,chat-completions,eu-west`;
       "",
     ].join("\n");
 
+    const files = [
+      { path: "receipts/2026-05-13.ndjson", bytes: new TextEncoder().encode(ndjson) },
+      { path: `public_keys/${fpr}.pem`, bytes: new TextEncoder().encode(publicKeyPem()) },
+      ...await Promise.all(BUNDLE_ASSETS.map(async ({ name, source }) => {
+        const response = await fetch(source);
+        if (!response.ok) throw new Error(`Could not load bundle file ${name}: ${response.status}`);
+        return { path: name, bytes: new Uint8Array(await response.arrayBuffer()) };
+      })),
+      { path: "VERIFY.md", bytes: new TextEncoder().encode(verifyMd) },
+    ];
+    const manifest = {
+      schema: "aigovops.bundle.manifest/v1",
+      generated: nowIso(),
+      generator: "aigovops-beacon (browser demo)",
+      receipt_count: allReceipts.length,
+      signer_fingerprint: fpr,
+      files: await Promise.all(files.map(async ({ path, bytes }) => ({
+        path,
+        sha256: await sha256Hex(bytes),
+      }))),
+    };
+
     zip.file("manifest.json", JSON.stringify(manifest, null, 2));
-    zip.file("receipts/2026-05-13.ndjson", ndjson);
-    zip.file(`public_keys/${fpr}.pem`, publicKeyPem());
-    zip.file("VERIFY.md", verifyMd);
+    for (const file of files) zip.file(file.path, file.bytes);
 
     const blob = await zip.generateAsync({ type: "blob" });
     const buf = await blob.arrayBuffer();

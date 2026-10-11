@@ -1,0 +1,178 @@
+# HIPAA-for-AI — Beacon Checklist Pack
+# A pragmatic mapping of HIPAA Security Rule and Privacy Rule
+# requirements onto AI systems that touch Protected Health Information
+# (PHI). This pack assumes Beacon is deployed inside a covered entity
+# or business associate environment.
+#
+# Sources:
+#   - HIPAA Security Rule, 45 CFR §§ 164.302 – 164.318
+#   - HIPAA Privacy Rule, 45 CFR §§ 164.500 – 164.534
+#   - HHS guidance on AI and HIPAA (where issued)
+# License: Apache-2.0. Not legal advice.
+
+id: hipaa-for-ai
+version: 1.0.0
+title: HIPAA-for-AI
+short_title: HIPAA-for-AI
+authority: U.S. Department of Health and Human Services (HHS / OCR)
+publication: 45 CFR Parts 160, 162, 164
+url: https://www.hhs.gov/hipaa/index.html
+applies_to:
+  - phi_touching_systems
+  - covered_entities
+  - business_associates
+trust_tier_minimum: T2
+human_readable_summary: >
+  If your AI system can see, store, or infer Protected Health
+  Information, HIPAA is not optional. This pack focuses on the
+  Security Rule controls that have a clean evidence story in
+  Beacon — receipts, signing, access logs, BAAs, and minimum
+  necessary use.
+
+functions:
+
+  # ─── ADMINISTRATIVE SAFEGUARDS ─────────────────────────────────────────
+  - id: ADMIN
+    title: Administrative safeguards
+    description: 45 CFR § 164.308 — administrative actions, policies,
+                 and procedures.
+    items:
+      - id: ADMIN-1.1
+        prompt: Has a Security Risk Analysis been performed that explicitly
+                includes the AI system?
+        evidence: sra_uri
+        gate: sra_includes_ai
+        severity: critical
+      - id: ADMIN-1.2
+        prompt: Is a designated Security Official accountable for the AI
+                system?
+        evidence: security_official_named
+        severity: high
+      - id: ADMIN-1.3
+        prompt: Are workforce members granted access on a need-to-know basis
+                with documented authorization?
+        evidence: access_authorization_log
+        severity: high
+      - id: ADMIN-1.4
+        prompt: Is workforce training on AI-specific PHI handling delivered
+                and recorded?
+        evidence: training_log_uri
+        severity: medium
+      - id: ADMIN-1.5
+        prompt: Are sanctions for workforce members who fail to comply
+                documented and applied?
+        evidence: sanctions_policy_uri
+        severity: medium
+      - id: ADMIN-1.6
+        prompt: Is there a contingency plan covering AI system failure,
+                including data backup and disaster recovery?
+        evidence: contingency_plan_uri
+        severity: high
+
+  # ─── BUSINESS ASSOCIATE AGREEMENTS ─────────────────────────────────────
+  - id: BAA
+    title: Business associate agreements
+    description: 45 CFR § 164.502(e) and § 164.504(e).
+    items:
+      - id: BAA-2.1
+        prompt: Is a Business Associate Agreement in place for every AI
+                vendor that processes PHI?
+        evidence: baa_uri
+        gate: baa_for_each_phi_vendor
+        severity: critical
+        auto_check: true
+      - id: BAA-2.2
+        prompt: Do BAAs explicitly address training-data use, retention, and
+                subprocessor disclosure?
+        evidence: baa_review_signoff
+        severity: critical
+      - id: BAA-2.3
+        prompt: Are vendor security attestations (HITRUST, SOC 2 Type II)
+                collected and current?
+        evidence: vendor_attestation_uri
+        severity: medium
+
+  # ─── PHYSICAL SAFEGUARDS ───────────────────────────────────────────────
+  - id: PHYS
+    title: Physical safeguards
+    description: 45 CFR § 164.310. Most relevant when Beacon runs on-prem.
+    items:
+      - id: PHYS-3.1
+        prompt: Are facility access controls in place where AI systems
+                process PHI?
+        evidence: facility_access_policy
+        severity: medium
+      - id: PHYS-3.2
+        prompt: Are workstation use policies enforced for endpoints that
+                can prompt PHI-touching models?
+        evidence: workstation_policy_uri
+        severity: medium
+
+  # ─── TECHNICAL SAFEGUARDS ──────────────────────────────────────────────
+  - id: TECH
+    title: Technical safeguards
+    description: 45 CFR § 164.312.
+    items:
+      - id: TECH-4.1
+        prompt: Is unique user identification enforced for all AI system
+                access (OIDC-bound, no shared accounts)?
+        evidence: beacon_user_subject_present
+        gate: unique_user_id
+        severity: critical
+        auto_check: true
+      - id: TECH-4.2
+        prompt: Is automatic logoff implemented for AI interfaces?
+        evidence: idle_timeout_config
+        severity: medium
+      - id: TECH-4.3
+        prompt: Is PHI encrypted at rest where stored or cached by the AI
+                system?
+        evidence: encryption_at_rest_attestation
+        severity: critical
+      - id: TECH-4.4
+        prompt: Is PHI encrypted in transit between caller, gateway, and
+                model provider?
+        evidence: tls_attestation
+        severity: critical
+      - id: TECH-4.5
+        prompt: Are AI invocations logged with audit controls sufficient to
+                reconstruct who, what, when?
+        evidence: beacon_receipts_active
+        gate: receipts_captured
+        severity: critical
+        auto_check: true
+      - id: TECH-4.6
+        prompt: Are receipts protected against alteration (cryptographic
+                signature, append-only storage)?
+        evidence: beacon_signature_verify
+        gate: signatures_valid
+        severity: critical
+        auto_check: true
+      - id: TECH-4.7
+        prompt: Is the minimum-necessary principle enforced in prompts and
+                results (PHI redaction, scope-of-use checks)?
+        evidence: redaction_policy_uri
+        gate: redaction_enabled
+        severity: high
+
+  # ─── BREACH NOTIFICATION ───────────────────────────────────────────────
+  - id: BREACH
+    title: Breach notification
+    description: 45 CFR §§ 164.400 – 164.414.
+    items:
+      - id: BREACH-5.1
+        prompt: Is there a documented process to assess and report AI-
+                involved PHI incidents within HIPAA timelines?
+        evidence: breach_runbook_uri
+        severity: critical
+      - id: BREACH-5.2
+        prompt: Is the audit-log retention configured to support breach
+                investigation (six years from creation or last in effect)?
+        evidence: retention_policy_uri
+        gate: retention_minimum_6yr
+        severity: critical
+
+# Scoring:
+# - All "critical" items must PASS for gate.hipaa_for_ai to PASS.
+# - This pack is opinionated: in healthcare, "almost compliant" is not
+#   compliant. Beacon will not soften the threshold.

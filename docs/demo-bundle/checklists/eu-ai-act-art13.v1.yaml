@@ -1,0 +1,159 @@
+# EU AI Act — Article 13 Transparency Pack
+# Article 13 covers transparency and provision of information to deployers
+# of high-risk AI systems. This pack distills the article into concrete,
+# evidence-backed checks Beacon can attest against an inventory item.
+#
+# Source: Regulation (EU) 2024/1689 (AI Act), Art. 13.
+# License: Apache-2.0 for this pack. The Regulation itself is © European Union.
+
+id: eu-ai-act-art13
+version: 1.0.0
+title: EU AI Act — Article 13 Transparency
+short_title: EU AI Act Art. 13
+authority: European Union (European Parliament and Council)
+publication: Regulation (EU) 2024/1689
+url: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+applies_to:
+  - high_risk_systems
+  - eu_deployments
+trust_tier_minimum: T2
+human_readable_summary: >
+  If you place a high-risk AI system on the EU market, you must give
+  deployers enough information to use it safely and lawfully. This pack
+  turns that obligation into a checklist your auditor can sign.
+
+functions:
+
+  # ─── INSTRUCTIONS FOR USE ──────────────────────────────────────────────
+  - id: ART13-INSTRUCTIONS
+    title: Instructions for use
+    description: Art. 13(2) and 13(3)(a–b). Information accompanying the system.
+    items:
+      - id: ART13-1.1
+        prompt: Are instructions for use provided in a digital format accessible
+                to deployers?
+        evidence: instructions_uri
+        gate: instructions_published
+        severity: critical
+      - id: ART13-1.2
+        prompt: Do the instructions identify the provider and, where applicable,
+                the authorized representative?
+        evidence: provider_identity_doc
+        severity: high
+      - id: ART13-1.3
+        prompt: Are the instructions concise, complete, correct, clear, relevant,
+                accessible, and comprehensible to deployers? (Art. 13(2))
+        evidence: instructions_review_signoff
+        severity: high
+
+  # ─── SYSTEM CHARACTERISTICS ────────────────────────────────────────────
+  - id: ART13-CHARACTERISTICS
+    title: Characteristics, capabilities, and limitations
+    description: Art. 13(3)(b)(i–v).
+    items:
+      - id: ART13-2.1
+        prompt: Is the intended purpose documented, including foreseeable
+                misuse?
+        evidence: intended_purpose_doc
+        gate: intended_purpose_present
+        severity: critical
+      - id: ART13-2.2
+        prompt: Are levels of accuracy, robustness, and cybersecurity declared,
+                with the metrics used to measure them?
+        evidence: performance_declaration
+        severity: critical
+      - id: ART13-2.3
+        prompt: Are foreseeable circumstances that may lead to risks to health,
+                safety, or fundamental rights described?
+        evidence: risk_circumstances_doc
+        severity: critical
+      - id: ART13-2.4
+        prompt: Are the technical capabilities and characteristics relevant to
+                explaining outputs described?
+        evidence: explainability_doc
+        severity: high
+      - id: ART13-2.5
+        prompt: Where relevant, is performance for specific persons or groups
+                disclosed?
+        evidence: subgroup_performance_doc
+        severity: high
+      - id: ART13-2.6
+        prompt: Are the input data specifications (training/validation/testing)
+                described, including provenance and any biases?
+        evidence: data_specs_doc
+        severity: high
+      - id: ART13-2.7
+        prompt: Is information provided that enables deployers to interpret
+                outputs and use them appropriately?
+        evidence: interpretation_guidance_doc
+        severity: high
+
+  # ─── HUMAN OVERSIGHT ───────────────────────────────────────────────────
+  - id: ART13-OVERSIGHT
+    title: Human oversight measures
+    description: Art. 13(3)(d) — measures referred to in Art. 14.
+    items:
+      - id: ART13-3.1
+        prompt: Are the human oversight measures referenced in Art. 14
+                described, including technical measures to facilitate
+                interpretation of outputs?
+        evidence: oversight_measures_doc
+        gate: human_oversight_defined
+        severity: critical
+      - id: ART13-3.2
+        prompt: Is the expected lifetime of the system stated, with any
+                necessary maintenance and care measures?
+        evidence: lifecycle_doc
+        severity: medium
+
+  # ─── LOGGING & TRACEABILITY ────────────────────────────────────────────
+  - id: ART13-LOGGING
+    title: Logging and traceability
+    description: Art. 13(3)(f) and cross-reference to Art. 12.
+    items:
+      - id: ART13-4.1
+        prompt: Is automatic logging of events enabled for the lifetime of
+                the system? (Art. 12)
+        evidence: beacon_receipts_active
+        gate: receipts_captured
+        severity: critical
+        auto_check: true
+      - id: ART13-4.2
+        prompt: Are logs kept for the period required by Union or national
+                law, and at least six months unless otherwise specified?
+        evidence: retention_policy_uri
+        gate: retention_minimum_6mo
+        severity: critical
+      - id: ART13-4.3
+        prompt: Is there a mechanism for deployers to collect, retain, and
+                analyze the logs?
+        evidence: beacon_export_endpoint
+        gate: export_endpoint_present
+        severity: high
+        auto_check: true
+
+  # ─── POST-MARKET INFORMATION ───────────────────────────────────────────
+  - id: ART13-POSTMARKET
+    title: Post-market information
+    description: Information that must remain current after deployment.
+    items:
+      - id: ART13-5.1
+        prompt: Is there a process to update instructions when the system or
+                its risks materially change?
+        evidence: change_management_uri
+        severity: high
+      - id: ART13-5.2
+        prompt: Are deployers notified of material changes within a defined
+                SLA?
+        evidence: deployer_notification_log
+        severity: high
+      - id: ART13-5.3
+        prompt: Is contact information for the provider's post-market
+                monitoring function published and tested?
+        evidence: contact_uri
+        severity: medium
+
+# How Beacon scores this pack:
+# - All items default to attestation unless auto_check: true.
+# - PASS threshold defaults to 0.95 for high_risk_systems (configurable).
+# - Failure on any "critical" item sets gate.eu_ai_act = FAIL.
