@@ -112,7 +112,7 @@ def vendor_for(host: str) -> str:
     return "other"
 
 
-def scan(ip_to_host: dict[str, str]) -> list[dict[str, str]]:
+def scan(ip_to_host: dict[str, str], *, strict: bool = False) -> list[dict[str, str]]:
     """Return a list of (host, pid, process_name) observations."""
     if psutil is None:
         print("[model_beacon] psutil not installed; cannot enumerate connections", file=sys.stderr)
@@ -121,7 +121,9 @@ def scan(ip_to_host: dict[str, str]) -> list[dict[str, str]]:
     observations: list[dict[str, str]] = []
     try:
         conns = psutil.net_connections(kind="inet")
-    except (psutil.AccessDenied, PermissionError):
+    except (psutil.AccessDenied, PermissionError) as exc:
+        if strict:
+            raise PermissionError("permission denied for net_connections") from exc
         print("[model_beacon] permission denied for net_connections (try sudo)", file=sys.stderr)
         return []
     for c in conns:

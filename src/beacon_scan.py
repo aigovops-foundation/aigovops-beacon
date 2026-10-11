@@ -124,7 +124,7 @@ def scan_egress() -> tuple[int, str | None]:
     try:
         hosts = model_beacon.load_hosts(None)
         ip_to_host = model_beacon.resolve_hosts(hosts)
-        observations = model_beacon.scan(ip_to_host)
+        observations = model_beacon.scan(ip_to_host, strict=True)
         return model_beacon.emit_receipts(observations), None
     except PermissionError:
         # psutil.net_connections() needs elevated privileges on macOS.
@@ -194,6 +194,19 @@ def _read_ndjson(path: Path) -> list[dict[str, Any]]:
     return out
 
 
+def _stored_receipt_ids() -> set[str]:
+    ids: set[str] = set()
+    src_dir = _common.RECEIPTS_DIR
+    if src_dir.is_dir():
+        for path in src_dir.glob("*.ndjson"):
+            ids.update(
+                receipt["id"]
+                for receipt in _read_ndjson(path)
+                if isinstance(receipt.get("id"), str)
+            )
+    return ids
+
+
 def _public_key_pem(raw: bytes) -> bytes:
     body = base64.b64encode(_SPKI_ED25519_PREFIX + raw)
     lines = [body[i : i + 64] for i in range(0, len(body), 64)]
@@ -234,8 +247,12 @@ def _self_verify(receipts: list[dict[str, Any]], raw_public_key: bytes) -> dict[
     }
 
 
-def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
-    """Assemble an audit bundle from everything in the local receipt store.
+def build_bundle(
+    out_dir: Path | None = None,
+    *,
+    exclude_ids: set[str] | None = None,
+) -> dict[str, Any]:
+    """Assemble an audit bundle, optionally excluding previously stored receipts.
 
     Layout matches server/src/services/export.js exactly — manifest.json,
     manifest.sha256, receipts/, public_keys/, policies/, checklists/,
@@ -249,6 +266,8 @@ def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
     bundle.mkdir(parents=True, exist_ok=True)
     (bundle / "receipts").mkdir(exist_ok=True)
     (bundle / "public_keys").mkdir(exist_ok=True)
+    for old_receipt_file in (bundle / "receipts").glob("*.ndjson"):
+        old_receipt_file.unlink()
 
     # Receipts — copied verbatim. The signature covers the bytes, so a
     # re-serialisation here would be a way to invalidate evidence for free.
@@ -257,10 +276,20 @@ def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
     src_dir = _common.RECEIPTS_DIR
     if src_dir.is_dir():
         for f in sorted(src_dir.glob("*.ndjson")):
-            shutil.copyfile(f, bundle / "receipts" / f.name)
-            entries = _read_ndjson(f)
-            receipt_counts[f.name] = len(entries)
-            all_receipts.extend(entries)
+            lines: list[bytes] = []
+            entries: list[dict[str, Any]] = []
+            for line in f.read_bytes().splitlines(keepends=True):
+                if not line.strip():
+                    continue
+                receipt = json.loads(line)
+                if exclude_ids is not None and receipt.get("id") in exclude_ids:
+                    continue
+                lines.append(line)
+                entries.append(receipt)
+            if lines:
+                (bundle / "receipts" / f.name).write_bytes(b"".join(lines))
+                receipt_counts[f.name] = len(entries)
+                all_receipts.extend(entries)
 
     # Public key. Named with the 16-hex-character fingerprint, not the SSH-style
     # one from docs/RECEIPT_SCHEMA.md — the SSH form is base64 and can contain
@@ -276,10 +305,17 @@ def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
     (bundle / "public_keys" / f"{hex_fpr}.pem").write_bytes(_public_key_pem(raw_pub))
 
     # The rules in force, so the auditor reads what we were held to.
+    rules_omitted: list[str] = []
     for name, dest in (("policy", "policies"), ("checklists", "checklists")):
         src = REPO_ROOT / name
         if src.is_dir():
             shutil.copytree(src, bundle / dest, dirs_exist_ok=True)
+        else:
+            print(
+                f"beacon-scan: warning: {src} is missing; omitting {dest}",
+                file=sys.stderr,
+            )
+            rules_omitted.append(dest)
 
     inventory = derive_inventory(all_receipts)
     (bundle / "inventory.json").write_text(
@@ -308,6 +344,8 @@ def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
             "Beacon's self-verification is convenience, not proof."
         ),
     }
+    if rules_omitted:
+        manifest["rules_omitted"] = rules_omitted
 
     # The digest goes over the bytes actually written, in `sha256sum -c` format.
     manifest_json = json.dumps(manifest, indent=2)
@@ -333,6 +371,7 @@ def build_bundle(out_dir: Path | None = None) -> dict[str, Any]:
         "receipt_count": len(all_receipts),
         "inventory_rows": len(inventory),
         "verification": verification,
+        "rules_omitted": rules_omitted,
     }
 
 
@@ -374,12 +413,13 @@ def main(argv: list[str] | None = None) -> int:
     if not args.as_json:
         print("beacon-scan: scanning…")
 
+    existing_receipt_ids = _stored_receipt_ids()
     scanned, artifact_receipts = scan_artifacts(paths, args.max_depth)
     egress_receipts, egress_skipped = (0, "skipped by --no-egress")
     if not args.no_egress:
         egress_receipts, egress_skipped = scan_egress()
 
-    result = build_bundle(args.out)
+    result = build_bundle(args.out, exclude_ids=existing_receipt_ids)
     result["files_scanned"] = scanned
     result["artifact_receipts"] = artifact_receipts
     result["egress_receipts"] = egress_receipts
@@ -397,6 +437,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  egress scan: SKIPPED — {egress_skipped}")
     else:
         print(f"  egress scan: {egress_receipts} receipt(s)")
+    if result["rules_omitted"]:
+        print(f"  rules: SKIPPED — {', '.join(result['rules_omitted'])}")
     print(
         f"  {result['receipt_count']} receipt(s) in the bundle, "
         f"{result['inventory_rows']} inventory row(s)"
