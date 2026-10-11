@@ -478,28 +478,57 @@ def test_invalid_out_is_rejected_before_scanning_or_writing_receipts(
     assert not receipt_dir.exists()
 
 
+def test_default_bundle_path_inside_policy_is_rejected(tmp_path, monkeypatch, capsys):
+    import src.beacon_scan as beacon_scan
+    from beacons import _common
+
+    root = tmp_path / "repo"
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", root)
+    monkeypatch.setattr(_common, "BEACON_HOME", root / "policy" / "x")
+
+    with pytest.raises(SystemExit) as exc:
+        beacon_scan.build_bundle()
+
+    assert exc.value.code == 2
+    assert capsys.readouterr().err == (
+        "beacon-scan: error: --out must not be the repository or "
+        "contain policy/ or checklists/\n"
+    )
+    assert not root.exists()
+
+
 @pytest.mark.skipif(
     os.name == "nt" or (hasattr(os, "geteuid") and os.geteuid() == 0),
     reason="write-only permission behavior requires a non-root POSIX user",
 )
-def test_append_receipt_falls_back_for_write_only_logs(tmp_path, monkeypatch):
+@pytest.mark.parametrize("has_trailing_newline", [False, True])
+def test_append_receipt_falls_back_for_write_only_logs(
+    tmp_path, monkeypatch, capsys, has_trailing_newline
+):
     import importlib
 
     monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
     from beacons import _common
 
     importlib.reload(_common)
+    import src.beacon_scan as beacon_scan
+
+    importlib.reload(beacon_scan)
     _common.RECEIPTS_DIR.mkdir(parents=True, exist_ok=True)
     day = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
     source = _common.RECEIPTS_DIR / f"{day}.ndjson"
-    source.write_bytes(b'{"id":"existing"}\n')
+    source.write_bytes(b'{"id":"a"}' + (b"\n" if has_trailing_newline else b""))
     source.chmod(0o200)
     try:
-        _common.append_receipt({"id": "write-only"})
+        _common.append_receipt({"id": "b"})
     finally:
         source.chmod(0o600)
 
-    assert json.loads(source.read_text().splitlines()[-1]) == {"id": "write-only"}
+    import src.beacon_verify as beacon_verify
+
+    assert beacon_scan._stored_receipt_ids() == {"a", "b"}
+    assert beacon_verify._read_jsonl(source) == [{"id": "a"}, {"id": "b"}]
+    assert capsys.readouterr().err == ""
 
 
 def test_access_denied_egress_is_a_skip_not_a_zero_observation_success(
