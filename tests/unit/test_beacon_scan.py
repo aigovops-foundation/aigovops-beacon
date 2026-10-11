@@ -10,6 +10,7 @@ verifier's pure-Python fallback — the thing that makes "nothing installed" tru
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import os
 import subprocess
@@ -414,6 +415,40 @@ def test_malformed_receipt_history_is_skipped_in_snapshot_and_bundle(
     assert expected_warning in captured.err
 
 
+def test_append_receipt_separates_a_truncated_history_line(
+    tmp_path, monkeypatch, capsys
+):
+    import importlib
+
+    monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
+    from beacons import _common
+
+    importlib.reload(_common)
+    import src.beacon_scan as beacon_scan
+
+    importlib.reload(beacon_scan)
+
+    _common.RECEIPTS_DIR.mkdir(parents=True, exist_ok=True)
+    day = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
+    source = _common.RECEIPTS_DIR / f"{day}.ndjson"
+    source.write_bytes(b'{"id": "x", "trunc')
+
+    receipt = _common.make_receipt(
+        event_type="inference.observed",
+        subject="model:test",
+        action="inference.observed",
+        evidence={"test": True},
+    )
+    _common.append_receipt(_common.sign_receipt(receipt))
+
+    assert receipt["id"] in beacon_scan._stored_receipt_ids()
+    assert (
+        f"beacon-scan: warning: skipping malformed line 1 in {source.name}"
+        in capsys.readouterr().err
+    )
+    assert source.read_bytes().startswith(b'{"id": "x", "trunc\n')
+
+
 def test_access_denied_egress_is_a_skip_not_a_zero_observation_success(
     monkeypatch, capsys
 ):
@@ -538,3 +573,39 @@ def test_reused_bundle_replaces_and_removes_stale_rules(
     assert not (bundle / "checklists").exists()
     assert result["rules_omitted"] == ["checklists"]
     assert "warning" in capsys.readouterr().err
+
+
+def test_bundle_output_cannot_replace_the_repository_root(
+    tmp_path, monkeypatch, capsys
+):
+    import importlib
+
+    monkeypatch.setenv("BEACON_HOME", str(tmp_path / "beacon-home"))
+    from beacons import _common
+
+    importlib.reload(_common)
+    import src.beacon_scan as beacon_scan
+
+    importlib.reload(beacon_scan)
+
+    repo_root = tmp_path / "repository"
+    policy = repo_root / "policy"
+    checklists = repo_root / "checklists"
+    policy.mkdir(parents=True)
+    checklists.mkdir()
+    policy_file = policy / "rules.rego"
+    checklists_file = checklists / "rules.yaml"
+    policy_file.write_text("package rules\n", encoding="utf-8")
+    checklists_file.write_text("rules: true\n", encoding="utf-8")
+    monkeypatch.setattr(beacon_scan, "REPO_ROOT", repo_root)
+
+    with pytest.raises(SystemExit) as error:
+        beacon_scan.build_bundle(repo_root)
+
+    assert error.value.code == 2
+    assert (
+        "beacon-scan: error: --out must not be the repository or contain policy/ or checklists/"
+        in capsys.readouterr().err
+    )
+    assert policy_file.is_file()
+    assert checklists_file.is_file()

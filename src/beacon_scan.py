@@ -285,6 +285,19 @@ def build_bundle(
 
     stamp = _dt.datetime.now(_dt.timezone.utc).isoformat().replace(":", "-").replace(".", "-")
     bundle = out_dir or (_common.BEACON_HOME / "bundles" / f"bundle-{stamp}")
+    resolved_bundle = bundle.resolve()
+    resolved_root = REPO_ROOT.resolve()
+    source_dirs = [(resolved_root / name).resolve() for name in ("policy", "checklists")]
+    if resolved_bundle == resolved_root or any(
+        source.is_relative_to(resolved_bundle)
+        or resolved_bundle.is_relative_to(source)
+        for source in source_dirs
+    ):
+        print(
+            "beacon-scan: error: --out must not be the repository or contain policy/ or checklists/",
+            file=sys.stderr,
+        )
+        raise SystemExit(2)
     bundle.mkdir(parents=True, exist_ok=True)
     os.chmod(bundle, 0o700)
     (bundle / "receipts").mkdir(exist_ok=True)
