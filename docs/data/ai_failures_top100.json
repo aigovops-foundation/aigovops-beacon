@@ -177,7 +177,7 @@
     "regulator": "No public regulator action or court settlement identified in the primary sources; Wormhole incident report and Reuters coverage documented the exploit and recapitalization",
     "source": {
       "text": "Wormhole Incident Report",
-      "url": "https://wormhole.com/wormhole-incident-report-02-02-22/"
+      "url": "https://web.archive.org/web/20240304014344/https://wormhole.com/wormhole-incident-report-02-02-22/"
     },
     "frameworks": [
       "['NIST AI RMF'",
@@ -429,7 +429,7 @@
     "regulator": "ICO undertakings / data protection investigation (3 July 2017)",
     "source": {
       "text": "ICO undertaking PDF",
-      "url": "https://ico.org.uk/media/action-weve-taken/undertakings/2014352/royal-free-undertaking-03072017.pdf"
+      "url": "https://web.archive.org/web/20250312125356/https://ico.org.uk/media/action-weve-taken/undertakings/2014352/royal-free-undertaking-03072017.pdf"
     },
     "frameworks": [
       "['GDPR'",
@@ -1874,7 +1874,7 @@
     "regulator": "FTC, CFPB, and 50 U.S. states settlement / FTC complaint; Reuters reported $650M record settlement and FTC said up to $425M consumer relief",
     "source": {
       "text": "FTC",
-      "url": "https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement"
+      "url": "https://web.archive.org/web/20261004105240/https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement"
     },
     "frameworks": [
       "['GDPR'",

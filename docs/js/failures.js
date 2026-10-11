@@ -104,11 +104,18 @@
   }
 
   if (filtersEl) {
+    function setActiveButton(activeButton) {
+      filtersEl.querySelectorAll('button[data-filter]').forEach(function (button) {
+        var active = button === activeButton;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+    setActiveButton(filtersEl.querySelector('button.active'));
     filtersEl.addEventListener('click', function (e) {
       var btn = e.target.closest('button[data-filter]');
       if (!btn) return;
-      filtersEl.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
-      btn.classList.add('active');
+      setActiveButton(btn);
       state.filter = btn.getAttribute('data-filter') || 'all';
       render();
     });

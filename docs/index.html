@@ -260,7 +260,7 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
             </div>
           </div>
 
-          <div class="inventory-board" id="inventoryBoard" aria-label="Discovered models"></div>
+          <div class="inventory-board" id="inventoryBoard" role="region" aria-label="Discovered models"></div>
         </div>
       </div>
     </section>
@@ -308,7 +308,7 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
         <p class="lede">When the receipts settle, Beacon assembles them into a portable evidence bundle: the manifest, the NDJSON receipt log, the public keys, the policy YAMLs, the checklists, and a one-page <code>VERIFY.md</code>. Anyone with <code>openssl</code> can re-check it. No vendor login. No phoning home.</p>
 
         <div class="bundle-board">
-          <div class="file-yard" id="fileYard" aria-label="Bundle contents"></div>
+          <div class="file-yard" id="fileYard" role="region" aria-label="Bundle contents"></div>
           <aside class="bundle-result" id="bundleResult" hidden>
             <h4>Evidence bundle assembled</h4>
             <div class="sha"><span class="kicker">sha-256</span><code id="bundleSha"></code></div>
@@ -418,11 +418,11 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
         </div>
         <div class="failures-toolbar reveal">
           <input type="search" id="failureSearch" placeholder="Search incidents, sectors, regulators…" aria-label="Search failures" />
-          <div class="failure-filters" id="failureFilters" role="tablist">
-            <button class="pill active" data-filter="all">All</button>
-            <button class="pill" data-filter="YES-Ship AI">YES-Ship</button>
-            <button class="pill" data-filter="YES-Steady AI">YES-Steady</button>
-            <button class="pill" data-filter="YES-Recover AI">YES-Recover</button>
+          <div class="failure-filters" id="failureFilters" role="group" aria-label="Filter failures">
+            <button class="pill active" data-filter="all" aria-pressed="true">All</button>
+            <button class="pill" data-filter="YES-Ship AI" aria-pressed="false">YES-Ship</button>
+            <button class="pill" data-filter="YES-Steady AI" aria-pressed="false">YES-Steady</button>
+            <button class="pill" data-filter="YES-Recover AI" aria-pressed="false">YES-Recover</button>
           </div>
         </div>
         <div id="failuresList" class="failures-list" aria-live="polite">
@@ -473,7 +473,7 @@ Mistral,mistral-large,chat-completions,eu-west</textarea>
         <p class="lede reveal">No SaaS to sign up for. Beacon is a small Node server plus a static Studio. Apache-2.0 licensed. Designed to run on Render, Railway, or DigitalOcean — or on your laptop.</p>
 
         <div class="run-grid reveal">
-          <pre class="code-block"><span class="c"># 1. Get the code</span>
+          <pre class="code-block" tabindex="0"><span class="c"># 1. Get the code</span>
 <span class="k">git</span> clone https://github.com/aigovops-foundation/aigovops-beacon.git
 <span class="k">cd</span> aigovops-beacon
 

@@ -934,6 +934,15 @@ footer.site-footer {
 
 .hero-copy { display: flex; flex-direction: column; gap: var(--space-4); }
 
+@media (min-width: 880px) {
+  .hero { padding: var(--space-8) 0 var(--space-20); }
+  .hero-grid { grid-template-columns: .9fr 1.1fr; gap: var(--space-12); }
+  .hero-copy { gap: var(--space-3); }
+  .hero h1 { max-width: 22ch; font-size: clamp(2.25rem, 3.4vw, 2.8rem); line-height: 1.05; }
+  .hero .cta-row { flex-wrap: nowrap; gap: var(--space-2); margin-top: var(--space-3); }
+  .hero .cta-row a { padding-inline: .9em; white-space: nowrap; }
+}
+
 /* Three-state coloured bands on left edge of each act section */
 section.ship    { border-top: 1px solid var(--border-soft); background: linear-gradient(180deg, rgba(46,125,79,0.05) 0%, transparent 200px); }
 section.steady  { background: linear-gradient(180deg, rgba(46,125,79,0.06) 0%, transparent 240px); }
