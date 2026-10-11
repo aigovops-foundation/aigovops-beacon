@@ -13,7 +13,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { ulid } from "ulid";
 import { canonicalize } from "../lib/canonical.js";
-import { sign, verify } from "./keys.js";
+import { activeFprFor, sign, verify } from "./keys.js";
 
 export function createReceiptService(ctx) {
   const { config, db, activeKey } = ctx;
@@ -125,10 +125,7 @@ export function createReceiptService(ctx) {
         found: true,
         receipt_id: r.id,
         key_fpr: signature.key_fpr,
-        // Both are the WIRE spelling, so a caller comparing them gets a real
-        // answer. Reporting the storage id here made them differ for every
-        // 1.1.0 receipt even when the same key signed it.
-        active_key_fpr: activeKey.keyFpr,
+        active_key_fpr: activeFprFor(activeKey, signature.key_fpr),
         canonical_form: signature.canonical_form,
         signature_verifies: ok,
       };

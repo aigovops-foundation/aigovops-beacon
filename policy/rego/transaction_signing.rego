@@ -47,6 +47,8 @@ required_fields := [
     "signature",
 ]
 
+supported_canonical_forms := {"RFC8785", "json/c14n-rfc8785"}
+
 missing_field contains f if {
     some f
     f in required_fields
@@ -82,7 +84,7 @@ signature_violation contains "signature does not verify against active public ke
 }
 
 signature_violation contains "canonical_form must be RFC 8785 JCS" if {
-    input.receipt.signature.canonical_form != "RFC8785"
+    not supported_canonical_forms[input.receipt.signature.canonical_form]
 }
 
 # ─── Capture-mode integrity ───────────────────────────────────────────────
