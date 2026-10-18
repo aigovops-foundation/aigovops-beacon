@@ -1,9 +1,9 @@
 /* AiGovOps Beacon — Framework Lab in-browser Ed25519 receipt sandbox.
  *
  * Requires (already loaded by Beacon index.html — reused by lab pages):
- *   - https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js
- *   - https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js
- *   - https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js
+ *   - ../vendor/nacl.min.js
+ *   - ../vendor/nacl-util.min.js
+ *   - ../vendor/jszip.min.js
  *
  * What it does — all client-side, zero network traffic:
  *   1. Generate an Ed25519 keypair with tweetnacl
