@@ -23,4 +23,4 @@ permissions:
 
 jobs:
   repo-sync:
-    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-repo-sync-check.yml@main
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-repo-sync-check.yml@d402457658f626cbdb77ec6f7de08916e829e7d9 # main 2026-10-18
