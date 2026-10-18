@@ -312,9 +312,7 @@ section.view.active { display: block; }
   <title>Framework Lab for AiGovOps Auditors</title>
   <meta name="description" content="A two-tier interactive lab for AI auditors built on AiGovOps Beacon. Level 100 walks the 30-minute Beacon flow; Level 200 covers the Suitcase Lab, the 9 lab variants, Policy-as-Code, the receipt API, and the 100-failure deep-dive." />
   <meta name="theme-color" content="#1F5E3A" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://www.aigovops-foundation.com/fonts/fonts.css">
 """
 
     inline_css = "  <style>\n" + site_css + "\n\n/* === lab.css === */\n" + lab_css + "\n\n/* === SPA overlay === */\n" + spa_css + "\n  </style>\n</head>\n"

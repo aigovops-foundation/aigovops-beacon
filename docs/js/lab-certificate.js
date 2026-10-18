@@ -246,7 +246,7 @@
 
     function standaloneDiploma(innerHtml) {
       return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>AiGovOps Beacon — Framework Lab Diploma</title>'
-        + '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">'
+        + '<link rel="stylesheet" href="https://www.aigovops-foundation.com/fonts/fonts.css">'
         + '<style>'
         + 'body{margin:0;background:#fbfaf6;color:#0e1b1c;font-family:"Inter",system-ui,sans-serif;display:flex;justify-content:center;padding:3rem;}'
         + '.diploma-inner{background:#fff;border:3px solid #1F5E3A;border-radius:14px;padding:3rem 4rem;max-width:780px;box-shadow:0 14px 40px -20px rgba(14,27,28,0.18);}'
