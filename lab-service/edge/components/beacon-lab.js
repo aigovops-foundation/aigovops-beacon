@@ -24,7 +24,7 @@ const API_BASE =
   "https://beacon-lab.aigovops-foundation.com";
 
 // Tweetnacl CDN — used by <beacon-lab-receipt> for signature verification.
-const NACL_CDN = "https://aigovops-foundation.github.io/aigovops-beacon/vendor/nacl-fast.min.js";
+const NACL_CDN = new URL("../vendor/nacl-fast.min.js", import.meta.url).href; // served from this site, not a CDN
 
 // ── Shared helpers ────────────────────────────────────────────────────────────
 
