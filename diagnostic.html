@@ -144,8 +144,8 @@
           <li class="check-item pending" data-check="js"><span class="check-icon">○</span><div class="check-body"><strong>JavaScript enabled</strong><span>Required for every interactive surface</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="webcrypto"><span class="check-icon">○</span><div class="check-body"><strong>Web Crypto API</strong><span><code>crypto.subtle</code> — for key fingerprints</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="localstorage"><span class="check-icon">○</span><div class="check-body"><strong>localStorage available</strong><span>Saves your progress and quiz answers</span></div><span class="check-result">…</span></li>
-          <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
-          <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip CDN reachable</strong><span><code>cdn.jsdelivr.net</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="tweetnacl"><span class="check-icon">○</span><div class="check-body"><strong>tweetnacl library loads</strong><span><code>docs/vendor/</code> — for Ed25519 signing</span></div><span class="check-result">…</span></li>
+          <li class="check-item pending" data-check="jszip"><span class="check-icon">○</span><div class="check-body"><strong>JSZip library loads</strong><span><code>docs/vendor/</code> — for downloadable bundles</span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="dataset"><span class="check-icon">○</span><div class="check-body"><strong>100-failure dataset (CORS)</strong><span>Live fetch of <code>aigovops-foundation.github.io/aigovops-beacon/data/ai_failures_top100.json</code></span></div><span class="check-result">…</span></li>
           <li class="check-item pending" data-check="signtest"><span class="check-icon">○</span><div class="check-body"><strong>Live Ed25519 sign+verify</strong><span>Generates a key, signs canonical bytes, verifies in-browser</span></div><span class="check-result">…</span></li>
         </ul>
@@ -166,7 +166,7 @@
           <li><strong>Modern browser + JavaScript</strong> — table-stakes; if these fail the lab won't load at all.</li>
           <li><strong>Web Crypto API</strong> — used to fingerprint your Ed25519 public key for the certificate diploma.</li>
           <li><strong>localStorage</strong> — saves your progress between sections and stores quiz answers. If disabled, the lab still works but progress resets on every reload.</li>
-          <li><strong>tweetnacl + JSZip</strong> — the Ed25519 signing library and the bundle-zipper. Both load from <code>cdn.jsdelivr.net</code>. If your network blocks the CDN, the sandbox in Section 4 of Level 100 won't work.</li>
+          <li><strong>tweetnacl + JSZip</strong> — the Ed25519 signing library and the bundle-zipper. Both are served from this site (<code>vendor/</code>), no CDN. If your network blocks the CDN, the sandbox in Section 4 of Level 100 won't work.</li>
           <li><strong>CORS to bobrapp.github.io</strong> — the 100-failure deep-dive table in Level 200 fetches the dataset from the canonical Beacon repo. If this fails, Level 200 still works for everything except the deep-dive.</li>
           <li><strong>Live sign + verify</strong> — end-to-end smoke test. Generates an Ed25519 keypair, signs canonical bytes, verifies the signature. If this passes, the Level 100 sandbox will work.</li>
         </ul>
@@ -191,9 +191,9 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="docs/vendor/nacl.min.js"></script>
+  <script src="docs/vendor/nacl-util.min.js"></script>
+  <script src="docs/vendor/jszip.min.js"></script>
 
   <script>
   (function () {
@@ -205,8 +205,8 @@
       js:         'Enable JavaScript in your browser settings (extremely rare to be off).',
       webcrypto:  'Your browser is too old. Upgrade to Chrome 60+, Firefox 60+, Safari 11+, Edge 79+.',
       localstorage: 'Disable private/incognito mode, or enable storage access. The lab works without it but progress will not persist.',
-      tweetnacl:  'Your network is blocking cdn.jsdelivr.net. Ask IT to allow it, or join from a personal device on home wifi.',
-      jszip:      'Same as tweetnacl — cdn.jsdelivr.net is blocked. The sandbox will not be able to bundle receipts into a zip.',
+      tweetnacl:  'The signing library did not load from this site. Reload the page; if it persists, your network is blocking the Beacon site itself.',
+      jszip:      'Same as tweetnacl — the zip library did not load from this site, so the sandbox cannot bundle receipts.',
       dataset:    'CORS or DNS issue reaching bobrapp.github.io. Lab still works for Level 100; Level 200 deep-dive table will not populate.',
       signtest:   'Crypto round-trip failed — likely a tweetnacl loading issue. Re-run after fixing the tweetnacl check above.'
     };
