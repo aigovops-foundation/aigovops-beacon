@@ -17,6 +17,6 @@ permissions:
 
 jobs:
   link-check:
-    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-link-check.yml@main
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-link-check.yml@d402457658f626cbdb77ec6f7de08916e829e7d9 # main 2026-10-18
     with:
       site_url: "https://aigovops-foundation.github.io/aigovops-beacon/"

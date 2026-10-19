@@ -17,12 +17,12 @@ permissions:
 
 jobs:
   triage-server:
-    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@main
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@d402457658f626cbdb77ec6f7de08916e829e7d9 # main 2026-10-18
     with:
       working_directory: "server"
       verify_command: "npm test"
   triage-studio:
-    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@main
+    uses: aigovops-foundation/aigovops-library-june-ken-bob/.github/workflows/reusable-dependency-triage.yml@d402457658f626cbdb77ec6f7de08916e829e7d9 # main 2026-10-18
     with:
       working_directory: "studio"
       verify_command: "npm run build"
