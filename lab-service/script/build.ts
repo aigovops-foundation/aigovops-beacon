@@ -63,13 +63,20 @@ async function buildAll() {
   // This is what lets aigovops-foundation.github.io load:
   //   <script src="https://<lab>/components/beacon-lab-bridge.js">
   // without any extra route logic on the server.
-  try {
-    await access("edge/components");
-    await mkdir("dist/public/components", { recursive: true });
-    await cp("edge/components", "dist/public/components", { recursive: true });
-    console.log("copied edge/components -> dist/public/components");
-  } catch {
-    console.log("no edge/components directory — skipping component copy");
+  // edge/vendor rides along as /vendor/*.js: beacon-lab.js resolves tweetnacl at
+  // `new URL("../vendor/nacl-fast.min.js", import.meta.url)`, so a backend-served component
+  // needs the library beside it or receipts verify as INVALID.
+  // Only a *missing* source directory is skippable; a failed copy must fail the build, or the
+  // image ships without its verifier and every receipt reads INVALID.
+  for (const dir of ["components", "vendor"]) {
+    const present = await access(`edge/${dir}`).then(() => true, () => false);
+    if (!present) {
+      console.log(`no edge/${dir} directory — skipping ${dir} copy`);
+      continue;
+    }
+    await mkdir(`dist/public/${dir}`, { recursive: true });
+    await cp(`edge/${dir}`, `dist/public/${dir}`, { recursive: true });
+    console.log(`copied edge/${dir} -> dist/public/${dir}`);
   }
 }
 
