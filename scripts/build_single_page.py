@@ -351,11 +351,14 @@ section.view.active { display: block; }
         + hibt_main + '\n</section>\n'
     )
 
-    cdn = """
-  <script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-"""
+    # tweetnacl, tweetnacl-util and JSZip are inlined from docs/vendor: this is a single
+    # standalone file, opened from a download folder or a USB stick as often as from the repo,
+    # so neither a CDN nor a relative docs/vendor/ path can be relied on.
+    cdn = "".join(
+        f"  <!-- {name} inlined so this single file works offline and from any folder -->\n"
+        f"  <script>\n{read(DOCS / 'vendor' / name).rstrip()}\n  </script>\n"
+        for name in ("nacl.min.js", "nacl-util.min.js", "jszip.min.js")
+    )
 
     inline_js = (
         '\n  <script>\nwindow.__BEACON_AUDIT_LOG__ = '

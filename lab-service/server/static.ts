@@ -5,7 +5,8 @@
  * branch dynamically imports ./vite instead).
  *
  * WHAT IT SERVES. `script/build.ts` writes the server bundle to `dist/index.cjs` and copies
- * `edge/components` to `dist/public/components`, so `dist/public` is the web root.
+ * `edge/components` to `dist/public/components` (and `edge/vendor` to `dist/public/vendor`), so
+ * `dist/public` is the web root.
  *
  * THE CLIENT MAY NOT EXIST, AND THAT IS FINE. The rebuild deliberately does not restore the
  * original React client — the estate's lab pages live on GitHub Pages (`docs/lab.html`,
