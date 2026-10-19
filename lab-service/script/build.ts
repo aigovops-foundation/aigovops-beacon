@@ -66,15 +66,17 @@ async function buildAll() {
   // edge/vendor rides along as /vendor/*.js: beacon-lab.js resolves tweetnacl at
   // `new URL("../vendor/nacl-fast.min.js", import.meta.url)`, so a backend-served component
   // needs the library beside it or receipts verify as INVALID.
+  // Only a *missing* source directory is skippable; a failed copy must fail the build, or the
+  // image ships without its verifier and every receipt reads INVALID.
   for (const dir of ["components", "vendor"]) {
-    try {
-      await access(`edge/${dir}`);
-      await mkdir(`dist/public/${dir}`, { recursive: true });
-      await cp(`edge/${dir}`, `dist/public/${dir}`, { recursive: true });
-      console.log(`copied edge/${dir} -> dist/public/${dir}`);
-    } catch {
+    const present = await access(`edge/${dir}`).then(() => true, () => false);
+    if (!present) {
       console.log(`no edge/${dir} directory — skipping ${dir} copy`);
+      continue;
     }
+    await mkdir(`dist/public/${dir}`, { recursive: true });
+    await cp(`edge/${dir}`, `dist/public/${dir}`, { recursive: true });
+    console.log(`copied edge/${dir} -> dist/public/${dir}`);
   }
 }
 
