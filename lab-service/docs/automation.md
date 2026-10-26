@@ -1,5 +1,7 @@
 # Beacon Lab v2 — Automation (`beacon-v2`)
 
+> **Hosting note (2026-10-26).** The Foundation's live lab at `beacon-lab.aigovops-foundation.com` no longer runs on Fly.io: it runs as a Docker Compose service on the Omni droplet behind the existing Cloudflare Tunnel — see [`deploy-droplet.md`](./deploy-droplet.md). Everything below about Fly/pplx is kept as a recipe for running **your own** copy of the lab; it is not how the Foundation's instance is operated.
+
 A single bash CLI that brings the entire v2 stack up or down with one command.
 
 ```bash
