@@ -1,5 +1,7 @@
 # Deploying Beacon Lab to Fly.io
 
+> **Hosting note (2026-10-26).** The Foundation's live lab at `beacon-lab.aigovops-foundation.com` no longer runs on Fly.io: it runs as a Docker Compose service on the Omni droplet behind the existing Cloudflare Tunnel — see [`deploy-droplet.md`](./deploy-droplet.md). Everything below about Fly/pplx is kept as a recipe for running **your own** copy of the lab; it is not how the Foundation's instance is operated.
+
 > ## ✅ STATUS 2026-08-04 — DEPLOYED AND LIVE
 >
 > **https://beacon-lab.aigovops-foundation.com** — Fly app `aigovops-beacon-lab`, region `sjc`,

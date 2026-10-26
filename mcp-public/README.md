@@ -1,5 +1,7 @@
 # aigovops-beacon-mcp-public
 
+> **Status (2026-10).** The Foundation no longer runs a hosted instance of this server (the Render deployment was retired in the hosting consolidation). The code stays as a recipe for hosting your own; use [`../mcp`](../mcp) locally over stdio.
+
 Public, internet-facing MCP server for AiGovOps Beacon.
 
 This is the **hosted variant** of [`../mcp`](../mcp). Same six tools, same wire

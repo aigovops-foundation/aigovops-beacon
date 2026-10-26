@@ -6,7 +6,7 @@ If you want the *same* curriculum backed by a **real multi-tenant service** with
 
 > **[https://beacon-lab.aigovops-foundation.com](https://beacon-lab.aigovops-foundation.com)**
 
-The live lab is the Express + React app under [`lab-service/`](../lab-service/) deployed on Perplexity Computer. Source for everything below: [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) and [`lab-service/client/src/pages/`](../lab-service/client/src/pages/).
+The live lab is the Express + React app under [`lab-service/`](../lab-service/) running on the Foundation's Omni droplet behind a Cloudflare Tunnel (see [`lab-service/docs/deploy-droplet.md`](../lab-service/docs/deploy-droplet.md)). Source for everything below: [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) and [`lab-service/client/src/pages/`](../lab-service/client/src/pages/).
 
 ---
 
