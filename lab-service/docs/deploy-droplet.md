@@ -56,8 +56,10 @@ The Fly app `aigovops-beacon-lab` (volume `beacon_data`) was left running at the
 down later. Its database is frozen at the moment of the copy (2026-10-26): anything learners do on the
 droplet afterwards — tenants, magic links, receipts — exists only in `/opt/beacon-lab/data`. So
 re-pointing the `beacon-lab` CNAME back to `le39ylr.aigovops-beacon-lab.fly.dev` is a same-day
-rollback only. Later, move the data back with both sides quiet — `docker compose stop` on the droplet
-(the WAL is checkpointed on close), `flyctl machine stop` on Fly, then copy `lab.db`, `lab.db-wal` and
-`lab.db-shm` together to the Fly volume (`flyctl ssh sftp shell`) and start Fly again — or accept the
-split. Never copy while either process is running: SQLite files from two different moments make an
-inconsistent database. `deploy-fly.md` documents that hosting as a recipe for your own copy.
+rollback only. Later, move the data back with both sides quiet: `docker compose stop` on the droplet
+(a clean close checkpoints the WAL, so usually only `lab.db` remains); Fly stays running but idle,
+since no DNS points at it — do not `flyctl machine stop`, sftp cannot reach a stopped machine. Upload
+`lab.db` and, only if they still exist, `lab.db-wal` and `lab.db-shm` with `flyctl ssh sftp shell`
+(`put` into `/data/`, replacing what is there), then `flyctl machine restart` so the app reopens the
+file — or accept the split. Never copy while the droplet container is running: files from two
+different moments make an inconsistent database. `deploy-fly.md` documents that hosting as a recipe for your own copy.
