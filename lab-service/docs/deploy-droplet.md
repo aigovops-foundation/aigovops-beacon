@@ -31,8 +31,16 @@ cd /opt/beacon-lab/aigovops-beacon && git pull --ff-only
 cd /opt/beacon-lab && docker compose build && docker compose up -d
 ```
 
-Rotate the admin password: edit `ADMIN_PASSWORD` in `compose.yml`, then `docker compose up -d`
-(the service reads it at start; existing sessions stay valid until the JWT expires).
+Rotate the admin password: the stored hash wins over the environment after first boot
+(`server/seed.ts` keeps it), so editing `ADMIN_PASSWORD` in `compose.yml` alone changes nothing.
+Rotate through the API, then update `compose.yml` so a fresh database would bootstrap the same value:
+
+```bash
+TOKEN=$(curl -s -X POST http://127.0.0.1:5000/api/admin/login -H 'content-type: application/json' \
+  -d '{"password":"<current>"}' | python3 -c 'import json,sys;print(json.load(sys.stdin)["token"])')
+curl -s -X POST http://127.0.0.1:5000/api/admin/rotate-password -H "authorization: Bearer $TOKEN" \
+  -H 'content-type: application/json' -d '{"newPassword":"<new-strong-one>"}'
+```
 
 ## Checks that prove it is up
 
@@ -45,6 +53,13 @@ Rotate the admin password: edit `ADMIN_PASSWORD` in `compose.yml`, then `docker 
 ## Rollback / history
 
 The Fly app `aigovops-beacon-lab` (volume `beacon_data`) was left running at the move and is scaled
-down later; while it exists, rollback is re-pointing the `beacon-lab` CNAME to
-`le39ylr.aigovops-beacon-lab.fly.dev` in the Cloudflare dashboard. `deploy-fly.md` documents that
-hosting as a recipe for your own copy.
+down later. Its database is frozen at the moment of the copy (2026-10-26): anything learners do on the
+droplet afterwards — tenants, magic links, receipts — exists only in `/opt/beacon-lab/data`. So
+re-pointing the `beacon-lab` CNAME back to `le39ylr.aigovops-beacon-lab.fly.dev` is a same-day
+rollback only. Later, move the data back with both sides quiet: `docker compose stop` on the droplet
+(a clean close checkpoints the WAL, so usually only `lab.db` remains); Fly stays running but idle,
+since no DNS points at it — do not `flyctl machine stop`, sftp cannot reach a stopped machine. Upload
+`lab.db` and, only if they still exist, `lab.db-wal` and `lab.db-shm` with `flyctl ssh sftp shell`
+(`put` into `/data/`, replacing what is there), then `flyctl machine restart` so the app reopens the
+file — or accept the split. Never copy while the droplet container is running: files from two
+different moments make an inconsistent database. `deploy-fly.md` documents that hosting as a recipe for your own copy.
