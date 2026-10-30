@@ -138,8 +138,9 @@ blur them.
 > **Corrected again 2026-08-05.** `npm install` failed on Node 24 and 26 — `better-sqlite3`
 > has no prebuilt binary for those ABIs and will not compile against their V8, so the first
 > command died on anyone running current Node while CI (pinned to Node 20/22) stayed green.
-> The server now prefers Node's built-in `node:sqlite` and keeps `better-sqlite3` as an
-> optional dependency for Node 20. Nothing to compile on Node 22.13+.
+> The server now prefers Node's built-in `node:sqlite`. `better-sqlite3` was optional for a
+> while; since 2026-10-30 it is a required dependency again at ^12, which ships prebuilt
+> binaries for Node 20–26 — a Node 20 install can no longer end up with no driver.
 
 ```bash
 # Local — this is the path that works today

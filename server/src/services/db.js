@@ -99,10 +99,11 @@ CREATE TABLE IF NOT EXISTS anchors (
 // ABI — so `cd server && npm install`, the first command in README.md, failed
 // outright while CI (pinned to Node 20/22) stayed green.
 //
-// better-sqlite3 is kept as an OPTIONAL dependency, not deleted: Node 20 has no
-// node:sqlite, and the Node 20 CI lane still uses it. Optional means a failed
-// native build is a warning instead of a fatal install error, so the quickstart
-// survives on new Node and keeps working on old Node.
+// better-sqlite3 is a REQUIRED dependency: Node 20 has no node:sqlite, and when
+// the addon was optional a failed native build was only a warning, so `npm
+// install` could succeed and `npm run init` then fail with no driver (Beacon #74
+// review). better-sqlite3 ^12 ships prebuilt binaries for Node 20–26, so the
+// quickstart still compiles nothing on new Node.
 //
 // Set BEACON_SQLITE_DRIVER=node|better-sqlite3 to pin one explicitly. The test
 // suite uses it to run the same assertions against both, which is the only way
