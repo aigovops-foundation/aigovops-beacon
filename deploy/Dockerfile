@@ -5,14 +5,14 @@
 # both API and UI.
 
 # Node 22 is used for both stages: Studio requires it, and the runtime stage needs node:sqlite.
-FROM node:22-alpine AS studio
+FROM node:25-alpine AS studio
 WORKDIR /studio
 COPY studio/package.json studio/package-lock.json* ./
 RUN npm install --no-audit --no-fund
 COPY studio/ ./
 RUN npm run build
 
-FROM node:22-alpine AS runtime
+FROM node:25-alpine AS runtime
 RUN apk add --no-cache python3 make g++ \
     && addgroup -S beacon && adduser -S beacon -G beacon
 WORKDIR /app
