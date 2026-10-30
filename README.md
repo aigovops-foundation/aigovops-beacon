@@ -260,7 +260,7 @@ Beacon doesn't replace anything — it sits *upstream* of the other Foundation p
    └───────────────────────────┘    └─────────────────────────┘
 ```
 
-Receipt schema is wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay). Gate schema is wire-compatible with [`aigovops-foundation-os`](https://github.com/bobrapp/aigovops-foundation-os).
+Receipt schema is wire-compatible with [`aigovops-Replay`](https://github.com/aigovops-foundation/aigovops-Replay). Gate schema is wire-compatible with [`aigovops-foundation-os`](https://github.com/aigovops-foundation/aigovops-foundation-os).
 
 For the broader Foundation context — sister projects, the umbrella policy-as-code companion, and how Beacon relates to other compliance tooling — see [`RELATED.md`](RELATED.md). Beacon does not require any of those projects.
 
