@@ -80,7 +80,7 @@ keep it in sync when you change a route.
 ## What's likely to get a "let's talk first"
 
 - Big architectural changes.
-- Anything that changes the receipt schema. Receipts are wire-compatible with [`aigovops-Replay`](https://github.com/bobrapp/aigovops-Replay) and must stay aligned with [OVERT](https://overt.is/) — talk to the steward and the review circle first.
+- Anything that changes the receipt schema. Receipts are wire-compatible with [`aigovops-Replay`](https://github.com/aigovops-foundation/aigovops-Replay) and must stay aligned with [OVERT](https://overt.is/) — talk to the steward and the review circle first.
 - New top-level documents.
 - Anything that touches the profile registration (see [`docs/PROFILE_REGISTRATION.md`](docs/PROFILE_REGISTRATION.md)) — the steward signs off on these.
 
