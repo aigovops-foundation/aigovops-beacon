@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS anchors (
 // better-sqlite3 is a REQUIRED dependency: Node 20 has no node:sqlite, and when
 // the addon was optional a failed native build was only a warning, so `npm
 // install` could succeed and `npm run init` then fail with no driver (Beacon #74
-// review). better-sqlite3 ^12 ships prebuilt binaries for Node 20–26, so the
+// review). better-sqlite3 12.9 ships prebuilt binaries for Node 20–25, so the
 // quickstart still compiles nothing on new Node.
 //
 // Set BEACON_SQLITE_DRIVER=node|better-sqlite3 to pin one explicitly. The test

@@ -22,7 +22,7 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "^12.11.1",
+    "better-sqlite3": "~12.9.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "helmet": "^8.0.0",

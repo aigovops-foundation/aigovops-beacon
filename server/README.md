@@ -21,7 +21,7 @@ Open the Studio at `http://localhost:5173` after `cd ../studio && npm run dev`.
 | Node | Driver | Compiler needed |
 |---|---|---|
 | 22.13+ | built-in `node:sqlite` | no |
-| 20 | `better-sqlite3` (required dependency, ^12 ships prebuilt binaries for Node 20–26) | no |
+| 20 | `better-sqlite3` (required dependency, 12.9 ships prebuilt binaries for Node 20–25) | no |
 
 `better-sqlite3` is a **required** dependency (decided 2026-10-30, Beacon #74 review):
 when it was optional, a failed native build was only a warning, so on Node 20 —

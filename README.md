@@ -139,8 +139,8 @@ blur them.
 > has no prebuilt binary for those ABIs and will not compile against their V8, so the first
 > command died on anyone running current Node while CI (pinned to Node 20/22) stayed green.
 > The server now prefers Node's built-in `node:sqlite`. `better-sqlite3` was optional for a
-> while; since 2026-10-30 it is a required dependency again at ^12, which ships prebuilt
-> binaries for Node 20–26 — a Node 20 install can no longer end up with no driver.
+> while; since 2026-10-30 it is a required dependency again at 12.9, which ships prebuilt
+> binaries for Node 20–25 — a Node 20 install can no longer end up with no driver.
 
 ```bash
 # Local — this is the path that works today
