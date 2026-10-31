@@ -21,12 +21,14 @@ Open the Studio at `http://localhost:5173` after `cd ../studio && npm run dev`.
 | Node | Driver | Compiler needed |
 |---|---|---|
 | 22.13+ | built-in `node:sqlite` | no |
-| 20 | `better-sqlite3` (optional dependency) | only if npm has no prebuilt for your platform |
+| 20 | `better-sqlite3` (required dependency, 12.9 ships prebuilt binaries for Node 20–25) | no |
 
-`better-sqlite3` is an **optional** dependency on purpose. On Node 24/26 it has
-no prebuilt binary and will not compile against a newer V8, so `npm install`
-used to fail outright — the first command of the quickstart. Optional means that
-build failure is a warning, and the built-in driver takes over.
+`better-sqlite3` is a **required** dependency (decided 2026-10-30, Beacon #74 review):
+when it was optional, a failed native build was only a warning, so on Node 20 —
+which has no `node:sqlite` — `npm install` could succeed and `npm run init` then
+fail with no driver at all. Version 12 ships prebuilt binaries for Node 20
+through 26, so nothing compiles on any supported Node; on 22.13+ the built-in
+driver is still preferred.
 
 Pin one with `BEACON_SQLITE_DRIVER=node` or `BEACON_SQLITE_DRIVER=better-sqlite3`
 — `test/unit/db-driver.test.js` uses it to run the same assertions against both
