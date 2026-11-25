@@ -22,18 +22,18 @@
     "node": ">=20.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "~12.9.0",
+    "better-sqlite3": "~13.2.0",
     "cors": "^2.8.5",
-    "express": "^4.21.1",
-    "helmet": "^8.0.0",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
     "morgan": "^1.10.0",
     "tweetnacl": "^1.0.3",
-    "ulid": "^2.3.0",
-    "yaml": "^2.6.0"
+    "ulid": "^3.0.2",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "fast-check": "^4.8.0",
-    "supertest": "^7.0.0"
+    "fast-check": "^4.11.0",
+    "supertest": "^7.3.2"
   },
   "keywords": [
     "ai-governance",
