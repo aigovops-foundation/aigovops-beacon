@@ -7,7 +7,7 @@ receipts to the public Pages site, then back down to zero. About **30 minutes**
 of hands-on time if you go straight through.
 
 > **What you'll build:** the same architecture documented in
-> [`ARCHITECTURE_V2.md`](./ARCHITECTURE_V2.md). One curriculum, two surfaces
+> [`ARCHITECTURE_V2.md`](../../docs/ARCHITECTURE_V2.md). One curriculum, two surfaces
 > (Pages + Lab backend), real cryptographic receipts.
 
 ---
@@ -413,11 +413,11 @@ Fly + Cloudflare APIs.
 
 ## Where to go next
 
-- [`ARCHITECTURE_V2.md`](./ARCHITECTURE_V2.md) — the design doc that motivated
+- [`ARCHITECTURE_V2.md`](../../docs/ARCHITECTURE_V2.md) — the design doc that motivated
   this stack.
 - [`automation.md`](./automation.md) — the CLI reference card.
 - [`deploy-fly.md`](./deploy-fly.md) — Fly-specific deep dive.
-- [`USING_LIVE_LAB.md`](./USING_LIVE_LAB.md) — the curriculum side: how
+- [`USING_LIVE_LAB.md`](../../docs/USING_LIVE_LAB.md) — the curriculum side: how
   learners actually use this thing.
 
 Questions or bugs → open an issue on
