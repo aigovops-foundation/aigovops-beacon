@@ -8,7 +8,7 @@ We meet in the open. Here is where, when, and how to join.
 **Where:** Google Meet link posted to the GitHub Discussions tab the day before, and to [www.aigovops-foundation.com](https://www.aigovops-foundation.com/) the week before.
 **Who:** anyone.
 **Format:** 30 min agenda, 15 min open Q&A, optional 15 min show-and-tell at the end.
-**Notes:** captured in [`docs/meetings/`](docs/meetings/) within 48 hours.
+**Notes:** captured within 48 hours; notes will be published here.
 **First one:** to be scheduled with the steward — see [`ROADMAP.md`](ROADMAP.md).
 
 ## Review circle — bi-weekly
@@ -17,7 +17,7 @@ We meet in the open. Here is where, when, and how to join.
 **Where:** Google Meet. Link in the agenda issue.
 **Who:** the project steward (chair), two maintainers, one rotating community seat. Anyone can read; only members of the circle have agenda items.
 **Format:** 45 minutes. What's about to ship, what needs review, what's blocked.
-**Notes:** committed to [`docs/meetings/review-circle/`](docs/meetings/review-circle/) within 48 hours.
+**Notes:** committed within 48 hours; notes will be published here.
 **Agenda:** opened as a GitHub issue tagged `review-circle` the Friday before, so anyone can add items.
 
 ## Steward office hours — monthly (when the steward has time)
