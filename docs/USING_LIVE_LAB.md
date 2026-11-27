@@ -6,7 +6,7 @@ If you want the *same* curriculum backed by a **real multi-tenant service** with
 
 > **[https://beacon-lab.aigovops-foundation.com](https://beacon-lab.aigovops-foundation.com)**
 
-The live lab is the Express + React app under [`lab-service/`](../lab-service/) running on the Foundation's Omni droplet behind a Cloudflare Tunnel (see [`lab-service/docs/deploy-droplet.md`](../lab-service/docs/deploy-droplet.md)). Source for everything below: [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) and [`lab-service/client/src/pages/`](../lab-service/client/src/pages/).
+The live lab is the Express + React app under [`lab-service/`](../lab-service/) running on the Foundation's Omni droplet behind a Cloudflare Tunnel (see [`lab-service/docs/deploy-droplet.md`](../lab-service/docs/deploy-droplet.md)). Source for everything below: [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) (routes) and [`lab-service/docs/TUTORIAL.md`](../lab-service/docs/TUTORIAL.md) (walkthrough).
 
 ---
 
@@ -134,7 +134,7 @@ The global anti-brute-force counter caps at 30 failed admin login attempts per 1
 
 ## See also
 
-- [`lab-service/README.md`](../lab-service/README.md) — the live lab's repo readme.
-- [`lab-service/docs/alternative-backends.md`](../lab-service/docs/alternative-backends.md) — how to redeploy the same backend on Fly.io, Cloud Run, Cloudflare Workers, or DigitalOcean.
+- [`lab-service/server/routes.ts`](../lab-service/server/routes.ts) — the live lab's API routes.
+- [`lab-service/docs/deploy-fly.md`](../lab-service/docs/deploy-fly.md) — how to redeploy the same backend on Fly.io.
 - [`docs/lab.html`](./lab.html) — the static Framework Lab landing page (this is the page that pointed you here).
 - [`docs/AUDITOR_WORKSHOP.md`](./AUDITOR_WORKSHOP.md) — facilitator playbook for 90-minute in-person workshops.

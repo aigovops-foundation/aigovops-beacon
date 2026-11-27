@@ -133,8 +133,8 @@ signs anything. Editing it is a signing-format change and needs its own
   "id": "01HXYZ8K3F2N5Q1R7S9V3W4Y6B",
   "ts_utc": "2026-05-13T15:04:22.318Z",
   "user": {
-    "sub": "bob@aigovopsfoundation.org",
-    "email": "bob@aigovopsfoundation.org",
+    "sub": "reviewer@example.org",
+    "email": "reviewer@example.org",
     "oidc_issuer": "https://login.microsoftonline.com/.../v2.0"
   },
   "vendor": "openai",
