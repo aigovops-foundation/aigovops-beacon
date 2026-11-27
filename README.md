@@ -8,7 +8,7 @@
   <strong>From shadow AI to verifiable evidence — in one afternoon.</strong><br/>
   An <a href="https://www.aigovops-foundation.com/">AiGovOps Foundation</a> project, implementing the <a href="https://overt.is/">OVERT 1.0 open standard</a>.<br/>
   Standard steward: <a href="https://www.glacis.io/">Glacis Technologies</a> · Foundation Founding Steward Partner.<br/>
-  <em>Beacon is an OVERT 1.0–conformant runtime that produces signed, verifiable receipts of every AI decision. It runs alone.</em>
+  <em>Beacon is a runtime targeting OVERT 1.1 conformance; registration pending. It produces signed, verifiable receipts of every AI decision. It runs alone.</em>
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@ Beacon implements the [**OVERT 1.0 open standard**](https://overt.is/) for obser
 |---|---|
 | **Standard** | OVERT 1.0 (Glacis Technologies, 25 March 2026) |
 | **Profile** | `aigovops-beacon.v1` — registration in progress, see [`docs/PROFILE_REGISTRATION.md`](docs/PROFILE_REGISTRATION.md) |
-| **Target conformance** | AAL-1 (self-declared) at registration · AAL-2 with IAP on roadmap |
+| **Target conformance** | AAL-1 (self-declared) at registration · per OVERT 1.1, registered profiles are required from AAL-3 and the Independent Attestation Provider (IAP) is an AAL-4 requirement |
 | **Patent covenant** | Royalty-free under [overt.is/ipr-policy](https://overt.is/ipr-policy) |
 | **Crosswalk** | [`crosswalks/overt-mapping.yaml`](crosswalks/overt-mapping.yaml) — Beacon controls → OVERT six domains |
 
