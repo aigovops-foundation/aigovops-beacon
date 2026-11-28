@@ -16,7 +16,7 @@
 # runtime stage, which meant compiling native deps a second time and needing python3/make/g++ in
 # the final image. Instead the builder prunes its own node_modules to production and the runtime
 # stage copies the result: one compile, and no compiler in what ships.
-FROM node:22-slim AS builder
+FROM node:25-slim AS builder
 WORKDIR /app
 
 RUN apt-get update \
@@ -35,7 +35,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 # ── runtime ──────────────────────────────────────────────────────────────────
-FROM node:22-slim AS runtime
+FROM node:25-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
